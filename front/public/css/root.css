@@ -1,0 +1,93 @@
+:root {
+    --background-color: #1d1d1f;
+    --color: #bababa;
+    /* --content-box: #faebd7;
+    --main_fontcolor: #f1c6b0;
+    --input-padding: 0.7rem 1.4rem;
+    --font-color: #70645d;
+    --border-color: #ddd;
+    --button-color: #f1c6b0; */
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    font-family: "NanumSquareRound";
+}
+a {
+    color: initial;
+    text-decoration: none;
+}
+
+ul,
+li {
+    padding: 0;
+    list-style: none;
+}
+#wrap {
+    position: relative;
+}
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 10rem;
+}
+#nav > img {
+    width: 5rem;
+    height: 5rem;
+}
+#logo > img {
+    width: 10rem;
+    height: 10rem;
+}
+#loginBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 6rem;
+    border-radius: 4rem;
+    margin-right: 3rem;
+    background-color: var(--background-color);
+}
+#loginBtn > a {
+    font-size: 2rem;
+    color: var(--color);
+    font-weight: 500;
+}
+#gnb {
+    position: absolute;
+    top: 10rem;
+    width: 20rem;
+    height: 30rem;
+    transition: all 1s;
+    margin-left: -30rem;
+    background-color: var(--background-color);
+}
+#gnb {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+}
+#gnb > li > a {
+    color: var(--color);
+    font-size: 3rem;
+}
+
+#wrap > .off {
+    margin-left: 0rem;
+    transition: all 1s;
+}
+
+@font-face {
+    font-family: "NanumSquareRound";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}

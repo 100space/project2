@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" type="text/css" href="/css/root.css" />
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        {% block css %} {% endblock %}
+    </head>
+    <body>
+        <div id="wrap">
+            <div id="header">
+                <div id="nav">
+                    <img src="/img/nav.png" />
+                </div>
+                <div id="logo">
+                    <img src="/img/logo.png" />
+                </div>
+                <div id="loginBtn">
+                    <a href="user/login.html">시작하기</a>
+                </div>
+            </div>
+            <ul id="gnb" class="off">
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">자유게시판</a></li>
+                <li><a href="#">게시판2</a></li>
+                <li><a href="#">Q&A</a></li>
+            </ul>
+        </div>
+        {% block content %} {% endblock %}
+        <script src="/js/root.js"></script>
+    </body>
+</html>
