@@ -8,5 +8,7 @@ router.get("/", (req, res, next) => {
 router.get("/user/login", (req, res, next) => {
     res.render("user/login.html")
 })
-
+router.get("/notice", (req, res, next) => {
+    res.render("board/view.html")
+})
 module.exports = router

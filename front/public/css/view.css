@@ -1,0 +1,17 @@
+#viewWrap {
+    width: 110rem;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: aqua;
+}
+#subCategory {
+    display: flex;
+    justify-content: center;
+}
+#subCategory > div {
+    width: 10rem;
+    height: 3rem;
+    background-color: blue;
+    margin: 1rem 2rem;
+    border-right: solid 0.1rem;
+}
