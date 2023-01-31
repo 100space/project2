@@ -10,7 +10,6 @@ class UserService {
     }
 
     async SignUp({ userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro }) {
-        console.log(userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, `service`)
 
         try {
             if (!userId || !userPw || !userName) throw "Invalid or empty, Confirm your Information";
