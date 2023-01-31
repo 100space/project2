@@ -9,6 +9,6 @@ router.get("/user/login", (req, res, next) => {
     res.render("user/login.html")
 })
 router.get("/notice", (req, res, next) => {
-    res.render("board/view.html")
+    res.render("board/list.html")
 })
 module.exports = router
