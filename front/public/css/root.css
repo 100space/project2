@@ -1,6 +1,6 @@
 :root {
-    --background-color: #1d1d1f;
-    --color: #bababa;
+    --background-color: #008ecf;
+    --color: #fafafa;
 }
 * {
     margin: 0;
@@ -58,7 +58,7 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 10rem;
+    width: 14rem;
     height: 6rem;
     border-radius: 4rem;
     margin-right: 3rem;

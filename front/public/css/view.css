@@ -2,16 +2,18 @@
     width: 110rem;
     height: 100vh;
     margin: 0 auto;
-    background-color: aqua;
+    background-color: #dadada;
 }
 #subCategory {
     display: flex;
     justify-content: center;
 }
-#subCategory > div {
+#subCategory > li {
     width: 10rem;
-    height: 3rem;
-    background-color: blue;
+    height: 2.5rem;
+    background-color: #fff;
     margin: 1rem 2rem;
-    border-right: solid 0.1rem;
+    border-right: solid 0.1rem #666;
+    border-left: solid 0.1rem #666;
+    font-size: 1.6rem;
 }
