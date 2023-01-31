@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const config = require("./config")
 const nunjucks = require("nunjucks")
+const axios = require("axios")
 const port = config.port
 const router = require("./routes")
 const cors = require("cors")
