@@ -58,6 +58,8 @@ userInfo.addEventListener("submit", async (e) => {
             'Content-Type': 'application/json'
         }
     })
-    console.log(response)
+    for (let j = 0; j < userValue.length; j++) {
+        document.cookie = `cookie${j}=${userValue[j]}`
+    }
 
 })
