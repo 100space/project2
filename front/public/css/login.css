@@ -52,7 +52,7 @@ button {
     box-shadow: 0 1px 1px;
     border: 1px solid #008ecf;
     background: #008ecf;
-    color: #fff;
+    color: #fafafa;
     font-size: 12px;
     font-weight: bold;
     padding: 12px 45px;
@@ -100,7 +100,8 @@ button :focus {
     position: relative;
     overflow: hidden;
     opacity: 85%;
-    width: 768px;
+    width: 100rem;
+    height: 55rem;
     max-width: 100%;
     min-height: 480px;
     transition: 333ms;
@@ -185,7 +186,7 @@ button :focus {
 .overlay {
     background: #ff416c;
     background: linear-gradient(to right, #008ecf, #008ecf) no-repeat 0 0 / cover;
-    color: #fff;
+    color: #fafafa;
     position: relative;
     left: -100%;
     height: 100%;
