@@ -8,6 +8,7 @@ module.exports = (sequelize, Sequelize) => {
                       primaryKey: true,
                       autoIncrement: true,
                     },
+
                     subject: {
                       type: Sequelize.STRING(64),
                       allowNull: false,
@@ -30,14 +31,14 @@ module.exports = (sequelize, Sequelize) => {
               }
           )
       }
-
-      static associate(models) {
-        this.belongsTo(models.User,{
-          foreignKey : "userId",
-          foreignKey : "userPic"
+      static associate(models){
+        this.belongsTo(models.User, {
+          foreignKey:"userId",
+        })
+        this.belongsTo(models.User, {
+          foreignKey:"userPic"
         })
       }
   }
   Board.initialize();
-  return Board
 };

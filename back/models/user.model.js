@@ -62,13 +62,6 @@ module.exports = (sequelize, Sequelize) => {
                 }
             )
         }
-        static associate(models) {
-            this.hasMany(models.Board, {
-              foreignKey: "userId",
-              foreignKey : "userPic" 
-            })
-          }
     }
     User.initialize();
-    return User
 };
