@@ -1,0 +1,35 @@
+{% extends 'layout/layout.html'%} {% block css %}
+<link rel="stylesheet" href="/css/view.css" />
+{% endblock %} {% block content %}
+<div id="viewWrap">
+    <div>
+        <div id="subCategory" class="flex-justi-center">
+            {% set subCategory = ['잡담','토론','투표'] %} {% for item in subCategory %}
+            <li class="flex-center">{{item}}</li>
+            {% endfor %}
+        </div>
+
+        <div class="flex-justi-center flex-column">
+            <div id="contentBox">
+                <div id="conImage" class="flex-center">
+                    <div id="contentImg">img</div>
+                </div>
+                <div id="contentSub">
+                    <ul id="subject">
+                        <a href="#">제목 : {{subject}}</a>
+                    </ul>
+                    <ul id="subjectBtm">
+                        <li id="writer">작성자 : {{userId}}</li>
+                        <li id="register">작성일 :</li>
+                    </ul>
+                </div>
+                <div id="liked">
+                    <img src="/img/liked.png" alt="" />
+                    <div id="contentLiked">추천수 : {{liked.length}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
