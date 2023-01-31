@@ -17,6 +17,12 @@ module.exports = (sequelize, Sequelize) =>{
                 sequelize,
             })
         }
+        static associate(models){
+            this.belongsToMany(models.Board,{
+                through:"hash",
+                foreignKey:"hashtagIdx",
+            })
+        }
     }
 
     hashtag.initialize();
