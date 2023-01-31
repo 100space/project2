@@ -13,18 +13,11 @@ fs.readdirSync(__dirname).filter((file) => file.indexOf("model") !== -1).map(fil
         console.log(`Error requiring file : ${file}. Error: ${e}`)
     }
 })
-const test = fs.readdirSync(__dirname).filter((file) => file.indexOf("model") !== -1).map(file => {
-    try {
-        require(path.join(__dirname, file))(sequelize, Sequelize)
-    } catch (e) {
-        console.log(`Error requiring file : ${file}. Error: ${e}`)
-    }
-})
 
+const {models} = sequelize;
+for(const key in models){
+    if(typeof models[key].associate !== "function") continue;
 
-const models = sequelize;
-for (const key in models) {
-    if (typeof models[key].associate !== "function") continue;
     models[key].associate(models)
 }
 
