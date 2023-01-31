@@ -16,7 +16,8 @@ const gnbfunction = async (e) => {
     arrow.classList.toggle("deg")
     arrow.classList.toggle("deg2")
     const response = await request.get(e.target.pathname)
-    console.dir(e.target.pathname)
+    location.href = `http://127.0.0.1:3005${e.target.pathname}`
+    console.log(response)
 }
 
 nav.addEventListener("click", navfunction)
