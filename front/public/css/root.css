@@ -1,12 +1,6 @@
 :root {
     --background-color: #1d1d1f;
     --color: #bababa;
-    /* --content-box: #faebd7;
-    --main_fontcolor: #f1c6b0;
-    --input-padding: 0.7rem 1.4rem;
-    --font-color: #70645d;
-    --border-color: #ddd;
-    --button-color: #f1c6b0; */
 }
 * {
     margin: 0;
@@ -24,11 +18,14 @@ a {
 
 ul,
 li {
+    margin: 0;
     padding: 0;
     list-style: none;
 }
 #wrap {
     position: relative;
+    width: 100%;
+    height: 100%;
 }
 #header {
     display: flex;
@@ -36,14 +33,26 @@ li {
     align-items: center;
     width: 100%;
     height: 10rem;
+    z-index: 10;
+}
+#nav {
+    width: 14rem;
+    height: 6rem;
+    margin-left: 3rem;
+    justify-content: start !important;
 }
 #nav > img {
     width: 5rem;
     height: 5rem;
 }
-#logo > img {
-    width: 10rem;
-    height: 10rem;
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#logo > a > img {
+    width: 9rem;
+    height: 9rem;
 }
 #loginBtn {
     display: flex;
@@ -53,6 +62,19 @@ li {
     height: 6rem;
     border-radius: 4rem;
     margin-right: 3rem;
+    background-color: var(--background-color);
+}
+#logBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 3rem;
+    width: 14rem;
+}
+.circle9 {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 3rem;
     background-color: var(--background-color);
 }
 #loginBtn > a {
@@ -66,7 +88,7 @@ li {
     width: 20rem;
     height: 30rem;
     transition: all 1s;
-    margin-left: -30rem;
+    margin-left: 0rem;
     background-color: var(--background-color);
 }
 #gnb {
@@ -81,7 +103,15 @@ li {
 }
 
 #wrap > .off {
-    margin-left: 0rem;
+    margin-left: -30rem;
+    transition: all 1s;
+}
+.deg {
+    transform: rotate(180deg);
+    transition: all 1s;
+}
+.deg2 {
+    transform: rotate(0);
     transition: all 1s;
 }
 

@@ -12,15 +12,28 @@
     <body>
         <div id="wrap">
             <div id="header">
-                <div id="nav">
-                    <img src="/img/nav.png" />
+                <div id="nav" class="flex-center">
+                    <img src="/img/nav.png" class="deg2" />
                 </div>
                 <div id="logo">
-                    <img src="/img/logo.png" />
+                    <a href="/">
+                        <img src="/img/logo.png" />
+                    </a>
                 </div>
+                {% if userid %}
+                <div id="logBtn">
+                    <div class="circle9">
+                        <a href="#"></a>
+                    </div>
+                    <div class="circle9">
+                        <a href="#"></a>
+                    </div>
+                </div>
+                {% else %}
                 <div id="loginBtn">
-                    <a href="user/login.html">시작하기</a>
+                    <a href="/user/login">시작하기</a>
                 </div>
+                {% endif %}
             </div>
             <ul id="gnb" class="off">
                 <li><a href="#">공지사항</a></li>
@@ -28,8 +41,8 @@
                 <li><a href="#">게시판2</a></li>
                 <li><a href="#">Q&A</a></li>
             </ul>
+            {% block content %} {% endblock %}
         </div>
-        {% block content %} {% endblock %}
         <script src="/js/root.js"></script>
     </body>
 </html>
