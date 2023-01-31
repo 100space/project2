@@ -1,7 +1,8 @@
 const request = axios.create({
     baseURL: "http://127.0.0.1:3000",
-    withCredentials: true
+    withCredentials: true,
 })
+
 
 const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
@@ -61,4 +62,5 @@ userInfo.addEventListener("submit", async (e) => {
         }
     })
     console.log(response)
+
 })
