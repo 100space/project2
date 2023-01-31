@@ -1,5 +1,21 @@
-{% extends 'layout/layout.html'%} {% block content %}
-
-<br />
+{% extends 'layout/layout.html'%} {% block css %}
+<link rel="stylesheet" href="/css/view.css" />
+{% endblock %} {% block content %}
+<div id="viewWrap">
+    <div>
+        <div id="subCategory">
+            {% set subCategory = ['123','222','333'] %} {% for item in subCategory %}
+            <div>{{item}}</div>
+            {% endfor %}
+        </div>
+        <ul>
+            <li>123</li>
+            <li>123</li>
+            <li>123</li>
+            <li>123</li>
+            <li>123</li>
+        </ul>
+    </div>
+</div>
 
 {% endblock %}
