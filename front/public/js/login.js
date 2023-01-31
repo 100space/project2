@@ -34,10 +34,6 @@ loginForm.addEventListener("submit", async (e) => {
 
 })
 
-
-
-
-
 // join
 userInfo.addEventListener("submit", async (e) => {
     e.preventDefault()
@@ -45,17 +41,18 @@ userInfo.addEventListener("submit", async (e) => {
     for (let i = 0; i < input.length; i++) {
         userValue.push(input[i].value)
     }
-    const [userid, userpw, userName, nickName, address, gender, phoneNum, email, introduce, userPic] = userValue
+    const [userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, userPic] = userValue
     const response = await axios.post("http://127.0.0.1:3000/user/join", {
-        userid,
-        userpw,
+        userId,
+        userPw,
         userName,
         nickName,
         address,
         gender,
         phoneNum,
-        email,
-        introduce,
+        userEmail,
+        userIntro,
+        userPic
     }, {
         headers: {
             'Content-Type': 'application/json'
