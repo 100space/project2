@@ -16,7 +16,7 @@
 <div id="loginFrm">
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="#">
+            <form action="/user/join" method="post">
                 <h1 style="padding-top: 2rem">Sign Up</h1>
                 <div class="social-container">
                     <a href="#" target="_blank" class="social"><i class="fab fa-github"></i></a>
@@ -54,11 +54,11 @@
                 <label>
                     <input type="text" placeholder="name" />
                 </label>
-                <button style="margin: 0.9rem 0 2rem 0">Sign Up</button>
+                <button style="margin: 0.9rem 0 2rem 0" type="submit">Sign Up</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#" id="form">
+            <form action="/user/login" id="form" method="post">
                 <h1 style="padding-top: 2rem">Sign in</h1>
                 <div class="social-container">
                     <a href="#" target="_blank" class="social"><i class="fab fa-github"></i></a>
@@ -73,7 +73,7 @@
                     <input type="password" placeholder="Password" />
                 </label>
                 <a href="#">Forgot Password</a>
-                <button>Sign In</button>
+                <button type="submit">Sign In</button>
             </form>
         </div>
         <div class="overlay-container">
