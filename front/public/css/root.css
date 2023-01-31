@@ -1,0 +1,123 @@
+:root {
+    --background-color: #1d1d1f;
+    --color: #bababa;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    font-family: "NanumSquareRound";
+}
+a {
+    color: initial;
+    text-decoration: none;
+}
+
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 10rem;
+    z-index: 10;
+}
+#nav {
+    width: 14rem;
+    height: 6rem;
+    margin-left: 3rem;
+    justify-content: start !important;
+}
+#nav > img {
+    width: 5rem;
+    height: 5rem;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#logo > a > img {
+    width: 9rem;
+    height: 9rem;
+}
+#loginBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 6rem;
+    border-radius: 4rem;
+    margin-right: 3rem;
+    background-color: var(--background-color);
+}
+#logBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 3rem;
+    width: 14rem;
+}
+.circle9 {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 3rem;
+    background-color: var(--background-color);
+}
+#loginBtn > a {
+    font-size: 2rem;
+    color: var(--color);
+    font-weight: 500;
+}
+#gnb {
+    position: absolute;
+    top: 10rem;
+    width: 20rem;
+    height: 30rem;
+    transition: all 1s;
+    margin-left: 0rem;
+    background-color: var(--background-color);
+}
+#gnb {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+}
+#gnb > li > a {
+    color: var(--color);
+    font-size: 3rem;
+}
+
+#wrap > .off {
+    margin-left: -30rem;
+    transition: all 1s;
+}
+.deg {
+    transform: rotate(180deg);
+    transition: all 1s;
+}
+.deg2 {
+    transform: rotate(0);
+    transition: all 1s;
+}
+
+@font-face {
+    font-family: "NanumSquareRound";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}

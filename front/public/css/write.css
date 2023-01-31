@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#editor {
+    border: 1px solid;
+    width: 50%;
+    margin: 0 auto;
+}
+
+#contents {
+    width: 50%;
+    height: 100px;
+    margin: 30px auto;
+    border: 1px solid;
+    display: none;
+}
