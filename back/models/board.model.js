@@ -21,10 +21,6 @@ module.exports = (sequelize, Sequelize) => {
                       type: Sequelize.STRING(255),
                       allowNull: false,
                     },
-                    comment: {
-                      type: Sequelize.STRING(64),
-                      allowNull: false,
-                    },
               },
               {
                   sequelize,
@@ -37,6 +33,19 @@ module.exports = (sequelize, Sequelize) => {
         })
         this.belongsTo(models.User, {
           foreignKey:"userPic"
+        })
+        this.belongsTo(models.category, {
+          foreignKey:"categoryMain"
+        })
+        this.belongsTo(models.category, {
+          foreignKey:"categorySub"
+        })
+        this.belongsTo(models.category, {
+          foreignKey:"CmdContent"
+        })
+        this.belongsToMany(models.hashtag,{
+          through:"hash",
+          foreignKey:"boardIdx",
         })
       }
   }
