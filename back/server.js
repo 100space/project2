@@ -9,13 +9,11 @@ app.use((error, req, res, next) => {
     console.log(error)
     res.status(500).send(error.message)
 })
-
 app.use(router)
 
-
-// app.get("/notice", (req, res, next) => {
-//     res.redirect("http://127.0.0.1:3005/notice")
-// })
+app.get("/notice", (req, res, next) => {
+    res.redirect("http://127.0.0.1:3005/notice")
+})
 
 app.listen(port, async () => {
     console.log("connecting to backend and Database...")
