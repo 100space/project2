@@ -6,29 +6,29 @@ const config = require('../config')["db"][env];
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-fs.readdirSync(__dirname).filter((file)=> file.indexOf("model")!== -1).map(file=>{
-    try{
+fs.readdirSync(__dirname).filter((file) => file.indexOf("model") !== -1).map(file => {
+    try {
         require(path.join(__dirname, file))(sequelize, Sequelize)
-    } catch(e){
+    } catch (e) {
         console.log(`Error requiring file : ${file}. Error: ${e}`)
     }
 })
-const test = fs.readdirSync(__dirname).filter((file)=> file.indexOf("model")!== -1).map(file=>{
-    try{
+const test = fs.readdirSync(__dirname).filter((file) => file.indexOf("model") !== -1).map(file => {
+    try {
         require(path.join(__dirname, file))(sequelize, Sequelize)
-    } catch(e){
+    } catch (e) {
         console.log(`Error requiring file : ${file}. Error: ${e}`)
     }
 })
-console.log(test)
+
 
 const models = sequelize;
-for(const key in models){
-    if(typeof models[key].associate !== "function") continue;
+for (const key in models) {
+    if (typeof models[key].associate !== "function") continue;
     models[key].associate(models)
 }
 
 module.exports = {
-    sequelize, 
+    sequelize,
     Sequelize
 }
