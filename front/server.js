@@ -1,7 +1,11 @@
 const express = require("express")
 const app = express()
+const config = require("./config")
 const nunjucks = require("nunjucks")
+
+const port = config.port
 const router = require("./routes")
+
 
 app.set("view engine", "html")
 nunjucks.configure("views", { express: app })
@@ -12,6 +16,7 @@ app.use(express.static("public"))
 
 app.use(router)
 
-app.listen(3005, async () => {
-    console.log("front server open")
+
+app.listen(port, async () => {
+    console.log(`front server open`)
 })
