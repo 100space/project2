@@ -10,40 +10,75 @@ const input = document.querySelector("#userinfo > label > input")
 const form = document.querySelector("#form")
 const idCheck = document.querySelector("input[name='userId']")
 const idOverlap = document.querySelector("label>p")
-const idFocus = document.querySelector("input[name='userPw']")
-
+// const idFocus = document.querySelector("input[name='userPw']")
 const nickCheck = document.querySelector("input[name='nickName']")
+
+const joinFrm = document.querySelector("#userinfo")
+
+joinFrm.addEventListener("input", async (e) => {
+    const valueFocus = e.target
+    const check = e.target.name
+    const checkValue = e.target.value
+    if (check === "userId") {
+        const response = await request.post("/user/check",
+            {
+                userid: checkValue
+            }, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const { data } = response
+        if (data) {
+            idOverlap.innerHTML = "중복된 아이디가 존재합니다."
+            idOverlap.style.display = "block"
+        } else {
+            idOverlap.innerHTML = ""
+            idOverlap.style.display = "none"
+        }
+    } else if (check === "userPw") {
+        valueFocus.addEventListener("input", (e) => {
+            if (idOverlap.innerHTML) {
+                valueFocus.value = ""
+                alert("아이디 중복값을 확인해주세요")
+                idCheck.focus()
+            }
+        })
+    } else if (check === "nickName")
+})
+
+
 // const nickOverlap = document.querySelector()
 
-idCheck.addEventListener("input", async (e) => {
-    const userid = idCheck.value
-    const response = await request.post(
-        "/user/check",
-        {
-            userid,
-        },
-        {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }
-    )
-    const { data } = response
-    if (data) {
-        idOverlap.innerHTML = "중복된 아이디가 존재합니다."
-        idOverlap.style.display = "block"
-    } else {
-        idOverlap.innerHTML = ""
-        idOverlap.style.display = "none"
-    }
-})
+// idCheck.addEventListener("input", async (e) => {
+//     const userid = idCheck.value
+//     const response = await request.post(
+//         "/user/check",
+//         {
+//             userid,
+//         },
+//         {
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//         }
+//     )
+//     const { data } = response
+//     if (data) {
+//         idOverlap.innerHTML = "중복된 아이디가 존재합니다."
+//         idOverlap.style.display = "block"
+//     } else {
+//         idOverlap.innerHTML = ""
+//         idOverlap.style.display = "none"
+//     }
+// })
 
-idFocus.addEventListener("focus", (e) => {
-    if (idOverlap.innerHTML) {
-        alert("아이디 중복값을 확인해주세요")
-        idCheck.focus()
-    }
-})
+// idFocus.addEventListener("focus", (e) => {
+//     if (idOverlap.innerHTML) {
+//         alert("아이디 중복값을 확인해주세요")
+//         idCheck.focus()
+//     }
+// })
 
 form.addEventListener("submit", async (e) => {
     try {
