@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    class chat extends Sequelize.Model {
+    class Chat extends Sequelize.Model {
         static initialize() {
             return this.init({
                 chatContent : {
@@ -10,11 +10,6 @@ module.exports = (sequelize, Sequelize) => {
                 sequelize,
             })
         }
-        static associate(models){
-            this.belongsTo(models.User,{
-                foreignKey : "nickName"
-            })
-        }
     }
-    chat.initialize();
+    Chat.initialize();
 };

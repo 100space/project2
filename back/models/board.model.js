@@ -8,7 +8,6 @@ module.exports = (sequelize, Sequelize) => {
                       primaryKey: true,
                       autoIncrement: true,
                     },
-
                     subject: {
                       type: Sequelize.STRING(64),
                       allowNull: false,
@@ -17,10 +16,18 @@ module.exports = (sequelize, Sequelize) => {
                       type: Sequelize.STRING(255),
                       allowNull: false,
                     },
-                    contentImg: {
-                      type: Sequelize.STRING(255),
-                      allowNull: false,
+                    viewCount : {
+                      type: Sequelize.INTEGER,
+                      defaultValue: 0,
                     },
+                    categoryMain : {
+                      type:Sequelize.STRING(64),
+                      allowNull : false,
+                    },
+                    categorySub : {
+                      type:Sequelize.STRING(64),
+                      allowNull : false,
+                    }
               },
               {
                   sequelize,
@@ -29,23 +36,21 @@ module.exports = (sequelize, Sequelize) => {
       }
       static associate(models){
         this.belongsTo(models.User, {
-          foreignKey:"userId",
+          foreignKey : "userId"
         })
-        this.belongsTo(models.User, {
-          foreignKey:"userPic"
+        this.hasMany(models.Comment, {
+          foreignKey : "boardIdx"
         })
-        this.belongsTo(models.category, {
-          foreignKey:"categoryMain"
+        this.hasMany(models.ContentImg,{
+          foreignKey : "boardIdx"
         })
-        this.belongsTo(models.category, {
-          foreignKey:"categorySub"
+        this.belongsToMany(models.Hashtag, {
+          through : "Hash",
+          foreignKey : "boardIdx"
         })
-        this.belongsTo(models.category, {
-          foreignKey:"CmdContent"
-        })
-        this.belongsToMany(models.hashtag,{
-          through:"hash",
-          foreignKey:"boardIdx",
+        this.belongsToMany(models.User, {
+          through : "Liked",
+          foreignKey : "boardIdx"
         })
       }
   }
