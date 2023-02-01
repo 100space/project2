@@ -10,6 +10,7 @@
         </div>
 
         <div class="flex-justi-center flex-column">
+            {% set boardlist = [{subject:"123",sub2:123},{sub1:123,sub2:123},{sub1:123,sub2:123},123,123] %} {% for item in boardlist %}
             <div id="contentBox">
                 <div id="conImage" class="flex-center">
                     <div id="contentImg">img</div>
@@ -28,6 +29,7 @@
                     <div id="contentLiked">추천수 : {{liked.length}}</div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>

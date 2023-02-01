@@ -1,14 +1,16 @@
 :root {
+    --background-color2: #008dcfaa;
     --background-color: #008ecf;
+
     --color: #fafafa;
 }
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 html {
     font-size: 62.5%;
-    box-sizing: border-box;
     font-family: "NanumSquareRound";
 }
 a {
@@ -85,17 +87,20 @@ li {
 #gnb {
     position: absolute;
     top: 10rem;
-    width: 20rem;
-    height: 30rem;
+    width: 52rem;
+    height: 100rem;
     transition: all 1s;
     margin-left: 0rem;
-    background-color: var(--background-color);
+    background-color: var(--background-color2);
+    z-index: 10;
 }
 #gnb {
     display: flex;
-    justify-content: space-evenly;
     flex-direction: column;
     align-items: center;
+}
+#gnb > li {
+    margin-top: 5rem;
 }
 #gnb > li > a {
     color: var(--color);
@@ -103,7 +108,7 @@ li {
 }
 
 #wrap > .off {
-    margin-left: -30rem;
+    margin-left: -52rem;
     transition: all 1s;
 }
 .deg {

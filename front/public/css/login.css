@@ -8,16 +8,19 @@
     0% {
         margin-left: 0;
     }
+
     100% {
         margin-left: -1600px;
     }
 }
 
 @keyframes swell {
+
     0%,
     100% {
         transform: translate3d(0, -25px, 0);
     }
+
     50% {
         transform: translate3d(0, 5px, 0);
     }
@@ -28,6 +31,7 @@ h1 {
     font-weight: bold;
     margin: 0;
 }
+
 p {
     font-size: 14px;
     font-weight: 100;
@@ -146,9 +150,10 @@ button :focus {
     transition: all 0.6s ease-in-out;
 }
 
-.form-container > label {
+.form-container>label {
     width: 70%;
 }
+
 .form-container input {
     background: #eee;
     border: none;
@@ -243,4 +248,14 @@ button :focus {
 
 .container.right-panel-active .overlay-right {
     transform: translateY(20%);
+}
+
+
+/* 장경호 css */
+label>p {
+    margin: 0;
+    color: #fa0505;
+    display: none;
+    font-weight: bold;
+
 }
