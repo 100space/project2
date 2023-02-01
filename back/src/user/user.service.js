@@ -20,6 +20,15 @@ class UserService {
         }
     }
 
+    async CheckId({ userid }) {
+        try {
+            const user = await this.userRepository.checkId({ userid })
+            return user
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
     async SignIn(token) {
         try {
             const payload = this.jwt.verify(token, SALT);

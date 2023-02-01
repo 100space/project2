@@ -5,12 +5,20 @@ class UserController {
     async postSignUp(req, res, next) {
         try {
             const { userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel, filename } = req.body;
-            console.log(req.body)
-            console.log(filename)
             const user = await this.userService.SignUp({ filename, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel })
             res.status(201).json(user)
         } catch (e) {
             next(e);
+        }
+    }
+
+    async checkUserid(req, res, next) {
+        try {
+            const { userid } = req.body
+            const user = await this.userService.CheckId({ userid })
+            res.status(201).json(user)
+        } catch (e) {
+            next(e)
         }
     }
 

@@ -5,12 +5,26 @@ class UserRepository {
     async addUser(payload) {
         try {
             const user = await this.User.create(payload, { raw: true });
-            console.log(user, `repository`)
             return user;
         } catch (e) {
             throw new Error(e);
         }
     }
+
+    async checkId({ userid }) {
+        try {
+            console.log(userid)
+            const user = await this.User.findOne({
+                raw: true, where: {
+                    userid
+                }
+            })
+            return user
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
     async getInfo(userId) {
         try {
             const user = await this.User.findOne({
