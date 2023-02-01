@@ -8,12 +8,12 @@ const request = axios.create({
 const upload = require("../midlewares/upload")
 
 router.get("/", (req, res, next) => {
+    if (req.user === undefined) return res.render("index.html")
     const { token } = req.cookies
     const [header, payload, signature] = token.split(".")
     const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
     req.user = pl
     console.log(pl, 123123)
-    if (req.user === undefined) return res.render("index.html")
     const { userId } = req.user
     res.render("index.html", {
         userId,

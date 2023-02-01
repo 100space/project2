@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
                     primaryKey: true,
                     autoIncrement: true,
                 },
-                Content: {
+                cmdContent: {
                     type: Sequelize.TEXT,
                     allowNull: false
                 }
@@ -23,6 +23,9 @@ module.exports = (sequelize, Sequelize) => {
             })
             this.belongsTo(models.User, {
                 foreignKey: "userId"
+            })
+            this.hasMany(models.Board,{
+                foreignKey : "cmdContent"
             })
         }
     }

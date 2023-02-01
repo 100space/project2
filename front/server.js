@@ -27,5 +27,5 @@ app.use('/image', express.static('./uploads'))
 app.use(router)
 
 app.listen(port, async () => {
-    console.log(`front server open`)
+    console.log(`front server open ${port}`)
 })
