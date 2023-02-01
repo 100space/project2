@@ -23,4 +23,11 @@ router.get("/user/login", (req, res, next) => {
 router.get("/notice", (req, res, next) => {
     res.render("board/list.html")
 })
+router.get("/community", (req, res, next) => {
+    res.render("board/list.html")
+})
+router.get("/qna", (req, res, next) => {
+    res.render("board/list.html")
+})
+
 module.exports = router
