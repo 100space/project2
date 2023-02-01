@@ -56,6 +56,7 @@ module.exports = (sequelize, Sequelize) => {
                         type: Sequelize.INTEGER,
                         defaultValue: 0,
                     }
+
                 },
                 {
                     sequelize,
@@ -72,8 +73,9 @@ module.exports = (sequelize, Sequelize) => {
             this.belongsToMany(models.Board, {
                 through: "Liked",
                 foreignKey: "userId"
+
             })
         }
     }
-    User.initialize();
-};
+    User.initialize()
+}

@@ -15,6 +15,7 @@ module.exports = (sequelize, Sequelize) => {
                 {
                     sequelize,
                 })
+
         }
         static associate(models) {
             this.belongsTo(models.Board, {
@@ -23,9 +24,7 @@ module.exports = (sequelize, Sequelize) => {
             this.belongsTo(models.User, {
                 foreignKey: "userId"
             })
-
         }
     }
-    Comment.initialize();
-};
-
+    Comment.initialize()
+}

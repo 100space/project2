@@ -5,6 +5,7 @@ const nunjucks = require("nunjucks")
 const axios = require("axios")
 const port = config.port
 const router = require("./routes")
+const cookieParser = require("cookie-parser")
 const cors = require("cors")
 
 app.use(
@@ -20,6 +21,7 @@ nunjucks.configure("views", { express: app })
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static("public"))
+app.use(cookieParser())
 
 app.use(router)
 

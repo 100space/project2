@@ -7,24 +7,27 @@ const signUpButton = document.getElementById("signUp")
 const signInButton = document.getElementById("signIn")
 const container = document.getElementById("container")
 const input = document.querySelector("#userinfo > label > input")
-
+const form = document.querySelector("#form")
 const idCheck = document.querySelector("input[name='userId']")
 const idOverlap = document.querySelector("label>p")
 const idFocus = document.querySelector("input[name='userPw']")
-
 
 const nickCheck = document.querySelector("input[name='nickName']")
 // const nickOverlap = document.querySelector()
 
 idCheck.addEventListener("input", async (e) => {
     const userid = idCheck.value
-    const response = await request.post("/user/check", {
-        userid
-    }, {
-        headers: {
-            'Content-Type': 'application/json'
+    const response = await request.post(
+        "/user/check",
+        {
+            userid,
+        },
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
         }
-    })
+    )
     const { data } = response
     if (data) {
         idOverlap.innerHTML = "중복된 아이디가 존재합니다."
@@ -42,8 +45,26 @@ idFocus.addEventListener("focus", (e) => {
     }
 })
 
+form.addEventListener("submit", async (e) => {
+    try {
+        e.preventDefault()
+        const { userId, userPw } = e.target
+        console.log(userId.value, userPw.value)
 
+        const response = await request.post("/auth", {
+            userId: userId.value,
+            userPw: userPw.value,
+        })
+        console.log(response)
+        console.log(response.data)
+        if (response.status === 200) {
+            document.cookie = `token=${response.data.token};`
+            location.href = "/"
+        }
+    } catch (e) {
+        alert("아이디와 패스워드가 다름")
+    }
+})
 
 signUpButton.addEventListener("click", () => container.classList.add("right-panel-active"))
 signInButton.addEventListener("click", () => container.classList.remove("right-panel-active"))
-
