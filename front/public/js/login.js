@@ -49,16 +49,16 @@ form.addEventListener("submit", async (e) => {
     try {
         e.preventDefault()
         const { userId, userPw } = e.target
-        console.log(userId.value, userPw.value)
 
         const response = await request.post("/auth", {
             userId: userId.value,
             userPw: userPw.value,
         })
-        console.log(response)
-        console.log(response.data)
+
         if (response.status === 200) {
+
             document.cookie = `token=${response.data.token}; path=/`
+
             location.href = "/"
         }
     } catch (e) {
