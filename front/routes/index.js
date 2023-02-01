@@ -7,13 +7,14 @@ const request = axios.create({
 })
 const upload = require("../midlewares/upload")
 
-
 router.get("/", (req, res, next) => {
+    console.log(req.cookies)
     res.render("index.html")
 })
 router.post("/user/join", upload.single("userPic"), async (req, res, next) => {
     const response = await request.post("/user/join", {
-        ...req.body, ...req.file
+        ...req.body,
+        ...req.file,
     })
     const { userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro } = response.data
     res.render("user/welcome.html", { userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro })

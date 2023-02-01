@@ -1,17 +1,17 @@
 class AuthController {
-    constructor({authService}){
-        this.authService = authService;
+    constructor({ authService }) {
+        this.authService = authService
     }
 
-    async postSignIn(req,res,next){
-        try{
-            const {userId, userPw} = req.body;
-            const token = await this.authService.token({userId, userPw});
-            res.json({token})
-        }catch(e){
-            next(e);
+    async postSignIn(req, res, next) {
+        try {
+            const { userId, userPw } = req.body
+            const token = await this.authService.token({ userId, userPw })
+            res.json({ token })
+        } catch (e) {
+            next(e)
         }
     }
 }
 
-module.exports = AuthController;
+module.exports = AuthController
