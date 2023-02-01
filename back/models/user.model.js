@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
                         allowNull : false,
                     },
                     userId : {
-                        type : Sequelize.STRING(60),
+                        type : Sequelize.STRING(255),
                         primaryKey : true,
                     },
                     userPw : {
@@ -61,6 +61,21 @@ module.exports = (sequelize, Sequelize) => {
                     sequelize,
                 }
             )
+        }
+        static associate(models){
+            this.hasMany(models.Board,{
+                foreignKey : "userId"
+            })
+            this.hasMany(models.Chat,{
+                foreignKey : "userId"
+            })
+            this.hasMany(models.User,{
+                foreignKey : "userPic"
+            })
+            this.belongsToMany(models.Board,{
+                through: "Liked",
+                foreignKey : "userId"
+            })
         }
     }
     User.initialize();

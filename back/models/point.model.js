@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    class point extends Sequelize.Model {
+    class Point extends Sequelize.Model {
         static initialize() {
             return this.init ({
                 userPoint : {
@@ -11,5 +11,5 @@ module.exports = (sequelize, Sequelize) => {
             })
         }
     }
-    point.initialize();
+    Point.initialize();
 };

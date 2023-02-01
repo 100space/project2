@@ -1,18 +1,30 @@
 module.exports = (sequelize, Sequelize) => {
-    class category extends Sequelize.Model {
+    class Category extends Sequelize.Model {
         static initialize () {
             return this.init ({
                 categoryMain : {
-                    type : Sequelize.STRING(64)
+                    type : Sequelize.STRING(64),
+                    primaryKey : true,
                 },
                 categorySub : {
                     type : Sequelize.STRING(64),
+                    primaryKey : true,
                 },
             },
             {
                 sequelize,
+                tableName : "Category",
+                autoIncrement : false,
+            })
+        }
+        static associate(models){
+            this.hasMany(models.Board, {
+                foreignKey : "categoryMain"
+            })
+            this.hasMany(models.Board,{
+                foreignKey : "categorySub"
             })
         }
     }
-    category.initialize();
+    Category.initialize();
 };
