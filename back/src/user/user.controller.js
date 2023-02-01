@@ -1,3 +1,5 @@
+const { Sign } = require('crypto');
+
 class UserController {
     constructor({ userService }) {
         this.userService = userService;
@@ -24,7 +26,9 @@ class UserController {
 
     async getSignIn(req, res, next) {
         try {
+
             if (!req.headers.authorization) throw new Error("SignIn is Invalid, Please Sign in your account");
+
             const [type, token] = req.headers.authorization.split(" ");
             if (type.toLowerCase() !== "bearer") throw new Error("Error occurred Invalid Authorization. Please close the browser and then try again.");
 

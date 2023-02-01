@@ -31,9 +31,9 @@ class UserService {
 
     async SignIn(token) {
         try {
-            const payload = this.jwt.verify(token, SALT);
             const { userId } = this.jwt.verify(token, SALT);
             const user = await this.userRepository.getInfo(userId);
+            console.log(user)
             return user;
         } catch (e) {
             throw new Error(e)
