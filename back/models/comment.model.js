@@ -1,31 +1,29 @@
 module.exports = (sequelize, Sequelize) => {
-    class Comment extends Sequelize.Model{
-        static initialize () {
-            return this.init ({
-                CmdIdx : {
-                    type : Sequelize.INTEGER,
-                    primaryKey : true,
-                    autoIncrement : true,
+    class Comment extends Sequelize.Model {
+        static initialize() {
+            return this.init({
+                CmdIdx: {
+                    type: Sequelize.INTEGER,
+                    primaryKey: true,
+                    autoIncrement: true,
                 },
-                Content : {
-                    type : Sequelize.TEXT,
-                    allowNull : false
+                Content: {
+                    type: Sequelize.TEXT,
+                    allowNull: false
                 }
             },
-            {
-                sequelize,
-            })
+                {
+                    sequelize,
+                })
         }
-        static associate(models){
+        static associate(models) {
             this.belongsTo(models.Board, {
-                foreignKey : "boardIdx",
+                foreignKey: "boardIdx",
             })
-            this.belongsTo(models.User,{
-                foreignKey : "userId"
+            this.belongsTo(models.User, {
+                foreignKey: "userId"
             })
-            this.belongsTo(models.User,{
-                foreignKey : "userPic"
-            })
+
         }
     }
     Comment.initialize();

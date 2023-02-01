@@ -3,58 +3,58 @@ module.exports = (sequelize, Sequelize) => {
         static initialize() {
             return this.init(
                 {
-                    userPic : {
-                        type : Sequelize.STRING(255),
-                        allowNull : false,
+                    userPic: {
+                        type: Sequelize.STRING(255),
+                        allowNull: false,
                     },
-                    userId : {
-                        type : Sequelize.STRING(255),
-                        primaryKey : true,
+                    userId: {
+                        type: Sequelize.STRING(255),
+                        primaryKey: true,
                     },
-                    userPw : {
-                        type : Sequelize.STRING(64),
-                        allowNull : false,
-                    },
-                    userName : {
-                        type : Sequelize.STRING(30),
-                        allowNull : false,
-                    },
-                    nickName : {
-                        type: Sequelize.STRING(30),
-                        unique : true,
-                    },
-                    address : {
-                        type : Sequelize.STRING(255),
-                        allowNull : false,
-                    },
-                    gender : {
-                        type : Sequelize.STRING(8),
-                        allowNull : false,
-                    },
-                    phoneNum : {
-                        type : Sequelize.STRING(30),
-                        allowNull : false,
-                    },
-                    userEmail : {
+                    userPw: {
                         type: Sequelize.STRING(64),
-                        allowNull : false,
+                        allowNull: false,
                     },
-                    userIntro : {
-                        type : Sequelize.STRING(255),
-                        allowNull : false,
+                    userName: {
+                        type: Sequelize.STRING(30),
+                        allowNull: false,
                     },
-                    provider : {
-                        type : Sequelize.ENUM("local","kakao"),
-                        allowNull : false,
-                        defaultValue : 'local',
+                    nickName: {
+                        type: Sequelize.STRING(30),
+                        unique: true,
                     },
-                    snsId : {
-                        type : Sequelize.STRING(64),
-                        allowNull : true,
+                    address: {
+                        type: Sequelize.STRING(255),
+                        allowNull: false,
                     },
-                    userLevel : {
-                        type : Sequelize.INTEGER,
-                        defaultValue : 0,
+                    gender: {
+                        type: Sequelize.STRING(8),
+                        allowNull: false,
+                    },
+                    phoneNum: {
+                        type: Sequelize.STRING(30),
+                        allowNull: false,
+                    },
+                    userEmail: {
+                        type: Sequelize.STRING(64),
+                        allowNull: false,
+                    },
+                    userIntro: {
+                        type: Sequelize.STRING(255),
+                        allowNull: false,
+                    },
+                    provider: {
+                        type: Sequelize.ENUM("local", "kakao"),
+                        allowNull: false,
+                        defaultValue: 'local',
+                    },
+                    snsId: {
+                        type: Sequelize.STRING(64),
+                        allowNull: true,
+                    },
+                    userLevel: {
+                        type: Sequelize.INTEGER,
+                        defaultValue: 0,
                     }
                 },
                 {
@@ -62,19 +62,16 @@ module.exports = (sequelize, Sequelize) => {
                 }
             )
         }
-        static associate(models){
-            this.hasMany(models.Board,{
-                foreignKey : "userId"
+        static associate(models) {
+            this.hasMany(models.Board, {
+                foreignKey: "userId"
             })
-            this.hasMany(models.Chat,{
-                foreignKey : "userId"
+            this.hasMany(models.Chat, {
+                foreignKey: "userId"
             })
-            this.hasMany(models.User,{
-                foreignKey : "userPic"
-            })
-            this.belongsToMany(models.Board,{
+            this.belongsToMany(models.Board, {
                 through: "Liked",
-                foreignKey : "userId"
+                foreignKey: "userId"
             })
         }
     }
