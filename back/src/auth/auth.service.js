@@ -1,12 +1,12 @@
 const dotenv = require('dotenv').config({ path: "../../.env" });
 const SALT = process.env.SALT || 'test';
-const crypto = require("crypto")
+
 
 class AuthService {
     constructor({ authRepository, jwt, crypto }) {
         this.authRepository = authRepository;
         this.jwt = jwt;
-        this.crypto = crypto;
+        this.crypto = jwt.crypto;
     }
 
     async token({ userId, userPw }) {

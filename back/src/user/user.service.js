@@ -1,16 +1,15 @@
 const dotenv = require('dotenv').config({ path: "../../.env" });
 const SALT = process.env.SALT || 'test';
-const crypto = require("crypto")
+
 
 class UserService {
     constructor({ userRepository, jwt }) {
         this.userRepository = userRepository;
         this.jwt = jwt;
-        this.crypto = crypto;
+        this.crypto = jwt.crypto;
     }
 
-    async SignUp({ userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro }) {
-
+    async SignUp({ filename: userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro }) {
         try {
             if (!userId || !userPw || !userName) throw "Invalid or empty, Confirm your Information";
             const hash = this.crypto.createHmac("sha256", SALT).update(userPw).digest("hex");
