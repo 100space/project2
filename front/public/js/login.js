@@ -6,6 +6,7 @@ const request = axios.create({
 const signUpButton = document.getElementById("signUp")
 const signInButton = document.getElementById("signIn")
 const container = document.getElementById("container")
+const input = document.querySelector("#userinfo > label > input")
 
 const idCheck = document.querySelector("input[name='userId']")
 const idOverlap = document.querySelector("label>p")
@@ -44,7 +45,5 @@ idFocus.addEventListener("focus", (e) => {
 
 
 signUpButton.addEventListener("click", () => container.classList.add("right-panel-active"))
-
 signInButton.addEventListener("click", () => container.classList.remove("right-panel-active"))
-
 
