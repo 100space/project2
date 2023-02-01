@@ -25,10 +25,8 @@ class UserController {
     async getSignIn(req, res, next) {
         try {
             if (!req.headers.authorization) throw new Error("SignIn is Invalid, Please Sign in your account")
-
             const [type, token] = req.headers.authorization.split(" ")
             if (type.toLowerCase() !== "bearer") throw new Error("Error occurred Invalid Authorization. Please close the browser and then try again.")
-
             const user = await this.userService.SignIn(token)
             res.json(user)
         } catch (e) {

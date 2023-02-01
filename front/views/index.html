@@ -1,4 +1,5 @@
-{% extends 'layout/layout.html'%} {% block css %} <link rel="stylesheet" href="/css/index.css" /> {% endblock %} {% block content %}
+{% extends 'layout/layout.html'%} {% block css %}
+<link rel="stylesheet" href="/css/index.css" /> {% endblock %} {% block content %}
 <div id="communityList">
     <div id="cate_header">
         <span> 자유게시판 </span>
@@ -15,7 +16,7 @@
                         <span>subject</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic">프로필사진</div>
+                        <div class="userPic">프로필사진 <img src="/image/{{image}}"></div>
                         <div class="userid">
                             <span>userid</span>
                         </div>
