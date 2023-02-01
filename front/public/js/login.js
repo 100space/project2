@@ -56,8 +56,9 @@ form.addEventListener("submit", async (e) => {
         })
 
         if (response.status === 200) {
-            document.cookie = `token=${response.data.token};path=/`
-            console.log(document.cookie)
+
+            document.cookie = `token=${response.data.token}; path=/`
+
             location.href = "/"
         }
     } catch (e) {
