@@ -1,5 +1,5 @@
 
-/* Const Class & ID */ 
+/* Const Class & ID */
 const writer = document.getElementById('writer');
 const subject = document.getElementById('subject');
 const content = document.getElementById('content');
@@ -7,13 +7,16 @@ const submitBtn = document.getElementById('SubmitBtn');
 const cancelBtn = document.getElementById('CancelBtn');
 /* Const Class & ID */
 
-/* ToastEditor Area*/ 
+
+/* ToastEditor Area*/
 const Editor = toastui.Editor;
 const editor = new Editor({
     el: document.querySelector('#content'),
     height: '500px',
     initialEditType: 'markdown',
     previewStyle: 'vertical',
+
+
     previewHighlight :  '',
 });
 
