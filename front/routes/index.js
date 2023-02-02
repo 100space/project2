@@ -6,6 +6,7 @@ const request = axios.create({
     withCredentials: true,
 })
 const upload = require("../midlewares/upload")
+const e = require('express')
 
 router.use("/", (req, res, next) => {
     try {
@@ -17,24 +18,26 @@ router.use("/", (req, res, next) => {
             const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
             req.user = pl
         }
-
     } catch (error) {
     } finally {
         next()
     }
 })
 
-
 router.get("/", async (req, res, next) => {
     const { userId } = req.user
     const response = await request.post("/user/check", {
         userid: userId,
     })
-    const { userPic: image } = response.data
-    res.render("index.html", {
-        userId,
-        image,
-    })
+    const { data } = response
+    if (data !== null) {
+        const { userPic: image } = response.data
+        res.render("index.html", {
+            userId, image
+        })
+    } else {
+        res.render("index.html")
+    }
 })
 router.post("/user/join", upload.single("userPic"), async (req, res, next) => {
     const response = await request.post("/user/join", {
