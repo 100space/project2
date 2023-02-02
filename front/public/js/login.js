@@ -6,14 +6,12 @@ const request = axios.create({
 const signUpButton = document.getElementById("signUp")
 const signInButton = document.getElementById("signIn")
 const container = document.getElementById("container")
-const input = document.querySelector("#userinfo > label > input")
 const form = document.querySelector("#form")
 const idCheck = document.querySelector("input[name='userId']")
-const idOverlap = document.querySelector("label>p")
 const idFocus = document.querySelector("input[name='userPw']")
 const nickCheck = document.querySelector("input[name='nickName']")
 const nickFocus = document.querySelector("input[name='address']")
-console.log(nickFocus)
+
 
 const joinFrm = document.querySelector("#userinfo")
 
@@ -40,9 +38,10 @@ joinFrm.addEventListener("input", async (e) => {
 
         } else {
             let pmakeForm = valueFocus.parentNode
-            let p = pmakeForm.lastChild
+            let [p] = pmakeForm.getElementsByTagName("p")
             pmakeForm.removeChild(p)
         }
+
     } else if (check === "nickName") {
         const response = await request.post("/user/checkNick",
             {
@@ -61,37 +60,10 @@ joinFrm.addEventListener("input", async (e) => {
             pmakeForm.appendChild(p)
         } else {
             let pmakeForm = valueFocus.parentNode
-            let p = pmakeForm.lastChild
+            let [p] = pmakeForm.getElementsByTagName("p")
             pmakeForm.removeChild(p)
         }
     }
-    // else if (check === "userPw") {
-    //     valueFocus.addEventListener("input", (e) => {
-    //         if (idOverlap.innerHTML) {
-    //             valueFocus.value = ""
-    //             alert("아이디 중복값을 확인해주세요")
-    //             idCheck.focus()
-    //         }
-    //     })
-    // } else if (check === "nickName") {
-    //     console.log(checkValue)
-    //     const response = await request.post("/user/checkNick", {
-    //         nickName: checkValue
-    //     }, {
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         }
-    //     })
-    //     const { data } = response
-
-    // }
-})
-
-joinFrm.addEventListener("change", async (e) => {
-    const valueFocus = e.target
-    const check = e.target.name
-    const checkValue = e.target.value
-
 })
 
 idFocus.addEventListener("focus", (e) => {
