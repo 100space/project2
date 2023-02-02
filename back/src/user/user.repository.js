@@ -13,10 +13,21 @@ class UserRepository {
 
     async checkId({ userid }) {
         try {
-            console.log(userid)
             const user = await this.User.findOne({
                 raw: true, where: {
                     userid
+                }
+            })
+            return user
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+    async checkNick({ nickName }) {
+        try {
+            const user = await this.User.findOne({
+                raw: true, where: {
+                    nickName
                 }
             })
             return user

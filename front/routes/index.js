@@ -9,8 +9,10 @@ const upload = require("../midlewares/upload")
 
 router.use("/", (req, res, next) => {
     try {
-        const { token } = req.cookies
-        if (token === undefined) return res.render("user/login.html")
+         const { token } = req.cookies
+    if (token === undefined) {
+        req.user = { userId: "guest" }
+    } else {
         const [header, payload, signature] = token.split(".")
         const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
         req.user = pl
@@ -22,8 +24,14 @@ router.use("/", (req, res, next) => {
 
 router.get("/", (req, res, next) => {
     const { userId } = req.user
+
+    const response = await request.post("/user/check", {
+        userid: userId
+    })
+    const { userPic: image } = response.data
+
     res.render("index.html", {
-        userId,
+        userId, image
     })
 })
 router.post("/user/join", upload.single("userPic"), async (req, res, next) => {
@@ -49,21 +57,16 @@ router.get("/user/login", (req, res, next) => {
 })
 router.get("/notice", (req, res, next) => {
     const { userId } = req.user
-    res.render("board/list.html", {
-        userId,
-    })
+    res.render("board/list.html", { userId })
 })
 router.get("/community", (req, res, next) => {
     const { userId } = req.user
-    res.render("board/list.html", {
-        userId,
-    })
+    res.render("board/list.html", { userId })
 })
 router.get("/qna", (req, res, next) => {
     const { userId } = req.user
-    res.render("board/list.html", {
-        userId,
-    })
+    res.render("board/list.html", { userId })
+
 })
 
 module.exports = router

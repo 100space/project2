@@ -28,6 +28,14 @@ class UserService {
             throw new Error(e)
         }
     }
+    async CheckNick({ nickName }) {
+        try {
+            const user = await this.userRepository.checkNick({ nickName })
+            return user
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
 
     async SignIn(token) {
         try {
