@@ -39,6 +39,6 @@ const searchFunction = (e) => {
 
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)
-userInfo.addEventListener("click", userInfoClick)
-logout.addEventListener("click", logoutFunction)
-searchBtn.addEventListener("click", searchFunction)
+// userInfo.addEventListener("click", userInfoClick)
+// logout.addEventListener("click", logoutFunction)
+// searchBtn.addEventListener("click", searchFunction)

@@ -10,7 +10,7 @@ const form = document.querySelector("#form")
 const idCheck = document.querySelector("input[name='userId']")
 const idFocus = document.querySelector("input[name='userPw']")
 const nickCheck = document.querySelector("input[name='nickName']")
-const nickFocus = document.querySelector("input[name='address']")
+const nickFocus = document.querySelector("input[name='address1']")
 
 
 const joinFrm = document.querySelector("#userinfo")
@@ -53,6 +53,7 @@ joinFrm.addEventListener("input", async (e) => {
                 "Content-Type": "application/json"
 
             }
+        }
         )
         const { data } = response
 
