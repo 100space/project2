@@ -61,10 +61,6 @@ router.get("/user/login", (req, res, next) => {
     })
 })
 
-router.get("/user/checkaddress", (req, res, next) => {
-    res.render("user/checkaddress.html",)
-})
-
 router.get("/notice", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
@@ -73,6 +69,12 @@ router.get("/community", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
 })
+
+router.get("/notice/write", (req,res,next)=>{
+    const { userId } = req.user
+    res.render("board/write.html",)
+})
+
 router.get("/qna", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
