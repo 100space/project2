@@ -20,14 +20,17 @@ joinFrm.addEventListener("input", async (e) => {
     const check = e.target.name
     const checkValue = e.target.value
     if (check === "userId") {
-        const response = await request.post("/user/check",
+        const response = await request.post(
+            "/user/check",
             {
-                userid: checkValue
-            }, {
-            headers: {
-                "Content-Type": "application/json"
+                userid: checkValue,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             }
-        })
+        )
         const { data } = response
         if (data) {
             let pmakeForm = valueFocus.parentNode
@@ -35,7 +38,6 @@ joinFrm.addEventListener("input", async (e) => {
             p.innerHTML = "중복된 아이디가 존재합니다."
             p.style.display = "block"
             pmakeForm.appendChild(p)
-
         } else {
             let pmakeForm = valueFocus.parentNode
             let [p] = pmakeForm.getElementsByTagName("p")
@@ -49,9 +51,11 @@ joinFrm.addEventListener("input", async (e) => {
             }, {
             headers: {
                 "Content-Type": "application/json"
+
             }
-        })
+        )
         const { data } = response
+
         if (data) {
             let pmakeForm = valueFocus.parentNode
             let p = document.createElement("p")
