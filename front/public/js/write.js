@@ -7,6 +7,7 @@ const submitBtn = document.getElementById('SubmitBtn');
 const cancelBtn = document.getElementById('CancelBtn');
 /* Const Class & ID */
 
+
 /* ToastEditor Area*/
 const Editor = toastui.Editor;
 const editor = new Editor({
@@ -14,61 +15,63 @@ const editor = new Editor({
     height: '500px',
     initialEditType: 'markdown',
     previewStyle: 'vertical',
-    previewHighlight: '',
+
+
+    previewHighlight :  '',
 });
 
-console.log('ts', typeof editor.eventEmitter.eventTypes.addImageBlobHook)
+console.log('ts',typeof editor.eventEmitter.eventTypes.addImageBlobHook)
 
-function addDefaultImageBlobHook(eventEmitter) {
-    eventEmitter.listen("addImageBlobHook", function (blob, callback) {
+function addDefaultImageBlobHook(eventEmitter){
+    eventEmitter.listen("addImageBlobHook", function(blob, callback){
         const formData = new FormData();
         formData.append("file", blob);
         comm.post({
-            url: "../../uploads.do",
-            processData: false,
-            contentType: false,
-            headers: {
-                "Content-Type": "multipart/form-data",
+            url : "../../uploads.do",
+            processData : false,
+            contentType : false,
+            headers : {
+                "Content-Type" : "multipart/form-data",
             },
-            params: formData,
+            params : formData,
         },
-            function (data) {
-                if (data.result.status != "성공") {
-                    return false;
-                } else {
-                    const url = "../../uploads.do?seq=" + data.result.fileSeq;
-                    return callback(url)
-                }
-            })
+        function(data){
+            if(data.result.status != "성공"){
+                return false;
+            } else{
+                const url = "../../uploads.do?seq=" + data.result.fileSeq;
+                return callback(url)
+            }
+        })
     })
 }
 
-/* ToastEditor Area*/
+/* ToastEditor Area*/ 
 
-/* Tagify Area*/
+/* Tagify Area*/ 
 const input = document.querySelector('input[name=tags-outside]')
 const tagify = new Tagify(input, {
-    whitelist: ["Hynn", "Baek", "Gyeong"],
-    maxTags: 5,
-    dropdown: {
-        position: "input",
-        enabled: 0
-    }
+  whitelist: ["Hynn", "Baek", "Gyeong"],
+  maxTags : 5,
+  dropdown: {
+    position: "input",
+    enabled : 0 
+  }
 })
-/* Tagify Area*/
+/* Tagify Area*/ 
 
 /* EventHandle Area */
 
-submitBtn.addEventListener('click', (e) => {
+submitBtn.addEventListener('click', (e)=>{
     e.preventDefault();
     let tags = JSON.parse(input.value);
-    let tagValues = tags.map(function (tag) {
+    let tagValues = tags.map(function(tag) {
         return tag.value
     })
     const data = {
-        writer: writer.value,
-        subject: subject.value,
-        content: editor.getHTML(),
+        writer : writer.value,
+        subject : subject.value,
+        content : editor.getHTML(),
         tags: tagValues
     }
     console.log(data);

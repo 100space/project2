@@ -1,7 +1,14 @@
 * {
     margin: 0;
     padding: 0;
-    text-align: center;
+    /* text-align: center; */
+}
+
+#contentArea {
+    width:120rem;
+    height:100rem;
+    margin : 0 auto;
+    margin-top : 10rem;
 }
 
 #editor {
@@ -10,10 +17,41 @@
     margin: 0 auto;
 }
 
-#contents {
-    width: 50%;
-    height: 100px;
-    margin: 30px auto;
-    border: 1px solid;
-    display: none;
+#subject {
+    background: transparent;
+    display: block;
+    padding: 0px;
+    font-size: 2.55rem;
+    width: 100%;
+    resize: none;
+    line-height: 1.5;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    color: var(--background-black);
+    margin-bottom: 20px;
 }
+
+#BtnArea {
+    display:flex;
+    justify-content: space-between;
+}
+
+#hashTag > input {
+    width:120rem;
+}
+
+.SubmitBtn {
+    width: 20rem;
+    height:5rem;
+    border:none;
+    outline: none;
+}
+
+.CancelBtn{
+    width: 20rem;
+    height:5rem;
+    border:none;
+    outline: none;
+}
+

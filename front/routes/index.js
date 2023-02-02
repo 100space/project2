@@ -31,6 +31,7 @@ router.get("/", async (req, res, next) => {
     const { data } = response
     if (data !== null) {
         const { userPic: image } = response.data
+        req.query = image
         res.render("index.html", {
             userId,
             image,
@@ -61,8 +62,9 @@ router.get("/user/login", (req, res, next) => {
     })
 })
 
+
 router.get("/user/checkaddress", (req, res, next) => {
-    res.render("user/checkaddress.html",)
+    res.render("user/checkaddress.html")
 })
 
 router.get("/notice", (req, res, next) => {
@@ -79,6 +81,12 @@ router.get("/community", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
 })
+
+router.get("/notice/write", (req,res,next)=>{
+    const { userId } = req.user
+    res.render("board/write.html",)
+})
+
 router.get("/qna", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
