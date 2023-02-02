@@ -8,8 +8,6 @@ const logout = document.querySelector("#logout")
 const search = document.querySelector("#search")
 const searchBtn = document.querySelector("#searchBtn")
 
-console.log(request)
-
 const navfunction = (e) => {
     gnb.classList.toggle("off")
     arrow.classList.toggle("deg")

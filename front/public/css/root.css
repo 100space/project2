@@ -130,10 +130,6 @@ li {
     transition: all 1s;
 }
 .off2 {
-    /* margin-top: -50rem; */
-    /* width: 4rem !important; */
-    /* height: 4rem !important; */
-    /* transform: translateZ(-20rem); */
     transform: scale(0.1);
     transition: all 1s;
     opacity: 0;
@@ -153,6 +149,11 @@ li {
     background-color: var(--white);
     transition: all 0.5s;
     font-size: 2rem;
+}
+.userPicSize {
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 #searchBtn {
     background-image: url(/img/search2.png);
