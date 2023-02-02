@@ -30,7 +30,8 @@ joinFrm.addEventListener("input", async (e) => {
         })
         const { data } = response
         if (data) {
-            idOverlap.innerHTML = "중복된 아이디가 존재합니다."
+
+            valueFocus.lastC.innerHTML = "중복된 아이디가 존재합니다."
             idOverlap.style.display = "block"
         } else {
             idOverlap.innerHTML = ""
@@ -44,7 +45,18 @@ joinFrm.addEventListener("input", async (e) => {
                 idCheck.focus()
             }
         })
-    } else if (check === "nickName")
+    } else if (check === "nickName") {
+        console.log(checkValue)
+        const response = await request.post("/user/checkNick", {
+            nickName: checkValue
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const { data } = response
+
+    }
 })
 
 

@@ -21,6 +21,17 @@ class UserController {
             next(e)
         }
     }
+    async checkNick(req, res, next) {
+        try {
+            console.log(req.body)
+            const { nickName } = req.body
+            console.log(nickName)
+            const user = await this.userService.CheckNick({ nickName })
+            res.status(201).json(user)
+        } catch (e) {
+            next(e)
+        }
+    }
 
     async getSignIn(req, res, next) {
         try {
