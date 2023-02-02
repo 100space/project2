@@ -2,7 +2,6 @@
     width: 120rem;
     height: 100vh;
     margin: 0 auto;
-    background-color: var(--white);
 }
 .flex-justi-center {
     display: flex;
