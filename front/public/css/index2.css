@@ -120,7 +120,7 @@
     width: 4rem;
     height: 4rem;
     border-radius: 2rem;
-    background-color: rgb(69, 72, 246);
+    z-index: 14;
 }
 
 .cardSubject {

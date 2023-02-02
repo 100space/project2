@@ -31,6 +31,7 @@ router.get("/", async (req, res, next) => {
     const { data } = response
     if (data !== null) {
         const { userPic: image } = response.data
+        req.query = image
         res.render("index.html", {
             userId,
             image,
@@ -59,6 +60,11 @@ router.get("/user/login", (req, res, next) => {
     res.render("user/login.html", {
         userId,
     })
+})
+
+
+router.get("/user/checkaddress", (req, res, next) => {
+    res.render("user/checkaddress.html")
 })
 
 router.get("/notice", (req, res, next) => {
