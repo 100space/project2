@@ -17,20 +17,20 @@ router.use("/", (req, res, next) => {
             const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
             req.user = pl
         }
+
     } catch (error) {
     } finally {
         next()
     }
 })
 
+
 router.get("/", async (req, res, next) => {
     const { userId } = req.user
-
     const response = await request.post("/user/check", {
         userid: userId,
     })
     const { userPic: image } = response.data
-
     res.render("index.html", {
         userId,
         image,
