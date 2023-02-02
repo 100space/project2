@@ -1,18 +1,21 @@
 :root {
     --background-black: #0000007a;
-    --background-color2: #008dcfaa;
-    --background-color: #008ecf;
+    --background-color2: #0000007a;
+    --background-color: #0000007a;
     --sdf: #ff7139;
     --sdfe: #00a6d2;
     --sdfa: #006381;
-
-    --white: #f8f8f8;
+    --haze: #f8f8f803;
+    --white: #f8f8f860;
     --color: #fafafa;
 }
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+body {
+    background: url(/img/background1920.jpg);
 }
 html {
     font-size: 62.5%;
@@ -33,6 +36,7 @@ li {
     position: relative;
     width: 100%;
     height: 100%;
+    background-color: var(--haze);
 }
 #header {
     display: flex;
@@ -41,7 +45,6 @@ li {
     width: 100%;
     height: 10rem;
     z-index: 10;
-    background-color: var(--white);
 }
 #nav {
     width: 14rem;
@@ -94,7 +97,8 @@ li {
     position: absolute;
     top: 10rem;
     width: 30rem;
-    height: 100%;
+    height: fit-content;
+    padding: 3rem;
     transition: all 1s;
     margin-left: 0rem;
     background-color: var(--background-color2);
@@ -142,13 +146,15 @@ li {
 #search {
     position: absolute;
     right: 20rem;
+    top: 3rem;
     width: 20rem;
-    height: 3rem;
+    height: 5rem;
     border: none;
     border-bottom: 0.2rem solid var(--sdf);
-    background-color: var(--white);
+    background-color: #00000030;
     transition: all 0.5s;
-    font-size: 2rem;
+    font-size: 4rem;
+    color: var(--color);
 }
 .userPicSize {
     background-size: 100% 100%;
