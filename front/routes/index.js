@@ -60,6 +60,11 @@ router.get("/user/login", (req, res, next) => {
         userId,
     })
 })
+
+router.get("/user/checkaddress", (req, res, next) => {
+    res.render("user/checkaddress.html",)
+})
+
 router.get("/notice", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })

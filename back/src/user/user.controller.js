@@ -4,8 +4,8 @@ class UserController {
     }
     async postSignUp(req, res, next) {
         try {
-            const { userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel, filename } = req.body
-            const user = await this.userService.SignUp({ filename, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel })
+            const { userId, userPw, userName, nickName, address1, address2, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel, filename } = req.body
+            const user = await this.userService.SignUp({ filename, userId, userPw, userName, nickName, address1, address2, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel })
             res.status(201).json(user)
         } catch (e) {
             next(e)

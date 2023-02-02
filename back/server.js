@@ -13,6 +13,6 @@ app.use((error, req, res, next) => {
 
 app.listen(port, async () => {
     console.log("connecting to backend and Database...")
-    await sequelize.sync({ force: true })
+    await sequelize.sync({ force: false })
     console.log(`Starting Server with port Number is ${port}`)
 })

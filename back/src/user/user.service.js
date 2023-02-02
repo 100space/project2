@@ -9,11 +9,14 @@ class UserService {
         this.crypto = jwt.crypto;
     }
 
-    async SignUp({ filename: userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro }) {
+    async SignUp({ filename: userPic, userId, userPw, userName, nickName, address1, address2, gender, phoneNum, userEmail, userIntro }) {
+        console.log('456');
         try {
             if (!userId || !userPw || !userName) throw "Invalid or empty, Confirm your Information";
             const hash = this.crypto.createHmac("sha256", SALT).update(userPw).digest("hex");
+            const address = address1 + " " + address2
             const user = await this.userRepository.addUser({ userPic, userId, userPw: hash, userName, nickName, address, gender, phoneNum, userEmail, userIntro })
+            console.log('234',user)
             return user
         } catch (e) {
             throw new Error(e)
