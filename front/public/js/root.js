@@ -2,6 +2,9 @@ import request from "/js/lib/request.js"
 const nav = document.querySelector("#nav")
 const gnb = document.querySelector("#gnb")
 const arrow = document.querySelector("#nav > img")
+const userInfo = document.querySelector("#userInfo")
+const infoGnb = document.querySelector("#infoGnb")
+const logout = document.querySelector("#logout")
 
 console.log(request)
 
@@ -19,6 +22,17 @@ const gnbfunction = async (e) => {
     location.href = `http://127.0.0.1:3005${e.target.pathname}`
     console.log(response)
 }
+const userInfoClick = (e) => {
+    console.log(e.target)
+    infoGnb.classList.toggle("off2")
+}
+const logoutFunction = (e) => {
+    e.preventDefault()
+    document.cookie = "token=; expires=Thum 01 Jan 1970 00:00:01 GMT"
+    location.href = "/"
+}
 
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)
+userInfo.addEventListener("click", userInfoClick)
+logout.addEventListener("click", logoutFunction)
