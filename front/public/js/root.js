@@ -5,6 +5,8 @@ const arrow = document.querySelector("#nav > img")
 const userInfo = document.querySelector("#userInfo")
 const infoGnb = document.querySelector("#infoGnb")
 const logout = document.querySelector("#logout")
+const search = document.querySelector("#search")
+const searchBtn = document.querySelector("#searchBtn")
 
 console.log(request)
 
@@ -31,8 +33,12 @@ const logoutFunction = (e) => {
     document.cookie = "token=; expires=Thum 01 Jan 1970 00:00:01 GMT"
     location.href = "/"
 }
+const searchFunction = (e) => {
+    search.classList.toggle("off3")
+}
 
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)
 userInfo.addEventListener("click", userInfoClick)
 logout.addEventListener("click", logoutFunction)
+searchBtn.addEventListener("click", searchFunction)

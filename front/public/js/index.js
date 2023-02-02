@@ -21,10 +21,3 @@ for (let i = 0; i < cardHeader.length; i++) {
         location.href = "/community"
     })
 }
-console.dir(a)
-console.dir((contentImg[1].style.height = 100))
-// console.log(cardBox[2].clientWidth)
-for (let i = 0; i < contentImg.length; i++) {
-    contentImg[2].style.height = 100
-    contentImg[i].style.height = cardBox[i].clientWidthght * 0.2
-}

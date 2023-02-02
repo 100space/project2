@@ -6,7 +6,6 @@ const request = axios.create({
     withCredentials: true,
 })
 const upload = require("../midlewares/upload")
-const e = require('express')
 
 router.use("/", (req, res, next) => {
     try {
@@ -33,7 +32,8 @@ router.get("/", async (req, res, next) => {
     if (data !== null) {
         const { userPic: image } = response.data
         res.render("index.html", {
-            userId, image
+            userId,
+            image,
         })
     } else {
         res.render("index.html")
