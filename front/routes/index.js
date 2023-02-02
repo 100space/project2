@@ -69,6 +69,12 @@ router.get("/notice", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
 })
+
+router.get('/write', (req, res, next) => {
+    res.render("board/write.html")
+})
+
+
 router.get("/community", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
