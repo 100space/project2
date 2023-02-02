@@ -4,7 +4,7 @@ const router = require("./routes/index")
 const app = require("./app")
 const { sequelize } = require("./models")
 const { models: { User } } = sequelize
-// onst { User } = modelsc
+const { models: { Board } } = sequelize
 const JWT = require("./lib/jwt")
 const crypto = require("crypto")
 const SALT = process.env.SALT
@@ -25,6 +25,9 @@ app.use((error, req, res, next) => {
 app.listen(port, async () => {
     console.log("connecting to backend and Database...")
     await sequelize.sync({ force: true })
-    await User.create({ userId: "admin", userPw: hash, userName: "123", nickName: "12345", address: "11", gender: "11", phoneNum: "11", userEmail: "11", userIntro: "11", userPic: '1675217223079.png' })
+    for (i = 1; i <= 10; i++) {
+        await User.create({ userId: `admin${i}`, userPw: hash, userName: "123", nickName: `${i}12345`, address: "11", gender: "11", phoneNum: "11", userEmail: "11", userIntro: "11", userPic: `${i}.png` })
+        await Board.create({ subject: `test${i}`, content: "test", categoryMain: "Q&A", categorySub: "baek", userId: `admin${i}` })
+    }
     console.log(`Starting Server with port Number is ${port}`)
 })

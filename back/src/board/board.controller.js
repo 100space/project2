@@ -5,4 +5,4 @@ class boardController {
 
 }
 
-module.exports = UserController
+module.exports = boardController
