@@ -3,6 +3,7 @@ class UserRepository {
         this.User = User;
     }
     async addUser(payload) {
+        console.log('789',payload);
         try {
             const user = await this.User.create(payload, { raw: true });
             return user;
