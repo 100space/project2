@@ -16,7 +16,6 @@ class UserService {
             const hash = this.crypto.createHmac("sha256", SALT).update(userPw).digest("hex");
             const address = address1 + " " + address2
             const user = await this.userRepository.addUser({ userPic, userId, userPw: hash, userName, nickName, address, gender, phoneNum, userEmail, userIntro })
-            console.log('234',user)
             return user
         } catch (e) {
             throw new Error(e)
