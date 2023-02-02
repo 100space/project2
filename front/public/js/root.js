@@ -8,6 +8,7 @@ const logout = document.querySelector("#logout")
 const search = document.querySelector("#search")
 const searchBtn = document.querySelector("#searchBtn")
 
+
 const navfunction = (e) => {
     gnb.classList.toggle("off")
     arrow.classList.toggle("deg")
@@ -37,6 +38,6 @@ const searchFunction = (e) => {
 
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)
-userInfo.addEventListener("click", userInfoClick)
-logout.addEventListener("click", logoutFunction)
-searchBtn.addEventListener("click", searchFunction)
+// userInfo.addEventListener("click", userInfoClick)
+// logout.addEventListener("click", logoutFunction)
+// searchBtn.addEventListener("click", searchFunction)
