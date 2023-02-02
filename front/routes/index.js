@@ -9,24 +9,26 @@ const upload = require("../midlewares/upload")
 
 router.use("/", (req, res, next) => {
     try {
-         const { token } = req.cookies
-    if (token === undefined) {
-        req.user = { userId: "guest" }
-    } else {
-        const [header, payload, signature] = token.split(".")
-        const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
-        req.user = pl
-    } catch (error) {
+        const { token } = req.cookies
+        if (token === undefined) {
+            req.user = { userId: "guest" }
+        } else {
+            const [header, payload, signature] = token.split(".")
+            const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
+            req.user = pl
+        }
+    }
+    catch (error) {
     } finally {
         next()
     }
 })
 
-router.get("/", (req, res, next) => {
+router.get("/", async(req, res, next) => {
     const { userId } = req.user
 
     const response = await request.post("/user/check", {
-        userid: userId
+        userId: userId
     })
     const { userPic: image } = response.data
 
