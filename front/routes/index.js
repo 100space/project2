@@ -17,23 +17,23 @@ router.use("/", (req, res, next) => {
             const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
             req.user = pl
         }
-    }
-    catch (error) {
+
+    } catch (error) {
     } finally {
         next()
     }
 })
 
-router.get("/", async(req, res, next) => {
-    const { userId } = req.user
 
+router.get("/", async (req, res, next) => {
+    const { userId } = req.user
     const response = await request.post("/user/check", {
-        userId: userId
+        userid: userId,
     })
     const { userPic: image } = response.data
-
     res.render("index.html", {
-        userId, image
+        userId,
+        image,
     })
 })
 router.post("/user/join", upload.single("userPic"), async (req, res, next) => {
@@ -68,7 +68,6 @@ router.get("/community", (req, res, next) => {
 router.get("/qna", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
-
 })
 
 module.exports = router
