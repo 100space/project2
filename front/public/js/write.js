@@ -22,29 +22,36 @@ const editor = new Editor({
 
 console.log('ts',typeof editor.eventEmitter.eventTypes.addImageBlobHook)
 
-function addDefaultImageBlobHook(eventEmitter){
-    eventEmitter.listen("addImageBlobHook", function(blob, callback){
-        const formData = new FormData();
-        formData.append("file", blob);
-        comm.post({
-            url : "../../uploads.do",
-            processData : false,
-            contentType : false,
-            headers : {
-                "Content-Type" : "multipart/form-data",
-            },
-            params : formData,
+
+
+editor.eventEmitter.listen("addImageBlobHook", function(blob, callback){
+    const formData = new FormData();
+    console.log('123',formData)
+    // console.log('4234',addImageBlobHook)
+    console.log('123',blob)
+    console.log('4444','data')
+    console.log(formData.append(data, blob));
+    formData.append("File", blob);
+    console.log(formData.append({File}, blob));
+    console.log(Comm)
+    comm.post({
+        url : "../../uploads.do",
+        processData : false,
+        contentType : false,
+        headers : {
+            "Content-Type" : "multipart/form-data",
         },
-        function(data){
-            if(data.result.status != "성공"){
-                return false;
-            } else{
-                const url = "../../uploads.do?seq=" + data.result.fileSeq;
-                return callback(url)
-            }
-        })
+        params : formData,
+    },
+    function(data){
+        if(data.result.status != "성공"){
+            return false;
+        } else{
+            const url = "../../uploads.do?seq=" + data.result.fileSeq;
+            return callback(url)
+        }
     })
-}
+})
 
 /* ToastEditor Area*/ 
 
@@ -71,23 +78,12 @@ submitBtn.addEventListener('click', (e)=>{
     const data = {
         writer : writer.value,
         subject : subject.value,
-        content : editor.getHTML(),
+        content : editor.getMarkdown(),
         tags: tagValues
     }
     console.log(data);
 })
-// {writer: '123', subject: '123', content: '123', tags: '[{"value":"123"},{"value":"234"}]'}
-// content
-// : 
-// "123"
-// subject
-// : 
-// "123"
-// tags
-// : 
-// "[{\"value\":\"123\"},{\"value\":\"234\"}]"
-// writer
-// : 
-// "123"
+
+
 
 /* EventHandle Area */
