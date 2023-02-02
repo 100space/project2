@@ -25,7 +25,7 @@ module.exports = (sequelize, Sequelize) => {
                 foreignKey: "userId"
             })
             this.hasMany(models.Board,{
-                foreignKey : "cmdContent"
+                foreignKey : "cmdIdx"
             })
         }
     }

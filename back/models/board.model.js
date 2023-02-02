@@ -39,7 +39,7 @@ module.exports = (sequelize, Sequelize) => {
           foreignKey : "userId"
         })
         this.belongsTo(models.Comment,{
-          foreignKey : "cmdContent"
+          foreignKey : "cmdIdx"
         })
         this.hasMany(models.Comment, {
           foreignKey : "boardIdx"

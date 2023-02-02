@@ -2,7 +2,7 @@
     width: 110rem;
     height: 100vh;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: var(--white);
 }
 .flex-justi-center {
     display: flex;
@@ -16,7 +16,7 @@
 #subCategory > li {
     width: 10rem;
     height: 2.5rem;
-    background-color: #fff;
+    background-color: var(--white);
     margin: 3rem 2rem 5rem 2rem;
     border-right: solid 0.1rem #999;
     border-left: solid 0.1rem #999;
