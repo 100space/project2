@@ -20,17 +20,19 @@ joinFrm.addEventListener("input", async (e) => {
     const check = e.target.name
     const checkValue = e.target.value
     if (check === "userId") {
-        const response = await request.post("/user/check",
+        const response = await request.post(
+            "/user/check",
             {
-                userid: checkValue
-            }, {
-            headers: {
-                "Content-Type": "application/json"
+                userid: checkValue,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             }
-        })
+        )
         const { data } = response
         if (data) {
-
             valueFocus.lastC.innerHTML = "중복된 아이디가 존재합니다."
             idOverlap.style.display = "block"
         } else {
@@ -47,15 +49,18 @@ joinFrm.addEventListener("input", async (e) => {
         })
     } else if (check === "nickName") {
         console.log(checkValue)
-        const response = await request.post("/user/checkNick", {
-            nickName: checkValue
-        }, {
-            headers: {
-                "Content-Type": "application/json"
+        const response = await request.post(
+            "/user/checkNick",
+            {
+                nickName: checkValue,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             }
-        })
+        )
         const { data } = response
-
     }
 })
 
