@@ -16,20 +16,81 @@
 }
 #cate_body {
     width: 100%;
-    height: 93rem;
+    height: 126rem;
     padding: 3rem;
     box-sizing: border-box;
     background-color: var(--white);
 }
 .flexCard {
+    width: 120rem;
+    height: 120rem;
+    margin: 0 auto;
+    display: grid;
+    background: url(/img/back.avif);
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-areas:
+        "a a b b . ."
+        "a a b b e e"
+        ". j j f e e"
+        ". j j i i ."
+        "c c c i i d"
+        "c c c . . d ";
+}
+#a {
+    background-color: var(--white);
+    grid-area: a;
+}
+
+#b {
+    background-color: var(--white);
+    grid-area: b;
+}
+#c {
+    background-color: var(--white);
+    grid-area: c;
+}
+#d {
+    background-color: var(--white);
+    grid-area: d;
+}
+#e {
+    background-color: var(--white);
+    grid-area: e;
+}
+#f {
+    background-color: var(--white);
+    grid-area: f;
+}
+#g {
+    background-color: var(--white);
+    grid-area: g;
+}
+#h {
+    background-color: var(--white);
+    grid-area: h;
+}
+#i {
+    background-color: var(--white);
+    grid-area: i;
+}
+#j {
+    background-color: var(--white);
+    grid-area: j;
+}
+#c > .content_box > .cardHeader > .userid {
+    margin-right: 23rem;
+}
+#d > .content_box > .cardHeader > .userid {
+    width: fit-content;
+    margin: 0;
+}
+#d > .content_box > .cardHeader > .status {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 3rem;
+    flex-direction: column;
 }
 .contentCard {
     overflow: hidden;
-    width: 40rem;
-    height: 42rem;
     background-color: antiquewhite;
 }
 .content_box {
@@ -38,20 +99,21 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-    width: 40rem;
+    width: 100%;
     height: 77rem;
     transition: all 1s;
 }
 .clickEvent {
-    top: -37rem;
+    top: -35rem;
     transition: all 1s;
 }
 .cardBody {
     padding: 2rem;
+    width: 100%;
+    /* height: 30%; */
 }
 .cardBody > img {
     width: 100%;
-    height: 100%;
     background-color: cadetblue;
 }
 .userPic {
@@ -60,10 +122,7 @@
     border-radius: 2rem;
     background-color: rgb(69, 72, 246);
 }
-.cardBody {
-    width: 40rem;
-    height: 28rem;
-}
+
 .cardSubject {
     font-size: 2.5rem;
     margin-top: 3rem;

@@ -8,24 +8,21 @@ const request = axios.create({
 const upload = require("../midlewares/upload")
 
 router.use("/", (req, res, next) => {
-    const { token } = req.cookies
+    try {
+         const { token } = req.cookies
     if (token === undefined) {
         req.user = { userId: "guest" }
-        next()
     } else {
         const [header, payload, signature] = token.split(".")
         const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
         req.user = pl
+    } catch (error) {
+    } finally {
         next()
     }
 })
 
-router.get("/", async (req, res, next) => {
-    const { token } = req.cookies
-    if (token === undefined) return res.render("index.html")
-    const [header, payload, signature] = token.split(".")
-    const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
-    req.user = pl
+router.get("/", (req, res, next) => {
     const { userId } = req.user
 
     const response = await request.post("/user/check", {
@@ -53,7 +50,10 @@ router.post("/user/login", async (req, res, next) => {
 })
 
 router.get("/user/login", (req, res, next) => {
-    res.render("user/login.html")
+    const { userId } = req.user
+    res.render("user/login.html", {
+        userId,
+    })
 })
 router.get("/notice", (req, res, next) => {
     const { userId } = req.user
@@ -66,6 +66,7 @@ router.get("/community", (req, res, next) => {
 router.get("/qna", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
+
 })
 
 module.exports = router
