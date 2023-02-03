@@ -3,10 +3,12 @@ class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    async PostWrite({ subject, content, categoryMain, categorySub, hash }) {
+    async MakeWrite({ subject, content, categoryMain, categorySub, hash, userId }) {
         try {
-            const [hash1, hash2, hash3, hash4, hash5] = hash
-            const result = await this.boardRepository.createBoard({ subject, content, categoryMain, categorySub, hash1, hash2, hash3, hash4, hash5 })
+
+            const array = hash.split(",")
+
+            const result = await this.boardRepository.createBoard({ subject, content, categoryMain, categorySub, hash: array, userId })
             return result
         } catch (e) {
             throw new Error(e)

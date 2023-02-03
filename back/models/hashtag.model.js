@@ -1,30 +1,30 @@
-module.exports = (sequelize, Sequelize) =>{
-    class Hashtag extends Sequelize.Model{
+module.exports = (sequelize, Sequelize) => {
+    class Hashtag extends Sequelize.Model {
         static initialize() {
             return this.init({
-                tag : {
-                    type : Sequelize.STRING(30),
-                    // primaryKey : true,
-                    allowNull : true,
+                hashTagIdx: {
+                    type: Sequelize.INTEGER,
+                    primaryKey: true,
+                    autoIncrement: true,
                 },
-                hashTagIdx : {
-                    type : Sequelize.INTEGER,
-                    primaryKey : true,
-                    autoIncrement : true,
-                }
+                tag: {
+                    type: Sequelize.STRING(30),
+                    // primaryKey : true,
+                    allowNull: true,
+                },
             },
-            {
-                sequelize,
-            })
+                {
+                    sequelize,
+                })
         }
-        static associate(models){
+        static associate(models) {
+            // this.belongsToMany(models.Board, {
+            //     through: "Hash",
+            //     foreignKey: "tag",
+            // })
             this.belongsToMany(models.Board, {
-                through :"Hash",
-                foreignKey : "tag",
-            })
-            this.belongsToMany(models.Board, {
-                through : "Hash",
-                foreignKey : "hashTagIdx"
+                through: "Hash",
+                foreignKey: "hashTagIdx"
             })
         }
     }

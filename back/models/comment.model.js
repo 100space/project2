@@ -18,15 +18,15 @@ module.exports = (sequelize, Sequelize) => {
 
         }
         static associate(models) {
-            this.belongsTo(models.Board, {
-                foreignKey: "boardIdx",
-            })
+            // this.belongsTo(models.Board, {
+            //     foreignKey: "boardIdx",
+            // })
             this.belongsTo(models.User, {
                 foreignKey: "userId"
             })
-            this.hasMany(models.Board,{
-                foreignKey : "cmdIdx"
-            })
+            // this.hasMany(models.Board,{
+            //     foreignKey : "cmdIdx"
+            // })
         }
     }
     Comment.initialize()
