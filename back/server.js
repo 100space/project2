@@ -43,5 +43,17 @@ app.listen(port, async () => {
         })
         await Board.create({ subject: `test${i}`, content: "test", categoryMain: "Q&A", categorySub: "baek", userId: `admin${i}` })
     }
+    await User.create({
+        userId: `guest`,
+        userPw: hash,
+        userName: "123",
+        nickName: `guest`,
+        address: "11",
+        gender: "11",
+        phoneNum: "11",
+        userEmail: "11",
+        userIntro: "11",
+        userPic: `1.png`,
+    })
     console.log(`Starting Server with port Number is ${port}`)
 })

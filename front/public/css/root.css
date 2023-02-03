@@ -7,7 +7,8 @@
     --sdfa: #006381;
     --haze: #f8f8f803;
     --white: #f8f8f860;
-    --white2: #f8f8f830;
+    --whitehover: antiquewhite;
+    --white2: #rgba(21, 21, 21, 0.49);
     --color: #fafafa;
 }
 .font-color {
@@ -118,23 +119,23 @@ li {
     flex-direction: column;
     align-items: center;
 }
-#gnb > li,
 #infoGnb > li {
     margin-top: 3rem;
 }
 #gnb > li > a,
 #infoGnb > li > a {
     color: var(--color);
-    font-size: 3rem;
+    font-size: 2.4rem;
 }
 #infoGnb {
     position: absolute;
     right: 5rem;
-    width: 30rem;
+    width: fit-content;
     height: fit-content;
     transition: all 1s;
     background-color: var(--background-black);
     z-index: 10;
+    padding: 3rem;
 }
 
 #wrap > .off {
@@ -200,12 +201,12 @@ li {
     width: 67%;
     border-bottom: 0.1rem var(--white2) solid;
 }
-.font-color > span:nth-child(1),
+.hotUser-subject > div > span,
 .gnb-h3 > a:nth-child(1) {
     text-align: right;
     font-size: 1.8rem;
 }
-.font-color > span:nth-child(2),
+.hotUser-subject > div > div > span,
 .gnb-h3 > a:nth-child(2) {
     text-align: right;
     font-size: 1.6rem;
@@ -229,6 +230,11 @@ li {
     margin: 0.5rem;
     justify-content: space-between;
 }
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .best-user-pic {
     width: 6rem;
     height: 6rem;
@@ -243,10 +249,4 @@ li {
     justify-content: center;
     align-items: end;
     border-bottom: 0.1rem var(--white2) solid;
-}
-@font-face {
-    font-family: "NanumSquareRound";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
 }

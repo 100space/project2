@@ -25,6 +25,7 @@
     margin: 0 auto;
     display: grid;
     background-color: #f8f8f800;
+    gap: 1rem;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(6, 1fr);
     grid-template-areas:
@@ -91,6 +92,10 @@
     overflow: hidden;
     background-color: antiquewhite;
 }
+.contentCard:hover {
+    background-color: var(--whitehover) !important;
+}
+
 .content_box {
     position: relative;
     top: 0rem;
@@ -102,9 +107,10 @@
     transition: all 1s;
 }
 .clickEvent {
-    top: -35rem;
+    top: -34rem;
     transition: all 1s;
 }
+
 .cardBody {
     padding: 2rem;
     width: 100%;
@@ -136,7 +142,7 @@
     width: 100%;
     height: 5rem;
     padding: 0 2rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
     background-color: var(--background-color);
 }
 .userid {
