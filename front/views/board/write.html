@@ -1,34 +1,24 @@
 
 {% extends 'layout/layout.html'%} {% block css %}
-
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
 <link rel="stylesheet" href="/css/write.css" />
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
-
-<!-- 토스트 UI 에디터, 자바스크립트 코어 -->
-<script src="https://uicdn.toast.com/editor/2.5.2/toastui-editor-all.min.js" defer></script>
-
-<!-- 코드 미러 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/codemirror.min.css" />
-<!-- 토스트 UI 에디터, CSS 코어 -->
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/2.5.2/toastui-editor.min.css" />
-
-<!-- 토스트 UI 에디터, 신택스 하이라이트 플러그인 추가 -->
-<script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/1.0.0/toastui-editor-plugin-code-syntax-highlight.min.js" defer></script>
-
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+<!-- <script src="path/to/Base64UploaderPlugin.js"></script> -->
 {% endblock %}
 <br />
 {% extends 'layout/layout.html'%} {% block content %}
 <div id="contentArea">
     <form action="">
         <div><input type="text" name="writer" id="writer" value="123" readonly hidden></div>
-        <div><input type="text" name="subject" id="subject" placeholder="제목을 입력하세요"></div>
-        <div id="content"></div>
+        <div id="subjectBack"><input type="text" name="subject" id="subject" placeholder="제목을 입력하세요"></div>
+        <div id="container">
+            <div id="editor"></div>
+        </div>
         <div id="hashTag">
             <input name='tags-outside' class='tagify--outside' placeholder='해시태그를 입력해주세요. 입력가능한 최대 태그수는 5개입니다.'>
         </div>
@@ -38,7 +28,5 @@
         </div>
     </form>
 </div>
-
 <script src="/js/write.js" type="text/javascript"></script>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 {% endblock %}

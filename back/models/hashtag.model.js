@@ -4,8 +4,13 @@ module.exports = (sequelize, Sequelize) =>{
             return this.init({
                 tag : {
                     type : Sequelize.STRING(30),
-                    primaryKey : true,
+                    // primaryKey : true,
                     allowNull : true,
+                },
+                hashTagIdx : {
+                    type : Sequelize.INTEGER,
+                    primaryKey : true,
+                    autoIncrement : true,
                 }
             },
             {
@@ -16,6 +21,10 @@ module.exports = (sequelize, Sequelize) =>{
             this.belongsToMany(models.Board, {
                 through :"Hash",
                 foreignKey : "tag",
+            })
+            this.belongsToMany(models.Board, {
+                through : "Hash",
+                foreignKey : "hashTagIdx"
             })
         }
     }
