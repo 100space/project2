@@ -3,7 +3,7 @@ const files = {
         files: 123
     }],
     upload2: [{
-        originalname: asdasd,
+        originalname: "asdasd",
         files: 123
     }]
 }

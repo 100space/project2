@@ -3,12 +3,9 @@ const port = process.env.PORT || "3000"
 const router = require("./routes/index")
 const app = require("./app")
 const { sequelize } = require("./models")
-const {
-    models: { User },
-} = sequelize
-const {
-    models: { Board },
-} = sequelize
+const { models: { User, Board, Comment, Hashtag, Point, Liked, Hash, Counterimg } } = sequelize
+
+
 const JWT = require("./lib/jwt")
 const crypto = require("crypto")
 const SALT = process.env.SALT
@@ -56,4 +53,5 @@ app.listen(port, async () => {
         userPic: `1.png`,
     })
     console.log(`Starting Server with port Number is ${port}`)
+
 })

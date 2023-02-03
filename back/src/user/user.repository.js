@@ -1,9 +1,12 @@
 class UserRepository {
-    constructor({ User }) {
-        this.User = User
+    constructor({ User, sequelize }) {
+        this.User = User;
+        this.sequelize = sequelize
     }
     async addUser(payload) {
-        console.log(789, payload)
+        console.log('789', payload);
+        console.log(this.User.QueryTypes)
+
         try {
             const user = await this.User.create(payload, { raw: true })
             return user
