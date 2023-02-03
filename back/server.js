@@ -3,8 +3,8 @@ const port = process.env.PORT || "3000"
 const router = require("./routes/index")
 const app = require("./app")
 const { sequelize } = require("./models")
-const { models: { User } } = sequelize
-const { models: { Board } } = sequelize
+const { models: { User, Board, Comment, Hashtag, Point, Liked, Hash, Counterimg } } = sequelize
+
 const JWT = require("./lib/jwt")
 const crypto = require("crypto")
 const SALT = process.env.SALT
@@ -29,5 +29,5 @@ app.listen(port, async () => {
         await User.create({ userId: `admin${i}`, userPw: hash, userName: "123", nickName: `${i}12345`, address: "11", gender: "11", phoneNum: "11", userEmail: "11", userIntro: "11", userPic: `${i}.png` })
         await Board.create({ subject: `test${i}`, content: "test", categoryMain: "Q&A", categorySub: "baek", userId: `admin${i}` })
     }
-    console.log(`Starting Server with port Number is ${port}`)
+
 })
