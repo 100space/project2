@@ -1,19 +1,18 @@
-const dotenv = require('dotenv').config({ path: "../../.env" });
-const SALT = process.env.SALT || 'test';
-
+const dotenv = require("dotenv").config({ path: "../../.env" })
+const SALT = process.env.SALT || "test"
 
 class UserService {
     constructor({ userRepository, jwt }) {
-        this.userRepository = userRepository;
-        this.jwt = jwt;
-        this.crypto = jwt.crypto;
+        this.userRepository = userRepository
+        this.jwt = jwt
+        this.crypto = jwt.crypto
     }
 
     async SignUp({ filename: userPic, userId, userPw, userName, nickName, address1, address2, gender, phoneNum, userEmail, userIntro }) {
-        console.log('456');
+        console.log("456")
         try {
-            if (!userId || !userPw || !userName) throw "Invalid or empty, Confirm your Information";
-            const hash = this.crypto.createHmac("sha256", SALT).update(userPw).digest("hex");
+            if (!userId || !userPw || !userName) throw "Invalid or empty, Confirm your Information"
+            const hash = this.crypto.createHmac("sha256", SALT).update(userPw).digest("hex")
             const address = address1 + " " + address2
             const user = await this.userRepository.addUser({ userPic, userId, userPw: hash, userName, nickName, address, gender, phoneNum, userEmail, userIntro })
             return user
@@ -22,9 +21,9 @@ class UserService {
         }
     }
 
-    async CheckId({ userid }) {
+    async CheckId({ userId }) {
         try {
-            const user = await this.userRepository.checkId({ userid })
+            const user = await this.userRepository.checkId({ userId })
             return user
         } catch (e) {
             throw new Error(e)
@@ -41,10 +40,10 @@ class UserService {
 
     async SignIn(token) {
         try {
-            const { userId } = this.jwt.verify(token, SALT);
-            const user = await this.userRepository.getInfo(userId);
+            const { userId } = this.jwt.verify(token, SALT)
+            const user = await this.userRepository.getInfo(userId)
             console.log(user)
-            return user;
+            return user
         } catch (e) {
             throw new Error(e)
         }
@@ -52,12 +51,12 @@ class UserService {
 
     async SignUpdate(userId, payload) {
         try {
-            const updateUser = await this.userRepository.updateInfo(userId, payload);
-            return updateUser;
+            const updateUser = await this.userRepository.updateInfo(userId, payload)
+            return updateUser
         } catch (e) {
             throw new Error(e)
         }
     }
 }
 
-module.exports = UserService;
+module.exports = UserService

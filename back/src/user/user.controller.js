@@ -14,8 +14,9 @@ class UserController {
 
     async checkUserid(req, res, next) {
         try {
-            const { userid } = req.body
-            const user = await this.userService.CheckId({ userid })
+            console.log(req.body)
+            const { userId } = req.body
+            const user = await this.userService.CheckId({ userId })
             res.status(201).json(user)
         } catch (e) {
             next(e)

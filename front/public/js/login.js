@@ -11,7 +11,7 @@ const idCheck = document.querySelector("input[name='userId']")
 const idFocus = document.querySelector("input[name='userPw']")
 const nickCheck = document.querySelector("input[name='nickName']")
 const nickFocus = document.querySelector("input[name='address1']")
-
+const address = document.querySelector("wrap_tf_keyword > input")
 
 const joinFrm = document.querySelector("#userinfo")
 
@@ -43,17 +43,17 @@ joinFrm.addEventListener("input", async (e) => {
             let [p] = pmakeForm.getElementsByTagName("p")
             pmakeForm.removeChild(p)
         }
-
     } else if (check === "nickName") {
-        const response = await request.post("/user/checkNick",
+        const response = await request.post(
+            "/user/checkNick",
             {
-                nickName: checkValue
-            }, {
-            headers: {
-                "Content-Type": "application/json"
-
+                nickName: checkValue,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
             }
-        }
         )
         const { data } = response
 
@@ -87,8 +87,10 @@ nickFocus.addEventListener("focus", (e) => {
     if (overValue === checkVal) {
         nickCheck.focus()
     }
+    address.addEventListener("click", (e) => {
+        e.target.focus()
+    })
 })
-
 
 form.addEventListener("submit", async (e) => {
     try {
@@ -107,7 +109,6 @@ form.addEventListener("submit", async (e) => {
         alert("아이디와 패스워드가 다름")
     }
 })
-
 
 signUpButton.addEventListener("click", () => container.classList.add("right-panel-active"))
 signInButton.addEventListener("click", () => container.classList.remove("right-panel-active"))

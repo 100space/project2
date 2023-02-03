@@ -7,7 +7,12 @@
     --sdfa: #006381;
     --haze: #f8f8f803;
     --white: #f8f8f860;
+    --whitehover: antiquewhite;
+    --white2: #rgba(21, 21, 21, 0.49);
     --color: #fafafa;
+}
+.font-color {
+    color: var(--color);
 }
 * {
     margin: 0;
@@ -45,6 +50,7 @@ li {
     width: 100%;
     height: 10rem;
     z-index: 10;
+    background-color: var(--white2);
 }
 #nav {
     width: 14rem;
@@ -82,6 +88,10 @@ li {
     margin-right: 3rem;
     width: 14rem;
 }
+#line {
+    width: 19rem;
+    border-top: 0.1rem solid var(--white);
+}
 .circle9 {
     width: 6rem;
     height: 6rem;
@@ -109,23 +119,23 @@ li {
     flex-direction: column;
     align-items: center;
 }
-#gnb > li,
 #infoGnb > li {
     margin-top: 3rem;
 }
 #gnb > li > a,
 #infoGnb > li > a {
     color: var(--color);
-    font-size: 3rem;
+    font-size: 2.4rem;
 }
 #infoGnb {
     position: absolute;
     right: 5rem;
-    width: 30rem;
-    height: 30rem;
+    width: fit-content;
+    height: fit-content;
     transition: all 1s;
     background-color: var(--background-black);
     z-index: 10;
+    padding: 3rem;
 }
 
 #wrap > .off {
@@ -178,10 +188,65 @@ li {
     transform: rotate(0);
     transition: all 1s;
 }
-
-@font-face {
-    font-family: "NanumSquareRound";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
+.gnb-h2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+.gnb-h3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 67%;
+    border-bottom: 0.1rem var(--white2) solid;
+}
+.hotUser-subject > div > span,
+.gnb-h3 > a:nth-child(1) {
+    text-align: right;
+    font-size: 1.8rem;
+}
+.hotUser-subject > div > div > span,
+.gnb-h3 > a:nth-child(2) {
+    text-align: right;
+    font-size: 1.6rem;
+}
+.hotPost {
+    margin: 5rem 0.5rem 0.5rem 0.5rem;
+}
+.font-h2 {
+    font-size: 2.4rem;
+}
+.hotPost-pic {
+    background-color: #000000ae;
+    width: 7.5rem;
+    height: 6rem;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+.flex {
+    display: flex;
+    width: 100%;
+    margin: 0.5rem;
+    justify-content: space-between;
+}
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.best-user-pic {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 3rem;
+    margin-left: 1.5rem;
+    background-color: var(--white);
+}
+.hotUser-subject {
+    width: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    border-bottom: 0.1rem var(--white2) solid;
 }
