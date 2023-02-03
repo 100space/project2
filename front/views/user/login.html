@@ -38,13 +38,13 @@
                     <p></p>
                 </label>
                 <label>
-                    <input type="address1" placeholder="주소를 검색해주세요" name="address1" id="eventAddress" onclick="sample2_execDaumPostcode()" readonly/>
+                    <input type="address1" placeholder="주소를 검색해주세요" name="address1" id="eventAddress" onclick="CheckAddress()" readonly/>
                 </label>
                 <label>
                     <input type="address2" placeholder="상세주소를 입력해주세요" id="inputAddress"name="address2" />
                 </label>
                 <label>
-                    <input type="text" placeholder="성별을 선택해주세요" name="gender" />
+                    <input type="list" placeholder="성별을 선택해주세요" name="gender" list="depList" autocomplete="off"/>
                 </label>
                 <label>
                     <input type="text" placeholder="010-0000-0000" name="phoneNum" />
@@ -100,6 +100,12 @@
         <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
         </div>
 </div>
+
+<datalist id="depList">
+    <option value="남자">남자</option>
+    <option value="여자">여자</option>
+</datalist>
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/addresscheck.js" type="text/javascript"></script>
 <script src="/js/login.js" type="text/javascript"></script>

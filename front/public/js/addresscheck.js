@@ -6,7 +6,7 @@ const element_access = document.getElementById('eventAddress');
         element_access.readOnly = true;
     }
 
-    function sample2_execDaumPostcode() {
+    function CheckAddress() {
         new daum.Postcode({
             oncomplete: function(data) {
                 var addr = ''; 

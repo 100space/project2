@@ -7,6 +7,7 @@
         <title>Document</title>
         <link rel="stylesheet" type="text/css" href="/css/root.css" />
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link href="/css/font.css" type="css/text" rel="stylesheet" />
         {% block css %} {% endblock %}
     </head>
 
@@ -41,18 +42,112 @@
                 </div>
             </div>
             <ul id="gnb" class="off gnb_flex">
+                <div id="hotBoard" class="gnb-h2">
+                    <div class="hotPost">
+                        <span class="font-color font-h2">인기 게시글</span>
+                    </div>
+                    <!-- board card 1pcs -->
+                    <div class="hotPost-list">
+                        <ul class="flex">
+                            <li class="hotPost-pic userPicSize" style="background-image: url('/img/liked.png')"></li>
+                            <li class="hotPost-subject gnb-h3">
+                                <a href="#" class="font-color">내가 찍은 사진</a>
+                                <a href="#" class="font-color">userid</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- board card 1pcs end -->
+                    <!-- board card 1pcs -->
+                    <div class="hotPost-list">
+                        <ul class="flex">
+                            <li class="hotPost-pic userPicSize" style="background-image: url('/img/liked.png')"></li>
+                            <li class="gnb-h3">
+                                <a href="#" class="font-color">내가 찍은 사진</a>
+                                <a href="#" class="font-color">userid</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- board card 1pcs end -->
+                    <!-- board card 1pcs -->
+                    <div class="hotPost-list">
+                        <ul class="flex">
+                            <li class="hotPost-pic userPicSize" style="background-image: url('/img/liked.png')"></li>
+                            <li class="gnb-h3">
+                                <a href="#" class="font-color">내가 찍은 사진</a>
+                                <a href="#" class="font-color">userid</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- board card 1pcs end -->
+                </div>
+                <div class="gnb-h2">
+                    <div class="hotPost">
+                        <span class="font-color font-h2">인기 멤버</span>
+                    </div>
+                    <!-- user card 1pcs -->
+                    <div class="flex">
+                        <div class="best-user-pic userPicSize">프로필사진</div>
+                        <div class="hotUser-subject">
+                            <div class="font-color">
+                                <span>userid</span>
+                            </div>
+                            <div class="">
+                                <div class="font-color">
+                                    <span>포스팅 수</span>
+                                    <span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- user card 1pcs end -->
+                    <!-- user card 1pcs -->
+                    <div class="flex">
+                        <div class="best-user-pic userPicSize">프로필사진</div>
+                        <div class="hotUser-subject">
+                            <div class="font-color">
+                                <span>userid</span>
+                            </div>
+                            <div class="">
+                                <div class="font-color">
+                                    <span>포스팅 수</span>
+                                    <span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- user card 1pcs end -->
+                    <!-- user card 1pcs -->
+                    <div class="flex">
+                        <div class="best-user-pic userPicSize">프로필사진</div>
+                        <div class="hotUser-subject">
+                            <div class="font-color">
+                                <span>userid</span>
+                            </div>
+                            <div class="">
+                                <div class="font-color">
+                                    <span>포스팅 수</span>
+                                    <span>10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- user card 1pcs end -->
+                </div>
+            </ul>
+
+            {% if userId and userId !== "guest" %}
+            <ul id="infoGnb" class="off2 gnb_flex">
                 <li><a href="/">메인페이지</a></li>
                 <li><a href="/notice">공지사항</a></li>
                 <li><a href="/community">자유게시판</a></li>
                 <li><a href="/chat">전체채팅방</a></li>
                 <li><a href="/qna">Q&A</a></li>
-            </ul>
-
-            {% if userId and userId !== "guest" %}
-            <ul id="infoGnb" class="off2 gnb_flex">
+                <li id="line"></li>
+                <li></li>
                 <li><a href="/user">마이페이지</a></li>
                 <li><a href="/user/myview">내가 쓴 글</a></li>
                 <li><a href="/" id="logout">로그아웃</a></li>
+                <li></li>
             </ul>
             {% else %}
             <ul id="infoGnb" class="off2 gnb_flex">

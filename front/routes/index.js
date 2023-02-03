@@ -26,7 +26,7 @@ router.use("/", (req, res, next) => {
 router.get("/", async (req, res, next) => {
     const { userId } = req.user
     const response = await request.post("/user/check", {
-        userid: userId,
+        userId: userId,
     })
     const { data } = response
     if (data !== null) {
@@ -62,7 +62,6 @@ router.get("/user/login", (req, res, next) => {
     })
 })
 
-
 router.get("/user/checkaddress", (req, res, next) => {
     res.render("user/checkaddress.html")
 })
@@ -72,19 +71,18 @@ router.get("/notice", (req, res, next) => {
     res.render("board/list.html", { userId })
 })
 
-router.get('/write', (req, res, next) => {
+router.get("/write", (req, res, next) => {
     res.render("board/write.html")
 })
-
 
 router.get("/community", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
 })
 
-router.get("/notice/write", (req,res,next)=>{
+router.get("/notice/write", (req, res, next) => {
     const { userId } = req.user
-    res.render("board/write.html",)
+    res.render("board/write.html")
 })
 
 router.get("/qna", (req, res, next) => {
@@ -92,4 +90,14 @@ router.get("/qna", (req, res, next) => {
     res.render("board/list.html", { userId })
 })
 
+router.get("/user/welcome/:id", async (req, res, next) => {
+    const { id } = req.params
+    const response = await request.post("/user/check", {
+        userId: id,
+    })
+    const { data } = response
+    // const { userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro } = response
+    // res.render("user/welcome.html", userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro)
+    res.render("user/welcome.html", { ...data })
+})
 module.exports = router
