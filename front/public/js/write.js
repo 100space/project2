@@ -14,6 +14,9 @@ const tagify = new Tagify(input, {
 })
 
 
+//수정할때 Editor 가져오기 = getData()
+//데이터 설정하기 = setData()
+
 CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
     insertImage:{
         uploadURL : false,

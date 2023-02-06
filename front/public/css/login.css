@@ -250,6 +250,10 @@ button :focus {
     transform: translateY(20%);
 }
 
+#iFrameContainer {
+    display: none;
+}
+
 
 /* 장경호 css */
 label>p {

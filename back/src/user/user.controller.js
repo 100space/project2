@@ -51,6 +51,7 @@ class UserController {
     async putUpdateUser(req, res, next) {
         console.log(req.params, "userController")
         console.log(req.body, "userController123123")
+        console.log(response, "1231451")
         try {
             const { userId } = req.params
             const { userPic, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel } = req.body
