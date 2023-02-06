@@ -9,7 +9,6 @@ class UserService {
     }
 
     async SignUp({ filename: userPic, userId, userPw, userName, nickName, address1, address2, gender, phoneNum, userEmail, userIntro }) {
-        console.log("456")
         try {
             if (!userId || !userPw || !userName) throw "Invalid or empty, Confirm your Information"
             const hash = this.crypto.createHmac("sha256", SALT).update(userPw).digest("hex")
@@ -42,16 +41,16 @@ class UserService {
         try {
             const { userId } = this.jwt.verify(token, SALT)
             const user = await this.userRepository.getInfo(userId)
-            console.log(user)
             return user
         } catch (e) {
             throw new Error(e)
         }
     }
 
-    async SignUpdate(userId, payload) {
+    async SignUpdate(payload) {
+        console.log(payload)
         try {
-            const updateUser = await this.userRepository.updateInfo(userId, payload)
+            const updateUser = await this.userRepository.updateInfo(payload)
             return updateUser
         } catch (e) {
             throw new Error(e)

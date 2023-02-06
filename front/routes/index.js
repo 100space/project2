@@ -6,6 +6,7 @@ const request = axios.create({
     withCredentials: true,
 })
 const upload = require("../midlewares/upload")
+const { response } = require("../../back/app")
 
 router.use("/", (req, res, next) => {
     try {
@@ -22,19 +23,23 @@ router.use("/", (req, res, next) => {
         next()
     }
 })
-
-router.get("/", async (req, res, next) => {
+router.use(async (req, res, next) => {
     const { userId } = req.user
     const response = await request.post("/user/check", {
         userId: userId,
     })
-    const { data } = response
+    req.body = response
+    next()
+})
+
+router.get("/", async (req, res, next) => {
+    data = req.body.data
     if (data !== null) {
-        const { userPic: image } = response.data
-        req.query = image
+        const { userPic, userId } = data
+        req.query = userPic
         res.render("index.html", {
             userId,
-            image,
+            userPic,
         })
     } else {
         res.render("index.html")
@@ -67,8 +72,9 @@ router.get("/user/checkaddress", (req, res, next) => {
 })
 
 router.get("/notice", (req, res, next) => {
-    const { userId } = req.user
-    res.render("board/list.html", { userId })
+    data = req.body.data
+    const { userId, userPic } = data
+    res.render("board/list.html", { userId, userPic })
 })
 
 router.get("/write", (req, res, next) => {
@@ -99,5 +105,41 @@ router.get("/user/welcome/:id", async (req, res, next) => {
     // const { userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro } = response
     // res.render("user/welcome.html", userPic, userId, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro)
     res.render("user/welcome.html", { ...data })
+})
+router.get("/profile/:id", async (req, res, next) => {
+    const { id } = req.params
+    const response = await request.post("/user/check", {
+        userId: id,
+    })
+    const { data } = response
+    res.render("user/mypage.html", {
+        ...data,
+        // userPic: image,
+    })
+})
+router.post("/profile/modify/:id", async (req, res, next) => {
+    const { id } = req.params
+    // console.log(req.body, "F.index")
+    const response = await request.put(`/profile/modify/${id}`, {
+        userId: id,
+    })
+    console.log(response)
+    const { data } = response
+    res.render("user/mypage.html", {
+        id,
+        ...data,
+        // userPic: image,
+    })
+})
+router.get("/profile/modify/:id", async (req, res, next) => {
+    const { id } = req.params
+    const response = await request.post("/user/check", {
+        userId: id,
+    })
+    const { data } = response
+    res.render("user/mypage.modify.html", {
+        ...data,
+        // userPic: image,
+    })
 })
 module.exports = router
