@@ -3,7 +3,7 @@ class BoardRepository {
         this.User = sequelize.models.User;
         this.Board = sequelize.models.Board;
         this.comment = sequelize.models.comment;
-        this.liked = sequelize.models.liked;
+        this.liked = sequelize.models.Liked;
         this.hash = sequelize.models.Hash;
         this.hashtag = sequelize.models.Hashtag;
         this.category = sequelize.models.category
@@ -47,6 +47,26 @@ class BoardRepository {
 
     async insertLike(payload) {
         try {
+            const { userId, boardIdx } = payload
+            const likeResult = await this.liked.findOrCreate({
+                where: { userId, boardIdx },
+                defaults: {
+                    userId,
+                    boardIdx
+                },
+            })
+            const likeresult = likeResult[0].dataValues
+            if (likeresult) {
+                const likeCount = await this.liked.findAll({
+                    where: {
+                        boardIdx
+                    },
+                    raw: true
+                })
+                console.log(likeCount.length)
+                // const boardLike = await this.Board.update({ liked: liked++ }, { where: { boardIdx } })
+                // console.log(boardLike)
+            }
 
         } catch (e) {
             throw new Error(`Error while insert status: ${e.message}`)

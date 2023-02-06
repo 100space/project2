@@ -27,6 +27,10 @@ module.exports = (sequelize, Sequelize) => {
           categorySub: {
             type: Sequelize.STRING(64),
             allowNull: false,
+          },
+          liked: {
+            type: Sequelize.INTEGER,
+            defaultValue: 0
           }
         },
         {
