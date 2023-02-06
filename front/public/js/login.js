@@ -101,8 +101,10 @@ form.addEventListener("submit", async (e) => {
             userPw: userPw.value,
         })
 
+
         if (response.status === 200) {
             document.cookie = `token=${response.data.token}; path=/`
+            document.cookie = `userId=${response.data.userId}; path=/`
             location.href = "/"
         }
     } catch (e) {
