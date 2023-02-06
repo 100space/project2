@@ -14,7 +14,8 @@ const jwt = new JWT({ crypto })
 
 const userPw = "11"
 const hash = jwt.crypto.createHmac("sha256", SALT).update(userPw).digest("hex")
-console.log(hash)
+
+
 app.use(router)
 
 app.use((error, req, res, next) => {

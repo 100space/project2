@@ -5,10 +5,16 @@ class BoardService {
 
     async MakeWrite({ subject, content, categoryMain, categorySub, hash, userId }) {
         try {
-
             const array = hash.split(",")
-
             const result = await this.boardRepository.createBoard({ subject, content, categoryMain, categorySub, hash: array, userId })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+    async InsertLike({ userId, boardIdx }) {
+        try {
+            const result = await this.boardRepository.insertLike({ userId, boardIdx })
             return result
         } catch (e) {
             throw new Error(e)

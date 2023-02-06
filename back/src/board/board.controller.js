@@ -11,6 +11,17 @@ class BoardController {
             next(e)
         }
     }
+
+    async infoLike(req, res, next) {
+        try {
+            const { userId } = req.cookies
+            const { boardIdx } = req.params
+            const result = await this.boardService.InsertLike({ userId, boardIdx })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = BoardController

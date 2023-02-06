@@ -13,7 +13,6 @@ class BoardRepository {
     // 등록할떄 토큰값 필요함 
     async createBoard(payload) {
         try {
-            console.log(this.hashtag)
             const { subject, content, categoryMain, categorySub, hash, userId } = payload
 
             const hashValue = hash.reduce((acc, value, index) => {
@@ -21,25 +20,11 @@ class BoardRepository {
                 return acc
             }, {})
 
-
-            // const result = await this.Board.create(subject, content, categoryMain, categorySub)
             const newBoard = await this.Board.create({ subject, content, categoryMain, categorySub, userId })
 
-            // const newCategory = await this.category.create({ categoryMain, categorySub })
-            // console.log(newCategory)
             if (hashValue) {
                 const boardContent = await this.Board.findOne({ subject, raw: true })
-
-
                 const { boardIdx } = boardContent
-                // const newHash = await this.hash.findOrCreate({
-                //     where: { boardIdx },
-                //     defaults: {
-                //         boardIdx,
-                //         hashtagIdx: boardIdx
-                //     }
-                // })
-                console.log(hash)
                 for (let i = 0; i < Object.keys(hashValue).length; i++) {
                     const result = hash[i]
                     const newHashTag = await this.hashtag.create({ hashtagIdx: boardIdx, tag: result })
@@ -59,6 +44,15 @@ class BoardRepository {
             throw new Error(`Error while creating board: ${error.message}`);
         }
     }
+
+    async insertLike(payload) {
+        try {
+
+        } catch (e) {
+            throw new Error(`Error while insert status: ${e.message}`)
+        }
+    }
+
 }
 
 
