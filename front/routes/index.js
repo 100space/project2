@@ -81,10 +81,20 @@ router.get("/write", (req, res, next) => {
     res.render("board/write.html")
 })
 
-
 router.get("/community", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
+})
+
+router.get("/community/view/like/:boardIdx", async (req, res, next) => {
+    const { userId } = req.cookies
+    const { boardIdx } = req.params
+    const response = await request.post("/board/like", {
+        userId,
+        boardIdx,
+    })
+    console.log(response)
+    res.send("1")
 })
 
 router.get("/notice/write", (req, res, next) => {
@@ -149,4 +159,5 @@ router.get("/profile/modify/:id", async (req, res, next) => {
         // userPic: image,
     })
 })
+router.get("/view")
 module.exports = router
