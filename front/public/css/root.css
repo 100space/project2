@@ -5,7 +5,8 @@
     --sdfa: #006381;
     --haze: #f8f8f803;
     --white: #f8f8f860;
-    --whitehover: antiquewhite;
+    --whitehover: rgba(250, 235, 215, 0.532);
+    --btnColor: #be8962;
     /* --white2: rgba(21, 21, 21, 0.49); */
     --color: #fafafa;
 }
@@ -59,8 +60,8 @@ li {
     justify-content: start !important;
 }
 #nav > img {
-    width: 5rem;
-    height: 5rem;
+    width: 8rem;
+    height: 8rem;
 }
 .flex-center {
     display: flex;
@@ -115,6 +116,7 @@ li {
     margin-left: 0rem;
     background-color: var(--background-color);
     z-index: 10;
+    border-radius: 0 3rem 3rem 0;
 }
 .gnb_flex {
     display: flex;
