@@ -72,7 +72,7 @@ router.get("/user/checkaddress", (req, res, next) => {
 })
 
 router.get("/notice", (req, res, next) => {
-    data = req.body.data
+    const data = req.body.data
     const { userId, userPic } = data
     res.render("board/list.html", { userId, userPic })
 })
@@ -159,5 +159,4 @@ router.get("/profile/modify/:id", async (req, res, next) => {
         // userPic: image,
     })
 })
-router.get("/view")
 module.exports = router
