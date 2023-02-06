@@ -42,17 +42,26 @@
     width: 120rem;
 }
 
-.SubmitBtn {
+#SubmitBtn {
     width: 20rem;
-    height: 5rem;
+    height:5rem;
+    border-radius: 2.5rem;
+    font-size: 1.8rem;
     border: none;
+    color:#008ecf;
+    background: #fafafa;
     outline: none;
 }
 
-.CancelBtn {
+
+#CancelBtn{
     width: 20rem;
-    height: 5rem;
+    height:5rem;
+    border-radius: 2.5rem;
+    font-size: 1.8rem;
     border: none;
+    color:#008ecf;
+    background: #fafafa;
     outline: none;
 }
 

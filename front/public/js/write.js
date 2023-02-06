@@ -15,6 +15,9 @@ const tagify = new Tagify(input, {
 
 
 CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+    insertImage:{
+        uploadURL : false,
+    },
     toolbar: {
         items: [
             'heading', '|',
@@ -25,7 +28,7 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
             '-',
             'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
             'alignment', '|',
-            'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+            'link', 'imageInsert', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
             'specialCharacters', 'horizontalLine', 'pageBreak', '|',
             'textPartLanguage', '|',
             'sourceEditing'
@@ -38,9 +41,6 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
             startIndex: true,
             reversed: true
         }
-    },
-    insertImage:{
-        uploadUrl : false,
     },
     heading: {
         options: [
@@ -115,21 +115,25 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
         'MathType'
     ]
 }).then( editor => {
-    document.getElementById("SubmitBtn").addEventListener("click", function (event) {
-        event.preventDefault()
+    submitBtn.addEventListener("click", (e) => {
+        e.preventDefault();
         const editorContent = editor.getData();
-        let tags = JSON.parse(input.value);
-        let tagValues = tags.map(function(tag) {
-        return tag.value
+        let inputValue = input.value;
+        if (!writer.value || !subject.value || !editorContent || !inputValue) {
+            alert("빈칸을 입력해주세요");
+        } else {
+            let tags = JSON.parse(inputValue);
+            let tagValues = tags.map((tag) => {
+            return tag.value;
         });
-    const data = {
-        writer: writer.value,
-        subject: subject.value,
-        content: editorContent,
-        tags: tagValues
+        const data = {
+            writer: writer.value,
+            subject: subject.value,
+            content: editorContent,
+            tags: tagValues,
+            };
+        console.log(123, data);
     }
-    console.log(123,data)
-    console.log(Base64UploaderPlugin)
     });
 })
 .catch( error => {
