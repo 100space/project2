@@ -1,3 +1,5 @@
+const { userController } = require("./user.module")
+
 class UserController {
     constructor({ userService }) {
         this.userService = userService
@@ -47,10 +49,14 @@ class UserController {
     }
 
     async putUpdateUser(req, res, next) {
+        console.log(req.params, "userController")
+        console.log(req.body, "userController123123")
         try {
             const { userId } = req.params
             const { userPic, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel } = req.body
-            const updateUser = await this.userService.updateUser(userId, { userPic, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel })
+            const updateUser = await this.userService.SignUpdate(userId, userPic, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel)
+            console.log(updateUser, 123123123)
+            // res.redirect(`http://127.0.0.1:3005/user/profile/${userId}`)
             res.status(200).json(updateUser)
         } catch (e) {
             next(e)

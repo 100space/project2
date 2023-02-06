@@ -4,9 +4,9 @@ const auth = require("../src/auth/auth.route")
 const user = require("../src/user/user.route")
 
 router.use("/auth", auth)
-
 router.use("/user", user)
 router.use("/profile", user)
+
 router.get("/", (req, res, next) => {
     res.redirect("http://127.0.0.1:3005/")
 })
