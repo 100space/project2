@@ -1,10 +1,10 @@
 class UserRepository {
     constructor({ User, sequelize }) {
-        this.User = User;
+        this.User = User
         this.sequelize = sequelize
     }
     async addUser(payload) {
-        console.log('789', payload);
+        console.log("789", payload)
         console.log(this.User.QueryTypes)
 
         try {
@@ -56,14 +56,22 @@ class UserRepository {
         }
     }
 
-    async updateInfo(userId, payload) {
+    async updateInfo(payload) {
         try {
-            const [updateCount, updateRows] = await this.User.update(payload, {
-                where: { userId },
+            const [count, affecteRows] = await this.User.update(payload, {
+                where: { userId: payload.userId },
                 returning: true,
             })
-            if (updateCount === 0) throw new Error("User not found, Please redirect your webpage")
-            return updateRow[0]
+            if (affecteRows) {
+                const response = await this.User.findOne({
+                    raw: true,
+                    where: {
+                        userId: payload.userId,
+                    },
+                })
+                return response
+            }
+            if (affecteRows === 0) throw new Error("User not found, Please redirect your webpage")
         } catch (e) {
             throw new Error(e)
         }

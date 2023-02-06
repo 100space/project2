@@ -3,10 +3,7 @@
 {% endblock %} {% block content %}
 <div id="viewWrap">
     <div>
-        <div id="boardHeader" class="flex-center">
-            <div>공지사항</div>
-            <div></div>
-        </div>
+        <div id="boardHeader" class="flex-center"></div>
         <div id="subCategory" class="flex-justi-center">
             {% set subCategory = ['sub1','sub2','sub3'] %} {% for item in subCategory %}
             <li class="flex-center">{{item}}</li>
@@ -53,10 +50,13 @@
                 </ul>
             </div>
             <div id="writeBtn" class="boardBtn">
-                <div class="flex-center">글쓰기</div>
+                <div class="flex-center">
+                    <a href="/write"> 글쓰기 </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script src="/js/list.js" type="text/javascript"></script>
 
 {% endblock %}

@@ -15,11 +15,11 @@ const address = document.querySelector("wrap_tf_keyword > input")
 
 const joinFrm = document.querySelector("#userinfo")
 
-const termsCheckbox = document.getElementById("termsCheckbox");
-const iFrameContainer = document.getElementById("iFrameContainer");
-const agreeBtn = document.getElementById("agreeBtn");
-const cancelBtn = document.getElementById("cancelBtn");
-const agreeText = document.getElementById("agreetext");
+const termsCheckbox = document.getElementById("termsCheckbox")
+const iFrameContainer = document.getElementById("iFrameContainer")
+const agreeBtn = document.getElementById("agreeBtn")
+const cancelBtn = document.getElementById("cancelBtn")
+const agreeText = document.getElementById("agreetext")
 
 joinFrm.addEventListener("input", async (e) => {
     const valueFocus = e.target
@@ -107,19 +107,14 @@ form.addEventListener("submit", async (e) => {
             userPw: userPw.value,
         })
 
-
         if (response.status === 200) {
             document.cookie = `token=${response.data.token}; path=/`
-            document.cookie = `userId=${response.data.userId}; path=/`
             location.href = "/"
         }
     } catch (e) {
         alert("아이디와 패스워드가 다름")
     }
 })
-
-
-
 
 signUpButton.addEventListener("click", () => container.classList.add("right-panel-active"))
 signInButton.addEventListener("click", () => container.classList.remove("right-panel-active"))
@@ -129,8 +124,6 @@ signInButton.addEventListener("click", () => container.classList.remove("right-p
 // // const agreeBtn = document.getElementById("agreeBtn");
 // // const cancelBtn = document.getElementById("cancelBtn");
 // // const agreeText = document.getElementById("agreetext");
-
-
 
 // termsCheckbox.addEventListener("click", function () {
 //     initLayerPosition();
@@ -176,5 +169,5 @@ signInButton.addEventListener("click", () => container.classList.remove("right-p
 //     if (!termsCheckbox.checked) {
 //         e.preventDefault()
 //         alert("이용약관을 읽고 동의를 해주세요");
-//     } 
+//     }
 //   }
