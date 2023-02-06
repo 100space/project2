@@ -16,7 +16,6 @@ class UserController {
 
     async checkUserid(req, res, next) {
         try {
-            console.log(req.body)
             const { userId } = req.body
             const user = await this.userService.CheckId({ userId })
             res.status(201).json(user)
@@ -49,15 +48,11 @@ class UserController {
     }
 
     async putUpdateUser(req, res, next) {
-        console.log(req.params, "userController")
-        console.log(req.body, "userController123123")
-        console.log(response, "1231451")
         try {
             const { userId } = req.params
-            const { userPic, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel } = req.body
-            const updateUser = await this.userService.SignUpdate(userId, userPic, userPw, userName, nickName, address, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel)
-            console.log(updateUser, 123123123)
-            // res.redirect(`http://127.0.0.1:3005/user/profile/${userId}`)
+            const data = req.body
+            console.log(data, "back Controll")
+            const updateUser = await this.userService.SignUpdate(data)
             res.status(200).json(updateUser)
         } catch (e) {
             next(e)

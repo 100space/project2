@@ -48,7 +48,7 @@ class UserService {
     }
 
     async SignUpdate(payload) {
-        console.log(payload)
+        console.log(payload, 123123)
         try {
             const updateUser = await this.userRepository.updateInfo(payload)
             return updateUser
