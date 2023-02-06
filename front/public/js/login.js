@@ -124,57 +124,57 @@ form.addEventListener("submit", async (e) => {
 signUpButton.addEventListener("click", () => container.classList.add("right-panel-active"))
 signInButton.addEventListener("click", () => container.classList.remove("right-panel-active"))
 
-// const termsCheckbox = document.getElementById("termsCheckbox");
-// const iFrameContainer = document.getElementById("iFrameContainer");
-// const agreeBtn = document.getElementById("agreeBtn");
-// const cancelBtn = document.getElementById("cancelBtn");
-// const agreeText = document.getElementById("agreetext");
+// // const termsCheckbox = document.getElementById("termsCheckbox");
+// // const iFrameContainer = document.getElementById("iFrameContainer");
+// // const agreeBtn = document.getElementById("agreeBtn");
+// // const cancelBtn = document.getElementById("cancelBtn");
+// // const agreeText = document.getElementById("agreetext");
 
 
 
-termsCheckbox.addEventListener("click", function () {
-    initLayerPosition();
-    if (termsCheckbox.checked) {
-        iFrameContainer.style.display = "none";
-    } else {
-        iFrameContainer.style.display = "block";
-    }
-});
+// termsCheckbox.addEventListener("click", function () {
+//     initLayerPosition();
+//     if (termsCheckbox.checked) {
+//         iFrameContainer.style.display = "none";
+//     } else {
+//         iFrameContainer.style.display = "block";
+//     }
+// });
 
-agreeText.addEventListener('scroll', function () {
-    if (textarea.scrollTop === textarea.scrollHeight - textarea.offsetHeight) {
-        agreeBtn.disabled = false;
-    } else {
-        agreeBtn.disabled = true;
-    }
-});
+// agreeText.addEventListener('scroll', function () {
+//     if (textarea.scrollTop === textarea.scrollHeight - textarea.offsetHeight) {
+//         agreeBtn.disabled = false;
+//     } else {
+//         agreeBtn.disabled = true;
+//     }
+// });
 
-agreeBtn.addEventListener("click", function () {
-    termsCheckbox.checked = true;
-    iFrameContainer.style.display = "none";
-});
+// agreeBtn.addEventListener("click", function () {
+//     termsCheckbox.checked = true;
+//     iFrameContainer.style.display = "none";
+// });
 
-cancelBtn.addEventListener("click", function (){
-    termsCheckbox.checked = false;
-    iFrameContainer.style.display = "none";
-});
+// cancelBtn.addEventListener("click", function (){
+//     termsCheckbox.checked = false;
+//     iFrameContainer.style.display = "none";
+// });
 
-function initLayerPosition(){
-    const width = 500;
-    const height = 600;
-    const borderWidth = 1;
+// function initLayerPosition(){
+//     const width = 500;
+//     const height = 600;
+//     const borderWidth = 1;
 
-    iFrameContainer.style.width = width + 'px';
-    iFrameContainer.style.height = height + 'px';
-    iFrameContainer.style.border = borderWidth + 'px solid';
-    iFrameContainer.style.backgroundColor.white;
-    iFrameContainer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/1.5 - borderWidth) + 'px';
-    iFrameContainer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
-}
+//     iFrameContainer.style.width = width + 'px';
+//     iFrameContainer.style.height = height + 'px';
+//     iFrameContainer.style.border = borderWidth + 'px solid';
+//     iFrameContainer.style.backgroundColor.white;
+//     iFrameContainer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/1.5 - borderWidth) + 'px';
+//     iFrameContainer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+// }
 
-function checkAcceptance() {
-    if (!termsCheckbox.checked) {
-        e.preventDefault()
-        alert("이용약관을 읽고 동의를 해주세요");
-    } 
-  }
+// function checkAcceptance() {
+//     if (!termsCheckbox.checked) {
+//         e.preventDefault()
+//         alert("이용약관을 읽고 동의를 해주세요");
+//     } 
+//   }
