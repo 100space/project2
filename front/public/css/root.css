@@ -1,6 +1,4 @@
 :root {
-    --background-black: #0000007a;
-    --background-color2: #0000007a;
     --background-color: #0000007a;
     --sdf: #ff7139;
     --sdfe: #00a6d2;
@@ -8,7 +6,7 @@
     --haze: #f8f8f803;
     --white: #f8f8f860;
     --whitehover: antiquewhite;
-    --white2: #rgba(21, 21, 21, 0.49);
+    /* --white2: rgba(21, 21, 21, 0.49); */
     --color: #fafafa;
 }
 .font-color {
@@ -20,11 +18,13 @@
     box-sizing: border-box;
 }
 body {
-    background: url(/img/background1920.jpg);
+    background: url(/img/background1920_2.jpg);
 }
 html {
     font-size: 62.5%;
-    font-family: "NanumSquareRound";
+    font-family: "SeoulNamsanC";
+    font-weight: 700;
+    color: #333;
 }
 a {
     color: initial;
@@ -50,7 +50,7 @@ li {
     width: 100%;
     height: 10rem;
     z-index: 10;
-    background-color: var(--white2);
+    /* background-color: var(--white2); */
 }
 #nav {
     width: 14rem;
@@ -96,7 +96,9 @@ li {
     width: 6rem;
     height: 6rem;
     border-radius: 3rem;
-    background-color: var(--background-color);
+}
+#userInfo {
+    background-color: #0000009f;
 }
 #loginBtn > a {
     font-size: 2rem;
@@ -111,7 +113,7 @@ li {
     padding: 3rem;
     transition: all 1s;
     margin-left: 0rem;
-    background-color: var(--background-color2);
+    background-color: var(--background-color);
     z-index: 10;
 }
 .gnb_flex {
@@ -133,7 +135,7 @@ li {
     width: fit-content;
     height: fit-content;
     transition: all 1s;
-    background-color: var(--background-black);
+    background-color: var(--background-color);
     z-index: 10;
     padding: 3rem;
 }
@@ -240,7 +242,7 @@ li {
     height: 6rem;
     border-radius: 3rem;
     margin-left: 1.5rem;
-    background-color: var(--white);
+    background-color: pink;
 }
 .hotUser-subject {
     width: 15rem;

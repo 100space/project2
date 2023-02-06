@@ -30,7 +30,7 @@
                         <a href="#"></a>
                     </div>
                     {% if userId and userId !== "guest" %}
-                    <div id="userInfo" class="circle9 userPicSize" style="background-image: url('/image/{{image}}');">
+                    <div id="userInfo" class="circle9 userPicSize" style="background-image: url('/image/{{userPic}}');">
                         <a href="#"></a>
                     </div>
                     {% else %}
@@ -144,7 +144,7 @@
                 <li><a href="/qna">Q&A</a></li>
                 <li id="line"></li>
                 <li></li>
-                <li><a href="/user">마이페이지</a></li>
+                <li><a href="/profile/{{userId}}">마이페이지</a></li>
                 <li><a href="/user/myview">내가 쓴 글</a></li>
                 <li><a href="/" id="logout">로그아웃</a></li>
                 <li></li>
