@@ -75,6 +75,7 @@ router.get("/write", (req, res, next) => {
     res.render("board/write.html")
 })
 
+
 router.get("/community", (req, res, next) => {
     const { userId } = req.user
     res.render("board/list.html", { userId })
@@ -83,6 +84,12 @@ router.get("/community", (req, res, next) => {
 router.get("/notice/write", (req, res, next) => {
     const { userId } = req.user
     res.render("board/write.html")
+})
+
+router.get("/notice/view", (req, res, next) => {
+    const { userId } = req.user
+    console.log(req.body)
+    res.render("board/view.html")
 })
 
 router.get("/qna", (req, res, next) => {
