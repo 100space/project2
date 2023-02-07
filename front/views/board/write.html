@@ -7,38 +7,39 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!-- <script src="path/to/Base64UploaderPlugin.js"></script> -->
 {% endblock %}
 <br />
 {% extends 'layout/layout.html'%} {% block content %}
 <div id="contentArea">
-    <form action="">
+    <form action="/write/{{categoryMain}}" method="post">
         {% if categoryMain === "notice" %}
-        <select name="categoryMain" id="categoryMain">
-            <option value="notice">1</option>
-            <option value="community">2</option>
-            <option value="qna">3</option>
+        <select name="categorySub" class="categoryMain">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
         </select>
         {% elif categoryMain === "community" %}
-        <select name="categoryMain" id="categoryMain">
-            <option value="notice">4</option>
-            <option value="community">5</option>
-            <option value="qna">6</option>
+        <select name="categorySub" class="categoryMain">
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
         </select>
         {% else %}
-        <select name="categoryMain" id="categoryMain">
-            <option value="notice">7</option>
-            <option value="community">8</option>
-            <option value="qna">9</option>
+        <select name="categorySub" class="categoryMain">
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
         </select>
         {% endif %}
-        <div><input type="text" name="writer" id="writer" value="123" readonly hidden /></div>
-        <div id="subjectBack"><input type="text" name="subject" id="subject" placeholder="제목을 입력하세요" /></div>
+        <div><input type="text" name="writer" id="writer" value="{{userId}}" readonly hidden /></div>
+        <div id="subjectBack" class="flex-center"><input type="text" name="subject" id="subject" placeholder="제목을 입력하세요" /></div>
         <div id="container">
-            <textarea id="editor"></textarea>
-        </div>
-        <div id="hashTag">
-            <input name="tags-outside" class="tagify--outside" placeholder="해시태그를 입력해주세요. 입력가능한 최대 태그수는 5개입니다." />
+            <textarea id="editor" name="content"></textarea>
+            <div id="hashTag">
+                <input name="tags-outside" class="tagify--outside" placeholder="해시태그를 입력해주세요. 입력가능한 최대 태그수는 5개입니다." />
+            </div>
         </div>
         <div id="BtnArea">
             <button style="margin: 0.9rem 0 2rem 0" type="button" id="CancelBtn">🔚 돌아가기</button>

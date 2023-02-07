@@ -15,7 +15,6 @@
 }
 
 @keyframes swell {
-
     0%,
     100% {
         transform: translate3d(0, -25px, 0);
@@ -130,9 +129,14 @@ button :focus {
     margin: 20px 0;
     display: block;
 }
+#kakao {
+    background-image: url("/img/kakao.png");
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+}
 
 .social-container a {
-    border: 1px solid #008ecf;
+    /* border: 1px solid #008ecf; */
     border-radius: 50%;
     display: inline-flex;
     justify-content: center;
@@ -150,7 +154,7 @@ button :focus {
     transition: all 0.6s ease-in-out;
 }
 
-.form-container>label {
+.form-container > label {
     width: 70%;
 }
 
@@ -254,12 +258,10 @@ button :focus {
     display: none;
 }
 
-
 /* 장경호 css */
-label>p {
+label > p {
     margin: 0;
     color: #fa0505;
     display: none;
     font-weight: bold;
-
 }

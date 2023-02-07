@@ -4,8 +4,11 @@ class BoardController {
     }
     async postWrite(req, res, next) {
         try {
-            const { subject, content, categoryMain, categorySub, hash, contentImg, userId, userPic } = req.body
-            const result = await this.boardService.MakeWrite({ subject, content, categoryMain, categorySub, hash, userId })
+            const {
+                data: { subject, content, categoryMain, categorySub, tags, writer },
+            } = req.body
+            const result = await this.boardService.MakeWrite({ subject, content, categoryMain, categorySub, hash: tags, userId: writer })
+            // const response = await this.boardService.FindUserInfo({ userId: writer })
             res.status(201).json(result)
         } catch (e) {
             next(e)

@@ -18,8 +18,8 @@ app.use(
 app.set("view engine", "html")
 nunjucks.configure("views", { express: app })
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.json({ limit: "1024mb" }))
+app.use(express.urlencoded({ limit: "1024mb", extended: false }))
 app.use(express.static("public"))
 app.use(cookieParser())
 app.use("/image", express.static("./uploads"))

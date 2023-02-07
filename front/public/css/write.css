@@ -10,14 +10,25 @@
     margin: 0 auto;
     margin-top: 10rem;
 }
-
+form {
+    width: 90rem;
+    margin: 0 auto;
+}
 #editor {
     border: 1px solid;
     width: 50%;
     margin: 0 auto;
     height: 50rem;
 }
-
+.categoryMain {
+    width: 10rem;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    background-color: var(--background-color);
+}
+#subjectBack {
+    height: 4rem;
+}
 #subject {
     background: transparent;
     display: block;
@@ -30,39 +41,21 @@
     border: none;
     font-weight: bold;
     color: var(--background-color);
-    margin-bottom: 20px;
 }
-
+.ck-placeholder {
+    font-size: 1.5rem;
+}
 #BtnArea {
     display: flex;
     justify-content: space-between;
 }
-
+#hashTag {
+    width: 100%;
+    height: 3rem;
+    background-color: #fff;
+}
 #hashTag > input {
-    width: 120rem;
-}
-
-#SubmitBtn {
-    width: 20rem;
-    height:5rem;
-    border-radius: 2.5rem;
-    font-size: 1.8rem;
-    border: none;
-    color:#008ecf;
-    background: #fafafa;
-    outline: none;
-}
-
-
-#CancelBtn{
-    width: 20rem;
-    height:5rem;
-    border-radius: 2.5rem;
-    font-size: 1.8rem;
-    border: none;
-    color:#008ecf;
-    background: #fafafa;
-    outline: none;
+    width: 100%;
 }
 
 #subjectBack {
@@ -70,16 +63,37 @@
 }
 
 #container {
-    width: 120rem;
+    width: 100%;
     margin: 20px auto;
 }
 
 .ck-editor__editable[role="textbox"] {
     /* editing area */
-    min-height: 200px;
+    min-height: 30rem;
 }
 .ck-content .image {
     /* block images */
     max-width: 80%;
-    margin: 20px auto;
+    margin: 2rem auto;
+}
+#SubmitBtn {
+    width: 20rem;
+    height: 5rem;
+    border-radius: 2.5rem;
+    font-size: 1.8rem;
+    border: none;
+    color: #008ecf;
+    background: #fafafa;
+    outline: none;
+}
+
+#CancelBtn {
+    width: 20rem;
+    height: 5rem;
+    border-radius: 2.5rem;
+    font-size: 1.8rem;
+    border: none;
+    color: #008ecf;
+    background: #fafafa;
+    outline: none;
 }

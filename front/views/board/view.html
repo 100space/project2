@@ -5,21 +5,19 @@
 <br />
 {% extends 'layout/layout.html'%} {% block content %}
 <div id="container">
-    <div id="subject">{Subject}</div>
+    <input type="hidden" name="hidden" id="hidden" value="{{content}}" />
+    <div id="subject">{{subject}}</div>
     <div id="writerTime">
-        <span id="writer">{Writer}</span>
+        <span id="writer">{{userId}}</span>
         <span id="Timestamp">
-            <span id="updatedTime">{createdTime}</span>
-            <span id="updatedTime">{updatedTime}</span>
+            <span id="updatedTime">{{createdTime}}</span>
+            <span id="updatedTime">{{updatedTime}}</span>
         </span>
     </div>
-    <div id="content">
-        <p>htgytdfjhyfdkjhyfgk</p>
-        <p>vaweㅍㅁㅈㄷf</p>
-        <p>
-            <strong>awefwaefawvc<img src="wefwef" /></strong>
-        </p>
-    </div>
-    <div id="tags">1</div>
+    <div id="content"></div>
+    {% for tags in hashtagValue %}
+    <div id="tags">{{tags.tag}}</div>
+    {% endfor %}
 </div>
+<script src="/js/view.js" type="text/javascript"></script>
 {% endblock %}
