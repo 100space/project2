@@ -91,6 +91,15 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo })
     }
 })
+
+router.get("/:categoryMain/view/like/:boardIdx", async (req, res, next) => {
+    const userInfo = req.userInfo
+    const { categoryMain, boardIdx } = req.params
+    const response = await request.post(`/board/${categoryMain}/view/like`, { userInfo, categoryMain, boardIdx })
+    res.send("1")
+
+})
+
 const HOST = `https://kauth.kakao.com`
 const REDIRECT_URI = `http://127.0.0.1:3000/oauth/kakao`
 const REST_API_KEY = `a540a18bfac74a86ac5ebed64df7ab64`

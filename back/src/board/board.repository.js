@@ -51,7 +51,7 @@ class BoardRepository {
 
     async insertLike(payload) {
         try {
-            const { userId, boardIdx } = payload
+            const { userId, boardIdx, categoryMain } = payload
             const likeResult = await this.liked.findOrCreate({
                 where: { userId, boardIdx },
                 defaults: {
@@ -60,16 +60,31 @@ class BoardRepository {
                 },
             })
             const likeresult = likeResult[0].dataValues
-            if (likeresult) {
+            if (likeResult[1]) {
                 const likeCount = await this.liked.findAll({
                     where: {
                         boardIdx,
                     },
                     raw: true,
                 })
-                console.log(likeCount.length)
-                // const boardLike = await this.Board.update({ liked: liked++ }, { where: { boardIdx } })
-                // console.log(boardLike)
+                const likeValue = likeCount.length
+                const boardLike = await this.Board.update({ liked: likeValue }, { where: { boardIdx } })
+                return boardLike
+            } else {
+                const likeDelete = await this.liked.destroy({
+                    where: {
+                        userId
+                    }
+                })
+                const likeCount = await this.liked.findAll({
+                    where: {
+                        boardIdx,
+                    },
+                    raw: true,
+                })
+                const likeValue = likeCount.length
+                const boardLike = await this.Board.update({ liked: likeValue }, { where: { boardIdx } })
+                return boardLike
             }
         } catch (e) {
             throw new Error(`Error while insert status: ${e.message}`)

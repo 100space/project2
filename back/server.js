@@ -56,7 +56,7 @@ app.get("/oauth/kakao", async (req, res, next) => {
         })
         console.log(user.data, "============")
         const sns = {
-            userPic : user.data.properties.["profile_image"],
+            // userPic : user.data.properties.["profile_image"],
             userId: user.data.id,
             userPw: user.data.id,
             userName: user.data.properties.nickname,
@@ -74,7 +74,7 @@ app.get("/oauth/kakao", async (req, res, next) => {
                 "Content-type": "application/json",
             },
         })
-    } catch (error) {}
+    } catch (error) { }
     res.redirect("http://127.0.0.1:3005/")
 })
 

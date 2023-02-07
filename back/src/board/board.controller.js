@@ -17,9 +17,9 @@ class BoardController {
 
     async infoLike(req, res, next) {
         try {
-            const { userId, boardIdx } = req.body
-            console.log(userId, boardIdx)
-            const result = await this.boardService.InsertLike({ userId, boardIdx })
+            const { categoryMain, boardIdx, userInfo } = req.body
+            // console.log(categoryMain, userInfo.userId, boardIdx)
+            const result = await this.boardService.InsertLike({ userId: userInfo.userId, boardIdx, categoryMain })
             res.status(201).json(result)
         } catch (e) {
             next(e)
