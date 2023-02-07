@@ -42,7 +42,7 @@ class BoardRepository {
                     })
                 }
             }
-            const hashtagValue = await this.sequelize.query("SELECT boardIdx, tag FROM Hashtag A LEFT JOIN Hash B ON A.hashTagIdx = B.hashTagIdx", { type: this.queryTypes.SELECT })
+            const hashtagValue = await this.sequelize.query("SELECT B.boardIdx, A.tag FROM Hashtag A LEFT JOIN Hash B ON A.hashTagIdx = B.hashTagIdx", { type: this.queryTypes.SELECT })
             return { newBoard, hashtagValue }
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)

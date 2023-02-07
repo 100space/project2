@@ -22,9 +22,9 @@ const tagify = new Tagify(input, {
 //데이터 설정하기 = setData()
 
 CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
-    insertImage: {
-        uploadURL: false,
-    },
+    // insertImage: {
+    //     uploadURL: true,
+    // },
     toolbar: {
         items: [
             "heading",

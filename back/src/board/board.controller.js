@@ -7,7 +7,6 @@ class BoardController {
             const {
                 data: { subject, content, categoryMain, categorySub, tags, writer },
             } = req.body
-            console.log(req.body)
             const result = await this.boardService.MakeWrite({ subject, content, categoryMain, categorySub, hash: tags, userId: writer })
             // const response = await this.boardService.FindUserInfo({ userId: writer })
             res.status(201).json(result)

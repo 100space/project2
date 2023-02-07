@@ -11,6 +11,7 @@ class BoardService {
     async MakeWrite({ subject, content, categoryMain, categorySub, hash, userId }) {
         try {
             const result = await this.boardRepository.createBoard({ subject, content, categoryMain, categorySub, hash, userId })
+            console.log(result, "servic")
             return result
         } catch (e) {
             throw new Error(e)

@@ -12,14 +12,13 @@ const idFocus = document.querySelector("input[name='userPw']")
 const nickCheck = document.querySelector("input[name='nickName']")
 const nickFocus = document.querySelector("input[name='address1']")
 const address = document.querySelector("wrap_tf_keyword > input")
-
 const joinFrm = document.querySelector("#userinfo")
-
 const termsCheckbox = document.getElementById("termsCheckbox")
 const iFrameContainer = document.getElementById("iFrameContainer")
 const agreeBtn = document.getElementById("agreeBtn")
 const cancelBtn = document.getElementById("cancelBtn")
 const agreeText = document.getElementById("agreetext")
+const kakao = document.querySelector("#kakao")
 
 joinFrm.addEventListener("input", async (e) => {
     const valueFocus = e.target
@@ -29,7 +28,7 @@ joinFrm.addEventListener("input", async (e) => {
         const response = await request.post(
             "/user/check",
             {
-                userid: checkValue,
+                userId: checkValue,
             },
             {
                 headers: {
@@ -113,6 +112,14 @@ form.addEventListener("submit", async (e) => {
         }
     } catch (e) {
         alert("아이디와 패스워드가 다름")
+    }
+})
+
+kakao.addEventListener("click", async (e) => {
+    try {
+        location.href = "/oauth/kakao"
+    } catch (e) {
+        alert("잠시 후 다시 시도하여 주십시오.")
     }
 })
 

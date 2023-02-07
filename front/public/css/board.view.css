@@ -1,39 +1,39 @@
 #container {
-    width : 120rem;
-    height : 1200rem;
+    width: 120rem;
+    height: 100rem;
     /* background: red; */
-    margin : 0 auto;
+    margin: 0 auto;
     margin-top: 10rem;
 }
 
 #container > #subject {
     font-size: 2.55rem;
-    height:auto;
-    width:110rem;
-    margin : 0 auto;
+    height: auto;
+    width: 110rem;
+    margin: 0 auto;
 }
 
 #container > #writerTime {
-    display:flex;
+    display: flex;
     justify-content: space-between;
-    height:auto;
-    width:110rem;
-    margin : 0 auto;
-    margin-top:2rem;
+    height: auto;
+    width: 110rem;
+    margin: 0 auto;
+    margin-top: 2rem;
 }
 
 #container > #content {
     /* background-color: green; */
     overflow: scroll;
-    height:auto;
-    width:110rem;
-    margin : 0 auto;
-    margin-top : 3rem;
+    height: auto;
+    width: 110rem;
+    margin: 0 auto;
+    margin-top: 3rem;
 }
 
 #container > #tags {
-    height:auto;
-    width:110rem;
-    margin : 0 auto;
-    margin-top : 2rem;
+    height: auto;
+    width: 110rem;
+    margin: 0 auto;
+    margin-top: 2rem;
 }

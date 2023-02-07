@@ -4,6 +4,7 @@ const axios = require("axios")
 const user = require("./user.routes")
 const profile = require("./profile.routes")
 const upload = require("../midlewares/upload")
+const e = require("express")
 const request = axios.create({
     baseURL: "http://127.0.0.1:3000",
     withCredentials: true,
@@ -70,6 +71,7 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         }
         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
         const { newBoard, hashtagValue } = response.data
+        console.log(newBoard)
         res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo })
     } else {
         let tags = JSON.parse(req.body["tags-outside"])
@@ -88,6 +90,14 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         const { newBoard, hashtagValue } = response.data
         res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo })
     }
+})
+const HOST = `https://kauth.kakao.com`
+const REDIRECT_URI = `http://127.0.0.1:3000/oauth/kakao`
+const REST_API_KEY = `a540a18bfac74a86ac5ebed64df7ab64`
+
+router.get("/oauth/kakao", (req, res, next) => {
+    const redirectURL = `${HOST}/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
+    res.redirect(redirectURL)
 })
 
 // router.use("/board", board)
