@@ -25,6 +25,25 @@ class BoardService {
             throw new Error(e)
         }
     }
+
+    async FindValue({ boardIdx }) {
+        try {
+            const result = await this.boardRepository.findValue({ boardIdx })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async DeleteValue({ boardIdx }) {
+        try {
+            const result = await this.boardRepository.deleteValue({ boardIdx })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
 }
 
 module.exports = BoardService

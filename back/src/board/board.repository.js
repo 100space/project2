@@ -15,7 +15,7 @@ class BoardRepository {
         const userInfo = await this.User.findOne({ userId, raw: true })
         return userInfo
     }
-    // 등록할떄 토큰값 필요함
+
     async createBoard(payload) {
         try {
             const { subject, content, categoryMain, categorySub, hash, userId } = payload
@@ -26,7 +26,7 @@ class BoardRepository {
             const newBoard = await this.Board.create({ subject, content, categoryMain, categorySub, userId }, { plain: true })
 
             if (hashValue) {
-                const boardContent = await this.Board.findOne({ subject, raw: true })
+                const boardContent = await this.Board.findOne({ where: { subject }, raw: true })
                 const { boardIdx } = boardContent
                 for (let i = 0; i < Object.keys(hashValue).length; i++) {
                     const result = hash[i]
@@ -88,6 +88,31 @@ class BoardRepository {
             }
         } catch (e) {
             throw new Error(`Error while insert status: ${e.message}`)
+        }
+    }
+
+    async findValue(payload) {
+        try {
+            const { boardIdx } = payload
+            const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
+            return response
+        } catch (e) {
+            throw new Error(`Error while find status: ${e.message}`)
+        }
+    }
+
+    async deleteValue(payload) {
+        try {
+            const { boardIdx } = payload
+            const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
+            if (response) {
+                const result = await this.Board.destroy({ where: { boardIdx } })
+                console.log(result)
+            }
+            console.log(response)
+
+        } catch (e) {
+            throw new Error(`Error while delete status: ${e.message}`)
         }
     }
 }
