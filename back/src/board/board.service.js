@@ -1,12 +1,16 @@
 class BoardService {
     constructor({ boardRepository }) {
-        this.boardRepository = boardRepository;
+        this.boardRepository = boardRepository
     }
-
+    async FindUserInfo({ userId }) {
+        try {
+            const response = await this.boardRepository.findUserInfo({ userId })
+            return response
+        } catch (error) {}
+    }
     async MakeWrite({ subject, content, categoryMain, categorySub, hash, userId }) {
         try {
-            const array = hash.split(",")
-            const result = await this.boardRepository.createBoard({ subject, content, categoryMain, categorySub, hash: array, userId })
+            const result = await this.boardRepository.createBoard({ subject, content, categoryMain, categorySub, hash, userId })
             return result
         } catch (e) {
             throw new Error(e)
@@ -20,7 +24,6 @@ class BoardService {
             throw new Error(e)
         }
     }
-
 }
 
-module.exports = BoardService;
+module.exports = BoardService

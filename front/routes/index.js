@@ -54,8 +54,40 @@ router.get("/qna", (req, res, next) => {
 router.get("/write/:categoryMain", (req, res, next) => {
     const userInfo = req.userInfo
     const { categoryMain } = req.params
-    console.log(categoryMain)
     res.render("board/write.html", { ...userInfo, categoryMain })
+})
+router.post("/write/:categoryMain", async (req, res, next) => {
+    const userInfo = req.userInfo
+    const { categoryMain } = req.params
+    // const a = req.body
+    if (!req.body["tags-outside"]) {
+        let data = {
+            writer: req.body.writer,
+            subject: req.body.subject,
+            content: req.body.content,
+            categoryMain,
+            categorySub: req.body.categorySub,
+        }
+        const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
+        const { newBoard, hashtagValue } = response.data
+        res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo })
+    } else {
+        let tags = JSON.parse(req.body["tags-outside"])
+        let tagValues = tags.map((tag) => {
+            return tag.value
+        })
+        let data = {
+            writer: req.body.writer,
+            subject: req.body.subject,
+            content: req.body.content,
+            tags: tagValues,
+            categoryMain,
+            categorySub: req.body.categorySub,
+        }
+        const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
+        const { newBoard, hashtagValue } = response.data
+        res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo })
+    }
 })
 
 // router.use("/board", board)

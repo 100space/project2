@@ -1,26 +1,29 @@
 class BoardRepository {
     constructor({ sequelize }) {
-        this.User = sequelize.models.User;
-        this.Board = sequelize.models.Board;
-        this.comment = sequelize.models.comment;
-        this.liked = sequelize.models.Liked;
-        this.hash = sequelize.models.Hash;
-        this.hashtag = sequelize.models.Hashtag;
+        this.User = sequelize.models.User
+        this.Board = sequelize.models.Board
+        this.comment = sequelize.models.comment
+        this.liked = sequelize.models.Liked
+        this.hash = sequelize.models.Hash
+        this.hashtag = sequelize.models.Hashtag
         this.category = sequelize.models.category
-        // this.sequelize = sequelize
-        // this.QueryTypes = QueryTypes
+        this.queryTypes = sequelize.QueryTypes
+        this.sequelize = sequelize
     }
-    // 등록할떄 토큰값 필요함 
+    async findUserInfo(payload) {
+        const { userId } = payload
+        const userInfo = await this.User.findOne({ userId, raw: true })
+        return userInfo
+    }
+    // 등록할떄 토큰값 필요함
     async createBoard(payload) {
         try {
             const { subject, content, categoryMain, categorySub, hash, userId } = payload
-
             const hashValue = hash.reduce((acc, value, index) => {
                 acc[`hash${index + 1}`] = value
                 return acc
             }, {})
-
-            const newBoard = await this.Board.create({ subject, content, categoryMain, categorySub, userId })
+            const newBoard = await this.Board.create({ subject, content, categoryMain, categorySub, userId }, { plain: true })
 
             if (hashValue) {
                 const boardContent = await this.Board.findOne({ subject, raw: true })
@@ -34,14 +37,15 @@ class BoardRepository {
                         where: { boardIdx, hashTagIdx: j },
                         defaults: {
                             boardIdx,
-                            hashTagIdx: j
-                        }
+                            hashTagIdx: j,
+                        },
                     })
                 }
             }
-
+            const hashtagValue = await this.sequelize.query("SELECT boardIdx, tag FROM Hashtag A LEFT JOIN Hash B ON A.hashTagIdx = B.hashTagIdx", { type: this.queryTypes.SELECT })
+            return { newBoard, hashtagValue }
         } catch (error) {
-            throw new Error(`Error while creating board: ${error.message}`);
+            throw new Error(`Error while creating board: ${error.message}`)
         }
     }
 
@@ -52,28 +56,25 @@ class BoardRepository {
                 where: { userId, boardIdx },
                 defaults: {
                     userId,
-                    boardIdx
+                    boardIdx,
                 },
             })
             const likeresult = likeResult[0].dataValues
             if (likeresult) {
                 const likeCount = await this.liked.findAll({
                     where: {
-                        boardIdx
+                        boardIdx,
                     },
-                    raw: true
+                    raw: true,
                 })
                 console.log(likeCount.length)
                 // const boardLike = await this.Board.update({ liked: liked++ }, { where: { boardIdx } })
                 // console.log(boardLike)
             }
-
         } catch (e) {
             throw new Error(`Error while insert status: ${e.message}`)
         }
     }
-
 }
 
-
-module.exports = BoardRepository;
+module.exports = BoardRepository
