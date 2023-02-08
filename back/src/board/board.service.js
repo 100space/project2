@@ -45,17 +45,18 @@ class BoardService {
     }
     async PictureCreate({ arr }) {
         try {
-            const arr1 = arr.map((x) => x.replace("data:image/jpeg;base64,/", ""))
-            const arr2 = arr1.map((x) => new Buffer.from(x, "base64").toString("binary"))
-            const result = this.fs.writeFile(`out.png`, arr2[0], "binary", function (e) {
-                console.log(e)
-            })
-            // const arr3 = arr2.map((x) => {
-            //     this.fs.writeFile(`${new Date().valueOf()}.png`, x, "binary", function (e) {
-            //         console.log(e)
-            //     })
+            const arr1 = arr.map((x) => x.replace("data:image/jpeg;base64,", ""))
+            const arr2 = arr1.map((x) => x.replace("data:image/png;base64,", ""))
+            const arr3 = arr2.map((x) => new Buffer.from(x, "base64").toString("binary"))
+            // const result = this.fs.writeFile(`.png`, arr2[0], "binary", function (e) {
+            //     console.log(e)
             // })
-            console.log(this.fs, "B. SERVI======================")
+            const arr4 = arr2.map((x, i) => {
+                this.fs.writeFile(`uploads/${new Date().valueOf()}${i}.png`, x, "base64", function (e) {
+                    console.log(e)
+                })
+            })
+            console.log(arr2, "B. SERVI======================")
         } catch (e) {}
     }
 }
