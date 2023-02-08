@@ -93,7 +93,7 @@
     background-color: antiquewhite;
 }
 .contentCard:hover {
-    background-color: var(--whitehover) !important;
+    background-color: antiquewhite !important;
 }
 
 .content_box {

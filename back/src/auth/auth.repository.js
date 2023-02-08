@@ -1,22 +1,24 @@
 class AuthRepository {
-    constructor({ User }){
-        this.User = User;
+    constructor({ User }) {
+        this.User = User
     }
 
-    async getSignIn({userId, userPw}){
-        try{
+    async getSignIn({ userId, userPw }) {
+        try {
             const user = await this.User.findOne({
-                raw : true,
-                attributes : ["userId", "userPw"],
-                where : {
-                    userId, userPw
-                }
+                raw: true,
+                attributes: ["userPic", "userId", "userPw", "provider"],
+                where: {
+                    userId,
+                    // userPw,
+                },
             })
-            return user;
-        }catch(e){
+            console.log(user)
+            return user
+        } catch (e) {
             throw new Error(e)
         }
     }
 }
 
-module.exports = AuthRepository;
+module.exports = AuthRepository

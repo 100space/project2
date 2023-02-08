@@ -4,12 +4,14 @@ const axios = require("axios")
 const user = require("./user.routes")
 const profile = require("./profile.routes")
 const upload = require("../midlewares/upload")
-const e = require("express")
+const config = require("../config")
 const request = axios.create({
     baseURL: "http://127.0.0.1:3000",
     withCredentials: true,
 })
 
+router.use("/user", user)
+router.use("/profile", profile)
 router.use("/", async (req, res, next) => {
     try {
         const { token } = req.cookies
@@ -31,13 +33,16 @@ router.use("/", async (req, res, next) => {
         next()
     }
 })
+
+router.get("/token/:token", async (req, res, next) => {
+    const { token } = req.params
+    res.cookie("token", token)
+    res.redirect("/")
+})
 router.get("/", (req, res, next) => {
     const userInfo = req.userInfo
     res.render("index.html", { ...userInfo })
 })
-
-router.use("/user", user)
-router.use("/profile", profile)
 
 router.get("/notice", (req, res, next) => {
     const userInfo = req.userInfo
@@ -91,12 +96,10 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo })
     }
 })
-const HOST = `https://kauth.kakao.com`
-const REDIRECT_URI = `http://127.0.0.1:3000/oauth/kakao`
-const REST_API_KEY = `a540a18bfac74a86ac5ebed64df7ab64`
 
 router.get("/oauth/kakao", (req, res, next) => {
-    const redirectURL = `${HOST}/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
+    const redirectURL = `${config.kakaoHOST}/oauth/authorize?client_id=${config.kakaoREST_API_KEY}&redirect_uri=${config.kakaoREDIRECT_URI}&response_type=code`
+
     res.redirect(redirectURL)
 })
 

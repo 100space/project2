@@ -8,7 +8,7 @@ class UserService {
         this.crypto = jwt.crypto
     }
 
-    async SignUp({ filename: userPic, userId, userPw, userName, nickName, address1, address2, gender, phoneNum, userEmail, userIntro }) {
+    async SignUp({ filename: userPic, userId, userPw, userName, nickName, address1, address2, gender, phoneNum, userEmail, userIntro, provider }) {
         try {
             if (!userId || !userPw || !userName) throw "Invalid or empty, Confirm your Information"
             const hash = this.crypto.createHmac("sha256", SALT).update(userPw).digest("hex")

@@ -114,13 +114,14 @@ form.addEventListener("submit", async (e) => {
         alert("아이디와 패스워드가 다름")
     }
 })
+const HOST = `https://kauth.kakao.com`
+const REDIRECT_URI = `http://127.0.0.1:3000/oauth/kakao`
+const REST_API_KEY = `6f3af7393558bd75aa668cd31cc22396`
 
 kakao.addEventListener("click", async (e) => {
     try {
         location.href = "/oauth/kakao"
-    } catch (e) {
-        alert("잠시 후 다시 시도하여 주십시오.")
-    }
+    } catch (e) {}
 })
 
 signUpButton.addEventListener("click", () => container.classList.add("right-panel-active"))
