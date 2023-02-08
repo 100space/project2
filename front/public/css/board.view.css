@@ -5,6 +5,7 @@
     margin: 5rem auto;
     padding: 2rem;
     background-color: rgb(248, 221, 182);
+    border-radius: 1rem;
     position: relative;
 }
 #container_header {

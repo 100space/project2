@@ -118,7 +118,7 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         }
         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
         const { newBoard, hashtagValue } = response.data
-        res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo, boardHot, userHot })
+        res.render("board/view.check.html", { ...newBoard, hashtagValue, ...userInfo, boardHot, userHot })
     }
 })
 

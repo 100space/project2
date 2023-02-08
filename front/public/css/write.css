@@ -11,8 +11,11 @@
     margin-top: 3rem;
 }
 form {
+    padding: 3rem 2rem;
     width: 90rem;
     margin: 0 auto;
+    background-color: rgb(248, 221, 182);
+    border-radius: 1rem;
 }
 #editor {
     border: 1px solid;
@@ -23,7 +26,7 @@ form {
 .categoryMain {
     width: 10rem;
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin: 2rem 0 2rem 0;
     background-color: var(--background-color);
 }
 #subjectBack {
@@ -86,24 +89,14 @@ form {
     max-width: 80%;
     margin: 2rem auto;
 }
-#SubmitBtn {
-    width: 20rem;
-    height: 5rem;
-    border-radius: 2.5rem;
-    font-size: 1.8rem;
-    border: none;
-    color: #008ecf;
-    background: #fafafa;
-    outline: none;
-}
 
-#CancelBtn {
-    width: 20rem;
+.writeSubBtn {
+    width: 15rem;
     height: 5rem;
     border-radius: 2.5rem;
     font-size: 1.8rem;
     border: none;
-    color: #008ecf;
-    background: #fafafa;
+    color: var(--color);
+    background: var(--btnColor);
     outline: none;
 }

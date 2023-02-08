@@ -68,9 +68,9 @@ class BoardService {
             const arr2 = arr1.map((x) => x.replace("data:image/png;base64,", ""))
             const arr3 = arr2.map((x) => new Buffer.from(x, "base64").toString("binary"))
             const arr4 = arr2.map(async (x, i) => {
-                this.fs.writeFile(`uploads/${boardIdx}_${i}.png`, x, "base64", function (e) {})
+                this.fs.writeFile(`../front/uploads/${boardIdx}_${i}.png`, x, "base64", function (e) {})
             })
-            const file = await this.fs.readdir("./uploads")
+            const file = await this.fs.readdir("../front/uploads")
             const boardFile = file.filter((x) => x.indexOf(`${boardIdx}`) >= 0)
             const response = await this.boardRepository.pictureCreate({ boardFile, boardIdx })
             return response
