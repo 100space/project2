@@ -4,9 +4,6 @@ class UserRepository {
         this.sequelize = sequelize
     }
     async addUser(payload) {
-        console.log("789", payload)
-        console.log(this.User.QueryTypes)
-
         try {
             const user = await this.User.create(payload, { raw: true })
             return user
@@ -14,6 +11,13 @@ class UserRepository {
             throw new Error(e)
         }
     }
+    // async kakaoUser(payload) {
+    //     try {
+    //         const user = await this.User.fineO
+    //     } catch (error) {
+
+    //     }
+    // }
 
     async checkId({ userId }) {
         try {

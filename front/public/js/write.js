@@ -104,7 +104,8 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
         supportAllValues: true,
     },
     fontSize: {
-        options: [10, 12, 14, "default", 18, 20, 22, 24, 26, 28],
+        options: [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, "default"],
+
         supportAllValues: true,
     },
     htmlSupport: {

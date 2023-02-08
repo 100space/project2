@@ -29,8 +29,12 @@
                     <div id="searchBtn" class="circle9">
                         <a href="#"></a>
                     </div>
-                    {% if userId and userId !== "guest" %}
+                    {% if userId and userId !== "guest" and provider === "local" %}
                     <div id="userInfo" class="circle9 userPicSize" style="background-image: url('/image/{{userPic}}');">
+                        <a href="#"></a>
+                    </div>
+                    {% elif userId and userId !== "guest" and provider === "kakao" %}
+                    <div id="userInfo" class="circle9 userPicSize" style="background-image: url('{{userPic}}');">
                         <a href="#"></a>
                     </div>
                     {% else %}

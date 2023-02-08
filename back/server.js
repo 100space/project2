@@ -1,22 +1,23 @@
 const dotenv = require("dotenv").config()
+const kakaoHOST = process.env.kakaoHOST
+const kakaoREDIRECT_URI = process.env.kakaoREDIRECT_URI
+const kakaoREST_API_KEY = process.env.kakaoREST_API_KEY
+const kakaoCLIENT_SECRET = process.env.kakaoCLIENT_SECRET
 const port = process.env.PORT || "3000"
 const router = require("./routes/index")
 const app = require("./app")
 const qs = require("qs")
 const { sequelize } = require("./models")
 const axios = require("axios")
-const {
-    models: { User, Board, Comment, Hashtag, Point, Liked, Hash, Counterimg },
-} = sequelize
-
 const JWT = require("./lib/jwt")
 const crypto = require("crypto")
 const SALT = process.env.SALT
-
 const jwt = new JWT({ crypto })
-
 const userPw = "11"
 const hash = jwt.crypto.createHmac("sha256", SALT).update(userPw).digest("hex")
+const {
+    models: { User, Board, Comment, Hashtag, Point, Liked, Hash, Counterimg },
+} = sequelize
 
 app.use(router)
 
@@ -25,27 +26,22 @@ app.use((error, req, res, next) => {
     res.status(500).send(error.message)
 })
 
-const HOST = `https://kauth.kakao.com`
-const REDIRECT_URI = `http://127.0.0.1:3000/oauth/kakao`
-const REST_API_KEY = `a540a18bfac74a86ac5ebed64df7ab64`
-const CLIENT_SECRET = `X7FMGoY2FumD7MXrSGsUOSiPkoaN0L9A`
 app.get("/oauth/kakao", async (req, res, next) => {
     try {
         const { code } = req.query
-        const host = `${HOST}/oauth/token`
+        const host = `${kakaoHOST}/oauth/token`
         const header = {
             "Content-type": "application/x-www-form-urlencoded",
         }
         const body = qs.stringify({
             grant_type: "authorization_code",
-            client_id: REST_API_KEY,
-            redirect_uri: REDIRECT_URI,
+            client_id: kakaoREST_API_KEY,
+            redirect_uri: kakaoREDIRECT_URI,
             code,
-            client_secret: CLIENT_SECRET,
+            client_secret: kakaoCLIENT_SECRET,
         })
         const response = await axios.post(host, body, header)
         const { access_token } = response.data
-        // console.log(access_token, "123123")
 
         const hostUser = `https://kapi.kakao.com/v2/user/me`
         const user = await axios.post(hostUser, null, {
@@ -54,28 +50,31 @@ app.get("/oauth/kakao", async (req, res, next) => {
                 Authorization: `Bearer ${access_token}`,
             },
         })
-        console.log(user.data, "============")
+
+        const userPwHash = jwt.crypto.createHmac("sha256", SALT).update(`${user.data.id}`).digest("hex")
+
         const sns = {
-            // userPic : user.data.properties.["profile_image"],
-            userId: user.data.id,
-            userPw: user.data.id,
+            userPic: user.data.properties["profile_image"],
+            userId: `${user.data.id}`,
+            userPw: userPwHash,
             userName: user.data.properties.nickname,
+            nickName: user.data.id,
+            address: user.data["kakao_account"].email,
+            gender: user.data["kakao_account"].gender,
+            phoneNum: user.data.id,
+            userEmail: user.data["kakao_account"].email,
             provider: "kakao",
+            userIntro: "회원정보를 수정해 주세요",
             snsId: user.data["kakao_account"].email,
         }
         const [snsCreate] = await User.findOrCreate({
             where: { snsId: sns.snsId },
             defaults: sns,
-        }) // 만들어짐.
-        const { userid, userpw } = snsCreate.dataValues
-        const bodys = { userid, userpw }
-        const result = await axios.post("http://127.0.0.1:3000/auth", bodys, {
-            headers: {
-                "Content-type": "application/json",
-            },
         })
-    } catch (error) { }
-    res.redirect("http://127.0.0.1:3005/")
+        const bodys = sns
+        const result = await axios.post("http://127.0.0.1:3000/auth", bodys)
+        res.redirect(`http://127.0.0.1:3005/token/${result.data.token}`)
+    } catch (error) {}
 })
 
 app.listen(port, async () => {

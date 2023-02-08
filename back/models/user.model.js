@@ -46,7 +46,7 @@ module.exports = (sequelize, Sequelize) => {
                     provider: {
                         type: Sequelize.ENUM("local", "kakao"),
                         allowNull: false,
-                        defaultValue: 'local',
+                        defaultValue: "local",
                     },
                     snsId: {
                         type: Sequelize.STRING(64),
@@ -64,7 +64,6 @@ module.exports = (sequelize, Sequelize) => {
                         type: Sequelize.INTEGER,
                         defaultValue: 0,
                     }
-
                 },
                 {
                     sequelize,
@@ -73,15 +72,14 @@ module.exports = (sequelize, Sequelize) => {
         }
         static associate(models) {
             this.hasMany(models.Board, {
-                foreignKey: "userId"
+                foreignKey: "userId",
             })
             this.hasMany(models.Chat, {
-                foreignKey: "userId"
+                foreignKey: "userId",
             })
             this.belongsToMany(models.Board, {
                 through: "Liked",
-                foreignKey: "userId"
-
+                foreignKey: "userId",
             })
         }
     }
