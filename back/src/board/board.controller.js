@@ -38,10 +38,18 @@ class BoardController {
 
     async deleteBoard(req, res, next) {
         try {
-
             const { boardIdx } = req.params
             console.log(boardIdx, "========================================")
             const result = await this.boardService.DeleteValue({ boardIdx })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+    async pictureInsert(req, res, next) {
+        try {
+            const { arr } = req.body
+            const result = await this.boardService.PictureCreate({ arr })
             res.status(201).json(result)
         } catch (e) {
             next(e)
