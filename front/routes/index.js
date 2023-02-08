@@ -91,6 +91,37 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo })
     }
 })
+
+router.get("/:categoryMain/view/:boardIdx", async (req, res, next) => {
+    const userInfo = req.userInfo
+    const { categoryMain, boardIdx } = req.params
+    const response = await request.post(`/board/${categoryMain}/view`, { userInfo, boardIdx })
+    const { data } = response
+    res.render("board/view.html", { ...data })
+})
+
+router.get("/:categoryMain/delete/:boardIdx", async (req, res, next) => {
+    const { categoryMain, boardIdx } = req.params
+    const result = await request.delete(`/board/${categoryMain}/${boardIdx}`)
+    res.redirect(`/${categoryMain}`)
+})
+
+router.get("/:categoryMain/view/like/:boardIdx", async (req, res, next) => {
+    const userInfo = req.userInfo
+    const { categoryMain, boardIdx } = req.params
+    const response = await request.post(`/board/${categoryMain}/view/like`, { userInfo, categoryMain, boardIdx })
+})
+
+router.get("/:categoryMain/view/modify/:boardIdx", async (req, res, next) => {
+    const userInfo = req.userInfo
+    const { categoryMain, boardIdx } = req.params
+    console.log(categoryMain, boardIdx)
+    const response = await request.put(`/board/${categoryMain}/view`, { userInfo, boardIdx })
+    const { data } = response
+    res.render("board/view.modify.html", { ...data })
+})
+
+
 const HOST = `https://kauth.kakao.com`
 const REDIRECT_URI = `http://127.0.0.1:3000/oauth/kakao`
 const REST_API_KEY = `a540a18bfac74a86ac5ebed64df7ab64`
