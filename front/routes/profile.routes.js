@@ -16,7 +16,9 @@ router.get("/:userId", async (req, res, next) => {
     })
     const { data } = response
     res.render("user/mypage.html", {
-        ...data, boardHot, userHot
+        ...data,
+        boardHot,
+        userHot,
     })
 })
 
@@ -29,12 +31,15 @@ router.get("/modify/:userId", async (req, res, next) => {
     })
     const { data } = response
     res.render("user/mypage.modify.html", {
-        ...data, boardHot, userHot
+        ...data,
+        boardHot,
+        userHot,
     })
 })
 
 router.post("/modify/:id", async (req, res, next) => {
     const { id } = req.params
+    console.log(req.body, 12312321, "======")
     const { boardHot } = req
     const { userHot } = req
     const response = await request.put(`/profile/${id}`, {

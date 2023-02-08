@@ -167,7 +167,7 @@ li {
     border-bottom: 0.2rem solid var(--sdf);
     background-color: #00000030;
     transition: all 0.5s;
-    font-size: 4rem;
+    font-size: 2rem;
     color: var(--color);
 }
 .userPicSize {
@@ -253,4 +253,185 @@ li {
     justify-content: center;
     align-items: end;
     border-bottom: 0.1rem var(--white2) solid;
+}
+/* #chatIcon {
+    position: fixed;
+    bottom: 3rem;
+    right: 3rem;
+    width: 50rem;
+    height: 50rem;
+    background-color: #00000030;
+} */
+#chatIcon_view {
+    width: 8rem;
+    height: 8rem;
+    position: fixed;
+    bottom: 3rem;
+    right: 3rem;
+    overflow: hidden;
+    border-radius: 100%;
+    background: linear-gradient(#3c5aff, #52f2fd);
+    transform: translate3d(0, 0, 0);
+}
+
+.wave1 {
+    width: 20rem;
+    height: 20rem;
+    position: absolute;
+    bottom: 2rem;
+    right: -7rem;
+    border-radius: 40%;
+    background: rgba(3, 169, 244, 0.8);
+    animation: move 8s infinite linear;
+}
+
+.wave2 {
+    width: 20rem;
+    height: 20rem;
+    position: absolute;
+    bottom: 2rem;
+    right: -5rem;
+    border-radius: 45%;
+    background: rgba(22, 37, 93, 0.583);
+    animation: move 7s infinite linear;
+}
+
+.wave3 {
+    width: 25rem;
+    height: 25rem;
+    position: absolute;
+    bottom: 2rem;
+    right: -5rem;
+    border-radius: 45%;
+    background: linear-gradient(rgba(11, 176, 221, 0.31) 70%, transparent);
+    animation: move 9s infinite linear;
+}
+
+.wave4 {
+    width: 25rem;
+    height: 25rem;
+    position: absolute;
+    bottom: 2.5rem;
+    right: -5rem;
+    border-radius: 46%;
+    /* background: linear-gradient(rgba(252, 251, 232, 0.232) 10%, transparent); */
+    animation: move 9s infinite linear;
+}
+#sh {
+    width: 6rem;
+    height: 6rem;
+    position: fixed;
+    bottom: 4rem;
+    right: 3.3rem;
+    background-image: url("/img/sh.png");
+    animation: moves 2.5s infinite linear;
+}
+#imgs {
+    position: absolute;
+    width: 8rem;
+    height: 8rem;
+}
+@keyframes move {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes moves {
+    0%,
+    100% {
+        transform: translateY(-3px);
+    }
+    50% {
+        transform: translateY(3px);
+    }
+}
+
+.open {
+    width: 45rem;
+    height: 60rem;
+    position: fixed;
+    right: 2.8rem;
+    bottom: 2.8rem;
+    background-color: antiquewhite;
+    transition: all 1.5s;
+}
+.close {
+    width: 45rem;
+    height: 60rem;
+    position: fixed;
+    right: -50rem;
+    bottom: 2.8rem;
+    opacity: 0;
+    background-color: antiquewhite;
+    transition: all 1.5s;
+}
+
+#chatHeader {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 5%;
+    background-color: var(--btnColor);
+}
+#chatBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    height: 95%;
+    padding: 2rem;
+}
+#closeBtn {
+    width: 6%;
+    height: 90%;
+    margin-left: 1rem;
+    border-radius: 50%;
+    background-color: red;
+}
+#frm {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 7%;
+    margin-top: 7%;
+}
+#chat {
+    height: fit-content;
+}
+#chat > li {
+    font-size: 1.8rem;
+}
+#chatInput {
+    width: 70%;
+    height: 100%;
+    font-size: 1.6rem;
+    border: none;
+    background-color: initial;
+    border-bottom: var(--sdf) solid 1.5px;
+    padding: 0.5rem 1.5rem;
+}
+#chatSubmit {
+    width: 20%;
+    background-color: var(--btnColor);
+    border: none;
+}
+#chat > li span {
+    padding: 0.5rem 1rem;
+    width: fit-content;
+    border-radius: 1.75rem;
+    height: 3.5rem;
+}
+.right {
+    display: flex;
+    justify-content: flex-end;
+}
+.right > span {
+    background-color: #be8962;
+}
+.left > span {
+    background-color: #edbf9e;
+}
+.left {
+    display: flex;
+    justify-content: flex-start;
 }

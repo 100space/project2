@@ -4,9 +4,11 @@ const gnb = document.querySelector("#gnb")
 const arrow = document.querySelector("#nav > img")
 const userInfo = document.querySelector("#userInfo")
 const infoGnb = document.querySelector("#infoGnb")
-const logout = document.querySelector("#logout")
 const search = document.querySelector("#search")
 const searchBtn = document.querySelector("#searchBtn")
+const chatIcon = document.querySelector("#chatIcon")
+const chatWindow = document.querySelector("#chatWindow")
+const closeBtn = document.querySelector("#closeBtn")
 
 const navfunction = (e) => {
     gnb.classList.toggle("off")
@@ -35,8 +37,21 @@ const searchFunction = (e) => {
     search.classList.toggle("off3")
 }
 
+const chatHandler = (e) => {
+    chatWindow.classList.toggle("open")
+    chatWindow.classList.toggle("close")
+}
+const chatCHandler = (e) => {
+    chatWindow.classList.toggle("open")
+    chatWindow.classList.toggle("close")
+}
+
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)
 userInfo.addEventListener("click", userInfoClick)
 searchBtn.addEventListener("click", searchFunction)
+chatIcon.addEventListener("click", chatHandler)
+closeBtn.addEventListener("click", chatCHandler)
+
+const logout = document.querySelector("#logout")
 logout.addEventListener("click", logoutFunction)

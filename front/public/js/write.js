@@ -148,33 +148,12 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
         "MathType",
     ],
 })
-    .then((editor) => {
-        // submitBtn.addEventListener("click", async (e) => {
-        //     e.preventDefault()
-        // })
-        // let tags = JSON.parse(inputValue)
-        // let tagValues = tags.map((tag) => {
-        //     return tag.value
-        // })
-        // const editorContent = editor.getData()
-        // let inputValue = input.value
-        // const categorySub = categoryMain.value
-        // const pathNameValue = location.pathname.slice(7)
-        // let data = {
-        //     writer: writer.value,
-        //     subject: subject.value,
-        //     content: editorContent,
-        //     tags: tagValues,
-        //     categoryMain: pathNameValue,
-        //     categorySub,
-        // }
-        //     if (!writer.value || !subject.value || !editorContent || !inputValue) {
-        //         alert("빈칸을 입력해주세요")
-        //     }
-        //     else {
-        //         // const response = await request.post(`/board${location.pathname}`, { data })
-        //     }
-    })
+    .then((editor) => {})
     .catch((error) => {
         console.error(error)
     })
+
+cancelBtn.addEventListener("click", () => {
+    const _pathname = location.pathname.slice(6)
+    location.href = `${_pathname}`
+})

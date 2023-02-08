@@ -23,9 +23,9 @@
                     </a>
                 </div>
                 <div id="logBtn">
-                    <div id="searchWrap">
+                    <form id="searchWrap">
                         <input type="text" name="search" id="search" class="off3" />
-                    </div>
+                    </form>
                     <div id="searchBtn" class="circle9">
                         <a href="#"></a>
                     </div>
@@ -158,6 +158,34 @@
                 <li><a href="/user/login">시작하기</a></li>
             </ul>
             {% endif %} {% block content %} {% endblock %}
+            <div id="chatIcon">
+                <div id="chatIcon_view">
+                    <div class="wave1"></div>
+                    <div class="wave2"></div>
+                    <div class="wave3"></div>
+                    <div class="wave4"></div>
+                </div>
+                <div id="imgs">
+                    <span id="sh" class="userPicSize"></span>
+                </div>
+            </div>
+            <div id="chatWindow" class="open">
+                <div id="chatHeader">
+                    <div id="closeBtn"></div>
+                </div>
+                <div id="chatBody">
+                    <ul id="chat">
+                        <li class="right">
+                            <span class="flex-center"> 123qwe </span>
+                        </li>
+                        <li class="left"><span class="flex-center"> 123q11we </span></li>
+                    </ul>
+                    <form id="frm">
+                        <input type="text" name="message" id="chatInput" />
+                        <button type="submit" id="chatSubmit">전송</button>
+                    </form>
+                </div>
+            </div>
         </div>
         <script src="/js/root.js" type="module"></script>
     </body>
