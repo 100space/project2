@@ -8,7 +8,7 @@
     width: 120rem;
     height: 80rem;
     margin: 0 auto;
-    margin-top: 10rem;
+    margin-top: 3rem;
 }
 form {
     width: 90rem;
@@ -49,27 +49,37 @@ form {
     display: flex;
     justify-content: space-between;
 }
+
 #hashTag {
     width: 100%;
-    height: 3rem;
+    height: 4.05rem;
     background-color: #fff;
 }
 #hashTag > input {
     width: 100%;
+    height: 100%;
 }
 
 #subjectBack {
     background-color: var(--white);
 }
-
+.tagify__dropdown {
+    font-size: 16px;
+}
 #container {
     width: 100%;
+    height: fit-content;
     margin: 20px auto;
+    overflow-y: scroll;
+    font-size: 1.6rem;
 }
-
+.ck-editor__main[role="presentation"] {
+    overflow-y: scroll;
+}
 .ck-editor__editable[role="textbox"] {
     /* editing area */
     min-height: 30rem;
+    max-height: 48rem;
 }
 .ck-content .image {
     /* block images */

@@ -5,6 +5,7 @@ const user = require("./user.routes")
 const profile = require("./profile.routes")
 const upload = require("../midlewares/upload")
 const config = require("../config")
+const e = require("express")
 const request = axios.create({
     baseURL: "http://127.0.0.1:3000",
     withCredentials: true,

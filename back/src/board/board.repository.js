@@ -93,8 +93,8 @@ class BoardRepository {
             } else {
                 const likeDelete = await this.liked.destroy({
                     where: {
-                        userId
-                    }
+                        userId,
+                    },
                 })
                 const likeCount = await this.liked.findAll({
                     where: {
@@ -127,10 +127,7 @@ class BoardRepository {
             const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
             if (response) {
                 const result = await this.Board.destroy({ where: { boardIdx } })
-                console.log(result)
             }
-            console.log(response)
-
         } catch (e) {
             throw new Error(`Error while delete status: ${e.message}`)
         }
