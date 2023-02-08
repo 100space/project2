@@ -8,7 +8,9 @@ const request = axios.create({
 })
 
 router.get("/login", (req, res, next) => {
-    res.render("user/login.html")
+    const { boardHot } = req
+    const { userHot } = req
+    res.render("user/login.html", { boardHot, userHot })
 })
 
 router.post("/login", async (req, res, next) => {
@@ -18,11 +20,13 @@ router.post("/login", async (req, res, next) => {
 })
 
 router.post("/join", upload.single("userPic"), async (req, res, next) => {
+    const { boardHot } = req
+    const { userHot } = req
     const response = await request.post("/user/join", {
         ...req.body,
         ...req.file,
     })
-    res.render("user/welcome.html", { ...response.data })
+    res.render("user/welcome.html", { ...response.data, boardHot, userHot })
 })
 
 module.exports = router

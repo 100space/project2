@@ -8,6 +8,15 @@ class UserService {
         this.crypto = jwt.crypto
     }
 
+    async HotValue() {
+        try {
+            const response = await this.userRepository.hotValue()
+            return response
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
     async SignUp({ filename: userPic, userId, userPw, userName, nickName, address1, address2, gender, phoneNum, userEmail, userIntro, provider }) {
         try {
             if (!userId || !userPw || !userName) throw "Invalid or empty, Confirm your Information"

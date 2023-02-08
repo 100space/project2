@@ -3,6 +3,25 @@ class BoardService {
         this.boardRepository = boardRepository
         this.fs = fs
     }
+
+    async RandomValue() {
+        try {
+            const response = await this.boardRepository.randomValue()
+            return response
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async HotValue() {
+        try {
+            const response = await this.boardRepository.hotValue()
+            return response
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
     async FindUserInfo({ userId }) {
         try {
             const response = await this.boardRepository.findUserInfo({ userId })

@@ -2,6 +2,25 @@ class BoardController {
     constructor({ boardService }) {
         this.boardService = boardService
     }
+
+    async getRandom(req, res, next) {
+        try {
+            const response = await this.boardService.RandomValue()
+            res.status(201).json(response)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async getHot(req, res, next) {
+        try {
+            const response = await this.boardService.HotValue()
+            res.status(201).json(response)
+        } catch (e) {
+            next(e)
+        }
+    }
+
     async postWrite(req, res, next) {
         try {
             const {
@@ -18,7 +37,7 @@ class BoardController {
     async infoLike(req, res, next) {
         try {
             const { categoryMain, boardIdx, userInfo } = req.body
-            // console.log(categoryMain, userInfo.userId, boardIdx)
+            console.log(categoryMain, userInfo.userId, boardIdx)
             const result = await this.boardService.InsertLike({ userId: userInfo.userId, boardIdx, categoryMain })
             res.status(201).json(result)
         } catch (e) {

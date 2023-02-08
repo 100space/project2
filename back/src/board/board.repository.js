@@ -1,5 +1,5 @@
 class BoardRepository {
-    constructor({ sequelize }) {
+    constructor({ sequelize, Sequelize }) {
         this.User = sequelize.models.User
         this.Board = sequelize.models.Board
         this.comment = sequelize.models.comment
@@ -9,7 +9,27 @@ class BoardRepository {
         this.category = sequelize.models.category
         this.queryTypes = sequelize.QueryTypes
         this.sequelize = sequelize
+        this.Sequelize = Sequelize
     }
+
+    async randomValue() {
+        try {
+            const boardRandom = await this.Board.findAll({ order: this.sequelize.literal('rand()'), limit: 7, raw: true })
+            return boardRandom
+        } catch (e) {
+            throw new Error(`error while finding randomValue: ${e.message}`)
+        }
+    }
+
+    async hotValue() {
+        try {
+            const boardHot = await this.Board.findAll({ order: this.sequelize.literal('liked DESC'), limit: 3, raw: true })
+        } catch (e) {
+            throw new Error(`error while finding hotValue: ${e.message}`)
+        }
+    }
+
+
     async findUserInfo(payload) {
         const { userId } = payload
         const userInfo = await this.User.findOne({ userId, raw: true })
