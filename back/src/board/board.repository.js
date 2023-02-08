@@ -2,11 +2,12 @@ class BoardRepository {
     constructor({ sequelize, Sequelize }) {
         this.User = sequelize.models.User
         this.Board = sequelize.models.Board
-        this.comment = sequelize.models.comment
+        this.comment = sequelize.models.Comment
         this.liked = sequelize.models.Liked
         this.hash = sequelize.models.Hash
         this.hashtag = sequelize.models.Hashtag
-        this.category = sequelize.models.category
+        this.picture = sequelize.models.Picture
+        this.category = sequelize.models.Category
         this.queryTypes = sequelize.QueryTypes
         this.sequelize = sequelize
         this.Sequelize = Sequelize
@@ -14,7 +15,7 @@ class BoardRepository {
 
     async randomValue() {
         try {
-            const boardRandom = await this.Board.findAll({ order: this.sequelize.literal('rand()'), limit: 7, raw: true })
+            const boardRandom = await this.Board.findAll({ order: this.sequelize.literal("rand()"), limit: 7, raw: true })
             return boardRandom
         } catch (e) {
             throw new Error(`error while finding randomValue: ${e.message}`)
@@ -23,12 +24,11 @@ class BoardRepository {
 
     async hotValue() {
         try {
-            const boardHot = await this.Board.findAll({ order: this.sequelize.literal('liked DESC'), limit: 3, raw: true })
+            const boardHot = await this.Board.findAll({ order: this.sequelize.literal("liked DESC"), limit: 3, raw: true })
         } catch (e) {
             throw new Error(`error while finding hotValue: ${e.message}`)
         }
     }
-
 
     async findUserInfo(payload) {
         const { userId } = payload
@@ -127,6 +127,16 @@ class BoardRepository {
             const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
             if (response) {
                 const result = await this.Board.destroy({ where: { boardIdx } })
+            }
+        } catch (e) {
+            throw new Error(`Error while delete status: ${e.message}`)
+        }
+    }
+    async pictureCreate(payload) {
+        try {
+            const { boardIdx, boardFile } = payload
+            for (let i = 0; i < boardFile.length; i++) {
+                const response = await this.picture.findOrCreate({ where: { boardIdx, picture: boardFile[i] } })
             }
         } catch (e) {
             throw new Error(`Error while delete status: ${e.message}`)

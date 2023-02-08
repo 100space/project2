@@ -51,6 +51,9 @@ module.exports = (sequelize, Sequelize) => {
             this.hasMany(models.ContentImg, {
                 foreignKey: "boardIdx",
             })
+            this.hasMany(models.Picture, {
+                foreignKey: "boardIdx",
+            })
             this.belongsToMany(models.Hashtag, {
                 through: "Hash",
                 foreignKey: "boardIdx",

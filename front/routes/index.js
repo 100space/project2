@@ -92,7 +92,6 @@ router.post("/write/:categoryMain", async (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
     const { categoryMain } = req.params
-    // const a = req.body
     if (!req.body["tags-outside"]) {
         let data = {
             writer: req.body.writer,
@@ -103,7 +102,6 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         }
         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
         const { newBoard, hashtagValue } = response.data
-        console.log(newBoard)
         res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo, boardHot, userHot })
     } else {
         let tags = JSON.parse(req.body["tags-outside"])
