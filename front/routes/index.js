@@ -97,6 +97,35 @@ router.post("/write/:categoryMain", async (req, res, next) => {
     }
 })
 
+router.get("/:categoryMain/view/:boardIdx", async (req, res, next) => {
+    const userInfo = req.userInfo
+    const { categoryMain, boardIdx } = req.params
+    const response = await request.post(`/board/${categoryMain}/view`, { userInfo, boardIdx })
+    const { data } = response
+    res.render("board/view.html", { ...data })
+})
+
+router.get("/:categoryMain/delete/:boardIdx", async (req, res, next) => {
+    const { categoryMain, boardIdx } = req.params
+    const result = await request.delete(`/board/${categoryMain}/${boardIdx}`)
+    res.redirect(`/${categoryMain}`)
+})
+
+router.get("/:categoryMain/view/like/:boardIdx", async (req, res, next) => {
+    const userInfo = req.userInfo
+    const { categoryMain, boardIdx } = req.params
+    const response = await request.post(`/board/${categoryMain}/view/like`, { userInfo, categoryMain, boardIdx })
+})
+
+router.get("/:categoryMain/view/modify/:boardIdx", async (req, res, next) => {
+    const userInfo = req.userInfo
+    const { categoryMain, boardIdx } = req.params
+    console.log(categoryMain, boardIdx)
+    const response = await request.put(`/board/${categoryMain}/view`, { userInfo, boardIdx })
+    const { data } = response
+    res.render("board/view.modify.html", { ...data })
+})
+
 router.get("/oauth/kakao", (req, res, next) => {
     const redirectURL = `${config.kakaoHOST}/oauth/authorize?client_id=${config.kakaoREST_API_KEY}&redirect_uri=${config.kakaoREDIRECT_URI}&response_type=code`
 

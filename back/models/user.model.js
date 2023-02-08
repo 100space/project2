@@ -58,8 +58,12 @@ module.exports = (sequelize, Sequelize) => {
                     },
                     personalNotice: {
                         type: Sequelize.INTEGER,
-                        defaultValue: 0,
+                        defaultValue: 0
                     },
+                    userPoint: {
+                        type: Sequelize.INTEGER,
+                        defaultValue: 0,
+                    }
                 },
                 {
                     sequelize,

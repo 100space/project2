@@ -17,9 +17,31 @@ class BoardController {
 
     async infoLike(req, res, next) {
         try {
-            const { userId, boardIdx } = req.body
-            console.log(userId, boardIdx)
-            const result = await this.boardService.InsertLike({ userId, boardIdx })
+            const { categoryMain, boardIdx, userInfo } = req.body
+            // console.log(categoryMain, userInfo.userId, boardIdx)
+            const result = await this.boardService.InsertLike({ userId: userInfo.userId, boardIdx, categoryMain })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async findBoard(req, res, next) {
+        try {
+            const { boardIdx } = req.body
+            const result = await this.boardService.FindValue({ boardIdx })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async deleteBoard(req, res, next) {
+        try {
+
+            const { boardIdx } = req.params
+            console.log(boardIdx, "========================================")
+            const result = await this.boardService.DeleteValue({ boardIdx })
             res.status(201).json(result)
         } catch (e) {
             next(e)
