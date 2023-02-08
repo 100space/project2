@@ -53,8 +53,8 @@ a {
 button {
     border-radius: 50px;
     box-shadow: 0 1px 1px;
-    border: 1px solid #008ecf;
-    background: #008ecf;
+    border: 1px solid #00121b35;
+    background: var(--btnColor);
     color: #fafafa;
     font-size: 12px;
     font-weight: bold;
@@ -194,7 +194,7 @@ button :focus {
 
 .overlay {
     background: #ff416c;
-    background: linear-gradient(to right, #008ecf, #008ecf) no-repeat 0 0 / cover;
+    background: linear-gradient(to right, #000000b9, #000000b9) no-repeat 0 0 / cover;
     color: #fafafa;
     position: relative;
     left: -100%;

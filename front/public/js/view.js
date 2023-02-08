@@ -3,6 +3,7 @@ const request = axios.create({
     withCredentials: true,
 })
 const hidden = document.querySelector("#hidden")
+const BoardIdx = document.querySelector("#boardIdx")
 const content = document.querySelector("#content")
 const contentValue = hidden.value
 content.innerHTML = `${contentValue}`
@@ -16,9 +17,10 @@ for (let i = 0; i < img.length; i++) {
     // console.log(img[i].currentSrc)
     arr.push(img[i].currentSrc)
 }
-console.log(arr)
+const boardIdx = BoardIdx.value
+
 ;(async () => {
-    const response = await request.post("/board/picture", { arr })
+    const response = await request.post("/board/picture", { arr, boardIdx })
     console.log(response)
 })()
 

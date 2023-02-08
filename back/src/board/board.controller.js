@@ -27,7 +27,7 @@ class BoardController {
                 data: { subject, content, categoryMain, categorySub, tags, writer },
             } = req.body
             const result = await this.boardService.MakeWrite({ subject, content, categoryMain, categorySub, hash: tags, userId: writer })
-            // const response = await this.boardService.FindUserInfo({ userId: writer })
+            console.log(result, "BoardCon")
             res.status(201).json(result)
         } catch (e) {
             next(e)
@@ -58,7 +58,6 @@ class BoardController {
     async deleteBoard(req, res, next) {
         try {
             const { boardIdx } = req.params
-            console.log(boardIdx, "========================================")
             const result = await this.boardService.DeleteValue({ boardIdx })
             res.status(201).json(result)
         } catch (e) {
@@ -67,8 +66,9 @@ class BoardController {
     }
     async pictureInsert(req, res, next) {
         try {
-            const { arr } = req.body
-            const result = await this.boardService.PictureCreate({ arr })
+            const { arr, boardIdx } = req.body
+
+            const result = await this.boardService.PictureCreate({ arr, boardIdx })
             res.status(201).json(result)
         } catch (e) {
             next(e)
