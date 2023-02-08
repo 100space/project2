@@ -4,6 +4,17 @@ class UserController {
     constructor({ userService }) {
         this.userService = userService
     }
+
+    async getHot(req, res, next) {
+        try {
+            const response = await this.userService.HotValue()
+            res.status(201).json(response)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+
     async postSignUp(req, res, next) {
         try {
             const { userId, userPw, userName, nickName, address1, address2, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel, filename } = req.body

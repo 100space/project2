@@ -2,6 +2,25 @@ class BoardService {
     constructor({ boardRepository }) {
         this.boardRepository = boardRepository
     }
+
+    async RandomValue() {
+        try {
+            const response = await this.boardRepository.randomValue()
+            return response
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async HotValue() {
+        try {
+            const response = await this.boardRepository.hotValue()
+            return response
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
     async FindUserInfo({ userId }) {
         try {
             const response = await this.boardRepository.findUserInfo({ userId })
@@ -11,7 +30,6 @@ class BoardService {
     async MakeWrite({ subject, content, categoryMain, categorySub, hash, userId }) {
         try {
             const result = await this.boardRepository.createBoard({ subject, content, categoryMain, categorySub, hash, userId })
-            console.log(result, "servic")
             return result
         } catch (e) {
             throw new Error(e)

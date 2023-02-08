@@ -6,7 +6,7 @@ const BoardController = require("./board.controller");
 
 
 
-const boardRepository = new BoardRepository({ sequelize });
+const boardRepository = new BoardRepository({ sequelize, Sequelize });
 const boardService = new BoardService({ boardRepository });
 const boardController = new BoardController({ boardService });
 

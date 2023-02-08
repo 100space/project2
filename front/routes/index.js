@@ -10,13 +10,17 @@ const request = axios.create({
     withCredentials: true,
 })
 
-router.use("/user", user)
-router.use("/profile", profile)
 router.use("/", async (req, res, next) => {
     try {
         const { token } = req.cookies
         if (token === undefined) {
             req.user = { userId: "guest" }
+            const boardResponse = await request.get("/board/hot")
+            const boardHot = boardResponse.data
+            req.boardHot = boardHot
+            const userResponse = await request.get("/user/hot")
+            const userHot = userResponse.data
+            req.userHot = userHot
         } else {
             const [header, payload, signature] = token.split(".")
             const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
@@ -27,43 +31,65 @@ router.use("/", async (req, res, next) => {
             })
             const { data } = response
             req.userInfo = data
+            const boardResponse = await request.get("/board/hot")
+            const boardHot = boardResponse.data
+            req.boardHot = boardHot
+            const userResponse = await request.get("/user/hot")
+            const userHot = userResponse.data
+            req.userHot = userHot
         }
     } catch (error) {
     } finally {
         next()
     }
 })
+router.use("/user", user)
+router.use("/profile", profile)
 
 router.get("/token/:token", async (req, res, next) => {
     const { token } = req.params
     res.cookie("token", token)
     res.redirect("/")
 })
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
     const userInfo = req.userInfo
-    res.render("index.html", { ...userInfo })
+    const { boardHot } = req
+    const { userHot } = req
+    const response = await request.get("/board/random")
+    const { data } = response
+    res.render("index.html", { ...userInfo, data, boardHot, userHot })
 })
 
 router.get("/notice", (req, res, next) => {
     const userInfo = req.userInfo
-    res.render("board/list.html", { ...userInfo })
+    const { boardHot } = req
+    const { userHot } = req
+    res.render("board/list.html", { ...userInfo, boardHot, userHot })
 })
 router.get("/community", (req, res, next) => {
     const userInfo = req.userInfo
-    res.render("board/list.html", { ...userInfo })
+    const { boardHot } = req
+    const { userHot } = req
+    res.render("board/list.html", { ...userInfo, boardHot, userHot })
 })
 router.get("/qna", (req, res, next) => {
     const userInfo = req.userInfo
-    res.render("board/list.html", { ...userInfo })
+    const { boardHot } = req
+    const { userHot } = req
+    res.render("board/list.html", { ...userInfo, boardHot, userHot })
 })
 
 router.get("/write/:categoryMain", (req, res, next) => {
     const userInfo = req.userInfo
+    const { boardHot } = req
+    const { userHot } = req
     const { categoryMain } = req.params
-    res.render("board/write.html", { ...userInfo, categoryMain })
+    res.render("board/write.html", { ...userInfo, categoryMain, boardHot, userHot })
 })
 router.post("/write/:categoryMain", async (req, res, next) => {
     const userInfo = req.userInfo
+    const { boardHot } = req
+    const { userHot } = req
     const { categoryMain } = req.params
     // const a = req.body
     if (!req.body["tags-outside"]) {
@@ -77,7 +103,7 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
         const { newBoard, hashtagValue } = response.data
         console.log(newBoard)
-        res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo })
+        res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo, boardHot, userHot })
     } else {
         let tags = JSON.parse(req.body["tags-outside"])
         let tagValues = tags.map((tag) => {
@@ -93,37 +119,46 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         }
         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
         const { newBoard, hashtagValue } = response.data
-        res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo })
+        res.render("board/view.html", { ...newBoard, hashtagValue, ...userInfo, boardHot, userHot })
     }
 })
 
 router.get("/:categoryMain/view/:boardIdx", async (req, res, next) => {
     const userInfo = req.userInfo
+    const { boardHot } = req
+    const { userHot } = req
     const { categoryMain, boardIdx } = req.params
     const response = await request.post(`/board/${categoryMain}/view`, { userInfo, boardIdx })
     const { data } = response
-    res.render("board/view.html", { ...data })
+    res.render("board/view.html", { ...data, boardHot, userHot })
 })
 
 router.get("/:categoryMain/delete/:boardIdx", async (req, res, next) => {
     const { categoryMain, boardIdx } = req.params
+    const { boardHot } = req
+    const { userHot } = req
     const result = await request.delete(`/board/${categoryMain}/${boardIdx}`)
     res.redirect(`/${categoryMain}`)
 })
 
 router.get("/:categoryMain/view/like/:boardIdx", async (req, res, next) => {
     const userInfo = req.userInfo
+    const { boardHot } = req
+    const { userHot } = req
     const { categoryMain, boardIdx } = req.params
     const response = await request.post(`/board/${categoryMain}/view/like`, { userInfo, categoryMain, boardIdx })
+    res.redirect(`/${categoryMain}/view/${boardIdx}`)
 })
 
 router.get("/:categoryMain/view/modify/:boardIdx", async (req, res, next) => {
     const userInfo = req.userInfo
+    const { boardHot } = req
+    const { userHot } = req
     const { categoryMain, boardIdx } = req.params
     console.log(categoryMain, boardIdx)
     const response = await request.put(`/board/${categoryMain}/view`, { userInfo, boardIdx })
     const { data } = response
-    res.render("board/view.modify.html", { ...data })
+    res.render("board/view.modify.html", { ...data, boardHot, userHot })
 })
 
 router.get("/oauth/kakao", (req, res, next) => {

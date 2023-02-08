@@ -3,6 +3,16 @@ class UserRepository {
         this.User = User
         this.sequelize = sequelize
     }
+
+    async hotValue() {
+        try {
+            const userHot = await this.User.findAll({ order: this.sequelize.literal('userPoint DESC'), limit: 3, raw: true })
+            return userHot
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
     async addUser(payload) {
         try {
             const user = await this.User.create(payload, { raw: true })
