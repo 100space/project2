@@ -99,6 +99,15 @@ class BoardService {
             throw new Error(e)
         }
     }
+
+    async PagingValue({ categoryMain, categorySub, pagingIndex }) {
+        try {
+            const result = await this.boardRepository.pagingValue({ categoryMain, categorySub, pagingIndex })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
 }
 
 module.exports = BoardService
