@@ -26,8 +26,9 @@ class BoardService {
         try {
             const response = await this.boardRepository.findUserInfo({ userId })
             return response
-        } catch (error) {}
+        } catch (error) { }
     }
+
     async MakeWrite({ subject, content, categoryMain, categorySub, hash, userId }) {
         try {
             const result = await this.boardRepository.createBoard({ subject, content, categoryMain, categorySub, hash, userId })
@@ -36,6 +37,7 @@ class BoardService {
             throw new Error(e)
         }
     }
+
     async InsertLike({ userId, boardIdx, categoryMain }) {
         try {
             const result = await this.boardRepository.insertLike({ userId, boardIdx, categoryMain })

@@ -12,11 +12,12 @@
 
 // console.log(array)
 
-const hashValue = ["title", "hava", "test"]
 
-const hashObject = hashValue.reduce((acc, value, index) => {
-    acc[`hash${index + 1}`] = value
-    return acc
-}, {})
+// Hash용
+// ```sql
+// SELECT B.hashtagIdx FROM Board A JOIN Hash B ON A.boardIdx =B.boardIdx
 
-console.log(hashObject)
+
+// (SELECT hashTagIdx, tag FROM Hashtag)
+// qqq
+
