@@ -101,7 +101,7 @@ router.post("/write/:categoryMain", async (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
     const { categoryMain } = req.params
-    if (!req.body["tags-outside"]) {
+    if (req.body["tags-outside"] === "") {
         let data = {
             writer: req.body.writer,
             subject: req.body.subject,
@@ -110,9 +110,8 @@ router.post("/write/:categoryMain", async (req, res, next) => {
             categorySub: req.body.categorySub,
         }
         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
-        console.log(response)
-        const { data: { newBoard, newHashTagVal } } = response
-        res.render("board/view.html", { ...newBoard, newHashTagVal, ...userInfo, boardHot, userHot })
+        const writeValue = response.data
+        res.render("board/view.html", { ...writeValue, ...userInfo, boardHot, userHot })
     } else {
         let tags = JSON.parse(req.body["tags-outside"])
         let tagValues = tags.map((tag) => {
@@ -128,6 +127,7 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         }
         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
         const { data: { newBoard, newHashTagVal } } = response
+        console.log(newHashTagVal)
         res.render("board/view.check.html", { ...newBoard, newHashTagVal, ...userInfo, boardHot, userHot })
     }
 })

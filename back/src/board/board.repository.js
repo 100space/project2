@@ -52,6 +52,7 @@ class BoardRepository {
             const { subject, content, categoryMain, categorySub, hash, userId } = payload
             const newBoard = (await this.Board.create({ subject, content, categoryMain, categorySub, userId })).get({ plain: true })
             const newHashTagVal = []
+
             if (hash) {
                 const boardContent = await this.sequelize.query("SELECT * FROM Board ORDER BY boardIdx DESC limit 1", { type: this.queryTypes.SELECT })
                 const [lastBoard] = boardContent
@@ -68,9 +69,9 @@ class BoardRepository {
                         where: { boardIdx, hashTagIdx: hashVal[j] }
                     })
                 }
-
                 return { newBoard, newHashTagVal }
             }
+            return newBoard
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)
         }
