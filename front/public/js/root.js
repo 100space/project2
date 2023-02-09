@@ -27,7 +27,7 @@ const gnbfunction = async (e) => {
     console.log(response)
 }
 const userInfoClick = (e) => {
-    console.log(e.target)
+    console.log(infoGnb.classList.toString())
     infoGnb.classList.toggle("off2")
 }
 const logoutFunction = (e) => {

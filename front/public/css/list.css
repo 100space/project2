@@ -4,7 +4,7 @@ body {
 }
 #viewWrap {
     width: 120rem;
-    height: 90vh;
+    height: 82vh;
     margin: 0 auto;
 }
 
@@ -87,8 +87,8 @@ body {
 }
 
 .boardBtn {
-    width: 23rem;
-    height: 4;
+    width: 30rem;
+    height: 4rem;
 }
 input {
     width: 17rem;
@@ -96,6 +96,7 @@ input {
     border: none;
     background-color: #00000010;
     font-size: 2rem;
+    margin-right: 2rem;
 }
 input:hover {
     background-color: #00000020;
@@ -128,4 +129,10 @@ button {
     color: var(--color);
     background: var(--btnColor);
     outline: none;
+}
+#pageBtn > li {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 2rem;
 }

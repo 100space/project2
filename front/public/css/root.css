@@ -384,7 +384,7 @@ li {
     height: 90%;
     margin-left: 1rem;
     border-radius: 50%;
-    background-color: red;
+    background-color: rgba(176, 24, 24, 0.985);
 }
 #frm {
     display: flex;
