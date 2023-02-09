@@ -108,6 +108,15 @@ class BoardService {
             throw new Error(e)
         }
     }
+
+    async FindSearch({ search }) {
+        try {
+            const result = await this.boardRepository.findSearch({ search })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
 }
 
 module.exports = BoardService
