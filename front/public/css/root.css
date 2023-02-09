@@ -410,9 +410,14 @@ li {
     padding: 0.5rem 1.5rem;
 }
 #chatSubmit {
-    width: 20%;
-    background-color: var(--btnColor);
+    width: 8rem;
+    height: 4rem;
+    border-radius: 2.5rem;
+    font-size: 1.8rem;
     border: none;
+    color: var(--color);
+    background: var(--btnColor);
+    outline: none;
 }
 #chat > li span {
     padding: 0.5rem 1rem;
@@ -426,14 +431,27 @@ li {
 .right {
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 2rem;
 }
 .right > span {
-    background-color: #be8962;
+    background-color: #d09b75;
+    color: #333;
 }
 .left > span {
     background-color: #edbf9e;
 }
 .left {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+.reply {
+    justify-content: flex-start;
+    flex-direction: column;
+}
+.reply > p {
+    /* width: 100%; */
     display: flex;
     justify-content: flex-start;
 }

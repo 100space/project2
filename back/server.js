@@ -12,6 +12,7 @@ const axios = require("axios")
 const JWT = require("./lib/jwt")
 const crypto = require("crypto")
 const SALT = process.env.SALT
+const SocketIO = require("./routes/socketIO")
 const jwt = new JWT({ crypto })
 const userPw = "11"
 const hash = jwt.crypto.createHmac("sha256", SALT).update(userPw).digest("hex")
@@ -74,10 +75,12 @@ app.get("/oauth/kakao", async (req, res, next) => {
         const bodys = sns
         const result = await axios.post("http://127.0.0.1:3000/auth", bodys)
         res.redirect(`http://127.0.0.1:3005/token/${result.data.token}`)
-    } catch (error) { }
+    } catch (error) {
+        next(error)
+    }
 })
 
-app.listen(port, async () => {
+const http = app.listen(port, async () => {
     console.log("connecting to backend and Database...")
     await sequelize.sync({ force: true })
     for (i = 1; i <= 10; i++) {
@@ -111,3 +114,4 @@ app.listen(port, async () => {
     })
     console.log(`Starting Server with port Number is ${port}`)
 })
+SocketIO(http, app)
