@@ -109,7 +109,7 @@ Board 기초작업
 Day 6 Will be update
 Board 작업예정 
 
-##Day 6 Completed
+## Day 6 Completed
 1) MyPage 작업완료
 2) 회원가입 이용약관 iFrame 적용완료
 3) Board CRUD 기초 설계 진행
@@ -117,7 +117,7 @@ Board 작업예정
 Day 7 Will be update
 User 기능 마무리 및 Board 작업
 
-##Day 7 Completed
+## Day 7 Completed
 1) MyPage 작업완료
 2) Board View 페이지 구현완료
 3) Like 기능 구현 완료 
@@ -125,11 +125,11 @@ User 기능 마무리 및 Board 작업
 Day 8 Will be update
 Board 기능 구현
 
-##Day 7 Completed
+## Day 8 Completed
 1)Front Router작업
 2)Notification 기능 구현
 3)Board CRUD 작업 진행
 
-Day 8 Will be update
+Day 9 Will be update
 Board 기능 구현
 
