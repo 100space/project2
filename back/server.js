@@ -83,7 +83,7 @@ app.get("/oauth/kakao", async (req, res, next) => {
 const http = app.listen(port, async () => {
     console.log("connecting to backend and Database...")
     await sequelize.sync({ force: true })
-    for (i = 1; i <= 20; i++) {
+    for (i = 1; i <= 50; i++) {
         await User.create({
             userId: `admin${i}`,
             userPw: hash,

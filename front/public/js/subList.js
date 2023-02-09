@@ -2,6 +2,10 @@ let pathname = location.pathname
 const contentSub = document.querySelector("#contentSub")
 const boardHeader = document.querySelector("#boardHeader")
 const writeBtn = document.querySelector("#writeBtn")
+const boardCount = document.querySelector("#boardCount")
+const prev = document.querySelector("#prev")
+const next = document.querySelector("#next")
+const pageNum = document.querySelector("#pageNum")
 
 let pathname2 = pathname.substring(0, 7)
 let pathname3 = pathname2 === "/notice" ? "공지사항" : pathname2 === "/commun" ? "커뮤니티" : "질문과 답변"
@@ -15,3 +19,36 @@ const writeBtnHandler = (e) => {
     location.href = `/write/${writePath}`
 }
 writeBtn.addEventListener("click", writeBtnHandler)
+
+const page = Math.floor(boardCount.value / 5) + 1
+console.log(page)
+let pageBlock = 1
+console.log(pageBlock)
+for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
+    console.log(i)
+    const a = document.createElement("a")
+    pageNum.append(a)
+    a.setAttribute("href", `/{{mainVal}}/{{categorySub}}/${i}`)
+    a.innerHTML = `${i}`
+}
+prev.addEventListener("click", () => {
+    pageBlock--
+    console.log(pageBlock)
+    for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
+        a.setAttribute("href", `/{{mainVal}}/{{categorySub}}/${i}`)
+        a.innerHTML = `${i}`
+    }
+})
+// for (let i = 5 * pageBlock - 4; i < page; i++) {
+//     console.log(i)
+// }
+
+next.addEventListener("click", () => {
+    pageBlock++
+    console.log(pageBlock)
+    for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
+        console.log(i)
+        a.setAttribute("href", `/{{mainVal}}/{{categorySub}}/${i}`)
+        a.innerHTML = `${i}`
+    }
+})
