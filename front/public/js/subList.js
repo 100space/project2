@@ -3,9 +3,10 @@ const contentSub = document.querySelector("#contentSub")
 const boardHeader = document.querySelector("#boardHeader")
 const writeBtn = document.querySelector("#writeBtn")
 
-let pathname2 = pathname === "/notice" ? "공지사항" : pathname === "/community" ? "커뮤니티" : "질문과 답변"
+let pathname2 = pathname.substring(0, 7)
+let pathname3 = pathname2 === "/notice" ? "공지사항" : pathname2 === "/commun" ? "커뮤니티" : "질문과 답변"
 
-boardHeader.innerHTML = `<div>${pathname2}</div>
+boardHeader.innerHTML = `<div>${pathname3}</div>
     <div>${pathname.slice(1).replace(/^[a-z]/, (char) => char.toUpperCase())}</div>`
 
 const writeBtnHandler = (e) => {

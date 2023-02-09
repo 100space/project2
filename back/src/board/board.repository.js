@@ -60,6 +60,7 @@ class BoardRepository {
                 for (let i = 0; i < hash.length; i++) {
                     const result = hash[i]
                     const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
+
                     newHashTagVal.push(newHashTag)
                 }
                 const hashVal = newHashTagVal.map(x => x.hashTagIdx)
@@ -170,6 +171,20 @@ class BoardRepository {
             return { response, subCount }
         } catch (e) {
             throw new Error(`Error while find subCategory: ${e.message}`)
+        }
+    }
+
+    async pagingValue({ categoryMain, categorySub, pagingIndex }) {
+        try {
+            const countpaging = (5 * pagingIndex) - 5
+            console.log(categoryMain, categorySub, pagingIndex)
+            const response = await this.sequelize.query(`SELECT row_number() over(order by boardIdx asc) AS num, subject, content, viewCount, categoryMain, categorySub, userId, createdAt, liked FROM Board WHERE categoryMain='${categoryMain}' AND categorySub='${categorySub}' limit 5 OFFSET ${countpaging}`, { type: this.queryTypes.SELECT })
+            const subCount = await this.Board.count({
+                where: { categoryMain, categorySub }
+            })
+            return { response, subCount }
+        } catch (e) {
+            throw new Error(`Error while find pagingValue: ${e.message}`)
         }
     }
 }
