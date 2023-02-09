@@ -1,0 +1,20 @@
+{% extends 'layout/layout.html'%} {% block css %}
+<link rel="stylesheet" href="/css/search.css" />
+{% endblock %} {% block content %}
+<div id="search_Wrap">
+    <div id="search_result" class="flex">' {{search}} '에 대한 검색 결과</div>
+    <div id="resultBody">
+        <div class="searchBox">
+            <span id="userSearch" class="searchHeader flex">유저 정보</span>
+
+            <div>1</div>
+            <div>1</div>
+            <div>1</div>
+        </div>
+        <div class="searchBox">
+            <span id="boardSearch" class="searchHeader flex">게시판 정보</span>
+            <div></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

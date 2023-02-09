@@ -8,7 +8,7 @@
     --whitehover: rgba(250, 235, 215, 0.532);
     --btnColor: #be8962;
     /* --white2: rgba(21, 21, 21, 0.49); */
-    --color: #fafafa;
+    --color: #eaeaea;
 }
 .font-color {
     color: var(--color);
@@ -25,7 +25,7 @@ html {
     font-size: 62.5%;
     font-family: "SeoulNamsanC";
     font-weight: 700;
-    color: #333;
+    color: #444;
 }
 a {
     color: initial;
@@ -169,6 +169,7 @@ li {
     transition: all 0.5s;
     font-size: 2rem;
     color: var(--color);
+    padding: 5px 10px;
 }
 .userPicSize {
     background-size: 100% 100%;
@@ -254,14 +255,7 @@ li {
     align-items: end;
     border-bottom: 0.1rem var(--white2) solid;
 }
-/* #chatIcon {
-    position: fixed;
-    bottom: 3rem;
-    right: 3rem;
-    width: 50rem;
-    height: 50rem;
-    background-color: #00000030;
-} */
+
 #chatIcon_view {
     width: 8rem;
     height: 8rem;
@@ -380,6 +374,10 @@ li {
     width: 100%;
     height: 95%;
     padding: 2rem;
+    background-image: url(/img/nav2.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 75%;
 }
 #closeBtn {
     width: 6%;
@@ -392,11 +390,12 @@ li {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    height: 7%;
-    margin-top: 7%;
+    height: 9%;
+    margin-top: 5%;
 }
 #chat {
     height: fit-content;
+    overflow-y: scroll;
 }
 #chat > li {
     font-size: 1.8rem;
@@ -418,8 +417,11 @@ li {
 #chat > li span {
     padding: 0.5rem 1rem;
     width: fit-content;
+    max-width: 50%;
+    word-break: break-all;
     border-radius: 1.75rem;
-    height: 3.5rem;
+    height: fit-content;
+    min-height: 3.5rem;
 }
 .right {
     display: flex;

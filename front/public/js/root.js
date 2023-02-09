@@ -9,6 +9,8 @@ const searchBtn = document.querySelector("#searchBtn")
 const chatIcon = document.querySelector("#chatIcon")
 const chatWindow = document.querySelector("#chatWindow")
 const closeBtn = document.querySelector("#closeBtn")
+const chat = document.querySelector("#chat")
+const frm = document.querySelector("#frm")
 
 const navfunction = (e) => {
     gnb.classList.toggle("off")
@@ -40,18 +42,25 @@ const searchFunction = (e) => {
 const chatHandler = (e) => {
     chatWindow.classList.toggle("open")
     chatWindow.classList.toggle("close")
+    chat.scrollTop = chat.scrollHeight
 }
 const chatCHandler = (e) => {
     chatWindow.classList.toggle("open")
     chatWindow.classList.toggle("close")
+    chat.scrollTop = chat.scrollHeight
 }
-
+const chatSubmitHandler = (e) => {
+    e.preventDefault()
+    chat.scrollTop = chat.scrollHeight
+    console.log(e.target)
+}
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)
 userInfo.addEventListener("click", userInfoClick)
 searchBtn.addEventListener("click", searchFunction)
+// search.addEventListener("keypress", searchEvent)
 chatIcon.addEventListener("click", chatHandler)
 closeBtn.addEventListener("click", chatCHandler)
-
+frm.addEventListener("submit", chatSubmitHandler)
 const logout = document.querySelector("#logout")
 logout.addEventListener("click", logoutFunction)

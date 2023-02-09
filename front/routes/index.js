@@ -61,6 +61,15 @@ router.get("/", async (req, res, next) => {
     res.render("index.html", { ...userInfo, data, boardHot, userHot })
 })
 
+router.get("/search", (req, res, next) => {
+    const userInfo = req.userInfo
+    const { boardHot } = req
+    const { userHot } = req
+    const { search } = req.query
+    console.log(search)
+    res.render("board/search.html", { ...userInfo, boardHot, userHot, search })
+})
+
 router.get("/notice", (req, res, next) => {
     const userInfo = req.userInfo
     const { boardHot } = req
