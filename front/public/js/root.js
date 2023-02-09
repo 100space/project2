@@ -11,7 +11,12 @@ const chatWindow = document.querySelector("#chatWindow")
 const closeBtn = document.querySelector("#closeBtn")
 const chat = document.querySelector("#chat")
 const frm = document.querySelector("#frm")
+const socket = io.connect("http://127.0.0.1:3000", {
+    path: "/socket.io",
+    transports: ["websocket"],
+})
 
+console.log(socket.on, "socket")
 const navfunction = (e) => {
     gnb.classList.toggle("off")
     arrow.classList.toggle("deg")
@@ -51,9 +56,33 @@ const chatCHandler = (e) => {
 }
 const chatSubmitHandler = (e) => {
     e.preventDefault()
-    chat.scrollTop = chat.scrollHeight
     console.log(e.target)
+    const { message, nickName } = e.target
+    const data = message.value
+    const userNick = nickName.value
+    const li = document.createElement("li")
+    li.classList.add("right")
+    li.innerHTML = `<span class="flex-center"> ${message.value} </span>`
+    chat.append(li)
+    chat.scrollTop = chat.scrollHeight
+    socket.emit("data", { data, userNick })
+    e.target.reset()
+    message.focus()
 }
+
+socket.on("reply", (data1) => {
+    const json = JSON.parse(data1)
+    console.log(json)
+    const { chunk, data } = json
+    const li = document.createElement("li")
+    li.classList.add("left")
+    console.log(chunk)
+    li.innerHTML = `<p >${chunk}</p>
+    <span class="flex-center reply"><p>${data}</p></span>`
+    chat.append(li)
+    chat.scrollTop = chat.scrollHeight
+})
+
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)
 userInfo.addEventListener("click", userInfoClick)

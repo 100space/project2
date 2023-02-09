@@ -5,7 +5,6 @@ const user = require("./user.routes")
 const profile = require("./profile.routes")
 const upload = require("../midlewares/upload")
 const config = require("../config")
-const e = require("express")
 const request = axios.create({
     baseURL: "http://127.0.0.1:3000",
     withCredentials: true,
@@ -46,7 +45,9 @@ router.use("/", async (req, res, next) => {
 })
 router.use("/user", user)
 router.use("/profile", profile)
-
+router.get("/io", (req, res, next) => {
+    res.render("/layout/layout.html")
+})
 router.get("/token/:token", async (req, res, next) => {
     const { token } = req.params
     res.cookie("token", token)
@@ -164,7 +165,7 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         }
         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
         const writeValue = response.data
-        res.render("board/view.html", { ...writeValue, ...userInfo, boardHot, userHot })
+        res.render("board/view.check.html", { ...writeValue, ...userInfo, boardHot, userHot })
     } else {
         let tags = JSON.parse(req.body["tags-outside"])
         let tagValues = tags.map((tag) => {
@@ -179,7 +180,9 @@ router.post("/write/:categoryMain", async (req, res, next) => {
             categorySub: req.body.categorySub,
         }
         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
-        const { data: { newBoard, newHashTagVal } } = response
+        const {
+            data: { newBoard, newHashTagVal },
+        } = response
         console.log(newHashTagVal)
         res.render("board/view.check.html", { ...newBoard, newHashTagVal, ...userInfo, boardHot, userHot })
     }

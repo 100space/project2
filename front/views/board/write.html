@@ -13,7 +13,7 @@
 <br />
 {% extends 'layout/layout.html'%} {% block content %}
 <div id="contentArea">
-    <form action="/write/{{categoryMain}}" method="post">
+    <form action="/write/{{categoryMain}}" method="post" id="writeFrm">
         {% if categoryMain === "notice" %}
         <select name="categorySub" class="categoryMain">
             <option value="1">1</option>

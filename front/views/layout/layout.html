@@ -157,7 +157,7 @@
             <ul id="infoGnb" class="off2 gnb_flex">
                 <li><a href="/user/login">시작하기</a></li>
             </ul>
-            {% endif %} {% block content %} {% endblock %} {% if userId %}
+            {% endif %} {% if userId %}
             <div id="chatIcon">
                 <div id="chatIcon_view">
                     <div class="wave1"></div>
@@ -175,31 +175,27 @@
                 </div>
                 <div id="chatBody">
                     <ul id="chat">
-                        <li class="right">
-                            <span class="flex-center"> sdfjlaksdfjahkjasdfkjjsadlkfjlksadfjlksadfjlksadjlkasdjalskdfjasdflkjasdfoiwjoifjwoeifj123qwe </span>
-                        </li>
                         <li class="left"><span class="flex-center"> 123q11we </span></li>
                         <li class="right">
                             <span class="flex-center"> sdfjlaksdfjahkjasdfkjjsadlkfjlksadfjlksadfjlksadjlkasdjalskdfjasdflkjasdfoiwjoifjwoeifj123qwe </span>
                         </li>
-                        <li class="left"><span class="flex-center"> 123q11we </span></li>
-                        <li class="right">
-                            <span class="flex-center"> sdfjlaksdfjahkjasdfkjjsadlkfjlksadfjlksadfjlksadjlkasdjalskdfjasdflkjasdfoiwjoifjwoeifj123qwe </span>
+                        <li class="left">
+                            <p></p>
+                            <span class="flex-center reply">
+                                <p>${data}sdfsdfsdfsdfsdfsdfsdfsdf</p>
+                            </span>
                         </li>
-                        <li class="left"><span class="flex-center"> 123q11we </span></li>
-                        <li class="right">
-                            <span class="flex-center"> sdfjlaksdfjahkjasdfkjjsadlkfjlksadfjlksadfjlksadjlkasdjalskdfjasdflkjasdfoiwjoifjwoeifj123qwe </span>
-                        </li>
-                        <li class="left"><span class="flex-center"> 123q11we </span></li>
                     </ul>
                     <form id="frm">
+                        <input type="hidden" name="nickName" value="{{nickName}}" />
                         <input type="text" name="message" id="chatInput" />
                         <button type="submit" id="chatSubmit">전송</button>
                     </form>
                 </div>
             </div>
-            {% endif %}
+            {% endif %} {% block content %} {% endblock %}
         </div>
         <script src="/js/root.js" type="module"></script>
+        <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     </body>
 </html>
