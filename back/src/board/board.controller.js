@@ -90,7 +90,16 @@ class BoardController {
         try {
             const { categoryMain, categorySub } = req.params
             const result = await this.boardService.CategorySubValue({ categoryMain, categorySub })
-            console.log(result)
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async findPagingValue(req, res, next) {
+        try {
+            const { categoryMain, categorySub, pagingindex } = req.params
+            const result = await this.boardService.PagingValue({ categoryMain, categorySub, pagingIndex: pagingindex })
             res.status(201).json(result)
         } catch (e) {
             next(e)
