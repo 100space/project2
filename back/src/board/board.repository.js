@@ -15,8 +15,19 @@ class BoardRepository {
 
     async randomValue() {
         try {
-            const boardRandom = await this.Board.findAll({ order: this.sequelize.literal("rand()"), limit: 7, raw: true })
-            return boardRandom
+            // const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx order by rand() Limit 7", { type: this.queryTypes.SELECT })
+            const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked,A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where B.picture LIKE '__\_0%'  order by rand() Limit 7", { type: this.queryTypes.SELECT })
+            const randomUser = []
+            const randomHash = []
+            for (let i = 0; i < boardRandom.length; i++) {
+                const randomUserid = boardRandom[i].userId
+                const randomboaridx = boardRandom[i].boardIdx
+                const randomUserinfo = await this.User.findOne({ where: { userId: randomUserid }, raw: true })
+                randomUser.push(randomUserinfo)
+                const randomhashtagValue = await this.sequelize.query(`SELECT B.boardIdx, A.tag FROM Hashtag A LEFT JOIN Hash B ON A.hashTagIdx = B.hashTagIdx`)
+            }
+            return { boardRandom, randomUser }
+
         } catch (e) {
             throw new Error(`error while finding randomValue: ${e.message}`)
         }
@@ -39,31 +50,27 @@ class BoardRepository {
     async createBoard(payload) {
         try {
             const { subject, content, categoryMain, categorySub, hash, userId } = payload
-            const hashValue = hash.reduce((acc, value, index) => {
-                acc[`hash${index + 1}`] = value
-                return acc
-            }, {})
-            const newBoard = await this.Board.create({ subject, content, categoryMain, categorySub, userId }, { plain: true })
-
-            if (hashValue) {
-                const boardContent = await this.Board.findOne({ where: { subject }, raw: true })
-                const { boardIdx } = boardContent
-                for (let i = 0; i < Object.keys(hashValue).length; i++) {
+            const newBoard = (await this.Board.create({ subject, content, categoryMain, categorySub, userId })).get({ plain: true })
+            const newHashTagVal = []
+            if (hash) {
+                const boardContent = await this.sequelize.query("SELECT * FROM Board ORDER BY boardIdx DESC limit 1", { type: this.queryTypes.SELECT })
+                const [lastBoard] = boardContent
+                const { boardIdx } = lastBoard
+                for (let i = 0; i < hash.length; i++) {
                     const result = hash[i]
-                    const newHashTag = await this.hashtag.create({ hashtagIdx: boardIdx, tag: result })
+                    const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
+                    newHashTagVal.push(newHashTag)
                 }
-                for (let j = 1; j <= hash.length; j++) {
+                const hashVal = newHashTagVal.map(x => x.hashTagIdx)
+                console.log(hashVal)
+                for (let j = 0; j < hashVal.length; j++) {
                     const newHash = await this.hash.findOrCreate({
-                        where: { boardIdx, hashTagIdx: j },
-                        defaults: {
-                            boardIdx,
-                            hashTagIdx: j,
-                        },
+                        where: { boardIdx, hashTagIdx: hashVal[j] }
                     })
                 }
+
+                return { newBoard, newHashTagVal }
             }
-            const hashtagValue = await this.sequelize.query("SELECT B.boardIdx, A.tag FROM Hashtag A LEFT JOIN Hash B ON A.hashTagIdx = B.hashTagIdx", { type: this.queryTypes.SELECT })
-            return { newBoard, hashtagValue }
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)
         }
