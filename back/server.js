@@ -74,7 +74,7 @@ app.get("/oauth/kakao", async (req, res, next) => {
         const bodys = sns
         const result = await axios.post("http://127.0.0.1:3000/auth", bodys)
         res.redirect(`http://127.0.0.1:3005/token/${result.data.token}`)
-    } catch (error) {}
+    } catch (error) { }
 })
 
 app.listen(port, async () => {
@@ -93,7 +93,9 @@ app.listen(port, async () => {
             userIntro: "11",
             userPic: `${i}.png`,
         })
+        await Hashtag.create({ hashTagIdx: `${i}`, tag: `${i}` })
         await Board.create({ subject: `test${i}`, content: "test", categoryMain: "Q&A", categorySub: "baek", userId: `admin${i}` })
+        await Hash.create({ boardIdx: `${i}`, hashTagIdx: `${i}` })
     }
     await User.create({
         userId: `guest`,

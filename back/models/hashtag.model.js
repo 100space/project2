@@ -18,10 +18,9 @@ module.exports = (sequelize, Sequelize) => {
                 })
         }
         static associate(models) {
-            // this.belongsToMany(models.Board, {
-            //     through: "Hash",
-            //     foreignKey: "tag",
-            // })
+            this.belongsToMany(models.Board, {
+                through: "Hash",
+            })
             this.belongsToMany(models.Board, {
                 through: "Hash",
                 foreignKey: "hashTagIdx"
