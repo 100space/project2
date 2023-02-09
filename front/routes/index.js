@@ -112,7 +112,7 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         }
         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
         const writeValue = response.data
-        res.render("board/view.html", { ...writeValue, ...userInfo, boardHot, userHot })
+        res.render("board/view.check.html", { ...writeValue, ...userInfo, boardHot, userHot })
     } else {
         let tags = JSON.parse(req.body["tags-outside"])
         let tagValues = tags.map((tag) => {
