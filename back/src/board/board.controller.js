@@ -64,11 +64,33 @@ class BoardController {
             next(e)
         }
     }
+
     async pictureInsert(req, res, next) {
         try {
             const { arr, boardIdx } = req.body
-
             const result = await this.boardService.PictureCreate({ arr, boardIdx })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async findCategory(req, res, next) {
+        try {
+            const { categoryMain } = req.params
+            const result = await this.boardService.CategoryValue({ categoryMain })
+            result.mainVal = categoryMain
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async findCategorySub(req, res, next) {
+        try {
+            const { categoryMain, categorySub } = req.params
+            const result = await this.boardService.CategorySubValue({ categoryMain, categorySub })
+            console.log(result)
             res.status(201).json(result)
         } catch (e) {
             next(e)

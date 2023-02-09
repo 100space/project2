@@ -150,6 +150,28 @@ class BoardRepository {
             throw new Error(`Error while delete status: ${e.message}`)
         }
     }
+
+    async categoryValue({ categoryMain }) {
+        try {
+            const response = await this.Board.findAll({ where: { categoryMain }, raw: true, limit: 5 })
+            const subVal = await this.sequelize.query(`SELECT DISTINCT categorySub FROM Board where categoryMain ='${categoryMain}'`, { type: this.queryTypes.SELECT })
+            return { response, subVal }
+        } catch (e) {
+            throw new Error(`Error while find category: ${e.message}`)
+        }
+    }
+
+    async categorySubValue({ categoryMain, categorySub }) {
+        try {
+            const response = await this.Board.findAll({ where: { categoryMain, categorySub }, raw: true, limit: 5 })
+            const subCount = await this.Board.count({
+                where: { categoryMain, categorySub }
+            })
+            return { response, subCount }
+        } catch (e) {
+            throw new Error(`Error while find subCategory: ${e.message}`)
+        }
+    }
 }
 
 module.exports = BoardRepository
