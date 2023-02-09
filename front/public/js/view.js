@@ -5,6 +5,7 @@ const request = axios.create({
 const hidden = document.querySelector("#hidden")
 const BoardIdx = document.querySelector("#boardIdx")
 const content = document.querySelector("#content")
+const writeCheckBtn = document.querySelector("#writeCheckBtn")
 const contentValue = hidden.value
 content.innerHTML = `${contentValue}`
 let img = document.querySelectorAll("#content img[src]")
@@ -19,6 +20,10 @@ for (let i = 0; i < img.length; i++) {
 }
 const boardIdx = BoardIdx.value
 
+writeCheckBtn.addEventListener("click", (e) => {
+    const _pathname = location.pathname.slice(6)
+    location.href = `${_pathname}`
+})
 ;(async () => {
     const response = await request.post("/board/picture", { arr, boardIdx })
     console.log(response)
