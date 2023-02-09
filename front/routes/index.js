@@ -91,8 +91,10 @@ router.get("/notice/:categorySub", async (req, res, next) => {
     const response = await request.get(`/board/notice/${categorySub}`)
     const { data } = response
     const subcateVal = data.response
-    const arrayNum = new Array(Math.floor(data.subCount / 10))
-    const data1 = subcateVal.map(x => {
+    const boardCount = data.subCount
+    // const arrayNum = new Array(Math.floor(data.subCount / 5) + 1)
+
+    const data1 = subcateVal.map((x) => {
         x.createdAt = x.createdAt.substring(0, 10)
         return x
     })
@@ -100,7 +102,7 @@ router.get("/notice/:categorySub", async (req, res, next) => {
     const data2 = response2.data
     const subVal = data2.subVal
     const mainVal = data2.mainVal
-    res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, arrayNum, categorySub })
+    res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, boardCount, categorySub })
 })
 
 router.get("/:categoryMain/:categorySub/:pagingIndex", async (req, res, next) => {

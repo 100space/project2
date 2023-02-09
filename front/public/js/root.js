@@ -16,7 +16,6 @@ const socket = io.connect("http://127.0.0.1:3000", {
     transports: ["websocket"],
 })
 
-console.log(socket.on, "socket")
 const navfunction = (e) => {
     gnb.classList.toggle("off")
     arrow.classList.toggle("deg")
@@ -56,7 +55,6 @@ const chatCHandler = (e) => {
 }
 const chatSubmitHandler = (e) => {
     e.preventDefault()
-    console.log(e.target)
     const { message, nickName } = e.target
     const data = message.value
     const userNick = nickName.value
@@ -72,11 +70,9 @@ const chatSubmitHandler = (e) => {
 
 socket.on("reply", (data1) => {
     const json = JSON.parse(data1)
-    console.log(json)
     const { chunk, data } = json
     const li = document.createElement("li")
     li.classList.add("left")
-    console.log(chunk)
     li.innerHTML = `<p >${chunk}</p>
     <span class="flex-center reply"><p>${data}</p></span>`
     chat.append(li)

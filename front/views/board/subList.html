@@ -40,13 +40,12 @@
                 </div>
             </form>
             <div id="pageNav" class="flex-center">
+                <li id="prev">◀️</li>
                 <ul id="pageBtn" class="flex boardBtn">
-                    <li>◀️</li>
-                    {% for length in arrayNum %}
-                    <li><a href="/{{mainVal}}/{{categorySub}}/{{loop.index}}">{{loop.index}}</a></li>
-                    {% endfor %}
-                    <li>▶️</li>
+                    <input type="hidden" name="boardCount" value="{{boardCount}}" id="boardCount" />
+                    <ul id="pageNum"></ul>
                 </ul>
+                <li id="next">▶️</li>
             </div>
             <div id="writeBtn" class="boardBtn">
                 <div class="flex-center">
