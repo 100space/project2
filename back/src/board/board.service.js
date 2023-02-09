@@ -64,6 +64,7 @@ class BoardService {
             throw new Error(e)
         }
     }
+
     async PictureCreate({ arr, boardIdx }) {
         try {
             const arr1 = arr.map((x) => x.replace("data:image/jpeg;base64,", ""))
@@ -76,6 +77,24 @@ class BoardService {
             const boardFile = file.filter((x) => x.indexOf(`${boardIdx}`) >= 0)
             const response = await this.boardRepository.pictureCreate({ boardFile, boardIdx })
             return response
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async CategoryValue({ categoryMain }) {
+        try {
+            const result = await this.boardRepository.categoryValue({ categoryMain })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async CategorySubValue({ categoryMain, categorySub }) {
+        try {
+            const result = await this.boardRepository.categorySubValue({ categoryMain, categorySub })
+            return result
         } catch (e) {
             throw new Error(e)
         }

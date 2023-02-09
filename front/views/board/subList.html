@@ -22,12 +22,12 @@
                     </ul>
                     <ul id="subjectBtm">
                         <li id="writer">작성자 : {{item.userId}}</li>
-                        <li id="register">작성일 :</li>
+                        <li id="register">작성일 :{{item.createdAt}}</li>
                     </ul>
                 </div>
                 <div id="liked">
                     <img src="/img/liked.png" alt="" />
-                    <div id="contentLiked">추천수 :12 {{item.liked.length}}</div>
+                    <div id="contentLiked">{{item.liked}}</div>
                 </div>
             </div>
             {% endfor %}
@@ -42,11 +42,9 @@
             <div id="pageNav" class="flex-center">
                 <ul id="pageBtn" class="flex boardBtn">
                     <li>◀️</li>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
+                    {% for length in arrayNum %}
+                    <li><a href="/{{mainVal}}/{{categorySub}}/{{loop.index}}">{{loop.index}}</a></li>
+                    {% endfor %}
                     <li>▶️</li>
                 </ul>
             </div>
@@ -58,6 +56,6 @@
         </div>
     </div>
 </div>
-<script src="/js/list.js" type="text/javascript"></script>
+<script src="/js/subList.js" type="text/javascript"></script>
 
 {% endblock %}
