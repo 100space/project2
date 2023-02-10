@@ -6,7 +6,7 @@
         <div id="boardHeader" class="flex-center"></div>
         <div id="subCategory" class="flex-justi-center">
             {% for item in subVal %}
-            <li class="flex-center"><a href="/{{mainVal}}/{{item.categorySub}}">{{item.categorySub}}</a></li>
+            <li class="flex-center"><a href="/{{mainVal}}/{{item.categorySub}}/1">{{item.categorySub}}</a></li>
             {% endfor %}
         </div>
 
@@ -35,17 +35,17 @@
         <div id="boardNav" class="flex">
             <form id="searchBar" method="get" action="#" class="boardBtn flex">
                 <div class="flex-center">
-                    <input type="text" />
+                    <input type="text" id="searchInput" />
                     <button type="submit">검색</button>
                 </div>
             </form>
             <div id="pageNav" class="flex-center">
-                <li id="prev">◀️</li>
                 <ul id="pageBtn" class="flex boardBtn">
-                    <input type="hidden" name="boardCount" value="{{boardCount}}" id="boardCount" />
-                    <ul id="pageNum"></ul>
+                    <li id="prev">◀️</li>
+                    <li id="pageNum"></li>
+                    <li id="next">▶️</li>
+                    <input type="hidden" id="hidden" value="{{boardCount}}" />
                 </ul>
-                <li id="next">▶️</li>
             </div>
             <div id="writeBtn" class="boardBtn">
                 <div class="flex-center">

@@ -90,7 +90,7 @@ body {
     width: 30rem;
     height: 4rem;
 }
-input {
+#searchInput {
     width: 17rem;
     height: 5rem;
     border: none;
@@ -135,4 +135,14 @@ button {
     display: flex;
     justify-content: center;
     width: 2rem;
+}
+#pageBtn > li:nth-child(2) {
+    width: 20rem;
+}
+
+#pageNum > a {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 4rem !important;
 }

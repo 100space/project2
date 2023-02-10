@@ -101,10 +101,7 @@ router.get("/notice/:categorySub", async (req, res, next) => {
     const { data } = response
     const subcateVal = data.response
     const boardCount = data.subCount
-    // const arrayNum = new Array(Math.floor(data.subCount / 5) + 1)
-
     const data1 = subcateVal.map((x) => {
-
         x.createdAt = x.createdAt.substring(0, 10)
         return x
     })
@@ -120,19 +117,20 @@ router.get("/:categoryMain/:categorySub/:pagingIndex", async (req, res, next) =>
     const { boardHot } = req
     const { userHot } = req
     const { categoryMain, categorySub, pagingIndex } = req.params
+
     const response = await request.get(`/board/${categoryMain}/${categorySub}/${pagingIndex}`)
     const { data } = response
     const subcateVal = data.response
-    const arrayNum = new Array(Math.floor(data.subCount / 5) + 1)
-    const data1 = subcateVal.map(x => {
+    const boardCount = data.subCount
+    const data1 = subcateVal.map((x) => {
         x.createdAt = x.createdAt.substring(0, 10)
         return x
     })
-    const response2 = await request.get(`/board/${categoryMain}`)
+    const response2 = await request.get("/board/notice")
     const data2 = response2.data
     const subVal = data2.subVal
     const mainVal = data2.mainVal
-    res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, arrayNum, categorySub })
+    res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, boardCount, categorySub })
 })
 
 router.get("/community", async (req, res, next) => {
@@ -152,19 +150,7 @@ router.get("/community/:categorySub", async (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
     const { categorySub } = req.params
-    const response = await request.get(`/board/notice/${categorySub}`)
-    const { data } = response
-    const subcateVal = data.response
-    const arrayNum = new Array(Math.floor(data.subCount / 5) + 1)
-    const data1 = subcateVal.map(x => {
-        x.createdAt = x.createdAt.substring(0, 10)
-        return x
-    })
-    const response2 = await request.get("/board/community")
-    const data2 = response2.data
-    const subVal = data2.subVal
-    const mainVal = data2.mainVal
-    res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, arrayNum, categorySub })
+    const response = await request.get(`/board/community/${categorySub}`)
 })
 
 router.get("/q&a", async (req, res, next) => {
@@ -198,6 +184,7 @@ router.get("/q&a/:categorySub", async (req, res, next) => {
     const mainVal = data2.mainVal
     res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, arrayNum, categorySub })
 })
+
 
 router.get("/write/:categoryMain", (req, res, next) => {
     const userInfo = req.userInfo
