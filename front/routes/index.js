@@ -53,6 +53,13 @@ router.get("/token/:token", async (req, res, next) => {
     res.cookie("token", token)
     res.redirect("/")
 })
+
+router.get("/oauth/kakao", (req, res, next) => {
+    const redirectURL = `${config.kakaoHOST}/oauth/authorize?client_id=${config.kakaoREST_API_KEY}&redirect_uri=${config.kakaoREDIRECT_URI}&response_type=code`
+
+    res.redirect(redirectURL)
+})
+
 router.get("/", async (req, res, next) => {
     const userInfo = req.userInfo
     const { boardHot } = req
@@ -70,7 +77,7 @@ router.get("/search", async (req, res, next) => {
     const boardResponse = await request.post("/board/search", { search })
     const { boardCount } = boardResponse.data
     const boardValue = boardResponse.data.response
-    const data1 = boardValue.map(x => {
+    const data1 = boardValue.map((x) => {
         x.createdAt = x.createdAt.substring(0, 10)
         return x
     })
@@ -86,26 +93,13 @@ router.get("/notice", async (req, res, next) => {
     const { userHot } = req
     const response = await request.get("/board/notice")
     const { data } = response
-    const listValue = data.response
-    const subVal = data.subVal
-    const mainVal = data.mainVal
-    res.render("board/list.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
-})
-
-router.get("/notice/:categorySub", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const { categorySub } = req.params
-    const response = await request.get(`/board/notice/${categorySub}`)
-    const { data } = response
     const subcateVal = data.response
     const boardCount = data.subCount
     const data1 = subcateVal.map((x) => {
         x.createdAt = x.createdAt.substring(0, 10)
         return x
     })
-    const response2 = await request.get("/board/notice")
+    const response2 = await request.get(`/board/notice`)
     const data2 = response2.data
     const subVal = data2.subVal
     const mainVal = data2.mainVal
@@ -126,7 +120,7 @@ router.get("/:categoryMain/:categorySub/:pagingIndex", async (req, res, next) =>
         x.createdAt = x.createdAt.substring(0, 10)
         return x
     })
-    const response2 = await request.get("/board/notice")
+    const response2 = await request.get(`/board/${categoryMain}`)
     const data2 = response2.data
     const subVal = data2.subVal
     const mainVal = data2.mainVal
@@ -142,7 +136,7 @@ router.get("/community", async (req, res, next) => {
     const listValue = data.response
     const subVal = data.subVal
     const mainVal = data.mainVal
-    res.render("board/list.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
+    res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
 })
 
 router.get("/community/:categorySub", async (req, res, next) => {
@@ -174,7 +168,7 @@ router.get("/q&a/:categorySub", async (req, res, next) => {
     const { data } = response
     const subcateVal = data.response
     const arrayNum = new Array(Math.floor(data.subCount / 5) + 1)
-    const data1 = subcateVal.map(x => {
+    const data1 = subcateVal.map((x) => {
         x.createdAt = x.createdAt.substring(0, 10)
         return x
     })
@@ -184,7 +178,6 @@ router.get("/q&a/:categorySub", async (req, res, next) => {
     const mainVal = data2.mainVal
     res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, arrayNum, categorySub })
 })
-
 
 router.get("/write/:categoryMain", (req, res, next) => {
     const userInfo = req.userInfo
@@ -267,12 +260,6 @@ router.get("/:categoryMain/view/modify/:boardIdx", async (req, res, next) => {
     const response = await request.put(`/board/${categoryMain}/view`, { userInfo, boardIdx })
     const { data } = response
     res.render("board/view.modify.html", { ...data, boardHot, userHot })
-})
-
-router.get("/oauth/kakao", (req, res, next) => {
-    const redirectURL = `${config.kakaoHOST}/oauth/authorize?client_id=${config.kakaoREST_API_KEY}&redirect_uri=${config.kakaoREDIRECT_URI}&response_type=code`
-
-    res.redirect(redirectURL)
 })
 
 module.exports = router

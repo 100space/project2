@@ -6,9 +6,9 @@ const hidden = document.querySelector("#hidden")
 const prev = document.querySelector("#prev")
 const next = document.querySelector("#next")
 const pageNum = document.querySelector("#pageNum")
+const pagePath = document.querySelector("#pagePath")
 
 let pathname2 = pathname.substring(0, 7)
-console.log(pathname2)
 let pathname3 = pathname2 === "/notice" ? "공지사항" : pathname2 === "/commun" ? "커뮤니티" : "질문과 답변"
 
 boardHeader.innerHTML = `<div>${pathname3}</div>
@@ -21,22 +21,25 @@ const writeBtnHandler = (e) => {
 }
 writeBtn.addEventListener("click", writeBtnHandler)
 
+const path = location.pathname
+const nowPage = path.replace(`${pagePath.value}/`, "")
+console.log(nowPage)
 let boardCount = hidden.value
-let pageBlock = 1
-
+const checkNum = 5 * nowPage - 4
+let pageBlock = Math.ceil(nowPage / 5)
 const page = Math.ceil(boardCount / 5)
 const maxPageBlock = Math.ceil(page / 5)
 
+console.log(pageBlock)
 for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
-    if (i < page) {
+    if (i <= page) {
         console.log(i)
         const tag = document.createElement("a")
         tag.innerHTML = `${i}`
-        tag.setAttribute("href", `${location.pathname}/${i}`)
+        tag.setAttribute("href", `${pagePath.value}/${i}`)
         pageNum.append(tag)
     }
 }
-
 prev.addEventListener("click", () => {
     if (pageBlock > 1) {
         pageBlock--
@@ -46,7 +49,7 @@ prev.addEventListener("click", () => {
                 console.log(i)
                 const tag = document.createElement("a")
                 tag.innerHTML = `${i}`
-                tag.setAttribute("href", `${location.pathname}/${i}`)
+                tag.setAttribute("href", `${pagePath.value}/${i}`)
                 pageNum.append(tag)
             }
         }
@@ -61,7 +64,7 @@ next.addEventListener("click", () => {
                 console.log(i)
                 const tag = document.createElement("a")
                 tag.innerHTML = `${i}`
-                tag.setAttribute("href", `${location.pathname}/${i}`)
+                tag.setAttribute("href", `${pagePath.value}/${i}`)
                 pageNum.append(tag)
             }
         }
