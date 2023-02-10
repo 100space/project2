@@ -63,6 +63,10 @@ module.exports = (sequelize, Sequelize) => {
                     userPoint: {
                         type: Sequelize.INTEGER,
                         defaultValue: 0,
+                    },
+                    userBoard: {
+                        type: Sequelize.INTEGER,
+                        defaultValue: 0
                     }
                 },
                 {

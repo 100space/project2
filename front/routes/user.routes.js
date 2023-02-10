@@ -29,4 +29,13 @@ router.post("/join", upload.single("userPic"), async (req, res, next) => {
     res.render("user/welcome.html", { ...response.data, boardHot, userHot })
 })
 
+router.get("/myview", async (req, res, next) => {
+    const { userId } = req.user
+    const { boardHot } = req
+    const { userHot } = req
+    const response = await request.post("/profile/myview/mywrite", { userId })
+    console.log(response)
+})
+
+
 module.exports = router

@@ -1,7 +1,9 @@
 class UserRepository {
-    constructor({ User, sequelize }) {
+    constructor({ User, sequelize, Sequelize }) {
         this.User = User
+        this.Board = sequelize.models.Board
         this.sequelize = sequelize
+        this.Sequelize = Sequelize
     }
 
     async hotValue() {
@@ -88,6 +90,40 @@ class UserRepository {
             if (affecteRows === 0) throw new Error("User not found, Please redirect your webpage")
         } catch (e) {
             throw new Error(e)
+        }
+    }
+
+    async findSearch({ search }) {
+        try {
+            const Op = this.Sequelize.Op
+            const response = await this.User.findAll({
+                where: {
+                    userId: { [Op.like]: `%${search}%` }
+                }, raw: true
+            })
+            const userCount = await this.User.count({
+                where: {
+                    userId: { [Op.like]: `%${search}%` }
+                }, raw: true
+            })
+            return { response, userCount }
+        } catch (e) {
+            throw new Error(`Error while find search Value: ${e.message}`)
+        }
+    }
+
+    async FindWriting({ userId }) {
+        try {
+            const response = await this.Board.findAll({
+                where: {
+                    userId
+                }, raw: true, order: [
+                    ['boardIdx', 'DESC']
+                ]
+            })
+            return response
+        } catch (e) {
+            throw new Error(`Error while find writing Value: ${e.message}`)
         }
     }
 }

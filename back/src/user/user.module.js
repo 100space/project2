@@ -1,5 +1,5 @@
 const { sequelize: { models: { User } } } = require("../../models");
-const { sequelize } = require("../../models")
+const { sequelize, Sequelize } = require("../../models")
 
 const UserRepository = require("./user.repository");
 const UserService = require("./user.service");
@@ -9,7 +9,7 @@ const crypto = require("crypto");
 
 const jwt = new JWT({ crypto });
 
-const userRepository = new UserRepository({ User, sequelize });
+const userRepository = new UserRepository({ User, sequelize, Sequelize });
 const userService = new UserService({ userRepository, jwt });
 const userController = new UserController({ userService });
 
