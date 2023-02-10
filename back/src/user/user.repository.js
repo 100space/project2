@@ -1,6 +1,7 @@
 class UserRepository {
     constructor({ User, sequelize, Sequelize }) {
         this.User = User
+        this.Board = sequelize.models.Board
         this.sequelize = sequelize
         this.Sequelize = Sequelize
     }
@@ -108,6 +109,21 @@ class UserRepository {
             return { response, userCount }
         } catch (e) {
             throw new Error(`Error while find search Value: ${e.message}`)
+        }
+    }
+
+    async FindWriting({ userId }) {
+        try {
+            const response = await this.Board.findAll({
+                where: {
+                    userId
+                }, raw: true, order: [
+                    ['boardIdx', 'DESC']
+                ]
+            })
+            return response
+        } catch (e) {
+            throw new Error(`Error while find writing Value: ${e.message}`)
         }
     }
 }

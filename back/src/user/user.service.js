@@ -74,6 +74,15 @@ class UserService {
             throw new Error(e)
         }
     }
+
+    async FindWriting({ userId }) {
+        try {
+            const result = await this.userRepository.FindWriting({ userId })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
 }
 
 module.exports = UserService

@@ -62,7 +62,6 @@ class UserController {
         try {
             const { userId } = req.params
             const data = req.body
-            console.log(data, "back Controll")
             const updateUser = await this.userService.SignUpdate(data)
             res.status(200).json(updateUser)
         } catch (e) {
@@ -74,7 +73,16 @@ class UserController {
         try {
             const { search } = req.body
             const result = await this.userService.FindSearch({ search })
-            console.log(result)
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async MyWriting(req, res, next) {
+        try {
+            const { userId } = req.body
+            const result = await this.userService.FindWriting({ userId })
             res.status(201).json(result)
         } catch (e) {
             next(e)

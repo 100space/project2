@@ -53,6 +53,7 @@ class BoardRepository {
             const newBoard = (await this.Board.create({ subject, content, categoryMain, categorySub, userId })).get({ plain: true })
             const newHashTagVal = []
             const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
+            const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
             if (hash) {
                 const boardContent = await this.sequelize.query("SELECT * FROM Board ORDER BY boardIdx DESC limit 1", { type: this.queryTypes.SELECT })
                 const [lastBoard] = boardContent
