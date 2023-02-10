@@ -52,7 +52,8 @@ class BoardRepository {
             const { subject, content, categoryMain, categorySub, hash, userId } = payload
             const newBoard = (await this.Board.create({ subject, content, categoryMain, categorySub, userId })).get({ plain: true })
             const newHashTagVal = []
-
+            const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
+            const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
             if (hash) {
                 const boardContent = await this.sequelize.query("SELECT * FROM Board ORDER BY boardIdx DESC limit 1", { type: this.queryTypes.SELECT })
                 const [lastBoard] = boardContent
@@ -185,6 +186,27 @@ class BoardRepository {
             return { response, subCount }
         } catch (e) {
             throw new Error(`Error while find pagingValue: ${e.message}`)
+        }
+    }
+
+    async findSearch({ search }) {
+        try {
+            const Op = this.Sequelize.Op
+            const response = await this.Board.findAll({
+                where: {
+                    subject: { [Op.like]: `%${search}%` }
+                }, raw: true
+            })
+            console.log(response)
+            const boardCount = await this.Board.count({
+                where: {
+                    subject: { [Op.like]: `%${search}%` }
+                }, raw: true
+            })
+            console.log(boardCount)
+            return { response, boardCount }
+        } catch (e) {
+            throw new Error(`Error while find search Value: ${e.message}`)
         }
     }
 }

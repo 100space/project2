@@ -12,6 +12,9 @@ router.get("/:categoryMain/:categorySub/:pagingindex", (req, res, next) => contr
 router.post("/write/:categoryMain", (req, res, next) => controller.postWrite(req, res, next))
 router.post("/:categoryMain/view/like", (req, res, next) => controller.infoLike(req, res, next))
 router.post("/:categoryMain/view", (req, res, next) => controller.findBoard(req, res, next))
+router.post("/search", (req, res, next) => controller.searchValue(req, res, next))
+
+
 
 router.put("/:categoryMain/view", (req, res, next) => controller.findBoard(req, res, next))
 

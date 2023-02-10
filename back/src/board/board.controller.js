@@ -105,6 +105,17 @@ class BoardController {
             next(e)
         }
     }
+
+    async searchValue(req, res, next) {
+        try {
+            const { search } = req.body
+            const result = await this.boardService.FindSearch({ search })
+            console.log(result)
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = BoardController

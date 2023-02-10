@@ -49,4 +49,5 @@ router.post("/modify/:id", async (req, res, next) => {
     res.render("user/mypage.html", { ...response.data, boardHot, userHot })
 })
 
+
 module.exports = router

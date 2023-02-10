@@ -95,6 +95,8 @@ const http = app.listen(port, async () => {
             userEmail: "11",
             userIntro: "11",
             userPic: `${i}.png`,
+            userBoard: "3",
+            userPoint: "50"
         })
         await Hashtag.create({ hashTagIdx: `${i}`, tag: `${i}` })
         await Board.create({ subject: `test${i}`, content: "test", categoryMain: "q&a", categorySub: "baek", userId: `admin${i}` })
