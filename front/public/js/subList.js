@@ -2,12 +2,13 @@ let pathname = location.pathname
 const contentSub = document.querySelector("#contentSub")
 const boardHeader = document.querySelector("#boardHeader")
 const writeBtn = document.querySelector("#writeBtn")
-const boardCount = document.querySelector("#boardCount")
+const hidden = document.querySelector("#hidden")
 const prev = document.querySelector("#prev")
 const next = document.querySelector("#next")
 const pageNum = document.querySelector("#pageNum")
 
 let pathname2 = pathname.substring(0, 7)
+console.log(pathname2)
 let pathname3 = pathname2 === "/notice" ? "공지사항" : pathname2 === "/commun" ? "커뮤니티" : "질문과 답변"
 
 boardHeader.innerHTML = `<div>${pathname3}</div>
@@ -20,35 +21,49 @@ const writeBtnHandler = (e) => {
 }
 writeBtn.addEventListener("click", writeBtnHandler)
 
-const page = Math.floor(boardCount.value / 5) + 1
-console.log(page)
+let boardCount = hidden.value
 let pageBlock = 1
-console.log(pageBlock)
+
+const page = Math.ceil(boardCount / 5)
+const maxPageBlock = Math.ceil(page / 5)
+
 for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
-    console.log(i)
-    const a = document.createElement("a")
-    pageNum.append(a)
-    a.setAttribute("href", `/{{mainVal}}/{{categorySub}}/${i}`)
-    a.innerHTML = `${i}`
+    if (i < page) {
+        console.log(i)
+        const tag = document.createElement("a")
+        tag.innerHTML = `${i}`
+        tag.setAttribute("href", `${location.pathname}/${i}`)
+        pageNum.append(tag)
+    }
 }
+
 prev.addEventListener("click", () => {
-    pageBlock--
-    console.log(pageBlock)
-    for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
-        a.setAttribute("href", `/{{mainVal}}/{{categorySub}}/${i}`)
-        a.innerHTML = `${i}`
+    if (pageBlock > 1) {
+        pageBlock--
+        pageNum.innerHTML = ""
+        for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
+            if (i > 0) {
+                console.log(i)
+                const tag = document.createElement("a")
+                tag.innerHTML = `${i}`
+                tag.setAttribute("href", `${location.pathname}/${i}`)
+                pageNum.append(tag)
+            }
+        }
     }
 })
-// for (let i = 5 * pageBlock - 4; i < page; i++) {
-//     console.log(i)
-// }
-
 next.addEventListener("click", () => {
-    pageBlock++
-    console.log(pageBlock)
-    for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
-        console.log(i)
-        a.setAttribute("href", `/{{mainVal}}/{{categorySub}}/${i}`)
-        a.innerHTML = `${i}`
+    if (pageBlock < maxPageBlock) {
+        pageBlock++
+        pageNum.innerHTML = ""
+        for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
+            if (i <= page) {
+                console.log(i)
+                const tag = document.createElement("a")
+                tag.innerHTML = `${i}`
+                tag.setAttribute("href", `${location.pathname}/${i}`)
+                pageNum.append(tag)
+            }
+        }
     }
 })
