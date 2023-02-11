@@ -20,4 +20,3 @@
 
 // (SELECT hashTagIdx, tag FROM Hashtag)
 // qqq
-

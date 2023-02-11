@@ -1,14 +1,14 @@
 class BoardRepository {
-    constructor({ sequelize, Sequelize }) {
-        this.User = sequelize.models.User
-        this.Board = sequelize.models.Board
-        this.comment = sequelize.models.Comment
-        this.liked = sequelize.models.Liked
-        this.hash = sequelize.models.Hash
-        this.hashtag = sequelize.models.Hashtag
-        this.picture = sequelize.models.Picture
-        this.category = sequelize.models.Category
-        this.queryTypes = sequelize.QueryTypes
+    constructor({ sequelize: { models: { User, Board, Comment, Liked, Hash, Hashtag, Picture, Category } }, Sequelize, sequelize }) {
+        this.User = User
+        this.Board = Board
+        this.comment = Comment
+        this.liked = Liked
+        this.hash = Hash
+        this.hashtag = Hashtag
+        this.picture = Picture
+        this.category = Category
+        this.queryTypes = Sequelize.QueryTypes
         this.sequelize = sequelize
         this.Sequelize = Sequelize
     }
@@ -16,7 +16,7 @@ class BoardRepository {
     async randomValue() {
         try {
             // const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx order by rand() Limit 7", { type: this.queryTypes.SELECT })
-            const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked,A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where B.picture LIKE '__\_0%'  order by rand() Limit 7", { type: this.queryTypes.SELECT })
+            const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where B.picture LIKE '__\_0%'  order by rand() Limit 7", { type: this.queryTypes.SELECT })
             const randomUser = []
             const randomHash = []
             for (let i = 0; i < boardRandom.length; i++) {
@@ -49,29 +49,26 @@ class BoardRepository {
 
     async createBoard(payload) {
         try {
-            const { subject, content, categoryMain, categorySub, hash, userId } = payload
-            const newBoard = (await this.Board.create({ subject, content, categoryMain, categorySub, userId })).get({ plain: true })
+            const { subject, content, mainCdValue, subCdValue, hashArray, userId } = payload
+            const newBoard = (await this.Board.create({ subject, content, userId, cateCd: `${mainCdValue}${subCdValue}` })).get({ plain: true })
             const newHashTagVal = []
             const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
             const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-            if (hash) {
-                const boardContent = await this.sequelize.query("SELECT * FROM Board ORDER BY boardIdx DESC limit 1", { type: this.queryTypes.SELECT })
-                const [lastBoard] = boardContent
-                const { boardIdx } = lastBoard
-                for (let i = 0; i < hash.length; i++) {
-                    const result = hash[i]
+            if (hashArray) {
+                const { boardIdx } = newBoard
+                for (let i = 0; i < hashArray.length; i++) {
+                    const result = hashArray[i]
                     const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
-
                     newHashTagVal.push(newHashTag)
                 }
                 const hashVal = newHashTagVal.map(x => x.hashTagIdx)
-                console.log(hashVal)
                 for (let j = 0; j < hashVal.length; j++) {
                     const newHash = await this.hash.findOrCreate({
                         where: { boardIdx, hashTagIdx: hashVal[j] }
                     })
                 }
                 return { newBoard, newHashTagVal }
+                console.log(newBoard, newHashTagVal)
             }
             return newBoard
         } catch (error) {
@@ -153,9 +150,43 @@ class BoardRepository {
         }
     }
 
-    async categoryValue({ categoryMain }) {
+    async findCategory(mainCd, subCd) {
         try {
-            const response = await this.Board.findAll({ where: { categoryMain }, raw: true, limit: 5 })
+            // select * from Category where name='notice' and subCd='0000'; mainName
+            // select * from Category where name='sub1' and not subCd in('0000'); subName
+
+            /*
+                select count(*) as length from (
+                    select * from Category where name='notice' and subCd='0000' 
+                    union all 
+                    select * from Category where name='sub1' and not subCd in('0000')
+                ) as A;
+            */
+
+            // subcd undefiend 
+            const where = {
+                name: mainCd,
+            }
+
+            const response = await this.sequeluze.query(`
+                select count(*) as length from (
+                    select * from Category where name='${mainCd}' and subCd='0000' 
+                    ${!subCd && `union all 
+                    select * from Category where name='${subCd}' and not subCd in('0000')`}
+                ) as A;
+            `)
+
+            return response
+            // const response = await this.category.findAll({ where, raw: true })
+            // return response
+        } catch (e) {
+            throw new Error('err')
+        }
+    }
+
+    async categoryValue({ categoryMain, categorySub }) {
+        try {
+            const response = await this.Board.findAll({ where: { categoryMain, categorySub }, raw: true, limit: 5 })
             const subVal = await this.sequelize.query(`SELECT DISTINCT categorySub FROM Board where categoryMain ='${categoryMain}'`, { type: this.queryTypes.SELECT })
             return { response, subVal }
         } catch (e) {
@@ -163,9 +194,18 @@ class BoardRepository {
         }
     }
 
+
+    // 리팩토링 시작 
     async categorySubValue({ categoryMain, categorySub }) {
         try {
-            const response = await this.Board.findAll({ where: { categoryMain, categorySub }, raw: true, limit: 5 })
+            const response = await this.Board.findAll({
+                attributes: ["boardIdx", "subject", "content", "viewCount", "categoryMain", "categorySub", "liked",
+                    [this.sequelize.fn("DATE_FORMAT", this.sequelize.col("createdAt"), "%Y-%m-%d"), 'createdAt'
+                    ]
+                ],
+                where: { categoryMain, categorySub }, raw: true, limit: 5
+            })
+
             const subCount = await this.Board.count({
                 where: { categoryMain, categorySub }
             })
@@ -174,6 +214,7 @@ class BoardRepository {
             throw new Error(`Error while find subCategory: ${e.message}`)
         }
     }
+    // 리팩토링 끝
 
     async pagingValue({ categoryMain, categorySub, pagingIndex }) {
         try {
