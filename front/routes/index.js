@@ -354,7 +354,7 @@ router.get("/:categoryMain/view/modify/:boardIdx", async (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
     const { categoryMain, boardIdx } = req.params
-    console.log(categoryMain, boardIdx)
+    // console.log(categoryMain, boardIdx)
     const response = await request.put(`/board/${categoryMain}/view`, { userInfo, boardIdx })
     const { data } = response
     res.render("board/view.modify.html", { ...data, boardHot, userHot })
