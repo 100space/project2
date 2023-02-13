@@ -11,12 +11,12 @@ class BoardService {
             1: "0001",
             2: "0002",
             3: "0003",
-            4: "0001",
-            5: "0002",
-            6: "0003",
-            7: "0001",
-            8: "0002",
-            9: "0003",
+            4: "0004",
+            5: "0005",
+            6: "0006",
+            7: "0007",
+            8: "0008",
+            9: "0009",
         }
     }
     // 글쓰기
@@ -114,17 +114,15 @@ class BoardService {
     // 서브카테고리 분류
     async CategoryValue({ mainCd, subCd, pageNumber }) {
         try {
-            const mainCdValue = mainCd === "notice" ? this.mainChange.notice : mainCd === "community" ? this.mainChange.community : this.mainChange.qna
-            const subCdValue = subCd === "sub1" ? this.subChange.sub1 : subCd === "sub2" ? this.subChange.sub2 : this.subChange.sub3
+            const mainCdValue = this.mainChange[mainCd]
+            const subCdValue = this.subChange[subCd]
             const findValue = `${mainCdValue}${subCdValue}`
             const result = await this.boardRepository.categoryValue({ findValue, pageNumber })
-
             const result2 = result.map((x, i) => {
                 x.showindex = i + 1
                 return x
             })
-            console.log(result2)
-            return result
+            return { listValue: result2 }
         } catch (e) {
             throw new Error(e)
         }
@@ -145,7 +143,7 @@ class BoardService {
         try {
             const response = await this.boardRepository.findUserInfo({ userId })
             return response
-        } catch (error) { }
+        } catch (error) {}
     }
 
     // 좋아요 추가하기
@@ -165,7 +163,7 @@ class BoardService {
             const arr2 = arr1.map((x) => x.replace("data:image/png;base64,", ""))
             const arr3 = arr2.map((x) => new Buffer.from(x, "base64").toString("binary"))
             const arr4 = arr2.map(async (x, i) => {
-                this.fs.writeFile(`../front/uploads/${boardIdx}_${i}.png`, x, "base64", function (e) { })
+                this.fs.writeFile(`../front/uploads/${boardIdx}_${i}.png`, x, "base64", function (e) {})
             })
             const file = await this.fs.readdir("../front/uploads")
             const boardFile = file.filter((x) => x.indexOf(`${boardIdx}`) >= 0)

@@ -24,7 +24,8 @@ class BoardRepository {
                 const newHashTag = await this.hashtag.findOrCreate({ where: { tag: result }, raw: true })
                 let hashVal = newHashTag[0].hashTagIdx
                 const newHash = await this.hash.findOrCreate({
-                    where: { boardIdx, hashTagIdx: hashVal }, raw: true
+                    where: { boardIdx, hashTagIdx: hashVal },
+                    raw: true,
                 })
             }
         }
@@ -39,11 +40,13 @@ class BoardRepository {
             const userPic = userInfo[0].userPic
             const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
             const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-            
+
             if (!hashArray) return { newBoard, newHashTagVal }
             const { boardIdx } = newBoard
             const newHashTag = await this.hashMake(boardIdx, hashArray)
-            const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, { type: this.queryTypes.SELECT })
+            const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
+                type: this.queryTypes.SELECT,
+            })
             newBoard.userPic = userPic
             return { newBoard, hashValue }
         } catch (error) {
@@ -56,6 +59,7 @@ class BoardRepository {
         try {
             const { boardIdx } = payload
             const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
+
             return response
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)

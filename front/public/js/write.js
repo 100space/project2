@@ -2,6 +2,9 @@ const writer = document.getElementById("writer")
 const subject = document.getElementById("subject")
 const submitBtn = document.getElementById("SubmitBtn")
 const cancelBtn = document.getElementById("CancelBtn")
+const editorz = document.querySelector("#editor")
+console.log(editorz)
+
 const categoryMain = document.querySelector(".categoryMain")
 const input = document.querySelector(".tagify--outside")
 const request = axios.create({
@@ -154,6 +157,12 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
     })
 
 cancelBtn.addEventListener("click", () => {
-    const _pathname = location.pathname.replace("/write", "")
-    location.href = `${_pathname}`
+    const _pathname = location.pathname.replace("/write", "").replace("/modify", "")
+    console.log(_pathname)
+    location.href = `${_pathname}?page=1`
+    // location.href = document.referer
 })
+
+if (location.pathname.indexOf("modify") >= 0) {
+    CKEDITOR.editorz.getData()
+}
