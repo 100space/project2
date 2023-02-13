@@ -34,7 +34,8 @@ router.get("/myview", async (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
     const response = await request.post("/profile/myview/mywrite", { userId })
-    console.log(response)
+    const { data } = response
+    console.log(data)
 })
 
 

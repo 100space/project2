@@ -149,7 +149,6 @@ router.get("/oauth/kakao", (req, res, next) => {
 
 //
 router.get("/", async (req, res, next) => {
-    console.log(req)
     const userInfo = req.userInfo
     const { boardHot } = req
     const { userHot } = req

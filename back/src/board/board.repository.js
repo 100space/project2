@@ -20,22 +20,23 @@ class BoardRepository {
             const newHashTagVal = []
             const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
             const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-            if (hashArray) {
-                const { boardIdx } = newBoard
-                for (let i = 0; i < hashArray.length; i++) {
-                    const result = hashArray[i]
-                    const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
-                    newHashTagVal.push(newHashTag)
-                }
-                const hashVal = newHashTagVal.map(x => x.hashTagIdx)
-                for (let j = 0; j < hashVal.length; j++) {
-                    const newHash = await this.hash.findOrCreate({
-                        where: { boardIdx, hashTagIdx: hashVal[j] }
-                    })
-                }
-                return { newBoard, newHashTagVal }
+            if (!hashArray) return { newBoard, newHashTagVal }
+
+
+            const { boardIdx } = newBoard
+            for (let i = 0; i < hashArray.length; i++) {
+                const result = hashArray[i]
+                const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
+                newHashTagVal.push(newHashTag) // newHashTag.
             }
-            return newBoard
+            const hashVal = newHashTagVal.map(x => x.hashTagIdx)
+            for (let j = 0; j < hashVal.length; j++) {
+                const newHash = await this.hash.findOrCreate({
+                    where: { boardIdx, hashTagIdx: hashVal[j] }
+                })
+            }
+            return { newBoard, newHashTagVal }
+
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)
         }

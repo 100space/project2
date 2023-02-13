@@ -52,17 +52,18 @@ router.get("/:mainCd/:subCd", async (req, res, next) => {
 router.post("/:mainCd/write", async (req, res, next) => {
     const { mainCd } = req.params
     let data = {
-        writer: req.body.writer,
+        userId: req.body.writer,
         subject: req.body.subject,
         content: req.body.content,
-        tags: req.body["tags-outsild"],
+        hash: req.body["tags-outside"],
         mainCd,
         subCd: req.body.categorySub,
     }
-    console.log(req.userInfo, 123123)
-    // const result = await request.post(`/board/${mainCd}/write`, { data })
+    const result = await request.post(`/board/${mainCd}/write`, { data })
+    console.log(result)
+    res.send("1")
     // res.render("board/view.check.html", { mainCd, data })
-    res.render("board/view.html")
+    // res.render("board/view.html")
 })
 //
 

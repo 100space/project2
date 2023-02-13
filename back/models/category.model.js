@@ -3,11 +3,11 @@ module.exports = (sequelize, Sequelize) => {
         static initialize() {
             return this.init({
                 mainCd: {
-                    type: Sequelize.STRING(4),
+                    type: Sequelize.STRING(8),
                     primaryKey: true,
                 },
                 subCd: {
-                    type: Sequelize.STRING(4),
+                    type: Sequelize.STRING(8),
                     primaryKey: true,
                 },
                 name: {

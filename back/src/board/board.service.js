@@ -8,20 +8,22 @@ class BoardService {
             "qna": "0003"
         }
         this.subChange = {
-            "sub1": "0001",
-            "sub2": "0002",
-            "sub3": "0003"
+            "1": "0001",
+            "2": "0002",
+            "3": "0003"
         }
     }
     // 글쓰기
     async MakeWrite(payload) {
         try {
             const { subject, content, mainCd, subCd, userId, hash } = payload
-            const hashValue = hash.replace("[", "").replace("]", "")
-            const hashArray = hashValue.split(",")
-            const mainCdValue = mainCd === "notice" ? this.mainChange.notice : mainCd === "community" ? this.mainChange.community : this.mainChange.qna
-            const subCdValue = subCd === "sub1" ? this.subChange.sub1 : subCd === "sub2" ? this.subChange.sub2 : this.subChange.sub3
+            const hashValue = JSON.parse(hash)
+            const hashArray = hashValue.map(x => x.value)
+            const mainCdValue = this.mainChange[mainCd]
+            const subCdValue = this.subChange[subCd]
             const result = await this.boardRepository.createBoard({ subject, content, mainCdValue, subCdValue, hashArray, userId })
+            console.log(hashArray)
+            console.log(result)
             return result
         } catch (e) {
             throw new Error(e)
