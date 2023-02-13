@@ -39,6 +39,7 @@ router.use("/", async (req, res, next) => {
             const userResponse = await request.get("/user/hot")
             const userHot = userResponse.data
             req.userHot = userHot
+            console.log(boardHot, 123123123)
         }
     } catch (error) {
     } finally {
@@ -48,7 +49,7 @@ router.use("/", async (req, res, next) => {
 router.use("/user", user)
 router.use("/profile", profile)
 router.use("/board", board)
-router.use('/admin,', admin)
+router.use("/admin,", admin)
 
 router.get("/io", (req, res, next) => {
     res.render("/layout/layout.html")
@@ -64,8 +65,8 @@ router.get("/oauth/kakao", (req, res, next) => {
     res.redirect(redirectURL)
 })
 
-router.get('/manage', (req,res,next)=>{
-    res.render('user/management.html')
+router.get("/manage", (req, res, next) => {
+    res.render("user/management.html")
 })
 
 //
@@ -159,8 +160,9 @@ router.get("/", async (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
     const response = await request.get("/board/random")
-    const { data } = response
-    res.render("index.html", { ...userInfo, data, boardHot, userHot })
+    const { boardRandom, randomUser } = response.data
+    console.log(response.data)
+    res.render("index.html", { ...userInfo, boardHot, userHot, boardRandom, randomUser, randomHash })
 })
 
 router.get("/search", async (req, res, next) => {

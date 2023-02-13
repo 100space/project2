@@ -59,10 +59,7 @@ class BoardRepository {
         try {
             const { boardIdx } = payload
             const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
-            const userId = response.userId
-            const userInfo = await this.User.findAll({ where: { userId }, raw: true })
-            const userPic = userInfo[0].userPic
-            response.userPic = userPic
+
             return response
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
@@ -106,7 +103,7 @@ class BoardRepository {
             } else {
                 return response
             }
-        } catch (e) { }
+        } catch (e) {}
     }
 
     // 게시글 지우기
@@ -135,17 +132,19 @@ class BoardRepository {
                 "SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where A.boardLevel = 0 order by rand() Limit 7",
                 { type: this.queryTypes.SELECT }
             )
-            console.log(boardRandom)
+            // console.log(boardRandom)
             const randomUser = []
             const randomHash = []
             for (let i = 0; i < boardRandom.length; i++) {
                 const randomUserid = boardRandom[i].userId
-                const randomboaridx = boardRandom[i].boardIdx
+                const randomboardIdx = boardRandom[i].boardIdx
                 const randomUserinfo = await this.User.findOne({ where: { userId: randomUserid }, raw: true })
                 randomUser.push(randomUserinfo)
-                const randomhashtagValue = await this.sequelize.query(`SELECT B.boardIdx, A.tag FROM Hashtag A LEFT JOIN Hash B ON A.hashTagIdx = B.hashTagIdx`)
+                const randomhashtagValue = await this.sequelize.query(`SELECT A.tag FROM Hashtag A JOIN Hash B ON A.hashTagIdx = B.hashTagIdx WHERE B.boardIdx =${randomboardIdx}`, { type: this.queryTypes.SELECT })
+                randomHash.push(randomhashtagValue)
             }
-            return { boardRandom, randomUser }
+
+            return { boardRandom, randomUser, randomHash }
         } catch (e) {
             throw new Error(`error while finding randomValue: ${e.message}`)
         }
@@ -156,14 +155,7 @@ class BoardRepository {
         const Op = this.Sequelize.Op
         try {
             const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
-            const allMainCd = await this.Board.count({
-                where: {
-                    cateCd: {
-                        [Op.like]: `${mainCdValue}%`
-                    }
-                }
-            }
-            )
+            console.log(mainCdValue, 123412984671298)
             const findMain = await this.Board.findAll({
                 limit: 5,
                 offset: indexValue,
@@ -174,9 +166,7 @@ class BoardRepository {
                 },
                 raw: true,
             })
-
-            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM BOARD WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
-            return { findMain, allMainCd, findSub }
+            return findMain
         } catch (e) {
             throw new Error(`Error while find pagingValue: ${e.message}`)
         }
@@ -207,6 +197,8 @@ class BoardRepository {
     async hotValue() {
         try {
             const boardHot = await this.Board.findAll({ order: this.sequelize.literal("liked DESC"), limit: 3, raw: true })
+            console.log(boardHot)
+            return boardHot
         } catch (e) {
             throw new Error(`error while finding hotValue: ${e.message}`)
         }

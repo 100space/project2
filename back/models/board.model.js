@@ -26,8 +26,8 @@ module.exports = (sequelize, Sequelize) => {
                     },
                     boardLevel: {
                         type: Sequelize.INTEGER,
-                        defaultValue: 0
-                    }
+                        defaultValue: 0,
+                    },
                 },
                 {
                     sequelize,
@@ -61,8 +61,8 @@ module.exports = (sequelize, Sequelize) => {
             this.belongsTo(models.Category, {
                 foreignKey: {
                     type: Sequelize.STRING(16),
-                    name: "cateCd"
-                }
+                    name: "cateCd",
+                },
             })
         }
     }
