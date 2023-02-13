@@ -2,8 +2,7 @@ const writer = document.getElementById("writer")
 const subject = document.getElementById("subject")
 const submitBtn = document.getElementById("SubmitBtn")
 const cancelBtn = document.getElementById("CancelBtn")
-const editorz = document.querySelector("#editor")
-console.log(editorz)
+const editor = document.querySelector("#editor")
 
 const categoryMain = document.querySelector(".categoryMain")
 const input = document.querySelector(".tagify--outside")
@@ -21,8 +20,6 @@ const tagify = new Tagify(input, {
     },
 })
 
-//수정할때 Editor 가져오기 = getData()
-//데이터 설정하기 = setData()
 
 CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
     toolbar: {
@@ -151,18 +148,69 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
         "MathType",
     ],
 })
-    .then((editor) => {})
+    .then((editor) => {
+        cancelBtn.addEventListener("click", () => {
+            const _pathname = location.pathname.replace("/write", "").replace("/modify", "")
+            // console.log(_pathname)
+            location.href = `${_pathname}?page=1`
+            // location.href = document.referer
+        })
+        
+        if (location.pathname.indexOf("modify") >= 0) {
+            console.log('test')
+            // console.log('edit', editor)
+            console.log('edit2', editor,data)
+            console.log('edit3', editor,data.processor)
+            console.log('edit4', editor,data.htmlFilter)
+            editor.data.processor.htmlFilter.addRules({
+                elements: {
+                    $: function (element) {
+                        // Output dimensions of images as width and height
+                        if (element.name === "img") {
+                            const width = element.attributes.width
+                            const height = element.attributes.height
+        
+                            if (width) {
+                                element.attributes.width = width
+                            }
+        
+                            if (height) {
+                                element.attributes.height = height
+                            }
+                        }
+        
+                        return element
+                    },
+                },
+            })
+        
+            editor.data.processor.htmlFilter.addRules({
+                elements: {
+                    a: function (element) {
+                        element.attributes.target = "_blank"
+                        return element
+                    },
+                },
+            })
+        
+            editor.data.processor.htmlFilter.addRules({
+                elements: {
+                    i: function (element) {
+                        if (element.attributes.class === "emoji") {
+                            element.name = "img"
+                            element.attributes.src = element.attributes.alt
+                        }
+        
+                        return element
+                    },
+                },
+            })
+        
+            editor.data.set(data)
+        }
+        
+    })
     .catch((error) => {
-        console.error(error)
+        // console.error(error)
     })
 
-cancelBtn.addEventListener("click", () => {
-    const _pathname = location.pathname.replace("/write", "").replace("/modify", "")
-    console.log(_pathname)
-    location.href = `${_pathname}?page=1`
-    // location.href = document.referer
-})
-
-if (location.pathname.indexOf("modify") >= 0) {
-    CKEDITOR.editorz.getData()
-}

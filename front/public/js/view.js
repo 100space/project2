@@ -14,7 +14,7 @@ let img = document.querySelectorAll("#content img[src]")
 
 const modifyBtnHandler = async (e) => {
     if (e.target.className.indexOf("modify") >= 0) {
-        console.log(mainCd.value)
+        // console.log(mainCd.value)
         // const res
         location.href = `/board/${mainCd.value}/write/modify`
     }
@@ -30,5 +30,5 @@ const boardIdx = BoardIdx.value
 
 ;(async () => {
     const response = await request.post("/board/picture", { arr, boardIdx })
-    console.log(response)
+    // console.log(response)
 })()
