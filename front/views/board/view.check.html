@@ -8,23 +8,19 @@
 <input type="hidden" name="boardIdx" id="boardIdx" value="{{boardIdx}}" />
 <div id="container">
     <div id="container_header">
-        <div id="subject">제목 : {{subject}}</div>
+        <div id="subject">제목 : {{newBoard.subject}}</div>
         <div id="writerTime">
             <div id="writeUser">
-                {% if provider === "local" %}
-                <span id="userId" class="userPicSize" style="background-image: url('/image/{{userPic}}');"></span>
-                {% else%}
-                <span id="userId" class="userPicSize" style="background-image: url('{{userPic}}');"></span>
-                {% endif %}
-                <span id="writer">작성자 : {{userId}}</span>
+                <span id="userId" class="userPicSize" style="background-image: url('/image/{{newBoard.userPic}}');"></span>
+                <span id="writer">작성자 : {{newBoard.userId}}</span>
             </div>
             <span id="Timestamp">
-                <span id="updatedTime">{{updatedAt}}</span>
+                <span id="updatedTime">{{newBoard.updatedAt}}</span>
             </span>
         </div>
     </div>
 
-    <div id="content"></div>
+    <div id="content">{{newBoard.boardIdx}}</div>
     <ul>
         {% for tags in newHashTagVal %}
         <li id="tags">#{{tags.tag}}</li>

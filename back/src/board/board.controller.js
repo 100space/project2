@@ -1,4 +1,3 @@
-
 class BoardController {
     constructor({ boardService }) {
         this.boardService = boardService
@@ -68,7 +67,7 @@ class BoardController {
         }
     }
 
-    // 인덱스 페이지 랜덤으로 값 뿌려주기 
+    // 인덱스 페이지 랜덤으로 값 뿌려주기
     async getRandom(req, res, next) {
         try {
             const response = await this.boardService.RandomValue()
@@ -88,7 +87,6 @@ class BoardController {
         }
     }
 
-
     // 좋아요 값 추가
     async infoLike(req, res, next) {
         try {
@@ -101,9 +99,6 @@ class BoardController {
         }
     }
 
-
-
-
     // 사진 저장하기
     async pictureInsert(req, res, next) {
         try {
@@ -114,9 +109,6 @@ class BoardController {
             next(e)
         }
     }
-
-
-
 
     // 검색 알고리즘
     async searchValue(req, res, next) {

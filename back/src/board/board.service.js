@@ -3,14 +3,21 @@ class BoardService {
         this.boardRepository = boardRepository
         this.fs = fs
         this.mainChange = {
-            "notice": "0001",
-            "community": "0002",
-            "qna": "0003"
+            notice: "0001",
+            community: "0002",
+            qna: "0003",
         }
         this.subChange = {
             "1": "0001",
             "2": "0002",
-            "3": "0003"
+            "3": "0003",
+            "4": "0001",
+            "5": "0002",
+            "6": "0003",
+            "7": "0001",
+            "8": "0002",
+            "9": "0003",
+            
         }
     }
     // 글쓰기
@@ -61,7 +68,6 @@ class BoardService {
         }
     }
 
-
     // 게시물 삭제하기
     async DeleteValue({ boardIdx }) {
         try {
@@ -109,7 +115,6 @@ class BoardService {
             })
             console.log(result2)
             return result
-
         } catch (e) {
             throw new Error(e)
         }
@@ -130,9 +135,8 @@ class BoardService {
         try {
             const response = await this.boardRepository.findUserInfo({ userId })
             return response
-        } catch (error) { }
+        } catch (error) {}
     }
-
 
     // 좋아요 추가하기
     async InsertLike({ userId, boardIdx, categoryMain }) {
@@ -144,7 +148,6 @@ class BoardService {
         }
     }
 
-
     // 사진 다듬기
     async PictureCreate({ arr, boardIdx }) {
         try {
@@ -152,7 +155,7 @@ class BoardService {
             const arr2 = arr1.map((x) => x.replace("data:image/png;base64,", ""))
             const arr3 = arr2.map((x) => new Buffer.from(x, "base64").toString("binary"))
             const arr4 = arr2.map(async (x, i) => {
-                this.fs.writeFile(`../front/uploads/${boardIdx}_${i}.png`, x, "base64", function (e) { })
+                this.fs.writeFile(`../front/uploads/${boardIdx}_${i}.png`, x, "base64", function (e) {})
             })
             const file = await this.fs.readdir("../front/uploads")
             const boardFile = file.filter((x) => x.indexOf(`${boardIdx}`) >= 0)
@@ -162,9 +165,6 @@ class BoardService {
             throw new Error(e)
         }
     }
-
-
-
 
     // 서브 카테고리로 분류하기
     async CategorySubValue({ categoryMain, categorySub }) {
@@ -183,9 +183,6 @@ class BoardService {
             throw new Error(e)
         }
     }
-
-
-
 
     // 검색 알고리즘
     async FindSearch({ search }) {
