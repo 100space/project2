@@ -88,6 +88,9 @@
     display: flex;
     flex-direction: column;
 }
+.d_status {
+    padding: 0 !important;
+}
 .contentCard {
     overflow: hidden;
     background-color: antiquewhite;
