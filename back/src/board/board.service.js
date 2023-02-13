@@ -8,15 +8,16 @@ class BoardService {
             qna: "0003",
         }
         this.subChange = {
-            1: "0001",
-            2: "0002",
-            3: "0003",
-            4: "0004",
-            5: "0005",
-            6: "0006",
-            7: "0007",
-            8: "0008",
-            9: "0009",
+
+            "sub1": "0001",
+            "sub2": "0002",
+            "sub3": "0003",
+            "sub4": "0004",
+            "sub5": "0005",
+            "sub6": "0006",
+            "sub7": "0007",
+            "sub8": "0008",
+            "sub9": "0009",
         }
     }
     // 글쓰기
@@ -41,11 +42,11 @@ class BoardService {
             const { cateCd } = result
             const mainValue = cateCd.slice(0, 4)
             const subValue = cateCd.slice(4, 8)
+            const keySub = Object.keys(this.subChange)
             const sendMain = mainValue === this.mainChange.notice ? "notice" : mainValue === this.mainChange.community ? "community" : "qna"
             const sendSub = subValue === this.subChange.sub1 ? "sub1" : subValue === this.subChange.sub2 ? "sub2" : "sub3"
             result.mainCd = sendMain
             result.subCd = sendSub
-            console.log(sendMain, sendSub, 123123123123)
             return result
         } catch (e) {
             throw new Error(e)
@@ -92,7 +93,7 @@ class BoardService {
         try {
             const mainCdValue = this.mainChange[mainCd]
             const result = await this.boardRepository.findMainValue({ mainCdValue, pageNumber })
-            const listValue = result.map((x) => {
+            const listValue = result.findMain.map((x) => {
                 const mainValue = x.cateCd.slice(0, 4)
                 const subValue = x.cateCd.slice(4, 8)
                 const sendMain = mainValue === this.mainChange.notice ? "notice" : mainValue === this.mainChange.community ? "community" : "qna"
@@ -102,10 +103,23 @@ class BoardService {
                 return x
             })
             const cateLength = {
-                length: `${listValue.length}`,
+                length: `${result.allMainCd}`,
             }
-
-            return { listValue, cateLength }
+            const findSub = result.findSub.map(x => {
+                const array = x.cateCd.slice(4, 8)
+                return array
+            })
+            const subChange = Object.keys(this.subChange)
+            const subCd = findSub.map(value => {
+                const subValue = subChange.find(x => this.subChange[x] === value)
+                return subValue
+            })
+            const subVal = subCd.map(x => {
+                const subOb = {}
+                subOb.categorySub = x
+                return subOb
+            })
+            return { listValue, cateLength, subVal }
         } catch (e) {
             throw new Error(e)
         }

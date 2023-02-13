@@ -9,7 +9,7 @@ const request = axios.create({
 
 // 사용자 정보 관리
 router.get("/users", async (req,res,next) => {
-  // 유저 정보 가져오기
+  
 });
 
 router.get("/users/:id", async (req,res,next) => {
