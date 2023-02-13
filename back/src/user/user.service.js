@@ -59,7 +59,7 @@ class UserService {
     async SignUpdate(payload) {
         const address = payload.address1 + " " + payload.address2
         payload.address = address
-        console.log(payload, 123123)
+        // console.log(payload, 123123)
         try {
             const updateUser = await this.userRepository.updateInfo(payload)
             return updateUser
