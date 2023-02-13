@@ -8,16 +8,15 @@ class BoardService {
             qna: "0003",
         }
         this.subChange = {
-            "1": "0001",
-            "2": "0002",
-            "3": "0003",
-            "4": "0001",
-            "5": "0002",
-            "6": "0003",
-            "7": "0001",
-            "8": "0002",
-            "9": "0003",
-
+            1: "0001",
+            2: "0002",
+            3: "0003",
+            4: "0001",
+            5: "0002",
+            6: "0003",
+            7: "0001",
+            8: "0002",
+            9: "0003",
         }
     }
     // 글쓰기
@@ -25,7 +24,7 @@ class BoardService {
         try {
             const { subject, content, mainCd, subCd, userId, hash } = payload
             const hashValue = JSON.parse(hash)
-            const hashArray = hashValue.map(x => x.value)
+            const hashArray = hashValue.map((x) => x.value)
             const mainCdValue = this.mainChange[mainCd]
             const subCdValue = this.subChange[subCd]
             const result = await this.boardRepository.createBoard({ subject, content, mainCdValue, subCdValue, hashArray, userId })
@@ -46,6 +45,7 @@ class BoardService {
             const sendSub = subValue === this.subChange.sub1 ? "sub1" : subValue === this.subChange.sub2 ? "sub2" : "sub3"
             result.mainCd = sendMain
             result.subCd = sendSub
+            console.log(sendMain, sendSub, 123123123123)
             return result
         } catch (e) {
             throw new Error(e)
@@ -90,10 +90,22 @@ class BoardService {
 
     async FindMainValue({ mainCd, pageNumber }) {
         try {
-            const mainCdValue = mainCd === "notice" ? this.mainChange.notice : mainCd === "community" ? this.mainChange.community : this.mainChange.qna
+            const mainCdValue = this.mainChange[mainCd]
             const result = await this.boardRepository.findMainValue({ mainCdValue, pageNumber })
-            result.count = result.length
-            return result
+            const listValue = result.map((x) => {
+                const mainValue = x.cateCd.slice(0, 4)
+                const subValue = x.cateCd.slice(4, 8)
+                const sendMain = mainValue === this.mainChange.notice ? "notice" : mainValue === this.mainChange.community ? "community" : "qna"
+                const sendSub = subValue === this.subChange.sub1 ? "sub1" : subValue === this.subChange.sub2 ? "sub2" : "sub3"
+                x.mainCd = sendMain
+                x.subCd = sendSub
+                return x
+            })
+            const cateLength = {
+                length: `${listValue.length}`,
+            }
+
+            return { listValue, cateLength }
         } catch (e) {
             throw new Error(e)
         }

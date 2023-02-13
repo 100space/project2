@@ -1,12 +1,12 @@
 {% extends 'layout/layout.html'%} {% block css %}
-<link rel="stylesheet" href="/css/search.css" />
+<link rel="stylesheet" href="/css/management.css" />
 {% endblock %} {% block content %}
 <div id="search_Wrap">
-    <div id="search_result" class="flex">' {{search}} '에 대한 검색 결과</div>
+    <div id="search_result" class="flex">사이트 관리페이지 입니다.</div>
     <div id="resultBody">
         <div class="searchBox">
             <span id="userSearch" class="searchHeader flex">유저 정보
-                <span> 총 {{userCount}} 개의 검색 결과가 있습니다.</span>
+                <span> 총 {{userCount}} 의 유저가 존재합니다.</span>
             </span>
             <div class="table">
                 <ul class="tableHeader flex">
@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="searchBox">
-            <span id="boardSearch" class="searchHeader flex">게시판 정보
-                <span> 총 {{boardCount}} 개의 검색 결과가 있습니다.</span>
+            <span id="boardSearch" class="searchHeader flex">게시판 관리
+                <span> 총 {{boardCount}} 개의 게시물이 표시됩니다.</span>
             </span>
             <div class="table">
                 <ul class="tableHeader flex">
@@ -53,24 +53,21 @@
             </div>
         </div>
         <div class="searchBox">
-            <span id="boardSearch" class="searchHeader flex">게시판 정보
-                <span> 총 {{boardCount}} 개의 검색 결과가 있습니다.</span>
+            <span id="boardSearch" class="searchHeader flex">카테고리 정보
+                <span> 총 {{categoryCount}} 개의 카테고리가 존재합니다. </span>
             </span>
             <div class="table">
                 <ul class="tableHeader flex">
-                    <li>게시글 번호</li>
-                    <li>게시글 제목</li>
-                    <li>작성자</li>
-                    <li>작성일</li>
-                    <li>추천수</li>
+                    <li>카테고리 유형</li>
+                    <li>카테고리 번호</li>
+                    <li>카테고리 명</li>
                 </ul>
                 {% for item in data1 %}
                 <ul class="tableContent flex">
                     <li>{{loop.index}}</li>
-                    <li><a href="#">{{item.subject}}</a></li>
-                    <li>{{item.userId}}</li>
-                    <li>{{item.createdAt}}</li>
-                    <li>{{item.liked}}</li>
+                    <li><a href="#">{{item.mainCd}}</a></li>
+                    <li>{{item.subCd}}</li>
+                    <li>{{item.name}}</li>
                 </ul>
                 {% endfor %}
             </div>

@@ -6,6 +6,7 @@ const profile = require("./profile.routes")
 const board = require("./board.routes")
 const upload = require("../midlewares/upload")
 const config = require("../config")
+const admin = require("./admin.routes")
 const request = axios.create({
     baseURL: "http://127.0.0.1:3000",
     withCredentials: true,
@@ -47,6 +48,7 @@ router.use("/", async (req, res, next) => {
 router.use("/user", user)
 router.use("/profile", profile)
 router.use("/board", board)
+router.use('/admin,', admin)
 
 router.get("/io", (req, res, next) => {
     res.render("/layout/layout.html")
@@ -60,6 +62,10 @@ router.get("/token/:token", async (req, res, next) => {
 router.get("/oauth/kakao", (req, res, next) => {
     const redirectURL = `${config.kakaoHOST}/oauth/authorize?client_id=${config.kakaoREST_API_KEY}&redirect_uri=${config.kakaoREDIRECT_URI}&response_type=code`
     res.redirect(redirectURL)
+})
+
+router.get('/manage', (req,res,next)=>{
+    res.render('user/management.html')
 })
 
 //

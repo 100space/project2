@@ -13,14 +13,13 @@ router.use((req, res, next) => {
     res.locals = { ...res.locals, userPic, userId, userPw, userName, nickName, provider }
     next()
 })
-/////////////검색기능 라우터 확인
 router.get("/:mainCd", async (req, res, next) => {
     const { mainCd } = req.params
     const { page } = req.query
+    console.log(mainCd)
     const result = await request.get(`/board/${mainCd}/${page}`)
-    const { data } = result
-    console.log(data)
-    res.render("board/subList.html", { mainCd, listValue: data })
+    const { listValue, cateLength } = result.data
+    res.render("board/subList.html", { mainCd, listValue, cateLength })
 })
 ///:mainCd/:subCd 라우터와 안 겹치려면 위로
 router.get("/:mainCd/write", (req, res, next) => {
@@ -33,9 +32,8 @@ router.get("/:mainCd/write", (req, res, next) => {
 router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
-
-    console.log(result, 132432)
-    res.render("board/view.html")
+    const newBoard = result.data
+    res.render("board/view.html", { newBoard })
 })
 
 //제일 밑으로 내려가자
@@ -59,14 +57,12 @@ router.post("/:mainCd/write", async (req, res, next) => {
         mainCd,
         subCd: req.body.categorySub,
     }
-    const result = await request.post(`/board/${mainCd}/write`, data)
+    const result = await request.post(`/board/${mainCd}/write`, { data })
     console.log(result)
-    // const { newBoard, newHashTagVal } = result.data
+    const { newBoard, newHashTagVal } = result.data
 
-    // console.log(newBoard)
-    res.send("1")
-    // res.render("board/view.check.html", { mainCd, newBoard, newHashTagVal })
-    // res.render("board/view.html")
+    console.log(newBoard, newHashTagVal)
+    res.render("board/view.check.html", { mainCd, newBoard, newHashTagVal })
 })
 //
 

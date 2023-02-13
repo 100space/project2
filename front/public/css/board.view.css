@@ -50,7 +50,7 @@
     background-color: rgb(248, 241, 231);
     overflow: scroll;
     width: 100%;
-    height: auto;
+    height: fit-content;
     padding: 2rem;
 }
 #Timestamp {

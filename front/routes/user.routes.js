@@ -7,6 +7,7 @@ const request = axios.create({
     withCredentials: true,
 })
 
+
 router.get("/login", (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
