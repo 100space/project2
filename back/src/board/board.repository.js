@@ -24,7 +24,8 @@ class BoardRepository {
                 const newHashTag = await this.hashtag.findOrCreate({ where: { tag: result }, raw: true })
                 let hashVal = newHashTag[0].hashTagIdx
                 const newHash = await this.hash.findOrCreate({
-                    where: { boardIdx, hashTagIdx: hashVal }, raw: true
+                    where: { boardIdx, hashTagIdx: hashVal },
+                    raw: true,
                 })
             }
         }
@@ -43,7 +44,9 @@ class BoardRepository {
             if (!hashArray) return { newBoard, newHashTagVal }
             const { boardIdx } = newBoard
             const newHashTag = await this.hashMake(boardIdx, hashArray)
-            const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, { type: this.queryTypes.SELECT })
+            const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
+                type: this.queryTypes.SELECT,
+            })
             newBoard.userPic = userPic
             return { newBoard, hashValue }
         } catch (error) {

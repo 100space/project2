@@ -6,9 +6,18 @@
 {% extends 'layout/layout.html'%} {% block content %}
 <input type="hidden" name="hidden" id="hidden" value="{{newBoard.content}}" />
 <input type="hidden" name="boardIdx" id="boardIdx" value="{{newBoard.boardIdx}}" />
+<input type="hidden" name="boardIdx" id="mainCd" value="{{newBoard.mainCd}}" />
 <div id="container">
     <div id="container_header">
-        <div id="subject">제목 : {{newBoard.subject}}</div>
+        <div class="flex">
+            <div id="subject">제목 : {{newBoard.subject}}</div>
+            {% if userId === newBoard.userId %}
+            <div id="view_modify" class="flex-center">
+                <span class="comment_modify item_Header_date">수정</span>
+                <span class="comment_delete item_Header_date">삭제</span>
+            </div>
+            {% endif %}
+        </div>
         <div id="writerTime">
             <div id="writeUser">
                 <span id="userId" class="userPicSize" style="background-image: url('/image/{{newBoard.userPic}}');"></span>

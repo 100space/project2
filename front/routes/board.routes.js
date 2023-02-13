@@ -25,14 +25,19 @@ router.get("/:mainCd", async (req, res, next) => {
 router.get("/:mainCd/write", (req, res, next) => {
     const { mainCd } = req.params
     console.log(mainCd)
-    // res.send("1")
     res.render("board/write.html", { mainCd })
+})
+router.get("/:mainCd/write/modify", (req, res, next) => {
+    const { mainCd } = req.params
+    console.log(mainCd)
+    res.render("board/write.modify.html", { mainCd })
 })
 
 router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
     const newBoard = result.data
+    console.log(result, 123123)
     res.render("board/view.html", { newBoard })
 })
 
@@ -41,9 +46,9 @@ router.get("/:mainCd/:subCd", async (req, res, next) => {
     const { mainCd, subCd } = req.params
     const pagequery = req.query
     const result = await request.get(`/board/${mainCd}/${subCd}/${pagequery.page}`)
-    const { response, subCount } = result.data
-    console.log(response, 123456)
-    res.render("board/subList.html", { mainCd, listValue: response, boardCount: subCount })
+    const { listValue } = result.data
+    console.log(listValue, 123456)
+    res.render("board/subList.html", { mainCd, listValue })
 })
 /////////////
 

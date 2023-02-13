@@ -4,14 +4,22 @@ const request = axios.create({
 })
 const hidden = document.querySelector("#hidden")
 const BoardIdx = document.querySelector("#boardIdx")
+const mainCd = document.querySelector("#mainCd")
 const content = document.querySelector("#content")
 const writeCheckBtn = document.querySelector("#writeCheckBtn")
+const viewModify = document.querySelector("#view_modify")
 const contentValue = hidden.value
 content.innerHTML = `${contentValue}`
 let img = document.querySelectorAll("#content img[src]")
 
-const updatedTime = document.querySelector("#updatedTime")
-console.log(updatedTime.innerHTML)
+const modifyBtnHandler = async (e) => {
+    if (e.target.className.indexOf("modify") >= 0) {
+        console.log(mainCd.value)
+        // const res
+        location.href = `/board/${mainCd.value}/write/modify`
+    }
+}
+viewModify.addEventListener("click", modifyBtnHandler)
 
 const arr = []
 for (let i = 0; i < img.length; i++) {
@@ -24,5 +32,3 @@ const boardIdx = BoardIdx.value
     const response = await request.post("/board/picture", { arr, boardIdx })
     console.log(response)
 })()
-
-// if(img.)

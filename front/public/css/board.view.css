@@ -16,11 +16,14 @@
     border-bottom: 1px solid var(--background-color);
 }
 
-#container > div > #subject {
+#container_header > div > #subject {
     height: auto;
-    margin: 0 auto;
     padding: 0.5rem 1rem;
     font-size: 3rem;
+    width: 70%;
+}
+#view_modify {
+    margin-right: 3rem;
 }
 #writeUser {
     display: flex;
@@ -147,10 +150,10 @@ ul > #tags {
     border-bottom: 1px solid var(--background-color);
 }
 
-.item_Header > div > .item_Header_writer {
+.item_Header_writer {
     font-size: 1.8rem;
 }
-.item_Header > div > .item_Header_date {
+.item_Header_date {
     margin-left: 2rem;
     color: gray;
     font-size: 1.6rem;

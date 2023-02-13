@@ -10,6 +10,7 @@ class BoardController {
                 data: { subject, content, userId, mainCd, subCd, hash },
             } = req.body
             const result = await this.boardService.MakeWrite({ subject, content, mainCd, subCd, userId, hash })
+            console.log(result, "cccccccc")
             res.status(201).json(result)
         } catch (e) {
             next(e)
@@ -20,6 +21,7 @@ class BoardController {
         try {
             const { boardIdx } = req.params
             const result = await this.boardService.FindValue({ boardIdx })
+            console.log(result)
             res.status(201).json(result)
         } catch (e) {
             next(e)
@@ -63,6 +65,7 @@ class BoardController {
         try {
             const { mainCd, subCd, pageNumber } = req.params
             const result = await this.boardService.CategoryValue({ mainCd, subCd, pageNumber })
+            console.log(result, "subCD")
             res.status(201).json(result)
         } catch (e) {
             next(e)
