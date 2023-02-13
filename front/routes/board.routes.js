@@ -16,12 +16,11 @@ router.use((req, res, next) => {
 /////////////검색기능 라우터 확인
 router.get("/:mainCd", async (req, res, next) => {
     const { mainCd } = req.params
-    const pagequery = req._parsedUrl.query
-    console.log(pagequery)
-    const result = await request.get(`/board/${mainCd}?${pagequery}`)
-    const { response, subVal, subCount } = result.data
-    console.log(result.data)
-    res.render("board/subList.html", { mainCd, listValue: response, subVal })
+    const { page } = req.query
+    const result = await request.get(`/board/${mainCd}/${page}`)
+    const { data } = result
+    console.log(data)
+    res.render("board/subList.html", { mainCd, listValue: data })
 })
 ///:mainCd/:subCd 라우터와 안 겹치려면 위로
 router.get("/:mainCd/write", (req, res, next) => {
@@ -52,17 +51,20 @@ router.get("/:mainCd/:subCd", async (req, res, next) => {
 router.post("/:mainCd/write", async (req, res, next) => {
     const { mainCd } = req.params
     let data = {
-        writer: req.body.writer,
+        userId: req.body.writer,
         subject: req.body.subject,
         content: req.body.content,
-        tags: req.body["tags-outsild"],
+        hash: req.body["tags-outside"],
         mainCd,
         subCd: req.body.categorySub,
     }
-    console.log(req.userInfo, 123123)
-    // const result = await request.post(`/board/${mainCd}/write`, { data })
-    // res.render("board/view.check.html", { mainCd, data })
-    res.render("board/view.html")
+    const result = await request.post(`/board/${mainCd}/write`, data)
+    console.log(result)
+    // const { newBoard, newHashTagVal } = result.data
+
+    // console.log(newBoard)
+    res.render("board/view.check.html", { mainCd, newBoard, newHashTagVal })
+    // res.render("board/view.html")
 })
 //
 
