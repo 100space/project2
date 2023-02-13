@@ -60,7 +60,7 @@ module.exports = (sequelize, Sequelize) => {
             })
             this.belongsTo(models.Category, {
                 foreignKey: {
-                    type: Sequelize.STRING(8),
+                    type: Sequelize.STRING(16),
                     name: "cateCd"
                 }
             })

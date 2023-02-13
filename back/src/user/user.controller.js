@@ -80,6 +80,8 @@ class UserController {
         }
     }
 
+
+    // 내가 쓴글 
     async MyWriting(req, res, next) {
         try {
             const { userId } = req.body
