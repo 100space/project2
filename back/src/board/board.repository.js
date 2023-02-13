@@ -1,5 +1,11 @@
 class BoardRepository {
-    constructor({ sequelize: { models: { User, Board, Comment, Liked, Hash, Hashtag, Picture, Category } }, Sequelize, sequelize }) {
+    constructor({
+        sequelize: {
+            models: { User, Board, Comment, Liked, Hash, Hashtag, Picture, Category },
+        },
+        Sequelize,
+        sequelize,
+    }) {
         this.User = User
         this.Board = Board
         this.comment = Comment
@@ -20,23 +26,22 @@ class BoardRepository {
             const newHashTagVal = []
             const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
             const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-            if (!hashArray) return { newBoard, newHashTagVal }
-
-
-            const { boardIdx } = newBoard
-            for (let i = 0; i < hashArray.length; i++) {
-                const result = hashArray[i]
-                const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
-                newHashTagVal.push(newHashTag) // newHashTag.
+            if (hashArray) {
+                const { boardIdx } = newBoard
+                for (let i = 0; i < hashArray.length; i++) {
+                    const result = hashArray[i]
+                    const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
+                    newHashTagVal.push(newHashTag)
+                }
+                const hashVal = newHashTagVal.map((x) => x.hashTagIdx)
+                for (let j = 0; j < hashVal.length; j++) {
+                    const newHash = await this.hash.findOrCreate({
+                        where: { boardIdx, hashTagIdx: hashVal[j] },
+                    })
+                }
+                return { newBoard, newHashTagVal }
             }
-            const hashVal = newHashTagVal.map(x => x.hashTagIdx)
-            for (let j = 0; j < hashVal.length; j++) {
-                const newHash = await this.hash.findOrCreate({
-                    where: { boardIdx, hashTagIdx: hashVal[j] }
-                })
-            }
-            return { newBoard, newHashTagVal }
-
+            return newBoard
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)
         }
@@ -57,11 +62,14 @@ class BoardRepository {
     async changeView(payload) {
         try {
             const { subject, content, mainCdValue, subCdValue, hashArray, userId, boardIdx } = payload
-            const response = await this.Board.update({ subject, content, cateCd: `${mainCdValue}${subCdValue}`, userId }, {
-                where: {
-                    boardIdx
+            const response = await this.Board.update(
+                { subject, content, cateCd: `${mainCdValue}${subCdValue}`, userId },
+                {
+                    where: {
+                        boardIdx,
+                    },
                 }
-            })
+            )
             const changeHash = []
             if (hashArray) {
                 const hashResponse = await this.hash.findAll({ where: { boardIdx }, raw: true })
@@ -69,13 +77,13 @@ class BoardRepository {
                     let hashTagIdx = hashResponse[i].hashTagIdx
                     const deleteHashTag = await this.hashtag.destroy({
                         where: {
-                            hashTagIdx
-                        }
+                            hashTagIdx,
+                        },
                     })
                     const deleteHash = await this.hashtag.destroy({
                         where: {
-                            hashTagIdx
-                        }
+                            hashTagIdx,
+                        },
                     })
                 }
                 for (let j = 0; j < hashArray.length; j++) {
@@ -87,10 +95,7 @@ class BoardRepository {
             } else {
                 return response
             }
-
-        } catch (e) {
-
-        }
+        } catch (e) {}
     }
 
     // 게시글 지우기
@@ -99,11 +104,14 @@ class BoardRepository {
             const { boardIdx } = payload
             const boardResponse = await this.Board.findOne({ where: { boardIdx }, raw: true })
             const boardLevel = boardResponse.boardLevel + 1
-            const response = await this.Board.update({ boardLevel: boardLevel }, {
-                where: {
-                    boardIdx
+            const response = await this.Board.update(
+                { boardLevel: boardLevel },
+                {
+                    where: {
+                        boardIdx,
+                    },
                 }
-            })
+            )
         } catch (e) {
             throw new Error(`Error while delete status: ${e.message}`)
         }
@@ -112,7 +120,10 @@ class BoardRepository {
     async randomValue() {
         try {
             // const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx order by rand() Limit 7", { type: this.queryTypes.SELECT })
-            const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where A.boardLevel = 0 order by rand() Limit 7", { type: this.queryTypes.SELECT })
+            const boardRandom = await this.sequelize.query(
+                "SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where A.boardLevel = 0 order by rand() Limit 7",
+                { type: this.queryTypes.SELECT }
+            )
             console.log(boardRandom)
             const randomUser = []
             const randomHash = []
@@ -124,7 +135,6 @@ class BoardRepository {
                 const randomhashtagValue = await this.sequelize.query(`SELECT B.boardIdx, A.tag FROM Hashtag A LEFT JOIN Hash B ON A.hashTagIdx = B.hashTagIdx`)
             }
             return { boardRandom, randomUser }
-
         } catch (e) {
             throw new Error(`error while finding randomValue: ${e.message}`)
         }
@@ -134,16 +144,17 @@ class BoardRepository {
     async findMainValue({ mainCdValue, pageNumber }) {
         const Op = this.Sequelize.Op
         try {
-            const indexValue = (pageNumber * 5 - 4) === 1 ? 0 : pageNumber * 5 - 4
-            console.log(indexValue)
+            const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
+            console.log(mainCdValue, 123412984671298)
             const findMain = await this.Board.findAll({
                 limit: 5,
                 offset: indexValue,
                 where: {
                     cateCd: {
-                        [Op.like]: `${mainCdValue}%`
-                    }
-                }, raw: true
+                        [Op.like]: `${mainCdValue}%`,
+                    },
+                },
+                raw: true,
             })
             return findMain
         } catch (e) {
@@ -155,22 +166,22 @@ class BoardRepository {
     async categoryValue({ findValue, pageNumber }) {
         const Op = this.Sequelize.Op
         try {
-            const indexValue = (pageNumber * 5 - 4) === 1 ? 0 : pageNumber * 5 - 4
+            const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
             const correctValue = await this.Board.findAll({
                 limit: 5,
                 offset: indexValue,
                 where: {
                     cateCd: {
-                        [Op.like]: `%${findValue}%`
-                    }
-                }, raw: true
+                        [Op.like]: `%${findValue}%`,
+                    },
+                },
+                raw: true,
             })
             return correctValue
         } catch (e) {
             throw new Error(`Error while find category: ${e.message}`)
         }
     }
-
 
     // 인기게시물
     async hotValue() {
@@ -243,19 +254,27 @@ class BoardRepository {
         }
     }
 
-
-    // 리팩토링 시작 
+    // 리팩토링 시작
     async categorySubValue({ categoryMain, categorySub }) {
         try {
             const response = await this.Board.findAll({
-                attributes: ["boardIdx", "subject", "content", "viewCount", "categoryMain", "categorySub", "liked",
-                    [this.sequelize.fn("DATE_FORMAT", this.sequelize.col("createdAt"), "%Y-%m-%d"), 'createdAt']
+                attributes: [
+                    "boardIdx",
+                    "subject",
+                    "content",
+                    "viewCount",
+                    "categoryMain",
+                    "categorySub",
+                    "liked",
+                    [this.sequelize.fn("DATE_FORMAT", this.sequelize.col("createdAt"), "%Y-%m-%d"), "createdAt"],
                 ],
-                where: { categoryMain, categorySub }, raw: true, limit: 5
+                where: { categoryMain, categorySub },
+                raw: true,
+                limit: 5,
             })
 
             const subCount = await this.Board.count({
-                where: { categoryMain, categorySub }
+                where: { categoryMain, categorySub },
             })
             return { response, subCount }
         } catch (e) {
@@ -264,22 +283,22 @@ class BoardRepository {
     }
     // 리팩토링 끝
 
-
-
     // 검색하기
     async findSearch({ search }) {
         try {
             const Op = this.Sequelize.Op
             const response = await this.Board.findAll({
                 where: {
-                    subject: { [Op.like]: `%${search}%` }
-                }, raw: true
+                    subject: { [Op.like]: `%${search}%` },
+                },
+                raw: true,
             })
             console.log(response)
             const boardCount = await this.Board.count({
                 where: {
-                    subject: { [Op.like]: `%${search}%` }
-                }, raw: true
+                    subject: { [Op.like]: `%${search}%` },
+                },
+                raw: true,
             })
             console.log(boardCount)
             return { response, boardCount }

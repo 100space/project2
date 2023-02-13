@@ -20,7 +20,6 @@ const {
     models: { User, Board, Comment, Hashtag, Point, Liked, Hash, Counterimg, Category },
 } = sequelize
 
-
 app.use(router)
 
 app.use((error, req, res, next) => {
@@ -85,16 +84,16 @@ const http = app.listen(port, async () => {
     console.log("connecting to backend and Database...")
     await sequelize.sync({ force: true })
     await Category.create({
-        mainCd: '0001',
-        subCd: '0000',
+        mainCd: "0001",
+        subCd: "0000",
         name: "notice",
-        type: "board"
+        type: "board",
     })
     await Category.create({
-        mainCd: '0001',
-        subCd: '0001',
+        mainCd: "0001",
+        subCd: "0001",
         name: "sub1",
-        type: "board"
+        type: "board",
     })
     for (i = 1; i <= 48; i++) {
         await User.create({
@@ -109,15 +108,13 @@ const http = app.listen(port, async () => {
             userIntro: "11",
             userPic: `${i}.png`,
             userBoard: "3",
-            userPoint: "50"
+            userPoint: "50",
         })
         await Hashtag.create({ hashTagIdx: `${i}`, tag: `${i}` })
         await Board.create({ subject: `test${i}`, content: "test", userId: `admin${i}`, cateCd: "00010001" })
-        await Board.create({ subject: `test${i}`, content: "test", userId: `admin${i}`, cateCd: "00010001" })
-        await Board.create({ subject: `test${i}`, content: "test", userId: `admin${i}`, cateCd: "00010001" })
+        await Board.create({ subject: `test${i}`, content: "test", userId: `admin${i}`, cateCd: "00020002" })
+        await Board.create({ subject: `test${i}`, content: "test", userId: `admin${i}`, cateCd: "00030003" })
         await Hash.create({ boardIdx: `${i}`, hashTagIdx: `${i}` })
-
-
     }
 
     // console.log(category.getInstance())

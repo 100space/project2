@@ -6,14 +6,16 @@ class BoardController {
     // 글쓰기
     async postWrite(req, res, next) {
         try {
-            const { data: { subject, content, userId, mainCd, subCd, hash } } = req.body
+            const {
+                data: { subject, content, userId, mainCd, subCd, hash },
+            } = req.body
             const result = await this.boardService.MakeWrite({ subject, content, mainCd, subCd, userId, hash })
             res.status(201).json(result)
         } catch (e) {
             next(e)
         }
     }
-    // 게시판 글 보기
+    // 게시판 글 보기 //view (viewcheck XXXXX)
     async findBoard(req, res, next) {
         try {
             const { boardIdx } = req.params
