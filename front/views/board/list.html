@@ -22,12 +22,12 @@
                     </ul>
                     <ul id="subjectBtm">
                         <li id="writer">작성자 : {{item.userId}}</li>
-                        <li id="register">작성일 :</li>
+                        <li id="register">작성일 :{{item.createdAt}}</li>
                     </ul>
                 </div>
                 <div id="liked">
                     <img src="/img/liked.png" alt="" />
-                    <div id="contentLiked">추천수 :12 {{item.liked.length}}</div>
+                    <div id="contentLiked">추천수 :{{item.liked}}</div>
                 </div>
             </div>
             {% endfor %}

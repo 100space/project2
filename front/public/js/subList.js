@@ -7,9 +7,11 @@ const prev = document.querySelector("#prev")
 const next = document.querySelector("#next")
 const pageNum = document.querySelector("#pageNum")
 
+
 let pathname2 = pathname.substring(0, 7)
-console.log(pathname2)
-let pathname3 = pathname2 === "/notice" ? "공지사항" : pathname2 === "/commun" ? "커뮤니티" : "질문과 답변"
+
+
+let pathname3 = pathname2 === "/notice" ? "공지사항" : pathname2 === "/commun" ? "커뮤니티" : pathname2 === "/user/m" ? "내가 쓴 글" : "질문과 답변"
 
 boardHeader.innerHTML = `<div>${pathname3}</div>
     <div>${pathname.slice(1).replace(/^[a-z]/, (char) => char.toUpperCase())}</div>`

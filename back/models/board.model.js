@@ -20,18 +20,14 @@ module.exports = (sequelize, Sequelize) => {
                         type: Sequelize.INTEGER,
                         defaultValue: 0,
                     },
-                    categoryMain: {
-                        type: Sequelize.STRING(64),
-                        allowNull: false,
-                    },
-                    categorySub: {
-                        type: Sequelize.STRING(64),
-                        allowNull: false,
-                    },
                     liked: {
                         type: Sequelize.INTEGER,
                         defaultValue: 0,
                     },
+                    boardLevel: {
+                        type: Sequelize.INTEGER,
+                        defaultValue: 0
+                    }
                 },
                 {
                     sequelize,
@@ -61,6 +57,12 @@ module.exports = (sequelize, Sequelize) => {
             this.belongsToMany(models.User, {
                 through: "Liked",
                 foreignKey: "boardIdx",
+            })
+            this.belongsTo(models.Category, {
+                foreignKey: {
+                    type: Sequelize.STRING(8),
+                    name: "cateCd"
+                }
             })
         }
     }
