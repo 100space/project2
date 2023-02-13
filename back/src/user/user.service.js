@@ -77,9 +77,10 @@ class UserService {
         }
     }
 
+    // 내가 쓴 글
     async FindWriting({ userId }) {
         try {
-            const result = await this.userRepository.FindWriting({ userId })
+            const result = await this.userRepository.findWriting({ userId })
             return result
         } catch (e) {
             throw new Error(e)

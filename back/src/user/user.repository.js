@@ -112,7 +112,7 @@ class UserRepository {
         }
     }
 
-    async FindWriting({ userId }) {
+    async findWriting({ userId }) {
         try {
             const response = await this.Board.findAll({
                 where: {
@@ -121,6 +121,7 @@ class UserRepository {
                     ['boardIdx', 'DESC']
                 ]
             })
+            // console.log(response.length)
             return response
         } catch (e) {
             throw new Error(`Error while find writing Value: ${e.message}`)

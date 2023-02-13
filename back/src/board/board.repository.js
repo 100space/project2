@@ -132,17 +132,19 @@ class BoardRepository {
                 "SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where A.boardLevel = 0 order by rand() Limit 7",
                 { type: this.queryTypes.SELECT }
             )
-            console.log(boardRandom)
+            // console.log(boardRandom)
             const randomUser = []
             const randomHash = []
             for (let i = 0; i < boardRandom.length; i++) {
                 const randomUserid = boardRandom[i].userId
-                const randomboaridx = boardRandom[i].boardIdx
+                const randomboardIdx = boardRandom[i].boardIdx
                 const randomUserinfo = await this.User.findOne({ where: { userId: randomUserid }, raw: true })
                 randomUser.push(randomUserinfo)
-                const randomhashtagValue = await this.sequelize.query(`SELECT B.boardIdx, A.tag FROM Hashtag A LEFT JOIN Hash B ON A.hashTagIdx = B.hashTagIdx`)
+                const randomhashtagValue = await this.sequelize.query(`SELECT A.tag FROM Hashtag A JOIN Hash B ON A.hashTagIdx = B.hashTagIdx WHERE B.boardIdx =${randomboardIdx}`, { type: this.queryTypes.SELECT })
+                randomHash.push(randomhashtagValue)
             }
-            return { boardRandom, randomUser }
+
+            return { boardRandom, randomUser, randomHash }
         } catch (e) {
             throw new Error(`error while finding randomValue: ${e.message}`)
         }

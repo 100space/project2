@@ -36,7 +36,8 @@ router.get("/myview", async (req, res, next) => {
     const { userHot } = req
     const response = await request.post("/profile/myview/mywrite", { userId })
     const { data } = response
-    console.log(data)
+    res.send("1")
+    // res.render("board/subList.html",)
 })
 
 
