@@ -103,7 +103,7 @@ class BoardRepository {
             } else {
                 return response
             }
-        } catch (e) { }
+        } catch (e) {}
     }
 
     // 게시글 지우기
@@ -140,7 +140,9 @@ class BoardRepository {
                 const randomboardIdx = boardRandom[i].boardIdx
                 const randomUserinfo = await this.User.findOne({ where: { userId: randomUserid }, raw: true })
                 randomUser.push(randomUserinfo)
-                const randomhashtagValue = await this.sequelize.query(`SELECT A.tag FROM Hashtag A JOIN Hash B ON A.hashTagIdx = B.hashTagIdx WHERE B.boardIdx =${randomboardIdx}`, { type: this.queryTypes.SELECT })
+                const randomhashtagValue = await this.sequelize.query(`SELECT A.tag FROM Hashtag A JOIN Hash B ON A.hashTagIdx = B.hashTagIdx WHERE B.boardIdx =${randomboardIdx}`, {
+                    type: this.queryTypes.SELECT,
+                })
                 randomHash.push(randomhashtagValue)
             }
 
@@ -158,11 +160,10 @@ class BoardRepository {
             const allMainCd = await this.Board.count({
                 where: {
                     cateCd: {
-                        [Op.like]: `${mainCdValue}%`
-                    }
-                }
-            }
-            )
+                        [Op.like]: `${mainCdValue}%`,
+                    },
+                },
+            })
             const findMain = await this.Board.findAll({
                 limit: 5,
                 offset: indexValue,

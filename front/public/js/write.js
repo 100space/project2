@@ -155,60 +155,9 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
             location.href = `${_pathname}?page=1`
             // location.href = document.referer
         })
-        
-        if (location.pathname.indexOf("modify") >= 0) {
-            console.log('test')
-            // console.log('edit', editor)
-            console.log('edit2', editor,data)
-            console.log('edit3', editor,data.processor)
-            console.log('edit4', editor,data.htmlFilter)
-            editor.data.processor.htmlFilter.addRules({
-                elements: {
-                    $: function (element) {
-                        // Output dimensions of images as width and height
-                        if (element.name === "img") {
-                            const width = element.attributes.width
-                            const height = element.attributes.height
-        
-                            if (width) {
-                                element.attributes.width = width
-                            }
-        
-                            if (height) {
-                                element.attributes.height = height
-                            }
-                        }
-        
-                        return element
-                    },
-                },
-            })
-        
-            editor.data.processor.htmlFilter.addRules({
-                elements: {
-                    a: function (element) {
-                        element.attributes.target = "_blank"
-                        return element
-                    },
-                },
-            })
-        
-            editor.data.processor.htmlFilter.addRules({
-                elements: {
-                    i: function (element) {
-                        if (element.attributes.class === "emoji") {
-                            element.name = "img"
-                            element.attributes.src = element.attributes.alt
-                        }
-        
-                        return element
-                    },
-                },
-            })
-        
-            editor.data.set(data)
-        }
-        
+        var editor = CKEDITOR.instances.editor1;
+        var data = editor.getData();
+        editor.setData(data);
     })
     .catch((error) => {
         // console.error(error)

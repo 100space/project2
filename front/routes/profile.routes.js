@@ -39,7 +39,7 @@ router.get("/modify/:userId", async (req, res, next) => {
 
 router.post("/modify/:id", async (req, res, next) => {
     const { id } = req.params
-    console.log(req.body, 12312321, "======")
+    // console.log(req.body, 12312321, "======")
     const { boardHot } = req
     const { userHot } = req
     const response = await request.put(`/profile/${id}`, {
