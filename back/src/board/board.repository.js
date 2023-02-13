@@ -17,6 +17,17 @@ class BoardRepository {
         this.queryTypes = Sequelize.QueryTypes
         this.sequelize = sequelize
         this.Sequelize = Sequelize
+        this.hashMake = async (boardIdx, hashArray) => {
+            const hashContent = []
+            for (let i = 0; i < hashArray.length; i++) {
+                const result = hashArray[i]
+                const newHashTag = await this.hashtag.findOrCreate({ where: { tag: result }, raw: true })
+                let hashVal = newHashTag[0].hashTagIdx
+                const newHash = await this.hash.findOrCreate({
+                    where: { boardIdx, hashTagIdx: hashVal }, raw: true
+                })
+            }
+        }
     }
     // 글쓰기
     async createBoard(payload) {
@@ -24,24 +35,17 @@ class BoardRepository {
             const { subject, content, mainCdValue, subCdValue, hashArray, userId } = payload
             const newBoard = (await this.Board.create({ subject, content, userId, cateCd: `${mainCdValue}${subCdValue}` })).get({ plain: true })
             const newHashTagVal = []
+            const userInfo = await this.User.findAll({ where: { userId }, raw: true })
+            const userPic = userInfo[0].userPic
             const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
             const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-            if (hashArray) {
-                const { boardIdx } = newBoard
-                for (let i = 0; i < hashArray.length; i++) {
-                    const result = hashArray[i]
-                    const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
-                    newHashTagVal.push(newHashTag)
-                }
-                const hashVal = newHashTagVal.map((x) => x.hashTagIdx)
-                for (let j = 0; j < hashVal.length; j++) {
-                    const newHash = await this.hash.findOrCreate({
-                        where: { boardIdx, hashTagIdx: hashVal[j] },
-                    })
-                }
-                return { newBoard, newHashTagVal }
-            }
-            return newBoard
+            
+            if (!hashArray) return { newBoard, newHashTagVal }
+            const { boardIdx } = newBoard
+            const newHashTag = await this.hashMake(boardIdx, hashArray)
+            const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, { type: this.queryTypes.SELECT })
+            newBoard.userPic = userPic
+            return { newBoard, hashValue }
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)
         }
