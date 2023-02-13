@@ -106,6 +106,7 @@ class BoardService {
             const cateLength = {
                 length: `${result.allMainCd}`,
             }
+            // console.log(result, "========================")
             const findSub = result.findSub.map(x => {
                 const array = x.cateCd.slice(4, 8)
                 return array
