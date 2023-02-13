@@ -57,9 +57,9 @@ router.get("/", async (req, res, next) => {
     const userInfo = req.userInfo
     const { boardHot } = req
     const { userHot } = req
-    // const response = await request.get("/board/random")
-    // const { data } = response
-    res.render("index.html", { ...userInfo, boardHot, userHot })
+    const response = await request.get("/board/random")
+    const { data } = response
+    res.render("index.html", { ...userInfo, data, boardHot, userHot })
 })
 
 router.get("/search", async (req, res, next) => {
@@ -80,20 +80,16 @@ router.get("/search", async (req, res, next) => {
     res.render("board/search.html", { ...userInfo, boardHot, userHot, search, boardCount, data1, userCount, userValue })
 })
 
-router.get("/board/:categoryMain/:categorySub", async (req, res, next) => {
+router.get("/notice", async (req, res, next) => {
     const userInfo = req.userInfo
     const { boardHot } = req
     const { userHot } = req
-    const { categoryMain, categorySub } = req.params
-    const response = await request.get(`/board/${categoryMain}/${categorySub}`)
-    console.log(response)
-    // res.render("board/subList.html", {})
-    // const { data } = response
-    // console.log(data)
-    // const listValue = data.response
-    // const subVal = data.subVal
-    // const mainVal = data.mainVal
-    // res.render("board/list.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
+    const response = await request.get("/board/notice")
+    const { data } = response
+    const listValue = data.response
+    const subVal = data.subVal
+    const mainVal = data.mainVal
+    res.render("board/list.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
 })
 
 router.get("/notice/:categorySub", async (req, res, next) => {
@@ -130,7 +126,7 @@ router.get("/:categoryMain/:categorySub/:pagingIndex", async (req, res, next) =>
         x.createdAt = x.createdAt.substring(0, 10)
         return x
     })
-    const response2 = await request.get(`/board/${categoryMain}`)
+    const response2 = await request.get("/board/notice")
     const data2 = response2.data
     const subVal = data2.subVal
     const mainVal = data2.mainVal
@@ -210,33 +206,28 @@ router.post("/write/:categoryMain", async (req, res, next) => {
             categoryMain,
             categorySub: req.body.categorySub,
         }
-        console.log(data)
-        res.send("1")
-        // const response = await request.post(`/board/${categoryMain}/write`, { data, userInfo })
-        // console.log(response)
-        // const writeValue = response.data
-        // res.render("board/view.check.html", { ...writeValue, ...userInfo, boardHot, userHot })
+        const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
+        const writeValue = response.data
+        res.render("board/view.check.html", { ...writeValue, ...userInfo, boardHot, userHot })
     } else {
         let tags = JSON.parse(req.body["tags-outside"])
         let tagValues = tags.map((tag) => {
             return tag.value
         })
         let data = {
-            userId: req.body.writer,
+            writer: req.body.writer,
             subject: req.body.subject,
             content: req.body.content,
-            hash: tagValues,
+            tags: tagValues,
             categoryMain,
             categorySub: req.body.categorySub,
         }
-        console.log(data)
-        // const response = await request.post(`/board/${categoryMain}/write`, { data, userInfo })
-        // const {
-        //     data: { newBoard, newHashTagVal },
-        // } = response
-        // console.log(data)
-        // res.render("board/view.check.html", { ...newBoard, newHashTagVal, ...userInfo, boardHot, userHot })
-        res.send("1")
+        const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
+        const {
+            data: { newBoard, newHashTagVal },
+        } = response
+        console.log(newHashTagVal)
+        res.render("board/view.check.html", { ...newBoard, newHashTagVal, ...userInfo, boardHot, userHot })
     }
 })
 

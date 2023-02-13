@@ -2,75 +2,8 @@ class BoardService {
     constructor({ boardRepository, fs }) {
         this.boardRepository = boardRepository
         this.fs = fs
-        this.mainChange = {
-            "notice": "0001",
-            "community": "0002",
-            "qna": "0003"
-        }
-        this.subChange = {
-            "sub1": "0001",
-            "sub2": "0002",
-            "sub3": "0003"
-        }
-    }
-    // 글쓰기
-    async MakeWrite(payload) {
-        try {
-            const { subject, content, mainCd, subCd, userId, hash } = payload
-            const hashValue = hash.replace("[", "").replace("]", "")
-            const hashArray = hashValue.split(",")
-            const mainCdValue = mainCd === "notice" ? this.mainChange.notice : mainCd === "community" ? this.mainChange.community : this.mainChange.qna
-            const subCdValue = subCd === "sub1" ? this.subChange.sub1 : subCd === "sub2" ? this.subChange.sub2 : this.subChange.sub3
-            const result = await this.boardRepository.createBoard({ subject, content, mainCdValue, subCdValue, hashArray, userId })
-            return result
-        } catch (e) {
-            throw new Error(e)
-        }
     }
 
-    // 게시물 리스트 view 보기
-    async FindValue({ boardIdx }) {
-        try {
-            const result = await this.boardRepository.findValue({ boardIdx })
-            const { cateCd } = result
-            const mainValue = cateCd.slice(0, 4)
-            const subValue = cateCd.slice(4, 8)
-            const sendMain = mainValue === this.mainChange.notice ? "notice" : mainValue === this.mainChange.community ? "community" : "qna"
-            const sendSub = subValue === this.subChange.sub1 ? "sub1" : subValue === this.subChange.sub2 ? "sub2" : "sub3"
-            result.mainCd = sendMain
-            result.subCd = sendSub
-            return result
-        } catch (e) {
-            throw new Error(e)
-        }
-    }
-
-    // 게시물 수정하기
-    async ChangeView(payload) {
-        try {
-            const { subject, content, userId, mainCd, subCd, hash, boardIdx } = payload
-            const hashValue = hash.replace("[", "").replace("]", "")
-            const hashArray = hashValue.split(",")
-            const mainCdValue = mainCd === "notice" ? this.mainChange.notice : mainCd === "community" ? this.mainChange.community : this.mainChange.qna
-            const subCdValue = subCd === "sub1" ? this.subChange.sub1 : subCd === "sub2" ? this.subChange.sub2 : this.subChange.sub3
-            const result = await this.boardRepository.changeView({ subject, content, mainCdValue, subCdValue, hashArray, userId, boardIdx })
-        } catch (e) {
-            throw new Error(e)
-        }
-    }
-
-
-    // 게시물 삭제하기
-    async DeleteValue({ boardIdx }) {
-        try {
-            const result = await this.boardRepository.deleteValue({ boardIdx })
-            return result
-        } catch (e) {
-            throw new Error(e)
-        }
-    }
-
-    // 랜덤 값 추출 -> 인덱스 페이지
     async RandomValue() {
         try {
             const response = await this.boardRepository.randomValue()
@@ -80,40 +13,6 @@ class BoardService {
         }
     }
 
-    // 메인 카테고리 값 가져오기
-
-    async FindMainValue({ mainCd, pageNumber }) {
-        try {
-            const mainCdValue = mainCd === "notice" ? this.mainChange.notice : mainCd === "community" ? this.mainChange.community : this.mainChange.qna
-            const result = await this.boardRepository.findMainValue({ mainCdValue, pageNumber })
-            result.count = result.length
-            return result
-        } catch (e) {
-            throw new Error(e)
-        }
-    }
-
-    // 서브카테고리 분류
-    async CategoryValue({ mainCd, subCd, pageNumber }) {
-        try {
-            const mainCdValue = mainCd === "notice" ? this.mainChange.notice : mainCd === "community" ? this.mainChange.community : this.mainChange.qna
-            const subCdValue = subCd === "sub1" ? this.subChange.sub1 : subCd === "sub2" ? this.subChange.sub2 : this.subChange.sub3
-            const findValue = `${mainCdValue}${subCdValue}`
-            const result = await this.boardRepository.categoryValue({ findValue, pageNumber })
-
-            const result2 = result.map((x, i) => {
-                x.showindex = i + 1
-                return x
-            })
-            console.log(result2)
-            return result
-
-        } catch (e) {
-            throw new Error(e)
-        }
-    }
-
-    // 핫 게시물
     async HotValue() {
         try {
             const response = await this.boardRepository.hotValue()
@@ -123,7 +22,6 @@ class BoardService {
         }
     }
 
-    // 유저 정보 찾기
     async FindUserInfo({ userId }) {
         try {
             const response = await this.boardRepository.findUserInfo({ userId })
@@ -131,8 +29,15 @@ class BoardService {
         } catch (error) { }
     }
 
+    async MakeWrite({ subject, content, categoryMain, categorySub, hash, userId }) {
+        try {
+            const result = await this.boardRepository.createBoard({ subject, content, categoryMain, categorySub, hash, userId })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
 
-    // 좋아요 추가하기
     async InsertLike({ userId, boardIdx, categoryMain }) {
         try {
             const result = await this.boardRepository.insertLike({ userId, boardIdx, categoryMain })
@@ -142,8 +47,24 @@ class BoardService {
         }
     }
 
+    async FindValue({ boardIdx }) {
+        try {
+            const result = await this.boardRepository.findValue({ boardIdx })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
 
-    // 사진 다듬기
+    async DeleteValue({ boardIdx }) {
+        try {
+            const result = await this.boardRepository.deleteValue({ boardIdx })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
     async PictureCreate({ arr, boardIdx }) {
         try {
             const arr1 = arr.map((x) => x.replace("data:image/jpeg;base64,", ""))
@@ -161,31 +82,33 @@ class BoardService {
         }
     }
 
-
-
-
-    // 서브 카테고리로 분류하기
-    async CategorySubValue({ categoryMain, categorySub }) {
+    async CategoryValue({ categoryMain }) {
         try {
-            const result = await this.boardRepository.categorySubValue({ categoryMain, categorySub })
-            const { response, subCount } = result
-
-            // const response2 = response.map((x) => {
-            //     x.createdAt = x.createdAt.split(0, 10)
-
-            //     return x
-            // })
-
+            const result = await this.boardRepository.categoryValue({ categoryMain })
             return result
         } catch (e) {
             throw new Error(e)
         }
     }
 
+    async CategorySubValue({ categoryMain, categorySub }) {
+        try {
+            const result = await this.boardRepository.categorySubValue({ categoryMain, categorySub })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
 
+    async PagingValue({ categoryMain, categorySub, pagingIndex }) {
+        try {
+            const result = await this.boardRepository.pagingValue({ categoryMain, categorySub, pagingIndex })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
 
-
-    // 검색 알고리즘
     async FindSearch({ search }) {
         try {
             const result = await this.boardRepository.findSearch({ search })

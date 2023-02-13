@@ -1,40 +1,29 @@
 module.exports = (sequelize, Sequelize) => {
     class Category extends Sequelize.Model {
-        static initialize() {
-            return this.init({
-                mainCd: {
-                    type: Sequelize.STRING(4),
-                    primaryKey: true,
+        static initialize () {
+            return this.init ({
+                categoryMain : {
+                    type : Sequelize.STRING(64),
+                    primaryKey : true,
                 },
-                subCd: {
-                    type: Sequelize.STRING(4),
-                    primaryKey: true,
+                categorySub : {
+                    type : Sequelize.STRING(64),
+                    primaryKey : true,
                 },
-                name: {
-                    type: Sequelize.STRING(32),
-                    allowNull: false
-                },
-                type: {
-                    type: Sequelize.STRING(32),
-                    allowNull: false
-                }
             },
-                {
-                    sequelize,
-                    tableName: "Category",
-                    autoIncrement: false,
-                })
-        }
-        static associate(models) {
-            this.hasMany(models.Board, {
-                foreignKey: {
-                    type: Sequelize.STRING(8),
-                    name: "cateCd"
-                }
+            {
+                sequelize,
+                tableName : "Category",
+                autoIncrement : false,
             })
-            // this.hasMany(models.Board, {
-            //     foreignKey: "categorySub"
-            // })
+        }
+        static associate(models){
+            this.hasMany(models.Board, {
+                foreignKey : "categoryMain"
+            })
+            this.hasMany(models.Board,{
+                foreignKey : "categorySub"
+            })
         }
     }
     Category.initialize();
