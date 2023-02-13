@@ -20,10 +20,6 @@ for (let i = 0; i < img.length; i++) {
 }
 const boardIdx = BoardIdx.value
 
-writeCheckBtn.addEventListener("click", (e) => {
-    const _pathname = location.pathname.slice(6)
-    location.href = `${_pathname}`
-})
 ;(async () => {
     const response = await request.post("/board/picture", { arr, boardIdx })
     console.log(response)

@@ -16,7 +16,10 @@ class BoardRepository {
     async randomValue() {
         try {
             // const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx order by rand() Limit 7", { type: this.queryTypes.SELECT })
-            const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked,A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where B.picture LIKE '__\_0%'  order by rand() Limit 7", { type: this.queryTypes.SELECT })
+            const boardRandom = await this.sequelize.query(
+                "SELECT A.userId, A.subject, A.viewCount, A.liked,A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where B.picture LIKE '___0%'  order by rand() Limit 7",
+                { type: this.queryTypes.SELECT }
+            )
             const randomUser = []
             const randomHash = []
             for (let i = 0; i < boardRandom.length; i++) {
@@ -27,7 +30,6 @@ class BoardRepository {
                 const randomhashtagValue = await this.sequelize.query(`SELECT B.boardIdx, A.tag FROM Hashtag A LEFT JOIN Hash B ON A.hashTagIdx = B.hashTagIdx`)
             }
             return { boardRandom, randomUser }
-
         } catch (e) {
             throw new Error(`error while finding randomValue: ${e.message}`)
         }
@@ -36,6 +38,7 @@ class BoardRepository {
     async hotValue() {
         try {
             const boardHot = await this.Board.findAll({ order: this.sequelize.literal("liked DESC"), limit: 3, raw: true })
+            return boardHot
         } catch (e) {
             throw new Error(`error while finding hotValue: ${e.message}`)
         }
@@ -64,11 +67,11 @@ class BoardRepository {
 
                     newHashTagVal.push(newHashTag)
                 }
-                const hashVal = newHashTagVal.map(x => x.hashTagIdx)
+                const hashVal = newHashTagVal.map((x) => x.hashTagIdx)
                 console.log(hashVal)
                 for (let j = 0; j < hashVal.length; j++) {
                     const newHash = await this.hash.findOrCreate({
-                        where: { boardIdx, hashTagIdx: hashVal[j] }
+                        where: { boardIdx, hashTagIdx: hashVal[j] },
                     })
                 }
                 return { newBoard, newHashTagVal }
@@ -156,6 +159,7 @@ class BoardRepository {
     async categoryValue({ categoryMain }) {
         try {
             const response = await this.Board.findAll({ where: { categoryMain }, raw: true, limit: 5 })
+            console.log(categoryMain, "bbbbb==============================")
             const subVal = await this.sequelize.query(`SELECT DISTINCT categorySub FROM Board where categoryMain ='${categoryMain}'`, { type: this.queryTypes.SELECT })
             return { response, subVal }
         } catch (e) {
@@ -167,7 +171,7 @@ class BoardRepository {
         try {
             const response = await this.Board.findAll({ where: { categoryMain, categorySub }, raw: true, limit: 5 })
             const subCount = await this.Board.count({
-                where: { categoryMain, categorySub }
+                where: { categoryMain, categorySub },
             })
             return { response, subCount }
         } catch (e) {
@@ -177,11 +181,13 @@ class BoardRepository {
 
     async pagingValue({ categoryMain, categorySub, pagingIndex }) {
         try {
-            const countpaging = (5 * pagingIndex) - 5
-            console.log(categoryMain, categorySub, pagingIndex)
-            const response = await this.sequelize.query(`SELECT row_number() over(order by boardIdx asc) AS num, subject, content, viewCount, categoryMain, categorySub, userId, createdAt, liked FROM Board WHERE categoryMain='${categoryMain}' AND categorySub='${categorySub}' limit 5 OFFSET ${countpaging}`, { type: this.queryTypes.SELECT })
+            const countpaging = 5 * pagingIndex - 5
+            const response = await this.sequelize.query(
+                `SELECT row_number() over(order by boardIdx asc) AS num, boardIdx, subject, content, viewCount, categoryMain, categorySub, userId, createdAt, liked FROM Board WHERE categoryMain='${categoryMain}' AND categorySub='${categorySub}' limit 5 OFFSET ${countpaging}`,
+                { type: this.queryTypes.SELECT }
+            )
             const subCount = await this.Board.count({
-                where: { categoryMain, categorySub }
+                where: { categoryMain, categorySub },
             })
             return { response, subCount }
         } catch (e) {
@@ -194,14 +200,16 @@ class BoardRepository {
             const Op = this.Sequelize.Op
             const response = await this.Board.findAll({
                 where: {
-                    subject: { [Op.like]: `%${search}%` }
-                }, raw: true
+                    subject: { [Op.like]: `%${search}%` },
+                },
+                raw: true,
             })
             console.log(response)
             const boardCount = await this.Board.count({
                 where: {
-                    subject: { [Op.like]: `%${search}%` }
-                }, raw: true
+                    subject: { [Op.like]: `%${search}%` },
+                },
+                raw: true,
             })
             console.log(boardCount)
             return { response, boardCount }

@@ -154,6 +154,6 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
     })
 
 cancelBtn.addEventListener("click", () => {
-    const _pathname = location.pathname.slice(6)
+    const _pathname = location.pathname.replace("/write", "")
     location.href = `${_pathname}`
 })

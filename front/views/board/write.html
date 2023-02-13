@@ -13,14 +13,14 @@
 <br />
 {% extends 'layout/layout.html'%} {% block content %}
 <div id="contentArea">
-    <form action="/write/{{categoryMain}}" method="post" id="writeFrm">
-        {% if categoryMain === "notice" %}
+    <form action="/board/{{mainCd}}/write" method="post" id="writeFrm">
+        {% if mainCd === "notice" %}
         <select name="categorySub" class="categoryMain">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
         </select>
-        {% elif categoryMain === "community" %}
+        {% elif mainCd === "community" %}
         <select name="categorySub" class="categoryMain">
             <option value="4">4</option>
             <option value="5">5</option>
