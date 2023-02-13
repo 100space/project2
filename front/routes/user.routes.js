@@ -34,12 +34,7 @@ router.get("/myview", async (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
     const response = await request.post("/profile/myview/mywrite", { userId })
-    const { data } = response
-    const data1 = data.map((x) => {
-        x.createdAt = x.createdAt.substring(0, 10)
-        return x
-    })
-    res.render("board/list.html", { listValue: data1 })
+    console.log(response)
 })
 
 

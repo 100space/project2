@@ -2,7 +2,6 @@ let pathname = location.pathname
 const contentSub = document.querySelector("#contentSub")
 const boardHeader = document.querySelector("#boardHeader")
 const writeBtn = document.querySelector("#writeBtn")
-console.log(pathname)
 
 let pathname2 = pathname === "/notice" ? "공지사항" : pathname === "/community" ? "커뮤니티" : "질문과 답변"
 

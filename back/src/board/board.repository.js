@@ -1,118 +1,22 @@
 class BoardRepository {
-    constructor({ sequelize: { models: { User, Board, Comment, Liked, Hash, Hashtag, Picture, Category } }, Sequelize, sequelize }) {
-        this.User = User
-        this.Board = Board
-        this.comment = Comment
-        this.liked = Liked
-        this.hash = Hash
-        this.hashtag = Hashtag
-        this.picture = Picture
-        this.category = Category
-        this.queryTypes = Sequelize.QueryTypes
+    constructor({ sequelize, Sequelize }) {
+        this.User = sequelize.models.User
+        this.Board = sequelize.models.Board
+        this.comment = sequelize.models.Comment
+        this.liked = sequelize.models.Liked
+        this.hash = sequelize.models.Hash
+        this.hashtag = sequelize.models.Hashtag
+        this.picture = sequelize.models.Picture
+        this.category = sequelize.models.Category
+        this.queryTypes = sequelize.QueryTypes
         this.sequelize = sequelize
         this.Sequelize = Sequelize
     }
-    // 글쓰기
-    async createBoard(payload) {
-        try {
-            const { subject, content, mainCdValue, subCdValue, hashArray, userId } = payload
-            const newBoard = (await this.Board.create({ subject, content, userId, cateCd: `${mainCdValue}${subCdValue}` })).get({ plain: true })
-            const newHashTagVal = []
-            const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-            const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-            if (hashArray) {
-                const { boardIdx } = newBoard
-                for (let i = 0; i < hashArray.length; i++) {
-                    const result = hashArray[i]
-                    const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
-                    newHashTagVal.push(newHashTag)
-                }
-                const hashVal = newHashTagVal.map(x => x.hashTagIdx)
-                for (let j = 0; j < hashVal.length; j++) {
-                    const newHash = await this.hash.findOrCreate({
-                        where: { boardIdx, hashTagIdx: hashVal[j] }
-                    })
-                }
-                return { newBoard, newHashTagVal }
-            }
-            return newBoard
-        } catch (error) {
-            throw new Error(`Error while creating board: ${error.message}`)
-        }
-    }
 
-    // view 페이지
-    async findValue(payload) {
-        try {
-            const { boardIdx } = payload
-            const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
-            return response
-        } catch (e) {
-            throw new Error(`Error while find status: ${e.message}`)
-        }
-    }
-
-    // 게시글 수정하기
-    async changeView(payload) {
-        try {
-            const { subject, content, mainCdValue, subCdValue, hashArray, userId, boardIdx } = payload
-            const response = await this.Board.update({ subject, content, cateCd: `${mainCdValue}${subCdValue}`, userId }, {
-                where: {
-                    boardIdx
-                }
-            })
-            const changeHash = []
-            if (hashArray) {
-                const hashResponse = await this.hash.findAll({ where: { boardIdx }, raw: true })
-                for (let i = 0; i < hashResponse.length; i++) {
-                    let hashTagIdx = hashResponse[i].hashTagIdx
-                    const deleteHashTag = await this.hashtag.destroy({
-                        where: {
-                            hashTagIdx
-                        }
-                    })
-                    const deleteHash = await this.hashtag.destroy({
-                        where: {
-                            hashTagIdx
-                        }
-                    })
-                }
-                for (let j = 0; j < hashArray.length; j++) {
-                    const result = hashArray[j]
-                    const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
-                    changeHash.push(newHashTag)
-                }
-                return { response, changeHash }
-            } else {
-                return response
-            }
-
-        } catch (e) {
-
-        }
-    }
-
-    // 게시글 지우기
-    async deleteValue(payload) {
-        try {
-            const { boardIdx } = payload
-            const boardResponse = await this.Board.findOne({ where: { boardIdx }, raw: true })
-            const boardLevel = boardResponse.boardLevel + 1
-            const response = await this.Board.update({ boardLevel: boardLevel }, {
-                where: {
-                    boardIdx
-                }
-            })
-        } catch (e) {
-            throw new Error(`Error while delete status: ${e.message}`)
-        }
-    }
-    // 랜덤값 추출
     async randomValue() {
         try {
             // const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx order by rand() Limit 7", { type: this.queryTypes.SELECT })
-            const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where A.boardLevel = 0 order by rand() Limit 7", { type: this.queryTypes.SELECT })
-            console.log(boardRandom)
+            const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked,A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where B.picture LIKE '__\_0%'  order by rand() Limit 7", { type: this.queryTypes.SELECT })
             const randomUser = []
             const randomHash = []
             for (let i = 0; i < boardRandom.length; i++) {
@@ -129,49 +33,6 @@ class BoardRepository {
         }
     }
 
-    // 카테고리별 게시판
-    async findMainValue({ mainCdValue, pageNumber }) {
-        const Op = this.Sequelize.Op
-        try {
-            const indexValue = (pageNumber * 5 - 4) === 1 ? 0 : pageNumber * 5 - 4
-            console.log(indexValue)
-            const findMain = await this.Board.findAll({
-                limit: 5,
-                offset: indexValue,
-                where: {
-                    cateCd: {
-                        [Op.like]: `${mainCdValue}%`
-                    }
-                }, raw: true
-            })
-            return findMain
-        } catch (e) {
-            throw new Error(`Error while find pagingValue: ${e.message}`)
-        }
-    }
-
-    // subcategory 정렬
-    async categoryValue({ findValue, pageNumber }) {
-        const Op = this.Sequelize.Op
-        try {
-            const indexValue = (pageNumber * 5 - 4) === 1 ? 0 : pageNumber * 5 - 4
-            const correctValue = await this.Board.findAll({
-                limit: 5,
-                offset: indexValue,
-                where: {
-                    cateCd: {
-                        [Op.like]: `%${findValue}%`
-                    }
-                }, raw: true
-            })
-            return correctValue
-        } catch (e) {
-            throw new Error(`Error while find category: ${e.message}`)
-        }
-    }
-
-
-    // 인기게시물
     async hotValue() {
         try {
             const boardHot = await this.Board.findAll({ order: this.sequelize.literal("liked DESC"), limit: 3, raw: true })
@@ -180,14 +41,44 @@ class BoardRepository {
         }
     }
 
-    // user 정보 찾기
     async findUserInfo(payload) {
         const { userId } = payload
         const userInfo = await this.User.findOne({ userId, raw: true })
         return userInfo
     }
 
-    // 좋아요 추가
+    async createBoard(payload) {
+        try {
+            const { subject, content, categoryMain, categorySub, hash, userId } = payload
+            const newBoard = (await this.Board.create({ subject, content, categoryMain, categorySub, userId })).get({ plain: true })
+            const newHashTagVal = []
+            const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
+            const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
+            if (hash) {
+                const boardContent = await this.sequelize.query("SELECT * FROM Board ORDER BY boardIdx DESC limit 1", { type: this.queryTypes.SELECT })
+                const [lastBoard] = boardContent
+                const { boardIdx } = lastBoard
+                for (let i = 0; i < hash.length; i++) {
+                    const result = hash[i]
+                    const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
+
+                    newHashTagVal.push(newHashTag)
+                }
+                const hashVal = newHashTagVal.map(x => x.hashTagIdx)
+                console.log(hashVal)
+                for (let j = 0; j < hashVal.length; j++) {
+                    const newHash = await this.hash.findOrCreate({
+                        where: { boardIdx, hashTagIdx: hashVal[j] }
+                    })
+                }
+                return { newBoard, newHashTagVal }
+            }
+            return newBoard
+        } catch (error) {
+            throw new Error(`Error while creating board: ${error.message}`)
+        }
+    }
+
     async insertLike(payload) {
         try {
             const { userId, boardIdx, categoryMain } = payload
@@ -230,7 +121,27 @@ class BoardRepository {
         }
     }
 
-    // 사진 값 정렬
+    async findValue(payload) {
+        try {
+            const { boardIdx } = payload
+            const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
+            return response
+        } catch (e) {
+            throw new Error(`Error while find status: ${e.message}`)
+        }
+    }
+
+    async deleteValue(payload) {
+        try {
+            const { boardIdx } = payload
+            const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
+            if (response) {
+                const result = await this.Board.destroy({ where: { boardIdx } })
+            }
+        } catch (e) {
+            throw new Error(`Error while delete status: ${e.message}`)
+        }
+    }
     async pictureCreate(payload) {
         try {
             const { boardIdx, boardFile } = payload
@@ -242,17 +153,19 @@ class BoardRepository {
         }
     }
 
+    async categoryValue({ categoryMain }) {
+        try {
+            const response = await this.Board.findAll({ where: { categoryMain }, raw: true, limit: 5 })
+            const subVal = await this.sequelize.query(`SELECT DISTINCT categorySub FROM Board where categoryMain ='${categoryMain}'`, { type: this.queryTypes.SELECT })
+            return { response, subVal }
+        } catch (e) {
+            throw new Error(`Error while find category: ${e.message}`)
+        }
+    }
 
-    // 리팩토링 시작 
     async categorySubValue({ categoryMain, categorySub }) {
         try {
-            const response = await this.Board.findAll({
-                attributes: ["boardIdx", "subject", "content", "viewCount", "categoryMain", "categorySub", "liked",
-                    [this.sequelize.fn("DATE_FORMAT", this.sequelize.col("createdAt"), "%Y-%m-%d"), 'createdAt']
-                ],
-                where: { categoryMain, categorySub }, raw: true, limit: 5
-            })
-
+            const response = await this.Board.findAll({ where: { categoryMain, categorySub }, raw: true, limit: 5 })
             const subCount = await this.Board.count({
                 where: { categoryMain, categorySub }
             })
@@ -261,11 +174,21 @@ class BoardRepository {
             throw new Error(`Error while find subCategory: ${e.message}`)
         }
     }
-    // 리팩토링 끝
 
+    async pagingValue({ categoryMain, categorySub, pagingIndex }) {
+        try {
+            const countpaging = (5 * pagingIndex) - 5
+            console.log(categoryMain, categorySub, pagingIndex)
+            const response = await this.sequelize.query(`SELECT row_number() over(order by boardIdx asc) AS num, subject, content, viewCount, categoryMain, categorySub, userId, createdAt, liked FROM Board WHERE categoryMain='${categoryMain}' AND categorySub='${categorySub}' limit 5 OFFSET ${countpaging}`, { type: this.queryTypes.SELECT })
+            const subCount = await this.Board.count({
+                where: { categoryMain, categorySub }
+            })
+            return { response, subCount }
+        } catch (e) {
+            throw new Error(`Error while find pagingValue: ${e.message}`)
+        }
+    }
 
-
-    // 검색하기
     async findSearch({ search }) {
         try {
             const Op = this.Sequelize.Op
