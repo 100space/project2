@@ -78,9 +78,9 @@ class UserService {
     }
 
     // 내가 쓴 글
-    async FindWriting({ userId }) {
+    async FindWriting({ userId, page }) {
         try {
-            const result = await this.userRepository.findWriting({ userId })
+            const result = await this.userRepository.findWriting({ userId })                 
             return result
         } catch (e) {
             throw new Error(e)

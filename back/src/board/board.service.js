@@ -82,7 +82,14 @@ class BoardService {
     async RandomValue() {
         try {
             const response = await this.boardRepository.randomValue()
-            return response
+            const {boardRandom, randomUser, randomHash} = response
+            const listValue = boardRandom.map((x)=>{
+                const mainValue = x.cateCd.slice(0,4)
+                const sendMain = mainValue === this.mainChange.notice ? "notice" : mainValue === this.mainChange.community ? "community" : "qna"
+                x.mainCd = sendMain
+                return x
+            })
+            return {listValue, randomUser, randomHash}
         } catch (e) {
             throw new Error(e)
         }
