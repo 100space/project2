@@ -4,6 +4,70 @@ class BoardController {
         this.boardService = boardService
     }
 
+    // 글쓰기
+    async postWrite(req, res, next) {
+        try {
+            const { subject, content, userId, mainCd, subCd, hash } = req.body
+            const result = await this.boardService.MakeWrite({ subject, content, mainCd, subCd, userId, hash })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+    // 게시판 글 보기
+    async findBoard(req, res, next) {
+        try {
+            const { boardIdx } = req.params
+            const result = await this.boardService.FindValue({ boardIdx })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    // 게시판 글 수정하기
+    async changeBoard(req, res, next) {
+        try {
+            const { boardIdx } = req.params
+            const { subject, content, userId, mainCd, subCd, hash } = req.body
+            const result = await this.boardService.ChangeView({ boardIdx, subject, content, userId, mainCd, subCd, hash })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+    // 게시판 삭제하기
+    async deleteBoard(req, res, next) {
+        try {
+            const { boardIdx } = req.params
+            const result = await this.boardService.DeleteValue({ boardIdx })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+    // 메인카테고리 분류
+    async findMainCd(req, res, next) {
+        try {
+            const { mainCd, pageNumber } = req.params
+            const result = await this.boardService.FindMainValue({ mainCd, pageNumber })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    // 서브카테고리 분류
+    async findCategorySub(req, res, next) {
+        try {
+            const { mainCd, subCd, pageNumber } = req.params
+            const result = await this.boardService.CategoryValue({ mainCd, subCd, pageNumber })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
     // 인덱스 페이지 랜덤으로 값 뿌려주기 
     async getRandom(req, res, next) {
         try {
@@ -24,16 +88,6 @@ class BoardController {
         }
     }
 
-    // 글쓰기
-    async postWrite(req, res, next) {
-        try {
-            const { subject, content, userId, mainCd, subCd, hash } = req.body
-            const result = await this.boardService.MakeWrite({ subject, content, mainCd, subCd, userId, hash })
-            res.status(201).json(result)
-        } catch (e) {
-            next(e)
-        }
-    }
 
     // 좋아요 값 추가
     async infoLike(req, res, next) {
@@ -47,27 +101,7 @@ class BoardController {
         }
     }
 
-    // 게시판 글 보기
-    async findBoard(req, res, next) {
-        try {
-            const { boardIdx } = req.body
-            const result = await this.boardService.FindValue({ boardIdx })
-            res.status(201).json(result)
-        } catch (e) {
-            next(e)
-        }
-    }
 
-    // 게시판 삭제하기
-    async deleteBoard(req, res, next) {
-        try {
-            const { boardIdx } = req.params
-            const result = await this.boardService.DeleteValue({ boardIdx })
-            res.status(201).json(result)
-        } catch (e) {
-            next(e)
-        }
-    }
 
 
     // 사진 저장하기
@@ -81,38 +115,8 @@ class BoardController {
         }
     }
 
-    // 카테고리 저장하기
-    async findCategory(req, res, next) {
-        try {
-            const { categoryMain, categorySub } = req.params
-            const result = await this.boardService.CategoryValue({ categoryMain, categorySub })
-            res.status(201).json(result)
-        } catch (e) {
-            next(e)
-        }
-    }
 
-    // 서브카테고리 분리하기
-    async findCategorySub(req, res, next) {
-        try {
-            const { categoryMain, categorySub } = req.params
-            const result = await this.boardService.CategorySubValue({ categoryMain, categorySub })
-            res.status(201).json(result)
-        } catch (e) {
-            next(e)
-        }
-    }
 
-    // 페이징 용 값 주기
-    async findPagingValue(req, res, next) {
-        try {
-            const { categoryMain, categorySub, pagingindex } = req.params
-            const result = await this.boardService.PagingValue({ categoryMain, categorySub, pagingIndex: pagingindex })
-            res.status(201).json(result)
-        } catch (e) {
-            next(e)
-        }
-    }
 
     // 검색 알고리즘
     async searchValue(req, res, next) {
