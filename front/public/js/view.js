@@ -14,9 +14,7 @@ let img = document.querySelectorAll("#content img[src]")
 
 const modifyBtnHandler = async (e) => {
     if (e.target.className.indexOf("modify") >= 0) {
-        // console.log(mainCd.value)
-        // const res
-        location.href = `/board/${mainCd.value}/write/modify`
+        location.href = `/board/${mainCd.value}/view/${BoardIdx.value}/modify`
     }
 }
 viewModify.addEventListener("click", modifyBtnHandler)

@@ -35,7 +35,6 @@ router.get("/:mainCd/write", (req, res, next) => {
 //     res.render("board/write.modify.html", { mainCd })
 // })
 
-
 router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
@@ -50,21 +49,19 @@ router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
         content: req.body.content,
         hash: req.body["tags-outside"],
     }
-    const result = await request.put(`/board/${mainCd}/view/${boardIdx}`, { data })
+    const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data })
     console.log(result)
     const { updatedBoard } = result.data
     res.redirect(`/board/${mainCd}/view/${boardIdx}`)
 })
 
-
 router.put("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const { subject, content, hash } = req.body
-    const result = await request.put(`/board/${mainCd}/view/${boardIdx}`, { data: { subject, content, hash } })
+    const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data: { subject, content, hash } })
     const { updatedBoard } = result.data
     res.json({ updatedBoard })
 })
-
 
 router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params

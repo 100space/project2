@@ -8,6 +8,9 @@
             <!-- 한칸 -->
             <div id="a" class="contentCard">
                 <div class="content_box">
+                    {% for item in boardRandom%}
+                    <input type="hidden" name="indexBoardIdx" id="indexBoardIdx" value="{{item.boardIdx}}}, {{item.mainCd}}" />
+                    {% endfor %}
                     <div class="cardBody">
                         <img style="background-image: url('/img/11.jpg'); height: calc(40rem * 0.54)" />
                     </div>
@@ -15,7 +18,7 @@
                         <span>{{boardRandom[0].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize"></div>
+                        <div class="userPic userPicSize" style="background-image:url('/image/{{randomUser[0].userPic}}') ;"></div>
                         <div class="userid">
                             <span>{{randomUser[0].userId}}</span>
                         </div>
@@ -48,7 +51,7 @@
                         <span>{{boardRandom[1].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize"></div>
+                        <div class="userPic userPicSize" style="background-image:url('/image/{{randomUser[1].userPic}}') ;"></div>
                         <div class="userid">
                             <span>{{randomUser[1].userId}}</span>
                         </div>
@@ -81,7 +84,7 @@
                         <span>{{boardRandom[2].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize"></div>
+                        <div class="userPic userPicSize" style="background-image:url('/image/{{randomUser[2].userPic}}') ;"></div>
                         <div class="userid">
                             <span>{{randomUser[2].userId}}</span>
                         </div>
@@ -114,11 +117,11 @@
                         <span>{{boardRandom[3].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize"></div>
+                        <div class="userPic userPicSize" style="background-image:url('/image/{{randomUser[3].userPic}}') ;"></div>
                         <div class="userid">
                             <span>{{randomUser[3].userId}}</span>
                         </div>
-                        <div class="status d_status">
+                        <div class="status">
                             <span>❤️</span>
                             <span>{{boardRandom[3].liked}}</span>
                             <span>👁</span>
@@ -148,7 +151,7 @@
                         <span>{{boardRandom[4].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize"></div>
+                        <div class="userPic userPicSize" style="background-image:url('/image/{{randomUser[4].userPic}}') ;"></div>
                         <div class="userid">
                             <span>{{randomUser[4].userId}}</span>
                         </div>
@@ -181,7 +184,7 @@
                         <span>{{boardRandom[5].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize"></div>
+                        <div class="userPic userPicSize" style="background-image:url('/image/{{randomUser[5].userPic}}') ;"></div>
                         <div class="userid">
                             <span>{{randomUser[5].userId}}</span>
                         </div>
@@ -214,7 +217,7 @@
                         <span>{{boardRandom[6].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize"></div>
+                        <div class="userPic userPicSize" style="background-image:url('/image/{{randomUser[6].userPic}}') ;"></div>
                         <div class="userid">
                             <span>{{randomUser[6].userId}}</span>
                         </div>

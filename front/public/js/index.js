@@ -5,6 +5,9 @@ const contentImg = document.querySelectorAll(".cardBody > img")
 const a = document.querySelector("#a")
 const cardSubject = document.querySelectorAll(".cardSubject > span")
 const textSub = document.querySelectorAll(".textSub")
+const indexBoardIdx = document.querySelectorAll("#indexBoardIdx")
+
+console.log(indexBoardIdx[0].boardIdx)
 
 for (let i = 0; i < cardHeader.length; i++) {
     cardHeader[i].addEventListener("click", (e) => {

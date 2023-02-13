@@ -103,7 +103,7 @@ class BoardRepository {
             } else {
                 return response
             }
-        } catch (e) { }
+        } catch (e) {}
     }
 
     // 게시글 지우기
@@ -129,7 +129,7 @@ class BoardRepository {
         try {
             // const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx order by rand() Limit 7", { type: this.queryTypes.SELECT })
             const boardRandom = await this.sequelize.query(
-                "SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where A.boardLevel = 0 order by rand() Limit 7",
+                "SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, B.picture, A.cateCd From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where A.boardLevel = 0 order by rand() Limit 7",
                 { type: this.queryTypes.SELECT }
             )
             // console.log(boardRandom)
@@ -140,7 +140,9 @@ class BoardRepository {
                 const randomboardIdx = boardRandom[i].boardIdx
                 const randomUserinfo = await this.User.findOne({ where: { userId: randomUserid }, raw: true })
                 randomUser.push(randomUserinfo)
-                const randomhashtagValue = await this.sequelize.query(`SELECT A.tag FROM Hashtag A JOIN Hash B ON A.hashTagIdx = B.hashTagIdx WHERE B.boardIdx =${randomboardIdx}`, { type: this.queryTypes.SELECT })
+                const randomhashtagValue = await this.sequelize.query(`SELECT A.tag FROM Hashtag A JOIN Hash B ON A.hashTagIdx = B.hashTagIdx WHERE B.boardIdx =${randomboardIdx}`, {
+                    type: this.queryTypes.SELECT,
+                })
                 randomHash.push(randomhashtagValue)
             }
 
@@ -158,11 +160,10 @@ class BoardRepository {
             const allMainCd = await this.Board.count({
                 where: {
                     cateCd: {
-                        [Op.like]: `${mainCdValue}%`
-                    }
-                }
-            }
-            )
+                        [Op.like]: `${mainCdValue}%`,
+                    },
+                },
+            })
             const findMain = await this.Board.findAll({
                 limit: 5,
                 offset: indexValue,
