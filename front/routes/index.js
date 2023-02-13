@@ -3,6 +3,7 @@ const router = express.Router()
 const axios = require("axios")
 const user = require("./user.routes")
 const profile = require("./profile.routes")
+const board = require("./board.routes")
 const upload = require("../midlewares/upload")
 const config = require("../config")
 const request = axios.create({
@@ -45,6 +46,8 @@ router.use("/", async (req, res, next) => {
 })
 router.use("/user", user)
 router.use("/profile", profile)
+router.use("/board", board)
+
 router.get("/io", (req, res, next) => {
     res.render("/layout/layout.html")
 })
@@ -56,11 +59,97 @@ router.get("/token/:token", async (req, res, next) => {
 
 router.get("/oauth/kakao", (req, res, next) => {
     const redirectURL = `${config.kakaoHOST}/oauth/authorize?client_id=${config.kakaoREST_API_KEY}&redirect_uri=${config.kakaoREDIRECT_URI}&response_type=code`
-
     res.redirect(redirectURL)
 })
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+//
 router.get("/", async (req, res, next) => {
+    console.log(req)
     const userInfo = req.userInfo
     const { boardHot } = req
     const { userHot } = req
@@ -86,7 +175,15 @@ router.get("/search", async (req, res, next) => {
     const userValue = userResponse.data.response
     res.render("board/search.html", { ...userInfo, boardHot, userHot, search, boardCount, data1, userCount, userValue })
 })
-
+router.get("/:categoryMain/view/:boardIdx", async (req, res, next) => {
+    const userInfo = req.userInfo
+    const { boardHot } = req
+    const { userHot } = req
+    const { categoryMain, boardIdx } = req.params
+    const response = await request.post(`/board/${categoryMain}/view`, { userInfo, boardIdx })
+    const { data } = response
+    res.render("board/view.html", { ...data, boardHot, userHot })
+})
 router.get("/notice", async (req, res, next) => {
     const userInfo = req.userInfo
     const { boardHot } = req
@@ -103,7 +200,7 @@ router.get("/notice", async (req, res, next) => {
     const data2 = response2.data
     const subVal = data2.subVal
     const mainVal = data2.mainVal
-    res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, boardCount, categorySub })
+    // res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, boardCount, categorySub })
 })
 
 router.get("/:categoryMain/:categorySub/:pagingIndex", async (req, res, next) => {
@@ -116,6 +213,7 @@ router.get("/:categoryMain/:categorySub/:pagingIndex", async (req, res, next) =>
     const { data } = response
     const subcateVal = data.response
     const boardCount = data.subCount
+    console.log(boardCount)
     const data1 = subcateVal.map((x) => {
         x.createdAt = x.createdAt.substring(0, 10)
         return x
@@ -124,7 +222,9 @@ router.get("/:categoryMain/:categorySub/:pagingIndex", async (req, res, next) =>
     const data2 = response2.data
     const subVal = data2.subVal
     const mainVal = data2.mainVal
-    res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, boardCount, categorySub })
+    res.send("111")
+
+    // res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, boardCount, categorySub })
 })
 
 router.get("/community", async (req, res, next) => {
@@ -147,17 +247,17 @@ router.get("/community/:categorySub", async (req, res, next) => {
     const response = await request.get(`/board/community/${categorySub}`)
 })
 
-router.get("/q&a", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const response = await request.get("/board/q&a")
-    const { data } = response
-    const listValue = data.response
-    const subVal = data.subVal
-    const mainVal = data.mainVal
-    res.render("board/list.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
-})
+// router.get("/q&a", async (req, res, next) => {
+//     const userInfo = req.userInfo
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const response = await request.get("/board/q&a")
+//     const { data } = response
+//     const listValue = data.response
+//     const subVal = data.subVal
+//     const mainVal = data.mainVal
+//     res.render("board/list.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
+// })
 
 router.get("/q&a/:categorySub", async (req, res, next) => {
     const userInfo = req.userInfo
@@ -179,13 +279,14 @@ router.get("/q&a/:categorySub", async (req, res, next) => {
     res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, arrayNum, categorySub })
 })
 
-router.get("/write/:categoryMain", (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const { categoryMain } = req.params
-    res.render("board/write.html", { ...userInfo, categoryMain, boardHot, userHot })
-})
+// router.get("/write/:categoryMain", (req, res, next) => {
+//     const userInfo = req.userInfo
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const { categoryMain } = req.params
+//     console.log(boardHot)
+//     res.render("board/write.html", { ...userInfo, categoryMain, boardHot, userHot })
+// })
 router.post("/write/:categoryMain", async (req, res, next) => {
     const userInfo = req.userInfo
     const { boardHot } = req
@@ -222,16 +323,6 @@ router.post("/write/:categoryMain", async (req, res, next) => {
         console.log(newHashTagVal)
         res.render("board/view.check.html", { ...newBoard, newHashTagVal, ...userInfo, boardHot, userHot })
     }
-})
-
-router.get("/:categoryMain/view/:boardIdx", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const { categoryMain, boardIdx } = req.params
-    const response = await request.post(`/board/${categoryMain}/view`, { userInfo, boardIdx })
-    const { data } = response
-    res.render("board/view.html", { ...data, boardHot, userHot })
 })
 
 router.get("/:categoryMain/delete/:boardIdx", async (req, res, next) => {

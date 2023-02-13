@@ -7,10 +7,3 @@ let pathname2 = pathname === "/notice" ? "공지사항" : pathname === "/communi
 
 boardHeader.innerHTML = `<div>${pathname2}</div>
     <div>${pathname.slice(1).replace(/^[a-z]/, (char) => char.toUpperCase())}</div>`
-
-const writeBtnHandler = (e) => {
-    e.preventDefault()
-    const writePath = location.pathname.slice(1)
-    location.href = `/write/${writePath}`
-}
-writeBtn.addEventListener("click", writeBtnHandler)

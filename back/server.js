@@ -83,7 +83,7 @@ app.get("/oauth/kakao", async (req, res, next) => {
 const http = app.listen(port, async () => {
     console.log("connecting to backend and Database...")
     await sequelize.sync({ force: true })
-    for (i = 1; i <= 48; i++) {
+    for (i = 1; i <= 20; i++) {
         await User.create({
             userId: `admin${i}`,
             userPw: hash,
@@ -96,11 +96,11 @@ const http = app.listen(port, async () => {
             userIntro: "11",
             userPic: `${i}.png`,
             userBoard: "3",
-            userPoint: "50"
+            userPoint: "50",
         })
         await Hashtag.create({ hashTagIdx: `${i}`, tag: `${i}` })
-        await Board.create({ subject: `test${i}`, content: "test", categoryMain: "q&a", categorySub: "baek", userId: `admin${i}` })
-        await Board.create({ subject: `test${i}`, content: "test", categoryMain: "notice", categorySub: "baek", userId: `admin${i}` })
+        await Board.create({ subject: `test${i}`, content: "test", categoryMain: "q&a", categorySub: "baek", userId: `admin${i}`, liked: `${i}` })
+        await Board.create({ subject: `test${i}`, content: "test", categoryMain: "notice", categorySub: "baek", userId: `admin${i}`, liked: `${2 * i - 3}` })
         await Board.create({ subject: `test${i}`, content: "test", categoryMain: "community", categorySub: "baek", userId: `admin${i}` })
         await Hash.create({ boardIdx: `${i}`, hashTagIdx: `${i}` })
     }

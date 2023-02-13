@@ -15,6 +15,7 @@ class BoardController {
     async getHot(req, res, next) {
         try {
             const response = await this.boardService.HotValue()
+            console.log(response, "GETHOT")
             res.status(201).json(response)
         } catch (e) {
             next(e)
@@ -37,7 +38,6 @@ class BoardController {
     async infoLike(req, res, next) {
         try {
             const { categoryMain, boardIdx, userInfo } = req.body
-            console.log(categoryMain, userInfo.userId, boardIdx)
             const result = await this.boardService.InsertLike({ userId: userInfo.userId, boardIdx, categoryMain })
             res.status(201).json(result)
         } catch (e) {
@@ -79,6 +79,7 @@ class BoardController {
         try {
             const { categoryMain } = req.params
             const result = await this.boardService.CategoryValue({ categoryMain })
+            console.log(result, "asdlkjasdflkjasd")
             result.mainVal = categoryMain
             res.status(201).json(result)
         } catch (e) {
@@ -100,6 +101,7 @@ class BoardController {
         try {
             const { categoryMain, categorySub, pagingindex } = req.params
             const result = await this.boardService.PagingValue({ categoryMain, categorySub, pagingIndex: pagingindex })
+            console.log(result, "-0 - 0 - 0 - 0 - 0")
             res.status(201).json(result)
         } catch (e) {
             next(e)
