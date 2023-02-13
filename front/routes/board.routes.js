@@ -16,10 +16,10 @@ router.use((req, res, next) => {
 router.get("/:mainCd", async (req, res, next) => {
     const { mainCd } = req.params
     const { page } = req.query
-    console.log(mainCd)
     const result = await request.get(`/board/${mainCd}/${page}`)
-    const { listValue, cateLength } = result.data
-    res.render("board/subList.html", { mainCd, listValue, cateLength })
+
+    const { listValue, cateLength, subVal } = result.data
+    res.render("board/subList.html", { mainCd, listValue, cateLength, subVal })
 })
 ///:mainCd/:subCd 라우터와 안 겹치려면 위로
 router.get("/:mainCd/write", (req, res, next) => {

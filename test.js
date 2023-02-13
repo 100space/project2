@@ -21,3 +21,6 @@
 // (SELECT hashTagIdx, tag FROM Hashtag)
 // qqq
 
+```sql
+select A.boardIdx, B.tag from Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = 145
+```

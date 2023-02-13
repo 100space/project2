@@ -39,7 +39,7 @@ class BoardRepository {
             const userPic = userInfo[0].userPic
             const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
             const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-            
+
             if (!hashArray) return { newBoard, newHashTagVal }
             const { boardIdx } = newBoard
             const newHashTag = await this.hashMake(boardIdx, hashArray)
@@ -56,6 +56,10 @@ class BoardRepository {
         try {
             const { boardIdx } = payload
             const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
+            const userId = response.userId
+            const userInfo = await this.User.findAll({ where: { userId }, raw: true })
+            const userPic = userInfo[0].userPic
+            response.userPic = userPic
             return response
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
@@ -99,7 +103,7 @@ class BoardRepository {
             } else {
                 return response
             }
-        } catch (e) {}
+        } catch (e) { }
     }
 
     // 게시글 지우기
@@ -149,7 +153,14 @@ class BoardRepository {
         const Op = this.Sequelize.Op
         try {
             const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
-            console.log(mainCdValue, 123412984671298)
+            const allMainCd = await this.Board.count({
+                where: {
+                    cateCd: {
+                        [Op.like]: `${mainCdValue}%`
+                    }
+                }
+            }
+            )
             const findMain = await this.Board.findAll({
                 limit: 5,
                 offset: indexValue,
@@ -160,7 +171,9 @@ class BoardRepository {
                 },
                 raw: true,
             })
-            return findMain
+
+            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM BOARD WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
+            return { findMain, allMainCd, findSub }
         } catch (e) {
             throw new Error(`Error while find pagingValue: ${e.message}`)
         }
