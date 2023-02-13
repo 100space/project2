@@ -8,12 +8,12 @@ class UserController {
     async getHot(req, res, next) {
         try {
             const response = await this.userService.HotValue()
-            console.log(response)
             res.status(201).json(response)
         } catch (e) {
             next(e)
         }
     }
+
 
     async postSignUp(req, res, next) {
         try {

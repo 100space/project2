@@ -1,11 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
-    class ContentImg extends Sequelize.Model{
-        static initialize(){
+    class ContentImg extends Sequelize.Model {
+        static initialize() {
             return this.init(
                 {
-                    contentImage : {
-                        type : Sequelize.STRING(255),
-                        allowNull : false,
+                    contentImage: {
+                        type: Sequelize.STRING(255),
+                        allowNull: false,
                         primaryKey: true,
                     }
 
@@ -15,11 +15,11 @@ module.exports = (sequelize, Sequelize) => {
                 }
             )
         }
-        static associate(models){
+        static associate(models) {
             this.belongsTo(models.Board, {
-                foreignKey :"boardIdx"
+                foreignKey: "boardIdx"
             })
         }
-    }   
+    }
     ContentImg.initialize();
 }
