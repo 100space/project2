@@ -95,7 +95,7 @@ const http = app.listen(port, async () => {
         name: "sub1",
         type: "board",
     })
-    for (i = 1; i <= 48; i++) {
+    for (i = 1; i <= 15; i++) {
         await User.create({
             userId: `admin${i}`,
             userPw: hash,
@@ -111,9 +111,15 @@ const http = app.listen(port, async () => {
             userPoint: "50",
         })
         await Hashtag.create({ hashTagIdx: `${i}`, tag: `${i}` })
-        await Board.create({ subject: `test${i}`, content: "test", userId: `admin${i}`, cateCd: "00010001" })
-        await Board.create({ subject: `test${i}`, content: "test", userId: `admin${i}`, cateCd: "00020002" })
-        await Board.create({ subject: `test${i}`, content: "test", userId: `admin${i}`, cateCd: "00030003" })
+        await Board.create({ subject: `test1`, content: "test", userId: `admin${i}`, cateCd: "00010001" })
+        await Board.create({ subject: `test2`, content: "test", userId: `admin${i}`, cateCd: "00010002" })
+        await Board.create({ subject: `test3`, content: "test", userId: `admin${i}`, cateCd: "00010003" })
+        await Board.create({ subject: `test4`, content: "test", userId: `admin${i}`, cateCd: "00020004" })
+        await Board.create({ subject: `test5`, content: "test", userId: `admin${i}`, cateCd: "00020005" })
+        await Board.create({ subject: `test6`, content: "test", userId: `admin${i}`, cateCd: "00020006" })
+        await Board.create({ subject: `test7`, content: "test", userId: `admin${i}`, cateCd: "00030007" })
+        await Board.create({ subject: `test8`, content: "test", userId: `admin${i}`, cateCd: "00030008" })
+        await Board.create({ subject: `test9`, content: "test", userId: `admin${i}`, cateCd: "00030009" })
         await Hash.create({ boardIdx: `${i}`, hashTagIdx: `${i}` })
     }
 
