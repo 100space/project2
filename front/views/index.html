@@ -12,28 +12,28 @@
                         <img style="background-image: url('/img/11.jpg'); height: calc(40rem * 0.54)" />
                     </div>
                     <div class="cardSubject">
-                        <span>subject</span>
+                        <span>{{boardRandom[0].subject}}</span>
                     </div>
                     <div class="cardHeader">
                         <div class="userPic userPicSize"></div>
                         <div class="userid">
-                            <span>userid</span>
+                            <span>{{randomUser[0].userId}}</span>
                         </div>
                         <div class="status">
                             <span>❤️</span>
-                            <span>10</span>
+                            <span>{{boardRandom[0].liked}}</span>
                             <span>👁</span>
-                            <span>12</span>
+                            <span>{{boardRandom[0].viewCount}}</span>
                         </div>
                     </div>
                     <div class="textareas">
-                        <h1 class="textSub">123</h1>
-                        <span class="textCon">123</span>
+                        <h1 class="textSub">{{boardRandom[0].subject}}</h1>
+                        <span class="textCon">{{boardRandom[0].content}}</span>
+                        {% for Hash in randomHash[0] %}
                         <ul id="hashtag">
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
+                            <li class="textHash">{{Hash.tag}}</li>
                         </ul>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -45,28 +45,28 @@
                         <img style="background-image: url('/img/22.jpg'); height: calc(40rem * 0.54)" />
                     </div>
                     <div class="cardSubject">
-                        <span>subject</span>
+                        <span>{{boardRandom[1].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize">프로필사진</div>
+                        <div class="userPic userPicSize"></div>
                         <div class="userid">
-                            <span>userid</span>
+                            <span>{{randomUser[1].userId}}</span>
                         </div>
                         <div class="status">
                             <span>❤️</span>
-                            <span>10</span>
+                            <span>{{boardRandom[1].liked}}</span>
                             <span>👁</span>
-                            <span>12</span>
+                            <span>{{boardRandom[1].viewCount}}</span>
                         </div>
                     </div>
                     <div class="textareas">
-                        <h1 class="textSub">123</h1>
-                        <span class="textCon">123</span>
+                        <h1 class="textSub">{{boardRandom[1].subject}}</h1>
+                        <span class="textCon">{{boardRandom[1].content}}</span>
+                        {% for Hash in randomHash[1] %}
                         <ul id="hashtag">
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
+                            <li class="textHash">{{Hash.tag}}</li>
                         </ul>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -78,28 +78,28 @@
                         <img style="background-image: url('/img/88.jpg'); height: calc(40rem * 0.54)" />
                     </div>
                     <div class="cardSubject">
-                        <span>subject</span>
+                        <span>{{boardRandom[2].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize">프로필사진</div>
+                        <div class="userPic userPicSize"></div>
                         <div class="userid">
-                            <span>userid</span>
+                            <span>{{randomUser[2].userId}}</span>
                         </div>
                         <div class="status">
                             <span>❤️</span>
-                            <span>10</span>
+                            <span>{{boardRandom[2].liked}}</span>
                             <span>👁</span>
-                            <span>12</span>
+                            <span>{{boardRandom[2].viewCount}}</span>
                         </div>
                     </div>
                     <div class="textareas">
-                        <h1 class="textSub">123</h1>
-                        <span class="textCon">123</span>
+                        <h1 class="textSub">{{boardRandom[2].subject}}</h1>
+                        <span class="textCon">{{boardRandom[2].content}}</span>
+                        {% for Hash in randomHash[2] %}
                         <ul id="hashtag">
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
+                            <li class="textHash">{{Hash.tag}}</li>
                         </ul>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -111,32 +111,28 @@
                         <img style="background-image: url('/img/55.jpg'); height: calc(40rem * 0.54)" />
                     </div>
                     <div class="cardSubject">
-                        <span>subject</span>
+                        <span>{{boardRandom[3].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize">프로필사진</div>
+                        <div class="userPic userPicSize"></div>
                         <div class="userid">
-                            <span>userid</span>
+                            <span>{{randomUser[3].userId}}</span>
                         </div>
-                        <div class="status">
-                            <div>
-                                <span>❤️</span>
-                                <span>10</span>
-                            </div>
-                            <div>
-                                <span>👁</span>
-                                <span>12</span>
-                            </div>
+                        <div class="status d_status">
+                            <span>❤️</span>
+                            <span>{{boardRandom[3].liked}}</span>
+                            <span>👁</span>
+                            <span>{{boardRandom[3].viewCount}}</span>
                         </div>
                     </div>
                     <div class="textareas">
-                        <h1 class="textSub">123</h1>
-                        <span class="textCon">123</span>
+                        <h1 class="textSub">{{boardRandom[3].subject}}</h1>
+                        <span class="textCon">{{boardRandom[3].content}}</span>
+                        {% for Hash in randomHash[3] %}
                         <ul id="hashtag">
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
+                            <li class="textHash">{{Hash.tag}}</li>
                         </ul>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -149,28 +145,28 @@
                         <img style="background-image: url('/img/44.jpg'); height: calc(40rem * 0.54)" />
                     </div>
                     <div class="cardSubject">
-                        <span>subject</span>
+                        <span>{{boardRandom[4].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize">프로필사진</div>
+                        <div class="userPic userPicSize"></div>
                         <div class="userid">
-                            <span>userid</span>
+                            <span>{{randomUser[4].userId}}</span>
                         </div>
                         <div class="status">
                             <span>❤️</span>
-                            <span>10</span>
+                            <span>{{boardRandom[4].liked}}</span>
                             <span>👁</span>
-                            <span>12</span>
+                            <span>{{boardRandom[4].viewCount}}</span>
                         </div>
                     </div>
                     <div class="textareas">
-                        <h1 class="textSub">123</h1>
-                        <span class="textCon">123</span>
+                        <h1 class="textSub">{{boardRandom[4].subject}}</h1>
+                        <span class="textCon">{{boardRandom[4].content}}</span>
+                        {% for Hash in randomHash[4] %}
                         <ul id="hashtag">
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
+                            <li class="textHash">{{Hash.tag}}</li>
                         </ul>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -182,28 +178,28 @@
                         <img style="background-image: url('/img/66.jpg'); height: calc(40rem * 0.54)" />
                     </div>
                     <div class="cardSubject">
-                        <span>subject</span>
+                        <span>{{boardRandom[5].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize">프로필사진</div>
+                        <div class="userPic userPicSize"></div>
                         <div class="userid">
-                            <span>userid</span>
+                            <span>{{randomUser[5].userId}}</span>
                         </div>
                         <div class="status">
                             <span>❤️</span>
-                            <span>10</span>
+                            <span>{{boardRandom[5].liked}}</span>
                             <span>👁</span>
-                            <span>12</span>
+                            <span>{{boardRandom[5].viewCount}}</span>
                         </div>
                     </div>
                     <div class="textareas">
-                        <h1 class="textSub">123</h1>
-                        <span class="textCon">123</span>
+                        <h1 class="textSub">{{boardRandom[5].subject}}</h1>
+                        <span class="textCon">{{boardRandom[5].content}}</span>
+                        {% for Hash in randomHash[5] %}
                         <ul id="hashtag">
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
+                            <li class="textHash">{{Hash.tag}}</li>
                         </ul>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -215,28 +211,28 @@
                         <img style="background-image: url('/img/33.jpg'); height: calc(40rem * 0.54)" />
                     </div>
                     <div class="cardSubject">
-                        <span>subject</span>
+                        <span>{{boardRandom[6].subject}}</span>
                     </div>
                     <div class="cardHeader">
-                        <div class="userPic userPicSize">프로필사진</div>
+                        <div class="userPic userPicSize"></div>
                         <div class="userid">
-                            <span>userid</span>
+                            <span>{{randomUser[6].userId}}</span>
                         </div>
                         <div class="status">
                             <span>❤️</span>
-                            <span>10</span>
+                            <span>{{boardRandom[6].liked}}</span>
                             <span>👁</span>
-                            <span>12</span>
+                            <span>{{boardRandom[6].viewCount}}</span>
                         </div>
                     </div>
                     <div class="textareas">
-                        <h1 class="textSub">123</h1>
-                        <span class="textCon">123</span>
+                        <h1 class="textSub">{{boardRandom[6].subject}}</h1>
+                        <span class="textCon">{{boardRandom[6].content}}</span>
+                        {% for Hash in randomHash[6] %}
                         <ul id="hashtag">
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
-                            <li class="textHash">#123</li>
+                            <li class="textHash">{{Hash.tag}}</li>
                         </ul>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
