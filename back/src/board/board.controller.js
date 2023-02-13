@@ -6,7 +6,7 @@ class BoardController {
     // 글쓰기
     async postWrite(req, res, next) {
         try {
-            const { subject, content, userId, mainCd, subCd, hash } = req.body
+            const { data: { subject, content, userId, mainCd, subCd, hash } } = req.body
             const result = await this.boardService.MakeWrite({ subject, content, mainCd, subCd, userId, hash })
             res.status(201).json(result)
         } catch (e) {
