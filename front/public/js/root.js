@@ -58,14 +58,18 @@ const chatSubmitHandler = (e) => {
     const { message, nickName } = e.target
     const data = message.value
     const userNick = nickName.value
-    const li = document.createElement("li")
-    li.classList.add("right")
-    li.innerHTML = `<span class="flex-center"> ${message.value} </span>`
-    chat.append(li)
-    chat.scrollTop = chat.scrollHeight
-    socket.emit("data", { data, userNick })
-    e.target.reset()
-    message.focus()
+    if (data === "") {
+        alert("메세지 내용이 없습니다")
+    } else {
+        const li = document.createElement("li")
+        li.classList.add("right")
+        li.innerHTML = `<span class="flex-center"> ${data} </span>`
+        chat.append(li)
+        chat.scrollTop = chat.scrollHeight
+        socket.emit("data", { data, userNick })
+        e.target.reset()
+        message.focus()
+    }
 }
 
 socket.on("reply", (data1) => {
