@@ -26,6 +26,7 @@ router.get("/:mainCd", async (req, res, next) => {
 router.get("/:mainCd/write", (req, res, next) => {
     const { mainCd } = req.params
     console.log(mainCd)
+    // res.send("1")
     res.render("board/write.html", { mainCd })
 })
 
@@ -63,7 +64,8 @@ router.post("/:mainCd/write", async (req, res, next) => {
     // const { newBoard, newHashTagVal } = result.data
 
     // console.log(newBoard)
-    res.render("board/view.check.html", { mainCd, newBoard, newHashTagVal })
+    res.send("1")
+    // res.render("board/view.check.html", { mainCd, newBoard, newHashTagVal })
     // res.render("board/view.html")
 })
 //
