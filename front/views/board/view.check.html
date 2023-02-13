@@ -4,8 +4,8 @@
 {% endblock %}
 <br />
 {% extends 'layout/layout.html'%} {% block content %}
-<input type="hidden" name="hidden" id="hidden" value="{{content}}" />
-<input type="hidden" name="boardIdx" id="boardIdx" value="{{boardIdx}}" />
+<input type="hidden" name="hidden" id="hidden" value="{{newBoard.content}}" />
+<input type="hidden" name="boardIdx" id="boardIdx" value="{{newBoard.boardIdx}}" />
 <div id="container">
     <div id="container_header">
         <div id="subject">제목 : {{newBoard.subject}}</div>
@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div id="content">{{newBoard.boardIdx}}</div>
+    <div id="content">{{newBoard.content}}</div>
     <ul>
         {% for tags in newHashTagVal %}
         <li id="tags">#{{tags.tag}}</li>
