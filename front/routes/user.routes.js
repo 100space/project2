@@ -34,7 +34,8 @@ router.get("/myview", async (req, res, next) => {
     const { userId } = req.user
     const { boardHot } = req
     const { userHot } = req
-    const response = await request.post("/profile/myview/mywrite", { userId })
+    const {page} = req.query
+    const response = await request.post("/profile/myview/mywrite", { userId, page })
     const { data } = response
     res.send("1")
     // res.render("board/subList.html",)

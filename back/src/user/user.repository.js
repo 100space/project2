@@ -113,7 +113,9 @@ class UserRepository {
     }
 
     async findWriting({ userId }) {
+        const Op = this.Sequelize.Op
         try {
+            const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
             const response = await this.Board.findAll({
                 where: {
                     userId
@@ -121,7 +123,6 @@ class UserRepository {
                     ['boardIdx', 'DESC']
                 ]
             })
-            // console.log(response.length)
             return response
         } catch (e) {
             throw new Error(`Error while find writing Value: ${e.message}`)
