@@ -19,29 +19,26 @@ router.get("/:mainCd", async (req, res, next) => {
     const result = await request.get(`/board/${mainCd}/${page}`)
 
     const { listValue, cateLength, subVal } = result.data
-    console.log(subVal)
+    // console.log(subVal)
     res.render("board/subList.html", { mainCd, listValue, cateLength, subVal })
 })
 ///:mainCd/:subCd 라우터와 안 겹치려면 위로
 router.get("/:mainCd/write", (req, res, next) => {
     const { mainCd } = req.params
-    console.log(mainCd)
+    // console.log(mainCd)
     res.render("board/write.html", { mainCd })
 })
-// router.get("/:mainCd/write/modify", (req, res, next) => {
-//     const { mainCd } = req.params
-//     console.log(mainCd)
-//     console.log(req.params)
-//     res.render("board/write.modify.html", { mainCd })
-// })
 
+// 수정 불러오기
 router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
-    const { newBoard } = result.data
-    res.render("board/write.modify.html", { mainCd, newBoard })
+    const boardData = result.data
+    res.render("board/write.modify.html", { mainCd, boardData })
 })
 
+
+// 수정완료하기
 router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     let data = {
@@ -67,7 +64,7 @@ router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
     const newBoard = result.data
-    console.log(result, 123123)
+    // console.log(result, 123123)
     res.render("board/view.html", { newBoard })
 })
 
@@ -77,7 +74,7 @@ router.get("/:mainCd/:subCd", async (req, res, next) => {
     const pagequery = req.query
     const result = await request.get(`/board/${mainCd}/${subCd}/${pagequery.page}`)
     const { listValue } = result.data
-    console.log(listValue, 123456)
+    // console.log(listValue, 123456)
     res.render("board/subList.html", { mainCd, listValue })
 })
 /////////////
@@ -93,10 +90,10 @@ router.post("/:mainCd/write", async (req, res, next) => {
         subCd: req.body.categorySub,
     }
     const result = await request.post(`/board/${mainCd}/write`, { data })
-    console.log(result)
+    // console.log(result)
     const { newBoard, newHashTagVal } = result.data
 
-    console.log(newBoard, newHashTagVal)
+    // console.log(newBoard, newHashTagVal)
     res.render("board/view.check.html", { mainCd, newBoard, newHashTagVal })
 })
 //

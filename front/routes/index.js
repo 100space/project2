@@ -39,7 +39,7 @@ router.use("/", async (req, res, next) => {
             const userResponse = await request.get("/user/hot")
             const userHot = userResponse.data
             req.userHot = userHot
-            console.log(boardHot, 123123123)
+            // console.log(boardHot, 123123123)
         }
     } catch (error) {
     } finally {
