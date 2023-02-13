@@ -58,7 +58,7 @@
             </span>
             <div class="table">
                 <ul class="tableHeader flex">
-                    <li>카테고리 유형</li>
+                    <li>유형</li>
                     <li>카테고리 번호</li>
                     <li>카테고리 명</li>
                 </ul>
@@ -72,6 +72,44 @@
                 {% endfor %}
             </div>
         </div>
+        <div class="searchBox">
+            <span id="boardSearch" class="searchHeader flex">통계
+                <span> 홈페이지 통계 정보</span>
+            </span>
+            <div class="table">
+                <ul class="tableHeader flex">
+                    <li id="dailyGraph">일자별 통계</li>
+                    <li id="TimeGraph">시간대 통계</li>
+                    <li id="likedGraph">좋아요 통계</li>
+                    <li id="hashtagGraph">해시태그 통계</li>
+                    <li id="likedByGenderGraph">성별 좋아요 통계</li>
+                </ul>
+                
+                <div class="graph" id="chart">
+                    <div class="bar" style="height: 120px; left: 0px;"></div>
+                    <div class="bar" style="height: 80px; left: 80px;"></div>
+                    <div class="bar" style="height: 160px; left: 160px;"></div>
+                    <div class="bar" style="height: 40px; left: 240px;"></div>
+                    <div class="bar" style="height: 100px; left: 320px;"></div>
+		            <div class="x-axis">
+                        <div class="x-label">2023-01-01</div>
+                        <div class="x-label">Jan 2</div>
+                        <div class="x-label">Jan 3</div>
+                        <div class="x-label">Jan 4</div>
+                        <div class="x-label">Jan 5</div>
+                    </div>
+	            	<div class="y-axis">
+                        <div class="y-label">200</div>
+                        <div class="y-label">150</div>
+                        <div class="y-label">100</div>
+                        <div class="y-label">50</div>
+                        <div class="y-label">0</div>
+                        </div>
+                    </div>
+            
+            </div>
+        </div>
     </div>
-</div>
+</div> 
+<script type="text/javascript" src="/js/management.js"></script>
 {% endblock %}
