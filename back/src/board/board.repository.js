@@ -161,8 +161,7 @@ class BoardRepository {
                         [Op.like]: `${mainCdValue}%`
                     }
                 }
-            }
-            )
+            })
             const findMain = await this.Board.findAll({
                 limit: 5,
                 offset: indexValue,
@@ -205,7 +204,6 @@ class BoardRepository {
     async hotValue() {
         try {
             const boardHot = await this.Board.findAll({ order: this.sequelize.literal("liked DESC"), limit: 3, raw: true })
-            console.log(boardHot)
             return boardHot
         } catch (e) {
             throw new Error(`error while finding hotValue: ${e.message}`)

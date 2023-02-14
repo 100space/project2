@@ -6,6 +6,11 @@ class UserService {
         this.userRepository = userRepository
         this.jwt = jwt
         this.crypto = jwt.crypto
+        this.mainChange = {
+            notice: "0001",
+            community: "0002",
+            qna: "0003",
+        }
     }
 
     async HotValue() {
@@ -80,8 +85,43 @@ class UserService {
     // 내가 쓴 글
     async FindWriting({ userId, page }) {
         try {
-            const result = await this.userRepository.findWriting({ userId })                 
-            return result
+            const result = await this.userRepository.findWriting({ userId, page })
+            const {response, findMain} = result
+            const myLength = response.length     
+            const writeCd = []
+            const myWriteMainCd = response.map(x=>{
+                const myCdValue = x.cateCd.slice(0,4)
+                writeCd.push(myCdValue)
+                let writeCdresult = writeCd.filter((value,index) => {
+                    return writeCd.indexOf(value) ===index
+                })
+                return writeCdresult
+            })
+            const writeCdarray = myWriteMainCd.pop()
+            writeCdarray.forEach((x,i,arr)=>{
+                switch(x){
+                    case '0001':
+                        arr[i]="notice"
+                        break
+                    case '0002':
+                        arr[i]="community"
+                        break
+                    case '0003':
+                        arr[i]="qna"
+                        break
+                }
+            })
+            return {myLength, findMain, writeCdarray}
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    // 내가 쓴 글 분류
+    async myMainCd({userId}){
+        try {
+            const {mainCd} = req.params
+            // const result
         } catch (e) {
             throw new Error(e)
         }
