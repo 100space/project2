@@ -155,60 +155,35 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
             location.href = `${_pathname}?page=1`
             // location.href = document.referer
         })
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (!tagify.value.length || !subject.value.trim() || !editor.getData().trim()) {
+                alert("모든 입력 항목은 필수입니다.");
+                return;
+            }
+            const userId = writer.value;
+            const mainCd = categoryMain.value;
+            const subCd = document.querySelector('select[name="categorySub"]').value;
+            const content = editor.getData();
+            const hash = tagify.value.map((tag) => tag.value).join(",");
+            const data = { subject: subject.value, content, userId, mainCd, subCd, hash };
+            request
+                .post(`/board/${mainCd}/write`, { data })
+                .then((response) => {
+                    const { id } = response.data;
+                    alert("글이 성공적으로 작성되었습니다.");
+                    location.href = `/board/${mainCd}/${id}`;
+                })
+                .catch((error) => {
+                    alert("글 작성에 실패했습니다.");
+                    console.error(error);
+                });
+        });
         
-        if (location.pathname.indexOf("modify") >= 0) {
-            console.log('test')
-            // console.log('edit', editor)
-            console.log('edit2', editor,data)
-            console.log('edit3', editor,data.processor)
-            console.log('edit4', editor,data.htmlFilter)
-            editor.data.processor.htmlFilter.addRules({
-                elements: {
-                    $: function (element) {
-                        // Output dimensions of images as width and height
-                        if (element.name === "img") {
-                            const width = element.attributes.width
-                            const height = element.attributes.height
-        
-                            if (width) {
-                                element.attributes.width = width
-                            }
-        
-                            if (height) {
-                                element.attributes.height = height
-                            }
-                        }
-        
-                        return element
-                    },
-                },
-            })
-        
-            editor.data.processor.htmlFilter.addRules({
-                elements: {
-                    a: function (element) {
-                        element.attributes.target = "_blank"
-                        return element
-                    },
-                },
-            })
-        
-            editor.data.processor.htmlFilter.addRules({
-                elements: {
-                    i: function (element) {
-                        if (element.attributes.class === "emoji") {
-                            element.name = "img"
-                            element.attributes.src = element.attributes.alt
-                        }
-        
-                        return element
-                    },
-                },
-            })
-        
-            editor.data.set(data)
-        }
-        
+
+        var editor = CKEDITOR.instances.editor1;
+        var data = editor.getData();
+        editor.setData(data);
     })
     .catch((error) => {
         // console.error(error)

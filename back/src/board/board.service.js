@@ -8,16 +8,15 @@ class BoardService {
             qna: "0003",
         }
         this.subChange = {
-
-            "sub1": "0001",
-            "sub2": "0002",
-            "sub3": "0003",
-            "sub4": "0004",
-            "sub5": "0005",
-            "sub6": "0006",
-            "sub7": "0007",
-            "sub8": "0008",
-            "sub9": "0009",
+            sub1: "0001",
+            sub2: "0002",
+            sub3: "0003",
+            sub4: "0004",
+            sub5: "0005",
+            sub6: "0006",
+            sub7: "0007",
+            sub8: "0008",
+            sub9: "0009",
         }
     }
     // 글쓰기
@@ -25,8 +24,8 @@ class BoardService {
         try {
             const { subject, content, mainCd, subCd, userId, hash } = payload
             const hashValue = JSON.parse(hash)
-            const hashArray = hashValue.map((x) => x.value)
-            console.log(mainCd, subCd)
+            const hashArray = Array.isArray(hashValue) ? hashValue.map((x) => x.value) : []
+            console.log(123,mainCd, subCd)
             const mainCdValue = this.mainChange[mainCd]
             const subCdValue = this.subChange[subCd]
             const result = await this.boardRepository.createBoard({ subject, content, mainCdValue, subCdValue, hashArray, userId })
@@ -35,6 +34,7 @@ class BoardService {
             throw new Error(e)
         }
     }
+    
 
     // 게시물 리스트 view 보기
     async FindValue({ boardIdx }) {
@@ -82,14 +82,14 @@ class BoardService {
     async RandomValue() {
         try {
             const response = await this.boardRepository.randomValue()
-            const {boardRandom, randomUser, randomHash} = response
-            const listValue = boardRandom.map((x)=>{
-                const mainValue = x.cateCd.slice(0,4)
+            const { boardRandom, randomUser, randomHash } = response
+            const listValue = boardRandom.map((x) => {
+                const mainValue = x.cateCd.slice(0, 4)
                 const sendMain = mainValue === this.mainChange.notice ? "notice" : mainValue === this.mainChange.community ? "community" : "qna"
                 x.mainCd = sendMain
                 return x
             })
-            return {listValue, randomUser, randomHash}
+            return { listValue, randomUser, randomHash }
         } catch (e) {
             throw new Error(e)
         }
@@ -114,16 +114,16 @@ class BoardService {
                 length: `${result.allMainCd}`,
             }
             // console.log(result, "========================")
-            const findSub = result.findSub.map(x => {
+            const findSub = result.findSub.map((x) => {
                 const array = x.cateCd.slice(4, 8)
                 return array
             })
             const subChange = Object.keys(this.subChange)
-            const subCd = findSub.map(value => {
-                const subValue = subChange.find(x => this.subChange[x] === value)
+            const subCd = findSub.map((value) => {
+                const subValue = subChange.find((x) => this.subChange[x] === value)
                 return subValue
             })
-            const subVal = subCd.map(x => {
+            const subVal = subCd.map((x) => {
                 const subOb = {}
                 subOb.categorySub = x
                 return subOb
@@ -137,19 +137,26 @@ class BoardService {
     // 서브카테고리 분류
     async CategoryValue({ mainCd, subCd, pageNumber }) {
         try {
-            const mainCdValue = this.mainChange[mainCd]
-            const subCdValue = this.subChange[subCd]
-            const findValue = `${mainCdValue}${subCdValue}`
-            const result = await this.boardRepository.categoryValue({ findValue, pageNumber })
-            const result2 = result.map((x, i) => {
-                x.showindex = i + 1
-                return x
-            })
-            return { listValue: result2 }
+          const mainCdValue = this.mainChange[mainCd]
+          if (!mainCdValue) {
+            throw new Error(`mainCd ${mainCd} not found in this.mainChange`)
+          }
+          const subCdValue = this.subChange[subCd]
+          if (!subCdValue) {
+            throw new Error(`subCd ${subCd} not found in this.subChange`)
+          }
+          const findValue = `${mainCdValue}${subCdValue}`
+          const result = await this.boardRepository.categoryValue({ findValue, pageNumber })
+          const result2 = result.map((x, i) => {
+            x.showindex = i + 1
+            return x
+          })
+          return { listValue: result2 }
         } catch (e) {
-            throw new Error(e)
+          throw new Error(e)
         }
-    }
+      }
+      
 
     // 핫 게시물
     async HotValue() {
@@ -166,7 +173,7 @@ class BoardService {
         try {
             const response = await this.boardRepository.findUserInfo({ userId })
             return response
-        } catch (error) { }
+        } catch (error) {}
     }
 
     // 좋아요 추가하기
@@ -186,7 +193,7 @@ class BoardService {
             const arr2 = arr1.map((x) => x.replace("data:image/png;base64,", ""))
             const arr3 = arr2.map((x) => new Buffer.from(x, "base64").toString("binary"))
             const arr4 = arr2.map(async (x, i) => {
-                this.fs.writeFile(`../front/uploads/${boardIdx}_${i}.png`, x, "base64", function (e) { })
+                this.fs.writeFile(`../front/uploads/${boardIdx}_${i}.png`, x, "base64", function (e) {})
             })
             const file = await this.fs.readdir("../front/uploads")
             const boardFile = file.filter((x) => x.indexOf(`${boardIdx}`) >= 0)
@@ -219,6 +226,15 @@ class BoardService {
     async FindSearch({ search }) {
         try {
             const result = await this.boardRepository.findSearch({ search })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async PostCommet({ boardIdx, cmdContent, userId }) {
+        try {
+            const result = await this.boardRepository.postComment({ boardIdx, cmdContent, userId })
             return result
         } catch (e) {
             throw new Error(e)

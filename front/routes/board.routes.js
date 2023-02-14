@@ -13,64 +13,69 @@ router.use((req, res, next) => {
     res.locals = { ...res.locals, userPic, userId, userPw, userName, nickName, provider }
     next()
 })
+router.get("/search", async (req, res, next) => {
+    const { search } = req.query
+    console.log(search)
+    const result = await request.post(`/board/search`, { search })
+    const { response, boardCount } = result.data
+    res.render("board/subList.html", { listValue: response, boardCount })
+})
 router.get("/:mainCd", async (req, res, next) => {
     const { mainCd } = req.params
     const { page } = req.query
     const result = await request.get(`/board/${mainCd}/${page}`)
 
     const { listValue, cateLength, subVal } = result.data
-    console.log(subVal)
+    // console.log(subVal)
     res.render("board/subList.html", { mainCd, listValue, cateLength, subVal })
 })
 ///:mainCd/:subCd 라우터와 안 겹치려면 위로
 router.get("/:mainCd/write", (req, res, next) => {
     const { mainCd } = req.params
-    console.log(mainCd)
+    // console.log(mainCd)
     res.render("board/write.html", { mainCd })
 })
-// router.get("/:mainCd/write/modify", (req, res, next) => {
-//     const { mainCd } = req.params
-//     console.log(mainCd)
-//     console.log(req.params)
-//     res.render("board/write.modify.html", { mainCd })
-// })
 
-
+// 수정 불러오기
 router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
-    const { newBoard } = result.data
-    res.render("board/write.modify.html", { mainCd, newBoard })
+    const boardData = result.data
+    // const hashtagResult = await request.get(`/board/${mainCd}/view/${boardIdx}/hashtags`)
+    // console.log(hashtagResult);
+    // const hashtagData = hashtagResult.data
+    res.render("board/write.modify.html", { mainCd, boardData })
 })
 
+// 수정완료하기
 router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
+    console.log('test1')
     const { mainCd, boardIdx } = req.params
     let data = {
         subject: req.body.subject,
         content: req.body.content,
         hash: req.body["tags-outside"],
     }
-    const result = await request.put(`/board/${mainCd}/view/${boardIdx}`, { data })
+    const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data })
     console.log(result)
     const { updatedBoard } = result.data
     res.redirect(`/board/${mainCd}/view/${boardIdx}`)
 })
 
-
 router.put("/:mainCd/view/:boardIdx", async (req, res, next) => {
+    console.log('test2')
     const { mainCd, boardIdx } = req.params
     const { subject, content, hash } = req.body
-    const result = await request.put(`/board/${mainCd}/view/${boardIdx}`, { data: { subject, content, hash } })
+    const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data: { subject, content, hash } })
     const { updatedBoard } = result.data
     res.json({ updatedBoard })
 })
-
 
 router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
     const newBoard = result.data
-    console.log(result, 123123)
+    // console.log(result, 123123)
     res.render("board/view.html", { newBoard })
 })
 
@@ -80,7 +85,7 @@ router.get("/:mainCd/:subCd", async (req, res, next) => {
     const pagequery = req.query
     const result = await request.get(`/board/${mainCd}/${subCd}/${pagequery.page}`)
     const { listValue } = result.data
-    console.log(listValue, 123456)
+    // console.log(listValue, 123456)
     res.render("board/subList.html", { mainCd, listValue })
 })
 /////////////
@@ -99,7 +104,7 @@ router.post("/:mainCd/write", async (req, res, next) => {
     console.log(result)
     const { newBoard, newHashTagVal } = result.data
 
-    console.log(newBoard, newHashTagVal)
+    // console.log(newBoard, newHashTagVal)
     res.render("board/view.check.html", { mainCd, newBoard, newHashTagVal })
 })
 //

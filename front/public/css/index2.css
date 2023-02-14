@@ -26,15 +26,15 @@
     display: grid;
     background-color: #f8f8f800;
     gap: 1rem;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(6, 1fr);
     grid-template-areas:
-        "a a b b . ."
-        "a a b b e e"
-        ". j j . e e"
-        ". j j i i ."
-        "c c c i i d"
-        "c c c . . d ";
+        "a a b b b . ."
+        "a a b b b e e"
+        ". j j . . e e"
+        ". j j i i . ."
+        "c c c i i d d"
+        "c c c . . d d";
 }
 #a {
     background-color: var(--white);
@@ -84,13 +84,11 @@
     width: fit-content;
     margin: 0;
 }
-#d > .content_box > .cardHeader > .status {
+/* #d > .content_box > .cardHeader > .status {
     display: flex;
     flex-direction: column;
-}
-.d_status {
-    padding: 0 !important;
-}
+} */
+
 .contentCard {
     overflow: hidden;
     background-color: antiquewhite;
@@ -159,19 +157,23 @@
     color: var(--color);
 }
 .textareas {
-    padding: 4rem;
+    padding: 3rem;
     height: 30rem;
 }
 .textSub {
-    margin-top: 4rem;
+    margin-top: 2rem;
     font-size: 3rem;
 }
 .textCon {
     display: block;
-    margin-top: 4rem;
+    margin-top: 2rem;
     font-size: 1.8rem;
 }
 #hashtag {
     margin-top: 4rem;
     display: flex;
+}
+
+.textHash {
+    font-size: 1.4rem;
 }
