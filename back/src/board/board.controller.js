@@ -140,7 +140,9 @@ class BoardController {
     async postComment(req, res, next) {
         try {
             const { boardIdx } = req.params
+            console.log(boardIdx)
             const { cmdContent, userId } = req.body
+            console.log(cmdContent,userId,"+==============")
             const result = await this.boardService.PostComment({ boardIdx, cmdContent, userId })
             res.status(201).json(result)
         } catch (e) {

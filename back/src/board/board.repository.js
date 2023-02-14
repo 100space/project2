@@ -63,7 +63,11 @@ class BoardRepository {
             const hashResponse = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
                 type: this.queryTypes.SELECT,
             })
-            return { response, hashResponse }
+            const commentResponse = await this.sequelize.query(`SELECT B.cmdIdx, B.cmdContent, B.boardIdx, B.userId from Board A JOIN Comment B On (A.boardIdx = B.boardIdx) where A.boardIdx =${boardIdx}`,{
+                type: this.queryTypes.SELECT,
+            })
+            
+            return { response, hashResponse, commentResponse }
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
         }

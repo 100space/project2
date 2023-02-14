@@ -46,7 +46,6 @@ class BoardService {
             const sendSub = subValue === this.subChange.sub1 ? "sub1" : subValue === this.subChange.sub2 ? "sub2" : "sub3"
             result.response.mainCd = sendMain
             result.response.subCd = sendSub
-            console.log(result)
             return result
         } catch (e) {
             throw new Error(e)
