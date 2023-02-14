@@ -125,6 +125,17 @@ class BoardController {
             next(e)
         }
     }
+
+    async postComment(req, res, next) {
+        try {
+            const { boardIdx } = req.params
+            const { cmdContent, userId } = req.body
+            const result = await this.boardService.PostComment({ boardIdx, inputValue, userId })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = BoardController

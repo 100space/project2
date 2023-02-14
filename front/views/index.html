@@ -8,8 +8,8 @@
             <!-- 한칸 -->
             <div id="a" class="contentCard">
                 <div class="content_box">
-                    {% for item in boardRandom%}
-                    <input type="hidden" name="indexBoardIdx" id="indexBoardIdx" value="{{item.boardIdx}}}, {{item.mainCd}}" />
+                    {% for item in boardRandom %}
+                    <input type="hidden" name="indexBoardIdx" id="indexBoardIdx" value="{{item.mainCd}},{{item.boardIdx}}" />
                     {% endfor %}
                     <div class="cardBody">
                         <img style="background-image: url('/img/11.jpg'); height: calc(40rem * 0.54)" />

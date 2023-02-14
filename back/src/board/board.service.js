@@ -8,16 +8,15 @@ class BoardService {
             qna: "0003",
         }
         this.subChange = {
-
-            "sub1": "0001",
-            "sub2": "0002",
-            "sub3": "0003",
-            "sub4": "0004",
-            "sub5": "0005",
-            "sub6": "0006",
-            "sub7": "0007",
-            "sub8": "0008",
-            "sub9": "0009",
+            sub1: "0001",
+            sub2: "0002",
+            sub3: "0003",
+            sub4: "0004",
+            sub5: "0005",
+            sub6: "0006",
+            sub7: "0007",
+            sub8: "0008",
+            sub9: "0009",
         }
     }
     // 글쓰기
@@ -82,14 +81,14 @@ class BoardService {
     async RandomValue() {
         try {
             const response = await this.boardRepository.randomValue()
-            const {boardRandom, randomUser, randomHash} = response
-            const listValue = boardRandom.map((x)=>{
-                const mainValue = x.cateCd.slice(0,4)
+            const { boardRandom, randomUser, randomHash } = response
+            const listValue = boardRandom.map((x) => {
+                const mainValue = x.cateCd.slice(0, 4)
                 const sendMain = mainValue === this.mainChange.notice ? "notice" : mainValue === this.mainChange.community ? "community" : "qna"
                 x.mainCd = sendMain
                 return x
             })
-            return {listValue, randomUser, randomHash}
+            return { listValue, randomUser, randomHash }
         } catch (e) {
             throw new Error(e)
         }
@@ -114,16 +113,16 @@ class BoardService {
                 length: `${result.allMainCd}`,
             }
             // console.log(result, "========================")
-            const findSub = result.findSub.map(x => {
+            const findSub = result.findSub.map((x) => {
                 const array = x.cateCd.slice(4, 8)
                 return array
             })
             const subChange = Object.keys(this.subChange)
-            const subCd = findSub.map(value => {
-                const subValue = subChange.find(x => this.subChange[x] === value)
+            const subCd = findSub.map((value) => {
+                const subValue = subChange.find((x) => this.subChange[x] === value)
                 return subValue
             })
-            const subVal = subCd.map(x => {
+            const subVal = subCd.map((x) => {
                 const subOb = {}
                 subOb.categorySub = x
                 return subOb
@@ -166,7 +165,7 @@ class BoardService {
         try {
             const response = await this.boardRepository.findUserInfo({ userId })
             return response
-        } catch (error) { }
+        } catch (error) {}
     }
 
     // 좋아요 추가하기
@@ -186,7 +185,7 @@ class BoardService {
             const arr2 = arr1.map((x) => x.replace("data:image/png;base64,", ""))
             const arr3 = arr2.map((x) => new Buffer.from(x, "base64").toString("binary"))
             const arr4 = arr2.map(async (x, i) => {
-                this.fs.writeFile(`../front/uploads/${boardIdx}_${i}.png`, x, "base64", function (e) { })
+                this.fs.writeFile(`../front/uploads/${boardIdx}_${i}.png`, x, "base64", function (e) {})
             })
             const file = await this.fs.readdir("../front/uploads")
             const boardFile = file.filter((x) => x.indexOf(`${boardIdx}`) >= 0)
@@ -219,6 +218,15 @@ class BoardService {
     async FindSearch({ search }) {
         try {
             const result = await this.boardRepository.findSearch({ search })
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    async PostCommet({ boardIdx, cmdContent, userId }) {
+        try {
+            const result = await this.boardRepository.postComment({ boardIdx, cmdContent, userId })
             return result
         } catch (e) {
             throw new Error(e)
