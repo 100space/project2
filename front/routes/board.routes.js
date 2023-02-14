@@ -13,6 +13,16 @@ router.use((req, res, next) => {
     res.locals = { ...res.locals, userPic, userId, userPw, userName, nickName, provider }
     next()
 })
+router.post("/:mainCd/search", async (req,res,next)=>{
+    const {mainCd} = req.params
+    const {search} = req.body
+    const result = await request.post("/board/list/search", { mainCd, search})
+    const {data: {subjectResponse, adminResponse, subjectlength, userlength}}= result
+    console.log(subjectResponse)
+    console.log(adminResponse)
+    res.render("board/search.list.html",{subjectlength, userlength, subjectResponse, adminResponse, search})
+})
+
 router.get("/search", async (req, res, next) => {
     const { search } = req.query
     console.log(search)

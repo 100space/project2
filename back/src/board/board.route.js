@@ -6,7 +6,7 @@ router.post("/picture", (req, res, next) => controller.pictureInsert(req, res, n
 router.get("/random", (req, res, next) => controller.getRandom(req, res, next))
 router.get("/hot", (req, res, next) => controller.getHot(req, res, next))
 router.post("/search", (req, res, next) => controller.searchValue(req, res, next))
-
+router.post("/list/search", (req,res,next)=> controller.searchListValue(req,res,next))
 //comment 작성하기
 router.post("/comment/:boardIdx", (req, res, next) => controller.postComment(req, res, next))
 

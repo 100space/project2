@@ -106,6 +106,7 @@ class BoardController {
     async pictureInsert(req, res, next) {
         try {
             const { arr, boardIdx } = req.body
+            console.log(arr, boardIdx, "+++++++++++++++++++++++++")
             const result = await this.boardService.PictureCreate({ arr, boardIdx })
             res.status(201).json(result)
         } catch (e) {
@@ -118,6 +119,17 @@ class BoardController {
         try {
             const { search } = req.body
             const result = await this.boardService.FindSearch({ search })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    // list 검색
+    async searchListValue(req,res,next){
+        try {
+            const {search,mainCd} = req.body
+            const result = await this.boardService.ListValue({search,mainCd})
             res.status(201).json(result)
         } catch (e) {
             next(e)

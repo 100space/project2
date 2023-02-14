@@ -35,7 +35,7 @@
             {% endfor %}
         </div>
         <div id="boardNav" class="flex">
-            <form id="searchBar" class="boardBtn flex" action="/board/search">
+            <form id="searchBar" method="post" class="boardBtn flex" action="/board/{{mainCd}}/search">
                 <div class="flex-center">
                     <input type="text" id="searchInput" name="search" />
                     <button type="submit">검색</button>

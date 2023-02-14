@@ -325,6 +325,31 @@ class BoardRepository {
         }
     }
 
+
+    //list 검색하기
+
+    async listValue({search, mainCdValue}){
+        try {
+            const Op = this.Sequelize.Op
+            const subjectResponse = await this.Board.findAll({
+                where:{
+                    subject:{ [Op.like]:`%${search}%`},
+                    cateCd: { [Op.like]:`${mainCdValue}%`}
+                },
+                raw:true
+            })
+            const adminResponse = await this.Board.findAll({
+                where:{
+                    userId:{ [Op.like]:`%${search}%`},
+                    cateCd:{[Op.like]:`${mainCdValue}%`}
+                },
+                raw:true
+            })
+           return {subjectResponse, adminResponse}
+        } catch (e) {
+            throw new Error(`Error while find list Value: ${e.message}`)
+        }
+    }
     // 댓글 작성
 
     async postComment({ boardIdx, cmdContent, userId }) {

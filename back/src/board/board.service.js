@@ -228,6 +228,22 @@ class BoardService {
         }
     }
 
+    // 리스트 검색 알고리즘
+    async ListValue({search, mainCd}){
+        try {
+            const mainCdValue = this.mainChange[mainCd]
+            const result = await this.boardRepository.listValue({search, mainCdValue})
+            const {subjectResponse,adminResponse} = result
+            const subjectlength = subjectResponse.length
+            const userlength = adminResponse.length
+            result.subjectlength = subjectlength
+            result.userlength = userlength
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
     // 댓글
     async PostComment({ boardIdx, cmdContent, userId }) {
         try {
