@@ -5,9 +5,9 @@ const request = axios.create({
 const submitBtn = document.querySelector("#submitBtn")
 const userPic = document.getElementById("userPic")
 const fileInput = document.querySelectorAll("input[name='userPic']")[0]
+const form = document.querySelector("#welcomeFrm");
 
 userPic.addEventListener("click", (e) => {
-    console.log(e)
     fileInput.click();
 });
 
@@ -19,24 +19,15 @@ fileInput.addEventListener("change", function(e) {
       userPic.style.backgroundImage = `url(${reader.result})`;
     }
   });
-  const form = document.querySelector("#welcomeFrm");
-
-  form.addEventListener("submit", (e) => {
+  
+form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const id = e.target.action.split("/").pop();
-    const request = new XMLHttpRequest();
-  
-    request.open("POST", `/profile/modify/${id}`, true);
-    request.send(formData);
-    request.onreadystatechange = function () {
-      if (request.readyState === XMLHttpRequest.DONE) {
-        if (request.status === 200) {
-          window.location.href = `/mypage/${id}`;
-        } else {
-          console.error("Error:", request.response);
-        }
-      }
-    };
-  });
-  
+    const userId = e.target.action.split("/").pop();
+    try {
+        const response = await axios.post(`/profile/modify/${userId}`, formData);
+        window.location.href = document.referrer
+        } catch (error) {
+        console.error(error);
+    }
+});
