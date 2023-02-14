@@ -7,7 +7,6 @@ const request = axios.create({
     withCredentials: true,
 })
 
-
 router.get("/login", (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
@@ -35,9 +34,12 @@ router.get("/myview", async (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
     const {page} = req.query
+    console.log(11,req.user)
+    console.log(22, req.body)
+    console.log(33, req.query)
     const response = await request.post("/profile/myview/mywrite", { userId, page })
     const { data:{myLength, findMain,writeCdarray}} = response
-    console.log(myLength, findMain, writeCdarray)
+    console.log(55, myLength, findMain, writeCdarray)
     res.render("user/mywrite.html", {myLength, listValue:findMain, subVal:writeCdarray })
 })
 
