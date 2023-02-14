@@ -158,7 +158,7 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
         })
         submitBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            if (!tagify.value.length || !subject.value.trim() || !editor.getData().trim()) {
+            if (!subject.value.trim() || !editor.getData().trim()) {
                 alert("모든 입력 항목은 필수입니다.");
                 return;
             }
@@ -172,7 +172,6 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
             request
                 .post(`/board/${mainCd}/write`, { data })
                 .then((response) => {
-                    console.log(response.data)
                     const { hashValue, newBoard } = response.data;
                     const {boardIdx} = newBoard
                     alert("글이 성공적으로 작성되었습니다.");

@@ -15,6 +15,7 @@ router.get("/:userId", async (req, res, next) => {
         userId,
     })
     const { data } = response
+    console.log(123,response.data.userPic)
     res.render("user/mypage.html", {
         ...data,
         boardHot,
