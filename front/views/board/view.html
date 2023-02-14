@@ -1,9 +1,11 @@
-{% extends 'layout/layout.html'%} {% block css %}
+{% extends 'layout/layout.html'%} 
+
+{% block css %}
 <br />
 <link rel="stylesheet" href="/css/board.view.css" />
 {% endblock %}
-<br />
-{% extends 'layout/layout.html'%} {% block content %}
+
+{% block content %}
 <input type="hidden" name="hidden" id="hidden" value="{{newBoard.content}}" />
 <input type="hidden" name="boardIdx" id="boardIdx" value="{{newBoard.boardIdx}}" />
 <input type="hidden" name="boardIdx" id="mainCd" value="{{newBoard.mainCd}}" />
@@ -43,7 +45,6 @@
                 <span>N개</span>
             </div>
             <div id="commentBody">
-                <!-- <form action="/board/{{mainCd}}/view/{{boardIdx}}" class="flex-center"> -->
                 <form class="flex-center" id="comment-form">
                     <input type="text" />
                     <button type="submit">댓글 작성</button>
@@ -61,7 +62,7 @@
                             <span class="comment_modify item_Header_date">수정</span>
                             <span class="comment_delete item_Header_date">삭제</span>
                         </div>
-                        {{ endif }}
+                        {% endif %}
                     </div>
                     <div class="comment">이런 저런 댓글 을 달면 이렇게</div>
                 </div>

@@ -4,13 +4,10 @@
     <form id="welcomeFrm" class="flexColumn" method="post" action="/profile/modify/{{userId}}">
         <div id="userPic" class="userPicSize" style="background-image: url('/image/{{userPic}}');"></div>
         <div id="textfrm">
-            <div class="callifont flex">
-                <div>사진수정 :</div>
-                <input type="file" placeholder="upload" style="font-size: 1.4rem;" name="userPic" multiple />
-            </div>
+            <input type="file" placeholder="upload" style="font-size: 1.4rem;" name="userPic" multiple hidden/>
             <div id="userId" class="callifont flex">
                 <div>아이디 :</div>
-                <input type="text" value="{{userId}}" class="userId" name="userId" />
+                <input type="text" value="{{userId}}" class="userId" name="userId" readonly/>
             </div>
             <div id="userName" class="callifont flex">
                 <div>이름 :</div>
@@ -61,6 +58,6 @@
     />
 </div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/js/mypage.js" type="text/javascript"></script>
+<script src="/js/mypage.modify.js" type="text/javascript"></script>
 <script src="/js/modify.address.js"></script>
 {% endblock %}

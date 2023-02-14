@@ -9,8 +9,9 @@ const input = document.querySelectorAll("input")
 
 const modifyHandler = async (e) => {
     location.href = `http://127.0.0.1:3005/profile/modify/${userId}`
-    // console.log(response)
+    console.log(response.data)
 }
+
 // console.log(input)
 // const submitHandler = async (e) => {
 //     e.perventDefault()
@@ -18,3 +19,5 @@ const modifyHandler = async (e) => {
 // }
 modifyBtn.addEventListener("click", modifyHandler)
 // submitBtn.addEventListener("submit", submitHandler)
+
+
