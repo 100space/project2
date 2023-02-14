@@ -130,7 +130,7 @@ class BoardController {
         try {
             const { boardIdx } = req.params
             const { cmdContent, userId } = req.body
-            const result = await this.boardService.PostComment({ boardIdx, inputValue, userId })
+            const result = await this.boardService.PostComment({ boardIdx, cmdContent, userId })
             res.status(201).json(result)
         } catch (e) {
             next(e)

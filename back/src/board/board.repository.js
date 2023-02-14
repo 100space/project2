@@ -160,9 +160,9 @@ class BoardRepository {
             const allMainCd = await this.Board.count({
                 where: {
                     cateCd: {
-                        [Op.like]: `${mainCdValue}%`
-                    }
-                }
+                        [Op.like]: `${mainCdValue}%`,
+                    },
+                },
             })
             const findMain = await this.Board.findAll({
                 limit: 5,
@@ -324,6 +324,17 @@ class BoardRepository {
             return { response, boardCount }
         } catch (e) {
             throw new Error(`Error while find search Value: ${e.message}`)
+        }
+    }
+
+    // 댓글 작성
+
+    async postComment({ boardIdx, cmdContent, userId }) {
+        try {
+            const response = (await this.comment.create({ boardIdx, cmdContent, userId })).get({ plain: true })
+            return response
+        } catch (e) {
+            throw new Error(`Error while create Comment Value: ${e.message}`)
         }
     }
 }

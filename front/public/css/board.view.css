@@ -147,7 +147,7 @@ ul > #tags {
     height: fit-content;
     padding: 2rem;
     margin: 0 auto;
-    border-bottom: 1px solid var(--background-color);
+    border-bottom: 1px dot-dash var(--background-color);
 }
 
 .item_Header_writer {
