@@ -59,11 +59,12 @@ router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
 router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     let data = {
+        subCd: req.body.categorySub,
+        userId: req.body.writer,
         subject: req.body.subject,
         content: req.body.content,
         hash: req.body["tags-outside"],
     }
-    console.log(data)
     const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data })
     const { updatedBoard } = result.data
     res.redirect(`/board/${mainCd}/view/${boardIdx}`)

@@ -77,39 +77,47 @@ class BoardRepository {
     async changeView(payload) {
         try {
             const { subject, content, mainCdValue, subCdValue, hashArray, userId, boardIdx } = payload
+            console.log(subject, content, mainCdValue, subCdValue, hashArray, userId, boardIdx , "==========================")
             const response = await this.Board.update(
-                { subject, content, cateCd: `${mainCdValue}${subCdValue}`, userId },
+                { subject, content, cateCd: `${mainCdValue}${subCdValue}` },
                 {
                     where: {
                         boardIdx,
                     },
                 }
             )
+            console.log(response, "===================================")
+            if (!hashArray) return { newBoard, newHashTagVal }
+            const newHashTag = await this.hashMake(boardIdx, hashArray)
+            return newHashTag
+            // const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
+            //     type: this.queryTypes.SELECT,
+            // })
             const changeHash = []
-            if (hashArray) {
-                const hashResponse = await this.hash.findAll({ where: { boardIdx }, raw: true })
-                for (let i = 0; i < hashResponse.length; i++) {
-                    let hashTagIdx = hashResponse[i].hashTagIdx
-                    const deleteHashTag = await this.hashtag.destroy({
-                        where: {
-                            hashTagIdx,
-                        },
-                    })
-                    const deleteHash = await this.hashtag.destroy({
-                        where: {
-                            hashTagIdx,
-                        },
-                    })
-                }
-                for (let j = 0; j < hashArray.length; j++) {
-                    const result = hashArray[j]
-                    const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
-                    changeHash.push(newHashTag)
-                }
-                return { response, changeHash }
-            } else {
-                return response
-            }
+            // if (hashArray) {
+            //     const hashResponse = await this.hash.findAll({ where: { boardIdx }, raw: true })
+            //     for (let i = 0; i < hashResponse.length; i++) {
+            //         let hashTagIdx = hashResponse[i].hashTagIdx
+            //         const deleteHashTag = await this.hashtag.destroy({
+            //             where: {
+            //                 hashTagIdx,
+            //             },
+            //         })
+            //         const deleteHash = await this.hashtag.destroy({
+            //             where: {
+            //                 hashTagIdx,
+            //             },
+            //         })
+            //     }
+            //     for (let j = 0; j < hashArray.length; j++) {
+            //         const result = hashArray[j]
+            //         const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
+            //         changeHash.push(newHashTag)
+            //     }
+            //     return { response, changeHash }
+            // } else {
+            //     return response
+            // }
         } catch (e) {}
     }
 
