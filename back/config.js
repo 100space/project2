@@ -21,6 +21,12 @@ const config = {
                 freezeTableName: true,
                 timestamps: true,
             },
+            timezone : "Asia/Seoul",
+            dialectOptions : {
+                charset : "utf8mb4",
+                dataStrings : "true",
+                typeCast : "true"
+            }
         },
         test: {
             database: process.env.DB_DATABASE || "test",
