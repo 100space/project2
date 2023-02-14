@@ -14,7 +14,7 @@ const request = axios.create({
 
 const tagify = new Tagify(input, {
     whitelist: ["Hynn", "Baek", "Gyeong"],
-    maxTags: 10,
+    maxTags: 5,
     dropdown: {
         position: "input",
         enabled: 0,
