@@ -25,7 +25,9 @@ const config = {
             port: port,
             host: host,
             dialect: "mysql",
+            
         },
+        
         test: {
             username: user,
             password: password,
