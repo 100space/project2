@@ -256,7 +256,22 @@ button :focus {
 
 #iFrameContainer {
     display: none;
+    text-align: center;
 }
+
+#termHeader, #termBody {
+    margin : 0 auto;
+    text-align: center;
+}
+
+#termHeader {
+    size: 1.5rem;
+}
+
+#termBody {
+    size : 1rem;
+}
+
 
 /* 장경호 css */
 label > p {

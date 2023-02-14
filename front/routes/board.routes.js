@@ -41,10 +41,12 @@ router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
     const boardData = result.data
-    // const hashtagResult = await request.get(`/board/${mainCd}/view/${boardIdx}/hashtags`)
-    // console.log(hashtagResult);
-    // const hashtagData = hashtagResult.data
-    res.render("board/write.modify.html", { mainCd, boardData })
+    console.log(22, boardData)
+    const tagObjects = boardData.hashResponse.map(tag => {
+        return { value: tag.tag }
+      });
+    console.log(33, tagObjects)
+    res.render("board/write.modify.html", { mainCd, boardData, tagObjects })
 })
 
 // 수정완료하기
