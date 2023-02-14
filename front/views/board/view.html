@@ -1,6 +1,4 @@
-{% extends 'layout/layout.html'%} 
-
-{% block css %}
+{% extends 'layout/layout.html'%} {% block css %}
 <br />
 <link rel="stylesheet" href="/css/board.view.css" />
 {% endblock %} {% block content %}
@@ -34,7 +32,7 @@
     <div id="content">{{newBoard.content}}</div>
     <ul>
         {% for tags in newHashTagVal %}
-        <li id="tags">{{tags.tag}}</li>
+        <li id="tags">#{{tags.tag}}</li>
         {% endfor %}
     </ul>
     <div id="comment_wrap">
@@ -50,11 +48,12 @@
                 </form>
             </div>
             <div id="commentList">
+                {% for comment in commentResponse %}
                 <div class="commentItem">
                     <div class="item_Header flex">
                         <div>
-                            <span class="item_Header_writer">작성자</span>
-                            <span class="item_Header_date">작성일</span>
+                            <span class="item_Header_writer">{{comment.userId}}</span>
+                            <span class="item_Header_date">{{comment.createdAt}}</span>
                         </div>
                         {% if userId === comment.userId %}
                         <div class="comment_controll">
@@ -63,8 +62,9 @@
                         </div>
                         {% endif %}
                     </div>
-                    <div class="comment">이런 저런 댓글 을 달면 이렇게</div>
+                    <div class="comment">{{comment.cmdContent}}</div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>

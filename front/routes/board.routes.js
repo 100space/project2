@@ -13,12 +13,14 @@ router.use((req, res, next) => {
     res.locals = { ...res.locals, userPic, userId, userPw, userName, nickName, provider }
     next()
 })
-router.post("/:mainCd/search", async (req,res,next)=>{
-    const {mainCd} = req.params
-    const {search} = req.body
-    const result = await request.post("/board/list/search", { mainCd, search})
-    const {data: {subjectResponse, adminResponse, subjectlength, userlength}}= result
-    res.render("board/search.list.html",{subjectlength, userlength, subjectResponse, adminResponse, search})
+router.post("/:mainCd/search", async (req, res, next) => {
+    const { mainCd } = req.params
+    const { search } = req.body
+    const result = await request.post("/board/list/search", { mainCd, search })
+    const {
+        data: { subjectResponse, adminResponse, subjectlength, userlength },
+    } = result
+    res.render("board/search.list.html", { subjectlength, userlength, subjectResponse, adminResponse, search })
 })
 
 router.get("/search", async (req, res, next) => {
@@ -68,16 +70,17 @@ router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { updatedBoard } = result.data
     res.redirect(`/board/${mainCd}/view/${boardIdx}`)
 })
-
+// 게시물 1개 확인
 router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
     const {
         data: { response, hashResponse, commentResponse },
     } = result
+    console.log(result.data)
     res.render("board/view.html", { newBoard: response, newHashTagVal: hashResponse, commentResponse })
 })
-
+// 게시물 작성 후 확인하기
 router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)

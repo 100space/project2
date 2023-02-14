@@ -63,10 +63,13 @@ class BoardRepository {
             const hashResponse = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
                 type: this.queryTypes.SELECT,
             })
-            const commentResponse = await this.sequelize.query(`SELECT B.cmdIdx, B.cmdContent, B.boardIdx, B.userId from Board A JOIN Comment B On (A.boardIdx = B.boardIdx) where A.boardIdx =${boardIdx}`,{
-                type: this.queryTypes.SELECT,
-            })
-            
+            const commentResponse = await this.sequelize.query(
+                `SELECT B.cmdIdx, B.cmdContent, B.boardIdx, B.userId, B.createdAt from Board A JOIN Comment B On (A.boardIdx = B.boardIdx) where A.boardIdx =${boardIdx} order by B.cmdIdx DESC`,
+                {
+                    type: this.queryTypes.SELECT,
+                }
+            )
+
             return { response, hashResponse, commentResponse }
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
@@ -126,7 +129,6 @@ class BoardRepository {
     // 랜덤값 추출
     async randomValue() {
         try {
-            // const boardRandom = await this.sequelize.query("SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx order by rand() Limit 7", { type: this.queryTypes.SELECT })
             const boardRandom = await this.sequelize.query(
                 "SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, A.cateCd , B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where A.boardLevel = 0 order by rand() Limit 7",
                 { type: this.queryTypes.SELECT }

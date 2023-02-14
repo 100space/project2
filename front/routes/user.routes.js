@@ -7,6 +7,14 @@ const request = axios.create({
     withCredentials: true,
 })
 
+router.use((req, res, next) => {
+    const { userPic, userId, userPw, userName, nickName, provider } = req.userInfo
+    const { boardHot, userHot } = req
+    res.locals = { boardHot, userHot }
+    res.locals = { ...res.locals, userPic, userId, userPw, userName, nickName, provider }
+    next()
+})
+
 router.get("/login", (req, res, next) => {
     const { boardHot } = req
     const { userHot } = req
@@ -33,17 +41,16 @@ router.get("/myview", async (req, res, next) => {
     const { userId } = req.user
     const { boardHot } = req
     const { userHot } = req
-    const {page} = req.query
-    console.log(11,req.user)
-    console.log(22, req.body)
-    console.log(33, req.query)
+    const { page } = req.query
     const response = await request.post("/profile/myview/mywrite", { userId, page })
-    const { data:{myLength, findMain,writeCdarray}} = response
-    console.log(55, myLength, findMain, writeCdarray)
-    res.render("user/mywrite.html", {myLength, listValue:findMain, subVal:writeCdarray })
+    const {
+        data: { myLength, findMain, writeCdarray },
+    } = response
+    console.log(myLength, findMain, writeCdarray)
+    res.render("user/mywrite.html", { myLength, listValue: findMain, subVal: writeCdarray })
+
 })
 
 router.get("/myview/:mainCd")
-
 
 module.exports = router

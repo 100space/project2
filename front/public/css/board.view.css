@@ -129,8 +129,10 @@ ul > #tags {
 }
 #commentBody > form > input {
     width: 75%;
-    height: 7rem;
-    padding: 1rem;
+    height: 6rem;
+    padding: 0.8rem;
+    font-size: 1.8rem;
+    border: solid 1px var(--background-color);
 }
 #commentBody > form > button {
     width: 10%;
