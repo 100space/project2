@@ -32,7 +32,6 @@ class BoardService {
             throw new Error(e)
         }
     }
-    
 
     // 게시물 리스트 view 보기
     async FindValue({ boardIdx }) {
@@ -135,26 +134,25 @@ class BoardService {
     // 서브카테고리 분류
     async CategoryValue({ mainCd, subCd, pageNumber }) {
         try {
-          const mainCdValue = this.mainChange[mainCd]
-          if (!mainCdValue) {
-            throw new Error(`mainCd ${mainCd} not found in this.mainChange`)
-          }
-          const subCdValue = this.subChange[subCd]
-          if (!subCdValue) {
-            throw new Error(`subCd ${subCd} not found in this.subChange`)
-          }
-          const findValue = `${mainCdValue}${subCdValue}`
-          const result = await this.boardRepository.categoryValue({ findValue, pageNumber })
-          const result2 = result.map((x, i) => {
-            x.showindex = i + 1
-            return x
-          })
-          return { listValue: result2 }
+            const mainCdValue = this.mainChange[mainCd]
+            if (!mainCdValue) {
+                throw new Error(`mainCd ${mainCd} not found in this.mainChange`)
+            }
+            const subCdValue = this.subChange[subCd]
+            if (!subCdValue) {
+                throw new Error(`subCd ${subCd} not found in this.subChange`)
+            }
+            const findValue = `${mainCdValue}${subCdValue}`
+            const result = await this.boardRepository.categoryValue({ findValue, pageNumber })
+            const result2 = result.map((x, i) => {
+                x.showindex = i + 1
+                return x
+            })
+            return { listValue: result2 }
         } catch (e) {
-          throw new Error(e)
+            throw new Error(e)
         }
-      }
-      
+    }
 
     // 핫 게시물
     async HotValue() {
@@ -230,7 +228,8 @@ class BoardService {
         }
     }
 
-    async PostCommet({ boardIdx, cmdContent, userId }) {
+    // 댓글
+    async PostComment({ boardIdx, cmdContent, userId }) {
         try {
             const result = await this.boardRepository.postComment({ boardIdx, cmdContent, userId })
             return result
