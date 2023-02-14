@@ -61,11 +61,13 @@ const arr = []
 for (let i = 0; i < img.length; i++) {
     arr.push(img[i].currentSrc)
 }
-
-viewModify.addEventListener("click", modifyBtnHandler)
-commentFrm.addEventListener("click", commentFrmHandler)
-commentModify.addEventListener("click", commentModifyHandler)
 ;(async () => {
     const response = await request.post("/board/picture", { arr, boardIdx })
     // console.log(response)
 })()
+
+viewModify.addEventListener("click", modifyBtnHandler)
+commentFrm.addEventListener("click", commentFrmHandler)
+commentModify.addEventListener("click", commentModifyHandler)
+
+
