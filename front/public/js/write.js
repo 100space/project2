@@ -155,6 +155,32 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
             location.href = `${_pathname}?page=1`
             // location.href = document.referer
         })
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (!tagify.value.length || !subject.value.trim() || !editor.getData().trim()) {
+                alert("모든 입력 항목은 필수입니다.");
+                return;
+            }
+            const userId = writer.value;
+            const mainCd = categoryMain.value;
+            const subCd = document.querySelector('select[name="categorySub"]').value;
+            const content = editor.getData();
+            const hash = tagify.value.map((tag) => tag.value).join(",");
+            const data = { subject: subject.value, content, userId, mainCd, subCd, hash };
+            request
+                .post(`/board/${mainCd}/write`, { data })
+                .then((response) => {
+                    const { id } = response.data;
+                    alert("글이 성공적으로 작성되었습니다.");
+                    location.href = `/board/${mainCd}/${id}`;
+                })
+                .catch((error) => {
+                    alert("글 작성에 실패했습니다.");
+                    console.error(error);
+                });
+        });
+        
+
         var editor = CKEDITOR.instances.editor1;
         var data = editor.getData();
         editor.setData(data);

@@ -34,12 +34,16 @@ router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
     const boardData = result.data
+    // const hashtagResult = await request.get(`/board/${mainCd}/view/${boardIdx}/hashtags`)
+    // console.log(hashtagResult);
+    // const hashtagData = hashtagResult.data
     res.render("board/write.modify.html", { mainCd, boardData })
 })
 
 
 // 수정완료하기
 router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
+    console.log('test1')
     const { mainCd, boardIdx } = req.params
     let data = {
         subject: req.body.subject,
@@ -53,6 +57,7 @@ router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
 })
 
 router.put("/:mainCd/view/:boardIdx", async (req, res, next) => {
+    console.log('test2')
     const { mainCd, boardIdx } = req.params
     const { subject, content, hash } = req.body
     const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data: { subject, content, hash } })
@@ -90,7 +95,7 @@ router.post("/:mainCd/write", async (req, res, next) => {
         subCd: req.body.categorySub,
     }
     const result = await request.post(`/board/${mainCd}/write`, { data })
-    // console.log(result)
+    console.log(result)
     const { newBoard, newHashTagVal } = result.data
 
     // console.log(newBoard, newHashTagVal)
