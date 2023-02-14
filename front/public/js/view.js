@@ -22,8 +22,9 @@ const modifyBtnHandler = async (e) => {
         location.href = `/board/${mainCd.value}/view/${boardIdx}/modify`
     } else {
         confirm("삭제하시겠습니까?")
+        console.log(mainCd.value, boardIdx)
         const response = await request.delete(`/board/${mainCd.value}/view/${boardIdx}`)
-        console.log(response)
+        location.href = `/board/${mainCd.value}?page=1`
     }
 }
 
@@ -69,5 +70,3 @@ for (let i = 0; i < img.length; i++) {
 viewModify.addEventListener("click", modifyBtnHandler)
 commentFrm.addEventListener("click", commentFrmHandler)
 commentModify.addEventListener("click", commentModifyHandler)
-
-
