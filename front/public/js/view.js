@@ -10,6 +10,8 @@ const loginUser = document.querySelector("#userId")
 const writeCheckBtn = document.querySelector("#writeCheckBtn")
 const viewModify = document.querySelector("#view_modify")
 const commentFrm = document.querySelector("#comment-form")
+const commentList = document.querySelector("#commentList")
+const commentModify = document.querySelector(".comment_modify")
 const contentValue = hidden.value
 content.innerHTML = `${contentValue}`
 let img = document.querySelectorAll("#content img[src]")
@@ -18,6 +20,10 @@ const boardIdx = BoardIdx.value
 const modifyBtnHandler = async (e) => {
     if (e.target.className.indexOf("modify") >= 0) {
         location.href = `/board/${mainCd.value}/view/${boardIdx}/modify`
+    } else {
+        confirm("삭제하시겠습니까?")
+        const response = await request.delete(`/board/${mainCd.value}/view/${boardIdx}`)
+        console.log(response)
     }
 }
 
@@ -27,9 +33,29 @@ const commentFrmHandler = async (e) => {
         const inputValue = commentFrm.children[0].value
         const userId = loginUser.value
         const result = await request.post(`/board/comment/${boardIdx}`, { cmdContent: inputValue, userId })
-        console.log(result, "view.js / comment")
+        const comment = result.data
+        const commentItem = document.createElement("div")
+        commentItem.classList.add("commentItem")
+        commentList.prepend(commentItem)
+        commentItem.innerHTML = `<div class="item_Header flex">
+                        <div>
+                            <span class="item_Header_writer">${comment.userId}</span>
+                            <span class="item_Header_date">${comment.createdAt}</span>
+                        </div>
+                        <div>
+                            <span class="comment_modify item_Header_date">수정</span>
+                            <span class="comment_delete item_Header_date">삭제</span>
+                        </div>
+                    </div>
+                    <div class="comment">${comment.cmdContent}</div>`
         //result 를 innerHTML / template로 작성
+        console.log(commentFrm.children[0])
+        commentFrm.focus()
+        commentFrm.reset()
     }
+}
+const commentModifyHandler = (e) => {
+    content.log(e.target)
 }
 const arr = []
 for (let i = 0; i < img.length; i++) {
@@ -38,6 +64,7 @@ for (let i = 0; i < img.length; i++) {
 
 viewModify.addEventListener("click", modifyBtnHandler)
 commentFrm.addEventListener("click", commentFrmHandler)
+commentModify.addEventListener("click", commentModifyHandler)
 ;(async () => {
     const response = await request.post("/board/picture", { arr, boardIdx })
     // console.log(response)
