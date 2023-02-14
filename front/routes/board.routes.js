@@ -51,25 +51,22 @@ router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
     const boardData = result.data
-    console.log(22, boardData)
     const tagObjects = boardData.hashResponse.map(tag => {
         return { value: tag.tag }
       });
-    console.log(33, tagObjects)
     res.render("board/write.modify.html", { mainCd, boardData, tagObjects })
 })
 
 // 수정완료하기
 router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
-    console.log("test1")
     const { mainCd, boardIdx } = req.params
     let data = {
         subject: req.body.subject,
         content: req.body.content,
         hash: req.body["tags-outside"],
     }
+    console.log(data)
     const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data })
-    console.log(result)
     const { updatedBoard } = result.data
     res.redirect(`/board/${mainCd}/view/${boardIdx}`)
 })

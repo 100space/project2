@@ -1,5 +1,5 @@
 class BoardService {
-    constructor({ boardRepository, fs }) {
+    constructor({ boardRepository, fs, moment }) {
         this.boardRepository = boardRepository
         this.fs = fs
         this.mainChange = {
@@ -18,6 +18,7 @@ class BoardService {
             sub8: "0008",
             sub9: "0009",
         }
+        this.moment = moment
     }
     // 글쓰기
     async MakeWrite(payload) {

@@ -38,9 +38,6 @@ module.exports = (sequelize, Sequelize) => {
             this.belongsTo(models.User, {
                 foreignKey: "userId",
             })
-            // this.belongsTo(models.Comment,{
-            //   foreignKey : "cmdIdx"
-            // })
             this.hasMany(models.Comment, {
                 foreignKey: "boardIdx",
             })
