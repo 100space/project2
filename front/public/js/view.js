@@ -30,6 +30,7 @@ const modifyBtnHandler = async (e) => {
 
 const commentFrmHandler = async (e) => {
     e.preventDefault()
+    console.log(e)
     if (e.target.localName === "button") {
         const inputValue = commentFrm.children[0].value
         const userId = loginUser.value
@@ -67,6 +68,6 @@ for (let i = 0; i < img.length; i++) {
     // console.log(response)
 })()
 
-viewModify.addEventListener("click", modifyBtnHandler)
 commentFrm.addEventListener("click", commentFrmHandler)
 commentModify.addEventListener("click", commentModifyHandler)
+viewModify.addEventListener("click", modifyBtnHandler)

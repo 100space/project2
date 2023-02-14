@@ -14,7 +14,6 @@ class UserController {
         }
     }
 
-
     async postSignUp(req, res, next) {
         try {
             const { userId, userPw, userName, nickName, address1, address2, gender, phoneNum, userEmail, userIntro, provider, snsId, userLevel, filename } = req.body
@@ -80,10 +79,10 @@ class UserController {
         }
     }
 
-
-    // 내가 쓴글 
+    // 내가 쓴글
     async MyWriting(req, res, next) {
         try {
+            console.log(req)
             const { userId, page } = req.body
             const result = await this.userService.FindWriting({ userId, page })
             res.status(201).json(result)
@@ -93,14 +92,11 @@ class UserController {
     }
 
     // 내가 쓴 글 메인 카테고리로 분류하기
-    async myMainCd(req,res,next){
+    async myMainCd(req, res, next) {
         try {
-            const {mainCd} = req.params
-        } catch (e) {
-            
-        }
+            const { mainCd } = req.params
+        } catch (e) {}
     }
-    
 }
 
 module.exports = UserController
