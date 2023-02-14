@@ -13,6 +13,13 @@ router.use((req, res, next) => {
     res.locals = { ...res.locals, userPic, userId, userPw, userName, nickName, provider }
     next()
 })
+router.get("/search", async (req, res, next) => {
+    const { search } = req.query
+    console.log(search)
+    const result = await request.post(`/board/search`, { search })
+    const { response, boardCount } = result.data
+    res.render("board/subList.html", { listValue: response, boardCount })
+})
 router.get("/:mainCd", async (req, res, next) => {
     const { mainCd } = req.params
     const { page } = req.query
@@ -39,7 +46,6 @@ router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     // const hashtagData = hashtagResult.data
     res.render("board/write.modify.html", { mainCd, boardData })
 })
-
 
 // 수정완료하기
 router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {

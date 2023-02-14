@@ -68,103 +68,6 @@ router.get("/oauth/kakao", (req, res, next) => {
 router.get("/manage", (req, res, next) => {
     res.render("user/management.html")
 })
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-//
-router.get("/", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const response = await request.get("/board/random")
-    const { boardRandom, randomUser, randomHash } = response.data
-    console.log(response.data)
-    res.render("index.html", { ...userInfo, boardHot, userHot, boardRandom, randomUser, randomHash })
-})
-
 router.get("/search", async (req, res, next) => {
     const userInfo = req.userInfo
     const { boardHot } = req
@@ -182,182 +85,280 @@ router.get("/search", async (req, res, next) => {
     const userValue = userResponse.data.response
     res.render("board/search.html", { ...userInfo, boardHot, userHot, search, boardCount, data1, userCount, userValue })
 })
-router.get("/:categoryMain/view/:boardIdx", async (req, res, next) => {
+
+router.get("/", async (req, res, next) => {
     const userInfo = req.userInfo
     const { boardHot } = req
     const { userHot } = req
-    const { categoryMain, boardIdx } = req.params
-    const response = await request.post(`/board/${categoryMain}/view`, { userInfo, boardIdx })
-    const { data } = response
-    res.render("board/view.html", { ...data, boardHot, userHot })
-})
-router.get("/notice", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const response = await request.get("/board/notice")
-    const { data } = response
-    const subcateVal = data.response
-    const boardCount = data.subCount
-    const data1 = subcateVal.map((x) => {
-        x.createdAt = x.createdAt.substring(0, 10)
-        return x
-    })
-    const response2 = await request.get(`/board/notice`)
-    const data2 = response2.data
-    const subVal = data2.subVal
-    const mainVal = data2.mainVal
-    // res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, boardCount, categorySub })
+    const response = await request.get("/board/random")
+    const { listValue, randomUser, randomHash } = response.data
+    console.log(response.data, 123123123123)
+    res.render("index.html", { ...userInfo, boardHot, userHot, boardRandom: listValue, randomUser, randomHash })
 })
 
-router.get("/:categoryMain/:categorySub/:pagingIndex", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const { categoryMain, categorySub, pagingIndex } = req.params
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-    const response = await request.get(`/board/${categoryMain}/${categorySub}/${pagingIndex}`)
-    const { data } = response
-    const subcateVal = data.response
-    const boardCount = data.subCount
-    console.log(boardCount)
-    const data1 = subcateVal.map((x) => {
-        x.createdAt = x.createdAt.substring(0, 10)
-        return x
-    })
-    const response2 = await request.get(`/board/${categoryMain}`)
-    const data2 = response2.data
-    const subVal = data2.subVal
-    const mainVal = data2.mainVal
-    res.send("111")
+//
 
-    // res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, boardCount, categorySub })
-})
-
-router.get("/community", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const response = await request.get("/board/community")
-    const { data } = response
-    const listValue = data.response
-    const subVal = data.subVal
-    const mainVal = data.mainVal
-    res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
-})
-
-router.get("/community/:categorySub", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const { categorySub } = req.params
-    const response = await request.get(`/board/community/${categorySub}`)
-})
-
-// router.get("/q&a", async (req, res, next) => {
+// router.get("/:categoryMain/view/:boardIdx", async (req, res, next) => {
 //     const userInfo = req.userInfo
 //     const { boardHot } = req
 //     const { userHot } = req
-//     const response = await request.get("/board/q&a")
+//     const { categoryMain, boardIdx } = req.params
+//     const response = await request.post(`/board/${categoryMain}/view`, { userInfo, boardIdx })
+//     const { data } = response
+//     res.render("board/view.html", { ...data, boardHot, userHot })
+// })
+// router.get("/notice", async (req, res, next) => {
+//     const userInfo = req.userInfo
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const response = await request.get("/board/notice")
+//     const { data } = response
+//     const subcateVal = data.response
+//     const boardCount = data.subCount
+//     const data1 = subcateVal.map((x) => {
+//         x.createdAt = x.createdAt.substring(0, 10)
+//         return x
+//     })
+//     const response2 = await request.get(`/board/notice`)
+//     const data2 = response2.data
+//     const subVal = data2.subVal
+//     const mainVal = data2.mainVal
+//     // res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, boardCount, categorySub })
+// })
+
+// router.get("/:categoryMain/:categorySub/:pagingIndex", async (req, res, next) => {
+//     const userInfo = req.userInfo
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const { categoryMain, categorySub, pagingIndex } = req.params
+
+//     const response = await request.get(`/board/${categoryMain}/${categorySub}/${pagingIndex}`)
+//     const { data } = response
+//     const subcateVal = data.response
+//     const boardCount = data.subCount
+//     console.log(boardCount)
+//     const data1 = subcateVal.map((x) => {
+//         x.createdAt = x.createdAt.substring(0, 10)
+//         return x
+//     })
+//     const response2 = await request.get(`/board/${categoryMain}`)
+//     const data2 = response2.data
+//     const subVal = data2.subVal
+//     const mainVal = data2.mainVal
+//     res.send("111")
+
+//     // res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, boardCount, categorySub })
+// })
+
+// router.get("/community", async (req, res, next) => {
+//     const userInfo = req.userInfo
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const response = await request.get("/board/community")
 //     const { data } = response
 //     const listValue = data.response
 //     const subVal = data.subVal
 //     const mainVal = data.mainVal
-//     res.render("board/list.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
+//     res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
 // })
 
-router.get("/q&a/:categorySub", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const { categorySub } = req.params
-    const response = await request.get(`/board/notice/${categorySub}`)
-    const { data } = response
-    const subcateVal = data.response
-    const arrayNum = new Array(Math.floor(data.subCount / 5) + 1)
-    const data1 = subcateVal.map((x) => {
-        x.createdAt = x.createdAt.substring(0, 10)
-        return x
-    })
-    const response2 = await request.get("/board/qna")
-    const data2 = response2.data
-    const subVal = data2.subVal
-    const mainVal = data2.mainVal
-    res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, arrayNum, categorySub })
-})
+// router.get("/community/:categorySub", async (req, res, next) => {
+//     const userInfo = req.userInfo
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const { categorySub } = req.params
+//     const response = await request.get(`/board/community/${categorySub}`)
+// })
 
-// router.get("/write/:categoryMain", (req, res, next) => {
+// // router.get("/q&a", async (req, res, next) => {
+// //     const userInfo = req.userInfo
+// //     const { boardHot } = req
+// //     const { userHot } = req
+// //     const response = await request.get("/board/q&a")
+// //     const { data } = response
+// //     const listValue = data.response
+// //     const subVal = data.subVal
+// //     const mainVal = data.mainVal
+// //     res.render("board/list.html", { ...userInfo, boardHot, userHot, listValue, subVal, mainVal })
+// // })
+
+// router.get("/q&a/:categorySub", async (req, res, next) => {
+//     const userInfo = req.userInfo
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const { categorySub } = req.params
+//     const response = await request.get(`/board/notice/${categorySub}`)
+//     const { data } = response
+//     const subcateVal = data.response
+//     const arrayNum = new Array(Math.floor(data.subCount / 5) + 1)
+//     const data1 = subcateVal.map((x) => {
+//         x.createdAt = x.createdAt.substring(0, 10)
+//         return x
+//     })
+//     const response2 = await request.get("/board/qna")
+//     const data2 = response2.data
+//     const subVal = data2.subVal
+//     const mainVal = data2.mainVal
+//     res.render("board/subList.html", { ...userInfo, boardHot, userHot, listValue: data1, subVal, mainVal, arrayNum, categorySub })
+// })
+
+// // router.get("/write/:categoryMain", (req, res, next) => {
+// //     const userInfo = req.userInfo
+// //     const { boardHot } = req
+// //     const { userHot } = req
+// //     const { categoryMain } = req.params
+// //     console.log(boardHot)
+// //     res.render("board/write.html", { ...userInfo, categoryMain, boardHot, userHot })
+// // })
+// router.post("/write/:categoryMain", async (req, res, next) => {
 //     const userInfo = req.userInfo
 //     const { boardHot } = req
 //     const { userHot } = req
 //     const { categoryMain } = req.params
-//     console.log(boardHot)
-//     res.render("board/write.html", { ...userInfo, categoryMain, boardHot, userHot })
+//     if (req.body["tags-outside"] === "") {
+//         let data = {
+//             writer: req.body.writer,
+//             subject: req.body.subject,
+//             content: req.body.content,
+//             categoryMain,
+//             categorySub: req.body.categorySub,
+//         }
+//         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
+//         const writeValue = response.data
+//         res.render("board/view.check.html", { ...writeValue, ...userInfo, boardHot, userHot })
+//     } else {
+//         let tags = JSON.parse(req.body["tags-outside"])
+//         let tagValues = tags.map((tag) => {
+//             return tag.value
+//         })
+//         let data = {
+//             writer: req.body.writer,
+//             subject: req.body.subject,
+//             content: req.body.content,
+//             tags: tagValues,
+//             categoryMain,
+//             categorySub: req.body.categorySub,
+//         }
+//         const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
+//         const {
+//             data: { newBoard, newHashTagVal },
+//         } = response
+//         console.log(newHashTagVal)
+//         res.render("board/view.check.html", { ...newBoard, newHashTagVal, ...userInfo, boardHot, userHot })
+//     }
 // })
-router.post("/write/:categoryMain", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const { categoryMain } = req.params
-    if (req.body["tags-outside"] === "") {
-        let data = {
-            writer: req.body.writer,
-            subject: req.body.subject,
-            content: req.body.content,
-            categoryMain,
-            categorySub: req.body.categorySub,
-        }
-        const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
-        const writeValue = response.data
-        res.render("board/view.check.html", { ...writeValue, ...userInfo, boardHot, userHot })
-    } else {
-        let tags = JSON.parse(req.body["tags-outside"])
-        let tagValues = tags.map((tag) => {
-            return tag.value
-        })
-        let data = {
-            writer: req.body.writer,
-            subject: req.body.subject,
-            content: req.body.content,
-            tags: tagValues,
-            categoryMain,
-            categorySub: req.body.categorySub,
-        }
-        const response = await request.post(`/board/write/${categoryMain}`, { data, userInfo })
-        const {
-            data: { newBoard, newHashTagVal },
-        } = response
-        console.log(newHashTagVal)
-        res.render("board/view.check.html", { ...newBoard, newHashTagVal, ...userInfo, boardHot, userHot })
-    }
-})
 
-router.get("/:categoryMain/delete/:boardIdx", async (req, res, next) => {
-    const { categoryMain, boardIdx } = req.params
-    const { boardHot } = req
-    const { userHot } = req
-    const result = await request.delete(`/board/${categoryMain}/${boardIdx}`)
-    res.redirect(`/${categoryMain}`)
-})
+// router.get("/:categoryMain/delete/:boardIdx", async (req, res, next) => {
+//     const { categoryMain, boardIdx } = req.params
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const result = await request.delete(`/board/${categoryMain}/${boardIdx}`)
+//     res.redirect(`/${categoryMain}`)
+// })
 
-router.get("/:categoryMain/view/like/:boardIdx", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const { categoryMain, boardIdx } = req.params
-    const response = await request.post(`/board/${categoryMain}/view/like`, { userInfo, categoryMain, boardIdx })
-    res.redirect(`/${categoryMain}/view/${boardIdx}`)
-})
+// router.get("/:categoryMain/view/like/:boardIdx", async (req, res, next) => {
+//     const userInfo = req.userInfo
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const { categoryMain, boardIdx } = req.params
+//     const response = await request.post(`/board/${categoryMain}/view/like`, { userInfo, categoryMain, boardIdx })
+//     res.redirect(`/${categoryMain}/view/${boardIdx}`)
+// })
 
-router.get("/:categoryMain/view/modify/:boardIdx", async (req, res, next) => {
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const { categoryMain, boardIdx } = req.params
-    // console.log(categoryMain, boardIdx)
-    const response = await request.put(`/board/${categoryMain}/view`, { userInfo, boardIdx })
-    const { data } = response
-    res.render("board/view.modify.html", { ...data, boardHot, userHot })
-})
+// router.get("/:categoryMain/view/modify/:boardIdx", async (req, res, next) => {
+//     const userInfo = req.userInfo
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const { categoryMain, boardIdx } = req.params
+//     // console.log(categoryMain, boardIdx)
+//     const response = await request.put(`/board/${categoryMain}/view`, { userInfo, boardIdx })
+//     const { data } = response
+//     res.render("board/view.modify.html", { ...data, boardHot, userHot })
+// })
 
 module.exports = router

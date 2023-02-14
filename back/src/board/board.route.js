@@ -7,6 +7,9 @@ router.get("/random", (req, res, next) => controller.getRandom(req, res, next))
 router.get("/hot", (req, res, next) => controller.getHot(req, res, next))
 router.post("/search", (req, res, next) => controller.searchValue(req, res, next))
 
+//comment 작성하기
+router.post("/comment/:boardIdx", (req, res, next) => controller.postComment(req, res, next))
+
 // 리팩토링할 코드
 // 리팩토링 코드 끝
 
@@ -21,10 +24,6 @@ router.delete("/:mainCd/view/:boardIdx", (req, res, next) => controller.deleteBo
 // 카테고리별 내용 불러오기
 router.get("/:mainCd/:pageNumber", (req, res, next) => controller.findMainCd(req, res, next))
 router.get("/:mainCd/:subCd/:pageNumber", (req, res, next) => controller.findCategorySub(req, res, next))
-
-
-
-
 
 // router.get("/:categoryMain", (req, res, next) => controller.findCategory(req, res, next))
 // router.post("/:categoryMain/view/like", (req, res, next) => controller.infoLike(req, res, next))

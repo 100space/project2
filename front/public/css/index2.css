@@ -157,16 +157,16 @@
     color: var(--color);
 }
 .textareas {
-    padding: 4rem;
+    padding: 3rem;
     height: 30rem;
 }
 .textSub {
-    margin-top: 4rem;
+    margin-top: 2rem;
     font-size: 3rem;
 }
 .textCon {
     display: block;
-    margin-top: 4rem;
+    margin-top: 2rem;
     font-size: 1.8rem;
 }
 #hashtag {

@@ -7,6 +7,7 @@
 <input type="hidden" name="hidden" id="hidden" value="{{newBoard.content}}" />
 <input type="hidden" name="boardIdx" id="boardIdx" value="{{newBoard.boardIdx}}" />
 <input type="hidden" name="boardIdx" id="mainCd" value="{{newBoard.mainCd}}" />
+<input type="hidden" name="boardIdx" id="userId" value="{{userId}}" />
 <div id="container">
     <div id="container_header">
         <div class="flex">
@@ -43,7 +44,7 @@
             </div>
             <div id="commentBody">
                 <!-- <form action="/board/{{mainCd}}/view/{{boardIdx}}" class="flex-center"> -->
-                <form class="flex-center">
+                <form class="flex-center" id="comment-form">
                     <input type="text" />
                     <button type="submit">댓글 작성</button>
                 </form>
