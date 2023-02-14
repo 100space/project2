@@ -16,7 +16,7 @@ router.post("/comment/:boardIdx", (req, res, next) => controller.postComment(req
 // 기본 CRUD
 router.post("/:mainCd/write", (req, res, next) => controller.postWrite(req, res, next))
 router.get("/:mainCd/view/:boardIdx", (req, res, next) => controller.findBoard(req, res, next))
-router.put("/:mainCd/view/:boardIdx", (req, res, next) => controller.changeBoard(req, res, next))
+router.put("/:mainCd/:boardIdx", (req, res, next) => controller.changeBoard(req, res, next))
 router.delete("/:mainCd/view/:boardIdx", (req, res, next) => controller.deleteBoard(req, res, next))
 
 // 기본 CRUD 끝

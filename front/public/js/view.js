@@ -43,7 +43,7 @@ const commentFrmHandler = async (e) => {
                             <span class="item_Header_writer">${comment.userId}</span>
                             <span class="item_Header_date">${comment.createdAt}</span>
                         </div>
-                        <div>
+                        <div class="comment_controll">
                             <span class="comment_modify item_Header_date">수정</span>
                             <span class="comment_delete item_Header_date">삭제</span>
                         </div>
