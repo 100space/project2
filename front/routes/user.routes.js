@@ -36,10 +36,12 @@ router.get("/myview", async (req, res, next) => {
     const { userHot } = req
     const {page} = req.query
     const response = await request.post("/profile/myview/mywrite", { userId, page })
-    const { data } = response
-    res.send("1")
-    // res.render("board/subList.html",)
+    const { data:{myLength, findMain,writeCdarray}} = response
+    console.log(myLength, findMain, writeCdarray)
+    res.render("user/mywrite.html", {myLength, listValue:findMain, subVal:writeCdarray })
 })
+
+router.get("/myview/:mainCd")
 
 
 module.exports = router

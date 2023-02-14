@@ -112,22 +112,30 @@ class UserRepository {
         }
     }
 
-    async findWriting({ userId }) {
+    async findWriting({ userId, page }) {
         const Op = this.Sequelize.Op
         try {
-            const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
+            const indexValue = page * 5 - 4 === 1 ? 0 : page * 5 - 4
             const response = await this.Board.findAll({
                 where: {
                     userId
-                }, raw: true, order: [
-                    ['boardIdx', 'DESC']
-                ]
+                }, raw: true
             })
-            return response
+            const findMain = await this.Board.findAll({
+                limit: 5,
+                offset: indexValue,
+                where: {
+                    userId,
+                },
+                raw: true,
+            })
+            return {response, findMain}
         } catch (e) {
             throw new Error(`Error while find writing Value: ${e.message}`)
         }
     }
+
+    async
 }
 
 module.exports = UserRepository
