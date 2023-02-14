@@ -23,9 +23,7 @@ class BoardService {
     async MakeWrite(payload) {
         try {
             const { subject, content, mainCd, subCd, userId, hash } = payload
-            const hashValue = JSON.parse(hash)
-            const hashArray = Array.isArray(hashValue) ? hashValue.map((x) => x.value) : []
-            console.log(123,mainCd, subCd)
+            const hashArray = hash.split(",")
             const mainCdValue = this.mainChange[mainCd]
             const subCdValue = this.subChange[subCd]
             const result = await this.boardRepository.createBoard({ subject, content, mainCdValue, subCdValue, hashArray, userId })
@@ -40,14 +38,15 @@ class BoardService {
     async FindValue({ boardIdx }) {
         try {
             const result = await this.boardRepository.findValue({ boardIdx })
-            const { cateCd } = result
+            const { cateCd } = result.response
             const mainValue = cateCd.slice(0, 4)
             const subValue = cateCd.slice(4, 8)
             const keySub = Object.keys(this.subChange)
             const sendMain = mainValue === this.mainChange.notice ? "notice" : mainValue === this.mainChange.community ? "community" : "qna"
             const sendSub = subValue === this.subChange.sub1 ? "sub1" : subValue === this.subChange.sub2 ? "sub2" : "sub3"
-            result.mainCd = sendMain
-            result.subCd = sendSub
+            result.response.mainCd = sendMain
+            result.response.subCd = sendSub
+            console.log(result)
             return result
         } catch (e) {
             throw new Error(e)
@@ -113,7 +112,6 @@ class BoardService {
             const cateLength = {
                 length: `${result.allMainCd}`,
             }
-            // console.log(result, "========================")
             const findSub = result.findSub.map((x) => {
                 const array = x.cateCd.slice(4, 8)
                 return array

@@ -13,6 +13,7 @@
 <br />
 {% extends 'layout/layout.html'%} {% block content %}
 <div id="contentArea">
+    <input type="hidden" id="mainCd" value="{{mainCd}}">
     <form action="/board/{{mainCd}}/write" method="post" id="writeFrm">
         {% if mainCd === "notice" %}
         <select name="categorySub" class="categoryMain">

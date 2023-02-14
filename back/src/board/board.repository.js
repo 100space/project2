@@ -34,6 +34,7 @@ class BoardRepository {
     async createBoard(payload) {
         try {
             const { subject, content, mainCdValue, subCdValue, hashArray, userId } = payload
+            console.log(payload)
             const newBoard = (await this.Board.create({ subject, content, userId, cateCd: `${mainCdValue}${subCdValue}` })).get({ plain: true })
             const newHashTagVal = []
             const userInfo = await this.User.findAll({ where: { userId }, raw: true })
@@ -59,8 +60,8 @@ class BoardRepository {
         try {
             const { boardIdx } = payload
             const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
-
-            return response
+            const hashResponse= await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {type: this.queryTypes.SELECT,})
+            return {response, hashResponse}
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
         }
@@ -132,7 +133,6 @@ class BoardRepository {
                 "SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, A.cateCd , B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where A.boardLevel = 0 order by rand() Limit 7",
                 { type: this.queryTypes.SELECT }
             )
-            // console.log(boardRandom)
             const randomUser = []
             const randomHash = []
             for (let i = 0; i < boardRandom.length; i++) {
@@ -313,14 +313,12 @@ class BoardRepository {
                 },
                 raw: true,
             })
-            console.log(response)
             const boardCount = await this.Board.count({
                 where: {
                     subject: { [Op.like]: `%${search}%` },
                 },
                 raw: true,
             })
-            console.log(boardCount)
             return { response, boardCount }
         } catch (e) {
             throw new Error(`Error while find search Value: ${e.message}`)

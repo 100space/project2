@@ -63,7 +63,6 @@ router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
 })
 
 router.put("/:mainCd/view/:boardIdx", async (req, res, next) => {
-    console.log('test2')
     const { mainCd, boardIdx } = req.params
     const { subject, content, hash } = req.body
     const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data: { subject, content, hash } })
@@ -74,9 +73,19 @@ router.put("/:mainCd/view/:boardIdx", async (req, res, next) => {
 router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
-    const newBoard = result.data
+
+    const {data:{response, hashResponse}} = result
     // console.log(result, 123123)
-    res.render("board/view.html", { newBoard })
+    res.render("board/view.html", { newBoard:response, newHashTagVal:hashResponse })
+})
+
+
+router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {
+    const { mainCd, boardIdx } = req.params
+    const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
+    const {data: {response, hashResponse}} = result
+    
+    res.render("board/view.check.html", { mainCd, newBoard:response, newHashTagVal:hashResponse })
 })
 
 //제일 밑으로 내려가자
@@ -89,24 +98,5 @@ router.get("/:mainCd/:subCd", async (req, res, next) => {
     res.render("board/subList.html", { mainCd, listValue })
 })
 /////////////
-
-router.post("/:mainCd/write", async (req, res, next) => {
-    const { mainCd } = req.params
-    let data = {
-        userId: req.body.writer,
-        subject: req.body.subject,
-        content: req.body.content,
-        hash: req.body["tags-outside"],
-        mainCd,
-        subCd: req.body.categorySub,
-    }
-    const result = await request.post(`/board/${mainCd}/write`, { data })
-    console.log(result)
-    const { newBoard, newHashTagVal } = result.data
-
-    // console.log(newBoard, newHashTagVal)
-    res.render("board/view.check.html", { mainCd, newBoard, newHashTagVal })
-})
-//
 
 module.exports = router
