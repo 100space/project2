@@ -43,10 +43,10 @@ const element_access = document.getElementById('eventAddress');
             maxSuggestItems : 5
         }).embed(element_layer);
         element_layer.style.display = 'block';
-        initLayerPosition();
+        initLayerPosition1();
     }
 
-    function initLayerPosition(){
+    function initLayerPosition1(){
         const width = 500;
         const height = 600;
         const borderWidth = 1;

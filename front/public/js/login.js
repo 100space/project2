@@ -125,24 +125,15 @@ kakao.addEventListener("click", async (e) => {
 })
 
 signUpButton.addEventListener("click", () => {
-    container.classList.add("right-panel-active");
-    initLayerPosition();
+    container.classList.add("right-panel-active")
+    termsCheckLayout()
     iFrameContainer.style.display = "block";
   });
   
 signInButton.addEventListener("click", () => {
     container.classList.remove("right-panel-active");
     });
-  
-termsCheckbox.addEventListener("click", () => {
-    initLayerPosition();
-    iFrameContainer.style.display = termsCheckbox.checked ? "none" : "block";
-    });
-  
-agreeText.addEventListener("scroll", () => {
-    agreeBtn.disabled = agreeText.scrollTop !== agreeText.scrollHeight - agreeText.offsetHeight;
-    });
-  
+   
 agreeBtn.addEventListener("click", () => {
     termsCheckbox.checked = true;
     iFrameContainer.style.display = "none";
@@ -154,16 +145,15 @@ cancelBtn.addEventListener("click", () => {
     container.classList.remove("right-panel-active");
     });
   
-function initLayerPosition() {
+const termsCheckLayout = () => {
     const width = 400;
-    const height = 550;
+    const height = 500;
     const borderWidth = 0;
-  
+    
     iFrameContainer.style.width = `${width}px`;
     iFrameContainer.style.height = `${height}px`;
     iFrameContainer.style.border = `${borderWidth}px solid`;
     iFrameContainer.style.backgroundColor = "white";
     iFrameContainer.style.left = `${(((window.innerWidth || document.documentElement.clientWidth) - width) / 1.5 - borderWidth)}px`;
     iFrameContainer.style.top = `${(((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth)}px`;
-    }
-  
+    };
