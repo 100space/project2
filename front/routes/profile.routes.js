@@ -38,17 +38,22 @@ router.get("/modify/:userId", async (req, res, next) => {
     })
 })
 
-router.post("/modify/:id", async (req, res, next) => {
+router.post("/modify/:id", upload.single("userPic"), async (req, res, next) => {
     const { id } = req.params
-    // console.log(req.body, 12312321, "======")
     const { boardHot } = req
     const { userHot } = req
-    const response = await request.put(`/profile/${id}`, {
-        ...req.body,
-    })
-    console.log(response, "here")
+    const data = { ...req.body }
+    if (req.file) {
+        data.userPic = req.file.filename
+    }
+    const response = await request.put(`/profile/${id}`, data)
+    console.log(response.data, "here")
+    console.log(boardHot, "test3")
+    console.log(userHot, "test2")
     res.render("user/mypage.html", { ...response.data, boardHot, userHot })
 })
+
+
 
 
 module.exports = router
