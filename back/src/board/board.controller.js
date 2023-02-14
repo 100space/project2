@@ -126,10 +126,10 @@ class BoardController {
     }
 
     // list 검색
-    async searchListValue(req,res,next){
+    async searchListValue(req, res, next) {
         try {
-            const {search,mainCd} = req.body
-            const result = await this.boardService.ListValue({search,mainCd})
+            const { search, mainCd } = req.body
+            const result = await this.boardService.ListValue({ search, mainCd })
             res.status(201).json(result)
         } catch (e) {
             next(e)

@@ -60,8 +60,10 @@ class BoardRepository {
         try {
             const { boardIdx } = payload
             const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
-            const hashResponse= await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {type: this.queryTypes.SELECT,})
-            return {response, hashResponse}
+            const hashResponse = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
+                type: this.queryTypes.SELECT,
+            })
+            return { response, hashResponse }
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
         }
@@ -111,16 +113,8 @@ class BoardRepository {
     async deleteValue(payload) {
         try {
             const { boardIdx } = payload
-            const boardResponse = await this.Board.findOne({ where: { boardIdx }, raw: true })
-            const boardLevel = boardResponse.boardLevel + 1
-            const response = await this.Board.update(
-                { boardLevel: boardLevel },
-                {
-                    where: {
-                        boardIdx,
-                    },
-                }
-            )
+            const boardResponse = await this.Board.destroy({ where: { boardIdx }, raw: true })
+            return boardResponse
         } catch (e) {
             throw new Error(`Error while delete status: ${e.message}`)
         }
@@ -325,27 +319,26 @@ class BoardRepository {
         }
     }
 
-
     //list 검색하기
 
-    async listValue({search, mainCdValue}){
+    async listValue({ search, mainCdValue }) {
         try {
             const Op = this.Sequelize.Op
             const subjectResponse = await this.Board.findAll({
-                where:{
-                    subject:{ [Op.like]:`%${search}%`},
-                    cateCd: { [Op.like]:`${mainCdValue}%`}
+                where: {
+                    subject: { [Op.like]: `%${search}%` },
+                    cateCd: { [Op.like]: `${mainCdValue}%` },
                 },
-                raw:true
+                raw: true,
             })
             const adminResponse = await this.Board.findAll({
-                where:{
-                    userId:{ [Op.like]:`%${search}%`},
-                    cateCd:{[Op.like]:`${mainCdValue}%`}
+                where: {
+                    userId: { [Op.like]: `%${search}%` },
+                    cateCd: { [Op.like]: `${mainCdValue}%` },
                 },
-                raw:true
+                raw: true,
             })
-           return {subjectResponse, adminResponse}
+            return { subjectResponse, adminResponse }
         } catch (e) {
             throw new Error(`Error while find list Value: ${e.message}`)
         }
