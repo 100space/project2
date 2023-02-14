@@ -124,58 +124,46 @@ kakao.addEventListener("click", async (e) => {
     } catch (e) {}
 })
 
-signUpButton.addEventListener("click", () => container.classList.add("right-panel-active"))
-signInButton.addEventListener("click", () => container.classList.remove("right-panel-active"))
-
-// // const termsCheckbox = document.getElementById("termsCheckbox");
-// // const iFrameContainer = document.getElementById("iFrameContainer");
-// // const agreeBtn = document.getElementById("agreeBtn");
-// // const cancelBtn = document.getElementById("cancelBtn");
-// // const agreeText = document.getElementById("agreetext");
-
-// termsCheckbox.addEventListener("click", function () {
-//     initLayerPosition();
-//     if (termsCheckbox.checked) {
-//         iFrameContainer.style.display = "none";
-//     } else {
-//         iFrameContainer.style.display = "block";
-//     }
-// });
-
-// agreeText.addEventListener('scroll', function () {
-//     if (textarea.scrollTop === textarea.scrollHeight - textarea.offsetHeight) {
-//         agreeBtn.disabled = false;
-//     } else {
-//         agreeBtn.disabled = true;
-//     }
-// });
-
-// agreeBtn.addEventListener("click", function () {
-//     termsCheckbox.checked = true;
-//     iFrameContainer.style.display = "none";
-// });
-
-// cancelBtn.addEventListener("click", function (){
-//     termsCheckbox.checked = false;
-//     iFrameContainer.style.display = "none";
-// });
-
-// function initLayerPosition(){
-//     const width = 500;
-//     const height = 600;
-//     const borderWidth = 1;
-
-//     iFrameContainer.style.width = width + 'px';
-//     iFrameContainer.style.height = height + 'px';
-//     iFrameContainer.style.border = borderWidth + 'px solid';
-//     iFrameContainer.style.backgroundColor.white;
-//     iFrameContainer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/1.5 - borderWidth) + 'px';
-//     iFrameContainer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
-// }
-
-// function checkAcceptance() {
-//     if (!termsCheckbox.checked) {
-//         e.preventDefault()
-//         alert("이용약관을 읽고 동의를 해주세요");
-//     }
-//   }
+signUpButton.addEventListener("click", () => {
+    container.classList.add("right-panel-active");
+    initLayerPosition();
+    iFrameContainer.style.display = "block";
+  });
+  
+signInButton.addEventListener("click", () => {
+    container.classList.remove("right-panel-active");
+    });
+  
+termsCheckbox.addEventListener("click", () => {
+    initLayerPosition();
+    iFrameContainer.style.display = termsCheckbox.checked ? "none" : "block";
+    });
+  
+agreeText.addEventListener("scroll", () => {
+    agreeBtn.disabled = agreeText.scrollTop !== agreeText.scrollHeight - agreeText.offsetHeight;
+    });
+  
+agreeBtn.addEventListener("click", () => {
+    termsCheckbox.checked = true;
+    iFrameContainer.style.display = "none";
+    });
+  
+cancelBtn.addEventListener("click", () => {
+    termsCheckbox.checked = false;
+    iFrameContainer.style.display = "none";
+    container.classList.remove("right-panel-active");
+    });
+  
+function initLayerPosition() {
+    const width = 400;
+    const height = 550;
+    const borderWidth = 0;
+  
+    iFrameContainer.style.width = `${width}px`;
+    iFrameContainer.style.height = `${height}px`;
+    iFrameContainer.style.border = `${borderWidth}px solid`;
+    iFrameContainer.style.backgroundColor = "white";
+    iFrameContainer.style.left = `${(((window.innerWidth || document.documentElement.clientWidth) - width) / 1.5 - borderWidth)}px`;
+    iFrameContainer.style.top = `${(((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth)}px`;
+    }
+  

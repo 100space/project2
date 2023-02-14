@@ -3,6 +3,7 @@ const subject = document.getElementById("subject")
 const submitBtn = document.getElementById("SubmitBtn")
 const cancelBtn = document.getElementById("CancelBtn")
 const editor = document.querySelector("#editor")
+const mainValue = document.querySelector("#mainCd")
 
 const categoryMain = document.querySelector(".categoryMain")
 const input = document.querySelector(".tagify--outside")
@@ -162,17 +163,20 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
                 return;
             }
             const userId = writer.value;
-            const mainCd = categoryMain.value;
-            const subCd = document.querySelector('select[name="categorySub"]').value;
+            const mainCd = mainValue.value
+            
+            const subCd = categoryMain.value;
             const content = editor.getData();
             const hash = tagify.value.map((tag) => tag.value).join(",");
             const data = { subject: subject.value, content, userId, mainCd, subCd, hash };
             request
                 .post(`/board/${mainCd}/write`, { data })
                 .then((response) => {
-                    const { id } = response.data;
+                    console.log(response.data)
+                    const { hashValue, newBoard } = response.data;
+                    const {boardIdx} = newBoard
                     alert("글이 성공적으로 작성되었습니다.");
-                    location.href = `/board/${mainCd}/${id}`;
+                    location.href = `/board/${mainCd}/viewcheck/${boardIdx}`;
                 })
                 .catch((error) => {
                     alert("글 작성에 실패했습니다.");
