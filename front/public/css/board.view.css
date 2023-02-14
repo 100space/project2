@@ -16,7 +16,7 @@
     border-bottom: 1px solid var(--background-color);
 }
 
-#container_header > div > #subject {
+#subject {
     height: auto;
     padding: 0.5rem 1rem;
     font-size: 3rem;
@@ -147,7 +147,7 @@ ul > #tags {
     height: fit-content;
     padding: 2rem;
     margin: 0 auto;
-    border-bottom: 1px dot-dash var(--background-color);
+    border-bottom: 1px dashed var(--background-color);
 }
 
 .item_Header_writer {

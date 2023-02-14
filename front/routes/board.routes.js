@@ -49,9 +49,9 @@ router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
     const boardData = result.data
-    const tagObjects = boardData.hashResponse.map(tag => {
+    const tagObjects = boardData.hashResponse.map((tag) => {
         return { value: tag.tag }
-      });
+    })
     res.render("board/write.modify.html", { mainCd, boardData, tagObjects })
 })
 
@@ -69,19 +69,9 @@ router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     res.redirect(`/board/${mainCd}/view/${boardIdx}`)
 })
 
-// router.put("/:mainCd/view/:boardIdx", async (req, res, next) => {
-//     const { mainCd, boardIdx } = req.params
-//     const { subject, content, hash } = req.body
-//     const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data: { subject, content, hash } })
-
-//     const { updatedBoard } = result.data
-//     res.json({ updatedBoard })
-// })
-
 router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
-
     const {
         data: { response, hashResponse, commentResponse },
     } = result

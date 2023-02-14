@@ -31,6 +31,7 @@ class BoardController {
         try {
             const { boardIdx } = req.params
             const { subject, content, userId, mainCd, subCd, hash } = req.body
+            console.log(req.body)
             const result = await this.boardService.ChangeView({ boardIdx, subject, content, userId, mainCd, subCd, hash })
             res.status(201).json(result)
         } catch (e) {
