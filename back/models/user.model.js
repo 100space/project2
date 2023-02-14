@@ -78,6 +78,9 @@ module.exports = (sequelize, Sequelize) => {
             this.hasMany(models.Board, {
                 foreignKey: "userId",
             })
+            this.hasMany(models.Comment, {
+                foreignKey: "userId",
+            })
             this.hasMany(models.Chat, {
                 foreignKey: "userId",
             })

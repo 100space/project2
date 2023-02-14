@@ -18,8 +18,6 @@ router.post("/:mainCd/search", async (req,res,next)=>{
     const {search} = req.body
     const result = await request.post("/board/list/search", { mainCd, search})
     const {data: {subjectResponse, adminResponse, subjectlength, userlength}}= result
-    console.log(subjectResponse)
-    console.log(adminResponse)
     res.render("board/search.list.html",{subjectlength, userlength, subjectResponse, adminResponse, search})
 })
 
@@ -71,23 +69,23 @@ router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     res.redirect(`/board/${mainCd}/view/${boardIdx}`)
 })
 
-router.put("/:mainCd/view/:boardIdx", async (req, res, next) => {
-    const { mainCd, boardIdx } = req.params
-    const { subject, content, hash } = req.body
-    const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data: { subject, content, hash } })
-    const { updatedBoard } = result.data
-    res.json({ updatedBoard })
-})
+// router.put("/:mainCd/view/:boardIdx", async (req, res, next) => {
+//     const { mainCd, boardIdx } = req.params
+//     const { subject, content, hash } = req.body
+//     const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data: { subject, content, hash } })
+
+//     const { updatedBoard } = result.data
+//     res.json({ updatedBoard })
+// })
 
 router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
 
     const {
-        data: { response, hashResponse },
+        data: { response, hashResponse, commentResponse },
     } = result
-    // console.log(result, 123123)
-    res.render("board/view.html", { newBoard: response, newHashTagVal: hashResponse })
+    res.render("board/view.html", { newBoard: response, newHashTagVal: hashResponse, commentResponse })
 })
 
 router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {
