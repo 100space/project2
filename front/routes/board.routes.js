@@ -51,7 +51,7 @@ router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
 
 // 수정완료하기
 router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
-    console.log('test1')
+    console.log("test1")
     const { mainCd, boardIdx } = req.params
     let data = {
         subject: req.body.subject,
@@ -76,18 +76,21 @@ router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
 
-    const {data:{response, hashResponse}} = result
+    const {
+        data: { response, hashResponse },
+    } = result
     // console.log(result, 123123)
-    res.render("board/view.html", { newBoard:response, newHashTagVal:hashResponse })
+    res.render("board/view.html", { newBoard: response, newHashTagVal: hashResponse })
 })
-
 
 router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
-    const {data: {response, hashResponse}} = result
-    
-    res.render("board/view.check.html", { mainCd, newBoard:response, newHashTagVal:hashResponse })
+    const {
+        data: { response, hashResponse },
+    } = result
+
+    res.render("board/view.check.html", { mainCd, newBoard: response, newHashTagVal: hashResponse })
 })
 
 //제일 밑으로 내려가자
