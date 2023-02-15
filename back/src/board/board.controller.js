@@ -93,18 +93,18 @@ class BoardController {
     // 좋아요 값 추가
     async likeBoard(req, res, next) {
         try {
-            // boardIdx, userId 구조분해할당 후 담기 
+            // boardIdx, userId 구조분해할당 후 담기
             const { boardIdx } = req.params
-            const { userId } = req.body.userInfo
-            console.log('11 Con',req.body)
-            console.log('22 Con',req.params)
+            const { userId } = req.body
+            console.log("11 Con", req.body)
+            console.log("22 Con", req.params)
             // service likeBoard method 호출 및 값 담기
             const response = await this.boardService.likeBoard({ boardIdx, userId })
             res.status(201).json(response)
-            } catch (e) {
-                next(e)
-            }
+        } catch (e) {
+            next(e)
         }
+    }
     // async infoLike(req, res, next) {
     //     try {
     //         const { categoryMain, boardIdx, userInfo } = req.body
@@ -163,7 +163,7 @@ class BoardController {
     }
 
     // 댓글 수정하기
-    async putComment(req,res,next) {
+    async putComment(req, res, next) {
         try {
             const {cmdIdx} = req.params
             const {cmdContent} = req.body
@@ -174,10 +174,10 @@ class BoardController {
         }
     }
     // 댓글 삭제하기
-    async deleteComment(req,res,next){
+    async deleteComment(req, res, next) {
         try {
-            const {cmdIdx} = req.params
-            const result = await this.boardService.DropComment({cmdIdx})
+            const { cmdIdx } = req.params
+            const result = await this.boardService.DropComment({ cmdIdx })
             res.status(201).json(result)
         } catch (e) {
             next(e)

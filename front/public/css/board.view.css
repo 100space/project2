@@ -116,7 +116,7 @@ ul > #tags {
     margin: 0 auto;
 }
 #commentHeader > span {
-    font-size: 2.4rem;
+    font-size: 2rem;
 }
 #commentBody {
     margin-top: 2rem;
@@ -158,6 +158,9 @@ ul > #tags {
     color: gray;
     font-size: 1.6rem;
 }
+.comment_delete > a {
+    color: gray;
+}
 .comment_modify {
     margin-left: 0 !important;
 }
@@ -165,7 +168,9 @@ ul > #tags {
     margin-top: 1.5rem;
     font-size: 2rem;
 }
+
 #liked {
+    width: 8rem;
     flex-direction: column;
 }
 #likedImg {
@@ -173,6 +178,9 @@ ul > #tags {
     height: 5rem;
     background-image: url(/img/liked.png);
     margin: 0 auto;
+}
+.centerBtn {
+    width: 10rem;
 }
 .likedImgClick {
     background-image: url(/img/liked.hover.png) !important;

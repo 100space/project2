@@ -73,9 +73,9 @@ router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
     const {
-        data: { response, hashResponse, commentResponse, commentLength },
+        data: { response, hashResponse, commentResponse, commentLength, likedUser },
     } = result
-    res.render("board/view.html", { newBoard: response, newHashTagVal: hashResponse, commentResponse, commentLength })
+    res.render("board/view.html", { newBoard: response, newHashTagVal: hashResponse, commentResponse, commentLength, likedUser })
 })
 // 게시물 작성 후 확인하기
 router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {
@@ -88,8 +88,8 @@ router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {
     res.render("board/view.check.html", { mainCd, newBoard: response, newHashTagVal: hashResponse })
 })
 // 댓글 삭제하기
-router.get("/:mainCd/comment/:cmdIdx", async (req,res,next)=>{
-    const {mainCd, cmdIdx} = req.params
+router.get("/:mainCd/comment/:cmdIdx", async (req, res, next) => {
+    const { mainCd, cmdIdx } = req.params
     const result = await request.delete(`/board/comment/${cmdIdx}`)
     res.redirect(`/board/${mainCd}/view/1`)
 })
@@ -107,9 +107,10 @@ router.get("/:mainCd/:subCd", async (req, res, next) => {
     const { mainCd, subCd } = req.params
     const pagequery = req.query
     const result = await request.get(`/board/${mainCd}/${subCd}/${pagequery.page}`)
-    const {data:{correctValue, cateLength, subVal}}= result
-    res.render("board/subList.html", { mainCd, listValue:correctValue, cateLength, subVal })
-
+    const {
+        data: { correctValue, cateLength, subVal },
+    } = result
+    res.render("board/subList.html", { mainCd, listValue: correctValue, cateLength, subVal })
 })
 
 /////////////

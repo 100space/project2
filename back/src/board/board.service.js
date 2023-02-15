@@ -139,9 +139,9 @@ class BoardService {
             const subCdValue = this.subChange[subCd]
             const findValue = `${mainCdValue}${subCdValue}`
             const result = await this.boardRepository.categoryValue({ findValue, pageNumber, mainCdValue })
-            const {correctValue, subcateLength, findSub}= result
-            const subArray = findSub.map(x=>x.cateCd.slice(4,8))
-            const subValue = subArray.map((x,i)=>{
+            const { correctValue, subcateLength, findSub } = result
+            const subArray = findSub.map((x) => x.cateCd.slice(4, 8))
+            const subValue = subArray.map((x, i) => {
                 switch (x) {
                     case "0001":
                         subArray[i] = "sub1"
@@ -172,13 +172,13 @@ class BoardService {
                         break
                 }
             })
-            const subVal =[]
-            const subValValue = subArray.map(x=>{
-                const subValobj= {}
+            const subVal = []
+            const subValValue = subArray.map((x) => {
+                const subValobj = {}
                 subValobj.categorySub = x
                 subVal.push(subValobj)
             })
-            return { correctValue, cateLength:subcateLength, subVal }
+            return { correctValue, cateLength: subcateLength, subVal }
         } catch (e) {
             throw new Error(e)
         }
@@ -205,7 +205,11 @@ class BoardService {
     // 좋아요 추가하기
     async InsertLike({ userId, boardIdx, categoryMain }) {
         try {
-            const result = await this.boardRepository.insertLike({ userId, boardIdx, categoryMain })
+            // payload 에 담고
+            const { userId, boardIdx } = payload
+            // 좋아요 여부 체크
+            const liked = await this.boardRepository.insertLike({ userId, boardIdx })
+            const result = liked.map((x) => x.userId)
             return result
         } catch (e) {
             throw new Error(e)
@@ -259,11 +263,11 @@ class BoardService {
     }
 
     // 리스트 검색 알고리즘
-    async ListValue({search, mainCd}){
+    async ListValue({ search, mainCd }) {
         try {
             const mainCdValue = this.mainChange[mainCd]
-            const result = await this.boardRepository.listValue({search, mainCdValue})
-            const {subjectResponse,adminResponse} = result
+            const result = await this.boardRepository.listValue({ search, mainCdValue })
+            const { subjectResponse, adminResponse } = result
             const subjectlength = subjectResponse.length
             const userlength = adminResponse.length
             result.subjectlength = subjectlength
@@ -293,12 +297,12 @@ class BoardService {
             throw new Error(e)
         }
     }
-    
+
     // 댓글 삭제하기
-    async DropComment({cmdIdx}){
+    async DropComment({ cmdIdx }) {
         try {
-            const result = await this.boardRepository.dropComment({cmdIdx})
-            return result 
+            const result = await this.boardRepository.dropComment({ cmdIdx })
+            return result
         } catch (e) {
             throw new Error(e)
         }

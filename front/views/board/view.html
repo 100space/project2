@@ -35,9 +35,17 @@
         <li id="tags">#{{tags.tag}}</li>
         {% endfor %}
     </ul>
-    <div id="liked" class="flex-center">
-        <div id="likedImg" class="userPicSize"></div>
-        <div id="likedCount">추천수 : {{newBoard.liked}}</div>
+    <div id="centerBtn" class="flex">
+        <div class="centerBtn">뒤로가기</div>
+        <div id="liked" class="flex-center">
+            {% if likedUser.indexOf(userId) >= 0 %}
+            <div id="likedImg" class="userPicSize likedImgClick"></div>
+            {% else %}
+            <div id="likedImg" class="userPicSize"></div>
+            {% endif %}
+            <div id="likedCount">추천수 : {{newBoard.liked}}</div>
+        </div>
+        <div class="centerBtn"></div>
     </div>
     <div id="comment_wrap">
         <div>

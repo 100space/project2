@@ -71,8 +71,15 @@ class BoardRepository {
                 }
             )
             const commentLength = commentResponse.length
-
-            return { response, hashResponse, commentResponse, commentLength }
+            const likedTable = await this.liked.findAll({
+                where: {
+                    boardIdx,
+                },
+                raw: true,
+            })
+            const likedUser = likedTable.map((x) => x.userId)
+            console.log(response)
+            return { response, hashResponse, commentResponse, commentLength, likedUser }
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
         }
@@ -188,16 +195,16 @@ class BoardRepository {
     }
 
     // subcategory 정렬
-    async categoryValue({ findValue, pageNumber,mainCdValue }) {
+    async categoryValue({ findValue, pageNumber, mainCdValue }) {
         const Op = this.Sequelize.Op
         try {
             const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
             const subcateLength = await this.Board.count({
-                where:{
-                    cateCd:{
-                        [Op.like]: `%${findValue}%`
-                    }
-                }
+                where: {
+                    cateCd: {
+                        [Op.like]: `%${findValue}%`,
+                    },
+                },
             })
             const correctValue = await this.Board.findAll({
                 limit: 5,
@@ -210,7 +217,7 @@ class BoardRepository {
                 raw: true,
             })
             const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM BOARD WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
-            return { correctValue, subcateLength,findSub}
+            return { correctValue, subcateLength, findSub }
         } catch (e) {
             throw new Error(`Error while find category: ${e.message}`)
         }
@@ -233,42 +240,48 @@ class BoardRepository {
         return userInfo
     }
 
-    // 좋아요 추가&삭제 
+    // 좋아요 추가&삭제
     async insertLike(payload) {
         try {
-        // userId, boarIdx, mainCD payload 담기
-        const { userId, boardIdx, mainCd } = payload
-        console.log('11 repository', payload)
-        // user, boardIdx 일치하는 게시물의 좋아요 확인
-        const liked = await this.liked.findOne({
-            where: { userId, boardIdx },
-          })
-          console.log('22 repository', liked)
-          // 좋아요가 이미 있으면 좋아요 제거 
-          if (liked) {
-            await liked.destroy()
-          } // 좋아요가 없으면 좋아요 추가  
-          else {
-            await this.liked.create({
-              userId,
-              boardIdx,
+            // userId, boarIdx, mainCD payload 담기
+            const { userId, boardIdx, mainCd } = payload
+            console.log("11 repository", payload)
+            // user, boardIdx 일치하는 게시물의 좋아요 확인
+            const liked = await this.liked.findOne({
+                where: { userId, boardIdx },
             })
-          }
-          // boardIdx 매칭되는 게시물 좋아요 개수 카운트
-          const likeCount = await this.liked.count({
-            where: {
-              boardIdx,
-            },
-          })
-          console.log('33 repository', likeCount)
-          // 게시물 좋아요 수 업데이트
-          const response = await this.Board.update({ liked: likeCount }, { where: { boardIdx } })
-          console.log('44 repository', response)
-          return response
+            console.log("22 repository", liked)
+            // 좋아요가 이미 있으면 좋아요 제거
+            if (liked) {
+                await liked.destroy()
+            } // 좋아요가 없으면 좋아요 추가
+            else {
+                await this.liked.create({
+                    userId,
+                    boardIdx,
+                })
+            }
+            // boardIdx 매칭되는 게시물 좋아요 개수 카운트
+            const likeCount = await this.liked.count({
+                where: {
+                    boardIdx,
+                },
+            })
+            console.log("33 repository", likeCount)
+            // 게시물 좋아요 수 업데이트
+            const response = await this.Board.update({ liked: likeCount }, { where: { boardIdx } })
+            console.log("44 repository", response)
+            const likedTable = await this.liked.findAll({
+                where: {
+                    boardIdx,
+                },
+                raw: true,
+            })
+            return likedTable
         } catch (e) {
-          throw new Error(`Error while inserting like: ${e.message}`)
+            throw new Error(`Error while inserting like: ${e.message}`)
         }
-      }
+    }
 
     // 사진 값 정렬
     async pictureCreate(payload) {
@@ -372,6 +385,7 @@ class BoardRepository {
     }
 
     // 댓글 수정하기
+
     async updateComment({ cmdContent, cmdIdx}){
         try{
             
@@ -386,12 +400,12 @@ class BoardRepository {
     }
 
     // 댓글 삭제하기
-    async dropComment({cmdIdx, userId}){
+    async dropComment({ cmdIdx }) {
         try {
             const response = await this.comment.destroy({
-                where:{
-                    cmdIdx
-                }
+                where: {
+                    cmdIdx,
+                },
             })
             console.log(response)
             const deleteUserPoint = await this.User.decrement({userPoint: 10}, {where : {userId}})
