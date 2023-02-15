@@ -135,6 +135,17 @@ class UserService {
         }
     }
 
+    // 내가 좋아요 한 글, 댓글 단 글 
+    async FindReaction({userId}){
+        try{
+            const result = await this.userRepository.findReaction({userId})
+            return result 
+        } catch(e) {
+            throw new Error(e)
+        }
+    }
+
+
     // 내가 쓴 글 분류
     async myMainCd({ userId }) {
         try {

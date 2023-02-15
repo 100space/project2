@@ -7,7 +7,7 @@ router.get("/random", (req, res, next) => controller.getRandom(req, res, next))
 router.get("/hot", (req, res, next) => controller.getHot(req, res, next))
 router.post("/search", (req, res, next) => controller.searchValue(req, res, next))
 router.post("/list/search", (req, res, next) => controller.searchListValue(req, res, next))
-router.post("/:mainCD/view/:boardIdx/like", (req, res, next) => controller.likeBoard(req, res, next));
+router.post("/:mainCd/view/:boardIdx/like", (req, res, next) => controller.likeBoard(req, res, next));
 
 //comment crud 작성하기
 router.post("/comment/:boardIdx", (req, res, next) => controller.postComment(req, res, next))
@@ -30,7 +30,7 @@ router.get("/:mainCd/:pageNumber", (req, res, next) => controller.findMainCd(req
 router.get("/:mainCd/:subCd/:pageNumber", (req, res, next) => controller.findCategorySub(req, res, next))
 
 // 좋아요 버튼
-router.post("/:mainCd/view/like", (req, res, next) => controller.infoLike(req, res, next))
+// router.post("/:mainCd/view/like", (req, res, next) => controller.infoLike(req, res, next))
 
 // 댓글 게시물 삭제
 // router.get("/:categoryMain", (req, res, next) => controller.findCategory(req, res, next))
