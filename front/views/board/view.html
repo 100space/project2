@@ -36,7 +36,9 @@
         {% endfor %}
     </ul>
     <div id="centerBtn" class="flex">
-        <div class="centerBtn">뒤로가기</div>
+        <div class="centerBtn">
+            <div class="backBtn">뒤로가기</div>
+        </div>
         <div id="liked" class="flex-center">
             {% if likedUser.indexOf(userId) >= 0 %}
             <div id="likedImg" class="userPicSize likedImgClick"></div>
@@ -45,7 +47,10 @@
             {% endif %}
             <div id="likedCount">추천수 : {{newBoard.liked}}</div>
         </div>
-        <div class="centerBtn"></div>
+        <div class="centerBtn viewNav">
+            <div class="prevBtn">이전글</div>
+            <div class="nextBtn">다음글</div>
+        </div>
     </div>
     <div id="comment_wrap">
         <div>
