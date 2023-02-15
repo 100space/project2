@@ -82,10 +82,14 @@ router.get("/search", async (req, res, next) => {
     const boardResponse = await request.post("/board/search", { search })
     const { boardCount } = boardResponse.data
     const boardValue = boardResponse.data.response
+    const categoryMap = {'0001' : 'notice', '0002' : 'community', '0003' : 'qna'}
     const data1 = boardValue.map((x) => {
         x.createdAt = x.createdAt.substring(0, 10)
+        x.cateCd = x.cateCd.substring(0,4)
+        x.mainCd = categoryMap[x.cateCd] || ''
         return x
     })
+    console.log(data1);
     const userResponse = await request.post("/user/search", { search })
     const { userCount } = userResponse.data
     const userValue = userResponse.data.response

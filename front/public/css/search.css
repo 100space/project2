@@ -70,3 +70,9 @@ body {
     font-size: 1.8rem;
     color: var(--color);
 }
+
+a {
+    text-decoration: none;
+    color: var(--sdfe);
+    font-size : 2.0rem;
+}
