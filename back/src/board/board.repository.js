@@ -69,8 +69,9 @@ class BoardRepository {
                     type: this.queryTypes.SELECT,
                 }
             )
+            const commentLength = commentResponse.length
 
-            return { response, hashResponse, commentResponse }
+            return { response, hashResponse, commentResponse, commentLength }
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
         }
@@ -365,6 +366,31 @@ class BoardRepository {
             return response
         } catch (e) {
             throw new Error(`Error while create Comment Value: ${e.message}`)
+        }
+    }
+
+    // 댓글 수정하기
+    async updateComment({boardIdx, cmdContent, userId, cmdIdx}){
+        try{
+            const response = await this.comment.update(
+                {cmdContent}, 
+                {where:{cmdIdx}}
+            )
+        } catch(e) {
+            throw new Error(`Error while update Comment Value: ${e.message}`)
+        }
+    }
+
+    // 댓글 삭제하기
+    async dropComment({cmdIdx}){
+        try {
+            const response = await this.comment.destroy({
+                where:{
+                    boardIdx
+                }
+            })
+        } catch (e) {
+            
         }
     }
 }
