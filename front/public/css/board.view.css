@@ -9,10 +9,9 @@
 }
 #container_header {
     width: 100%;
-    /* position: fixed; */
     background-color: antiquewhite;
     padding: 2rem 2rem 2rem 3rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     border-bottom: 1px solid var(--background-color);
 }
 
@@ -86,7 +85,7 @@ ul > #tags {
     width: fit-content;
     padding: 2px 10px;
     border: 1px solid var(--background-color);
-    margin: 3rem 3px 2rem 3px;
+    margin: 1rem 3px 1rem 3px;
     font-size: 2rem;
 }
 #writeCheckBtn {
@@ -141,7 +140,6 @@ ul > #tags {
 #commentList {
     width: 90%;
     margin: 2rem auto 0;
-    padding: 2rem;
     border-top: 1px solid var(--background-color);
 }
 .commentItem {
@@ -166,4 +164,24 @@ ul > #tags {
 .comment {
     margin-top: 1.5rem;
     font-size: 2rem;
+}
+#liked {
+    flex-direction: column;
+}
+#likedImg {
+    width: 5rem;
+    height: 5rem;
+    background-image: url(/img/liked.png);
+    margin: 0 auto;
+}
+.likedImgClick {
+    background-image: url(/img/liked.hover.png) !important;
+}
+#likedCount {
+    margin: 0 auto;
+    font-size: 1.6rem;
+}
+.commentContent {
+    border: none;
+    background-color: var(--white);
 }
