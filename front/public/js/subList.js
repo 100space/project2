@@ -30,14 +30,14 @@ for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
     }
 }
 prev.addEventListener("click", () => {
-    if (pageBlock > 1) {
-        pageBlock--
+    if (pageBlock > maxPageBlock) {
+        pageBlock++
         pageNum.innerHTML = ""
         for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
-            if (i > 0) {
+            if (i <= page) {
                 const tag = document.createElement("a")
                 tag.innerHTML = `${i}`
-                tag.setAttribute("href", `${pagePath}/${i}`)
+                tag.setAttribute("href", `${pagePath}?page=${i}`)
                 pageNum.append(tag)
             }
         }
@@ -49,10 +49,9 @@ next.addEventListener("click", () => {
         pageNum.innerHTML = ""
         for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
             if (i <= page) {
-                console.log(i)
                 const tag = document.createElement("a")
                 tag.innerHTML = `${i}`
-                tag.setAttribute("href", `${pagePath}/${i}`)
+                tag.setAttribute("href", `${pagePath}?page=${i}`)
                 pageNum.append(tag)
             }
         }

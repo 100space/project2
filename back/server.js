@@ -110,7 +110,7 @@ const http = app.listen(port, async () => {
             userIntro: "11",
             userPic: `${i}.png`,
             userBoard: "3",
-            userPoint: "50",
+            userPoint: "0",
         })
         await Hashtag.create({ hashTagIdx: `${i}`, tag: `${i}` })
         await Board.create({ subject: `test1`, content: "test", userId: `admin${i}`, cateCd: "00010001" })
