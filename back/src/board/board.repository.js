@@ -97,32 +97,12 @@ class BoardRepository {
                     },
                 }
             )
-            const changeHash = []
-            if (hashArray) {
-                const hashResponse = await this.hash.findAll({ where: { boardIdx }, raw: true })
-                for (let i = 0; i < hashResponse.length; i++) {
-                    let hashTagIdx = hashResponse[i].hashTagIdx
-                    const deleteHashTag = await this.hashtag.destroy({
-                        where: {
-                            hashTagIdx,
-                        },
-                    })
-                    const deleteHash = await this.hashtag.destroy({
-                        where: {
-                            hashTagIdx,
-                        },
-                    })
-                }
-                for (let j = 0; j < hashArray.length; j++) {
-                    const result = hashArray[j]
-                    const newHashTag = (await this.hashtag.create({ tag: result })).get({ plain: true })
-                    changeHash.push(newHashTag)
-                }
-                return { response, changeHash }
-            } else {
-                return response
-            }
-        } catch (e) {}
+            if (!hashArray) return { newBoard, newHashTagVal }
+            const newHashTag = await this.hashMake(boardIdx, hashArray)
+            return newHashTag
+        } catch (e) {
+            throw new Error(`Error while change status: ${e.message}`)
+        } 
     }
 
     // 게시글 지우기
