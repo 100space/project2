@@ -146,7 +146,9 @@ class BoardRepository {
     async findMainValue({ mainCdValue, pageNumber }) {
         const Op = this.Sequelize.Op
         try {
-            const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
+            const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 5
+            // console.log(pageNumber);
+            console.log(indexValue);
             const allMainCd = await this.Board.count({
                 where: {
                     cateCd: {
