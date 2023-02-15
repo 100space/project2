@@ -147,6 +147,34 @@ Board 기능 구현
 2)Notification 기능 구현
 3)Board CRUD 작업 진행
 
-Day 9 Will be update
-Board 기능 구현
+## Day 8 Completed
+1) Front Router 작업
+2) Notification 기능 구현
+3) board CRUD 작업
 
+## Day 9 Completed 
+1) Front 화면 그리기 작업
+2) Board CRUD 진행
+3) Backend Connect & DB Connect (Board)
+
+## Day 10 Completed
+1) Backend DB Table 변경 및 Model 재설계
+2) Front 그리기 작업 진행
+
+## Day 11 Completed
+1) Write/Modify Page CKEditor 연결
+2) 회원정보 수정 다음 API 연동
+3) 관리자페이지 기본 UI 구성
+4) Front Router Redesign
+5) Search / Comment 작업
+6) Backend Model 수정
+7) Backend CRUD 재작업
+
+## Day 12 Completed
+1) 회원정보 수정 프로필 사진 업로드 처리
+2) 회원가입 약관 동의 처리
+3) Admin HTML/CSS 기본 구성
+4) Paging/Index 화면 재구성
+5) Comment 기능 재추가
+6) 나의 글 기능 추가
+7) Board Router/Backend 처리
