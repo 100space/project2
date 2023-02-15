@@ -7,18 +7,12 @@ const request = axios.create({
     withCredentials: true,
 })
 
-router.use((req, res, next) => {
-    const { userPic, userId, userPw, userName, nickName, provider } = req.userInfo
+router.use("/",(req, res, next) => {
+        const { userPic, userId, userPw, userName, nickName, provider } = req.userInfo
     const { boardHot, userHot } = req
     res.locals = { boardHot, userHot }
     res.locals = { ...res.locals, userPic, userId, userPw, userName, nickName, provider }
     next()
-})
-
-router.get("/login", (req, res, next) => {
-    const { boardHot } = req
-    const { userHot } = req
-    res.render("user/login.html", { boardHot, userHot })
 })
 
 router.post("/login", async (req, res, next) => {
@@ -52,5 +46,12 @@ router.get("/myview", async (req, res, next) => {
 })
 
 router.get("/myview/:mainCd")
+
+router.get("/myview/reaction", async(req,res,next)=>{
+    const {page} = req.query
+    
+    
+})
+
 
 module.exports = router
