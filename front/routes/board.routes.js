@@ -36,6 +36,7 @@ router.get("/:mainCd", async (req, res, next) => {
     const { page } = req.query
     const result = await request.get(`/board/${mainCd}/${page}`)
     const { listValue, cateLength, subVal } = result.data
+    console.log(result.data)
     res.render("board/subList.html", { mainCd, listValue, cateLength, subVal })
 })
 ///:mainCd/:subCd 라우터와 안 겹치려면 위로
@@ -107,6 +108,7 @@ router.post("/:mainCd/comment/:cmdIdx", async (req, res, next) => {
 //제일 밑으로 내려가자
 router.get("/:mainCd/:subCd", async (req, res, next) => {
     const { mainCd, subCd } = req.params
+    console.log(req.params,'123123')
     const pagequery = req.query
     const result = await request.get(`/board/${mainCd}/${subCd}/${pagequery.page}`)
     const {
