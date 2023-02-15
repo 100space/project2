@@ -15,6 +15,7 @@ const commentList = document.querySelector("#commentList")
 const commentModify = document.querySelectorAll(".comment_modify")
 const commentCount = document.querySelector("#commentHeader > span:nth-child(2)")
 const liked = document.querySelector("#liked")
+const backBtn = document.querySelector(".backBtn")
 const contentValue = hidden.value
 content.innerHTML = `${contentValue}`
 let img = document.querySelectorAll("#content img[src]")
@@ -38,9 +39,9 @@ const likedHandler = async (e) => {
     liked.children[0].classList.toggle("likedImgClick")
     //
 }
-
-
-
+const backBtnHandler = () => {
+    location.href = document.referrer
+}
 const commentFrmHandler = async (e) => {
     e.preventDefault()
 
@@ -64,35 +65,34 @@ const commentFrmHandler = async (e) => {
                         </div>
                     </div>
                     <div class="comment">${response.cmdContent}</div>`
-        //result 를 innerHTML / template로 작성
-        const commentUpdate = document.querySelector("#comment_update")
-        commentUpdate.addEventListener("click", async (e)=>{
-            commentItem.removeChild(commentItem.lastChild)
-            let form = document.createElement("form")
-            form.setAttribute("charset","UTF-8")
-            form.setAttribute("method","post")
-            form.setAttribute("action",`/board/${mainCd.value}/comment/${response.cmdIdx}`)
-            form.id = "commentUpdateFrm"
+            //result 를 innerHTML / template로 작성
+            const commentUpdate = document.querySelector("#comment_update")
+            commentUpdate.addEventListener("click", async (e) => {
+                commentItem.removeChild(commentItem.lastChild)
+                let form = document.createElement("form")
+                form.setAttribute("charset", "UTF-8")
+                form.setAttribute("method", "post")
+                form.setAttribute("action", `/board/${mainCd.value}/comment/${response.cmdIdx}`)
+                form.id = "commentUpdateFrm"
 
-            let input = document.createElement("input")
-            input.type = "text"
-            input.name ="cmdContent"
-            
-            let button = document.createElement("button")
-            button.type = "submit"
-            button.innerHTML = "수정 완료"
+                let input = document.createElement("input")
+                input.type = "text"
+                input.name = "cmdContent"
 
-            form.appendChild(input)
-            form.appendChild(button)
-            commentItem.append(form)
+                let button = document.createElement("button")
+                button.type = "submit"
+                button.innerHTML = "수정 완료"
 
-            const commentUpdateFrm = document.querySelector("#commentUpdateFrm")
+                form.appendChild(input)
+                form.appendChild(button)
+                commentItem.append(form)
 
-        })
-        commentCount.innerHTML = ` ${count}개`
-        
-        commentFrm.focus()
-        commentFrm.reset()
+                const commentUpdateFrm = document.querySelector("#commentUpdateFrm")
+            })
+            commentCount.innerHTML = ` ${count}개`
+
+            commentFrm.focus()
+            commentFrm.reset()
         }
     }
 }
@@ -111,6 +111,7 @@ for (let i = 0; i < img.length; i++) {
     // console.log(response)
 })()
 liked.addEventListener("click", likedHandler)
+backBtn.addEventListener("click", backBtnHandler)
 commentFrm.addEventListener("click", commentFrmHandler)
 console.log(commentModify.length)
 for (let i = 0; i < commentModify.length; i++) {
