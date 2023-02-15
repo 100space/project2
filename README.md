@@ -106,11 +106,9 @@ Progress : 0%  No Completed of total 6 Item
 
 
 ## Day 8 Completed
-1)Front Router작업
-
-2)Notification 기능 구현
-
-3)Board CRUD 작업 진행
+1) Front Router작업
+2) Notification 기능 구현
+3) Board CRUD 작업 진행
 
 ## Day 8 Completed
 1) Front Router 작업
