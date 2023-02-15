@@ -89,7 +89,6 @@ router.get("/search", async (req, res, next) => {
         x.mainCd = categoryMap[x.cateCd] || ''
         return x
     })
-    console.log(data1);
     const userResponse = await request.post("/user/search", { search })
     const { userCount } = userResponse.data
     const userValue = userResponse.data.response

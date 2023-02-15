@@ -9,10 +9,9 @@
         <div id="subCategory" class="flex-justi-center">
             {% for item in subVal %}
             <li class="flex-center">
-                <a href="/board/{{mainCd}}/{{item.categorySub}}?page=1">{{item.categorySub}}</a></li>
+                <a href="/board/{{mainCd}}/{{item.categorySub}}?page=1" id="subCdLink">{{item.categorySub}}</a>
             {% endfor %}
         </div>
-
 
         <div class="flex-justi-center flex-column">
             {% for item in listValue %}
