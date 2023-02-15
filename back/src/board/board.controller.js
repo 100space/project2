@@ -64,7 +64,6 @@ class BoardController {
         try {
             const { mainCd, subCd, pageNumber } = req.params
             const result = await this.boardService.CategoryValue({ mainCd, subCd, pageNumber })
-            console.log(result, "subCD")
             res.status(201).json(result)
         } catch (e) {
             next(e)

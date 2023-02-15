@@ -111,6 +111,7 @@ class BoardService {
             const cateLength = {
                 length: `${result.allMainCd}`,
             }
+            console.log(cateLength)
             const findSub = result.findSub.map((x) => {
                 const array = x.cateCd.slice(4, 8)
                 return array
@@ -135,20 +136,49 @@ class BoardService {
     async CategoryValue({ mainCd, subCd, pageNumber }) {
         try {
             const mainCdValue = this.mainChange[mainCd]
-            if (!mainCdValue) {
-                throw new Error(`mainCd ${mainCd} not found in this.mainChange`)
-            }
             const subCdValue = this.subChange[subCd]
-            if (!subCdValue) {
-                throw new Error(`subCd ${subCd} not found in this.subChange`)
-            }
             const findValue = `${mainCdValue}${subCdValue}`
-            const result = await this.boardRepository.categoryValue({ findValue, pageNumber })
-            const result2 = result.map((x, i) => {
-                x.showindex = i + 1
-                return x
+            const result = await this.boardRepository.categoryValue({ findValue, pageNumber, mainCdValue })
+            const {correctValue, subcateLength, findSub}= result
+            const subArray = findSub.map(x=>x.cateCd.slice(4,8))
+            const subValue = subArray.map((x,i)=>{
+                switch (x) {
+                    case "0001":
+                        subArray[i] = "sub1"
+                        break
+                    case "0002":
+                        subArray[i] = "sub2"
+                        break
+                    case "0003":
+                        subArray[i] = "sub3"
+                        break
+                    case "0004":
+                        subArray[i] = "sub4"
+                        break
+                    case "0005":
+                        subArray[i] = "sub5"
+                        break
+                    case "0006":
+                        subArray[i] = "sub6"
+                        break
+                    case "0007":
+                        subArray[i] = "sub7"
+                        break
+                    case "0008":
+                        subArray[i] = "sub8"
+                        break
+                    case "0009":
+                        subArray[i] = "sub9"
+                        break
+                }
             })
-            return { listValue: result2 }
+            const subVal =[]
+            const subValValue = subArray.map(x=>{
+                const subValobj= {}
+                subValobj.categorySub = x
+                subVal.push(subValobj)
+            })
+            return { correctValue, cateLength:subcateLength, subVal }
         } catch (e) {
             throw new Error(e)
         }

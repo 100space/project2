@@ -36,6 +36,7 @@ const likedHandler = (e) => {
 }
 const commentFrmHandler = async (e) => {
     e.preventDefault()
+
     console.log(e)
     const inputValue = commentFrm.children[0].value
     if (inputValue) {
@@ -53,14 +54,16 @@ const commentFrmHandler = async (e) => {
                         </div>
                         <div class="comment_controll">
                             <span class="comment_modify item_Header_date">수정</span>
-                            <span class="comment_delete item_Header_date">삭제</span>
+                            <span class="comment_delete item_Header_date"><a href=/board/${mainCd.value}/comment/${response.cmdIdx}>삭제</a></span>
                         </div>
                     </div>
                     <div class="comment">${response.cmdContent}</div>`
-            //result 를 innerHTML / template로 작성
-            commentCount.innerHTML = ` ${count}개`
-            commentFrm.focus()
-            commentFrm.reset()
+        //result 를 innerHTML / template로 작성
+        commentCount.innerHTML = ` ${count}개`
+        
+        commentFrm.focus()
+        commentFrm.reset()
+
         }
     }
 }
