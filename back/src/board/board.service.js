@@ -139,9 +139,9 @@ class BoardService {
             const subCdValue = this.subChange[subCd]
             const findValue = `${mainCdValue}${subCdValue}`
             const result = await this.boardRepository.categoryValue({ findValue, pageNumber, mainCdValue })
-            const {correctValue, subcateLength, findSub}= result
-            const subArray = findSub.map(x=>x.cateCd.slice(4,8))
-            const subValue = subArray.map((x,i)=>{
+            const { correctValue, subcateLength, findSub } = result
+            const subArray = findSub.map((x) => x.cateCd.slice(4, 8))
+            const subValue = subArray.map((x, i) => {
                 switch (x) {
                     case "0001":
                         subArray[i] = "sub1"
@@ -172,13 +172,13 @@ class BoardService {
                         break
                 }
             })
-            const subVal =[]
-            const subValValue = subArray.map(x=>{
-                const subValobj= {}
+            const subVal = []
+            const subValValue = subArray.map((x) => {
+                const subValobj = {}
                 subValobj.categorySub = x
                 subVal.push(subValobj)
             })
-            return { correctValue, cateLength:subcateLength, subVal }
+            return { correctValue, cateLength: subcateLength, subVal }
         } catch (e) {
             throw new Error(e)
         }
@@ -205,46 +205,16 @@ class BoardService {
     // 좋아요 추가하기
     async likeBoard(payload) {
         try {
-        // payload 에 담고
-        const { userId, boardIdx, mainCd } = payload
-        // 좋아요 여부 체크
-        const liked = await this.liked.findOne({
-            where: { userId, boardIdx },
-            })
-            console.log('11service',payload)
-            console.log('22service',liked)
-        // 이미 눌럿다면 좋아요 삭제
-        if (liked) {
-            await liked.destroy()
-            }
-        // 안눌럿으면 추가
-        else {
-            await this.liked.create({
-            userId,
-            boardIdx,
-            })
-        }
-        // 좋아요 카운트 구하기 
-        const likeCount = await this.liked.count({
-            where: { boardIdx },
-            })
-            console.log('33service',likeCount)
-        // 게시물 업데이트
-        const response = await this.Board.update({ liked: likeCount }, { where: { boardIdx } })
-        console.log('44service',response)
-        return response
+            // payload 에 담고
+            const { userId, boardIdx } = payload
+            // 좋아요 여부 체크
+            const liked = await this.boardRepository.insertLike({ userId, boardIdx })
+            const result = liked.map((x) => x.userId)
+            return result
         } catch (e) {
             throw new Error(`Error while processing like board: ${e.message}`)
         }
-    }        
-    // async InsertLike({ userId, boardIdx, categoryMain }) {
-    //     try {
-    //         const result = await this.boardRepository.insertLike({ userId, boardIdx, categoryMain })
-    //         return result
-    //     } catch (e) {
-    //         throw new Error(e)
-    //     }
-    // }
+    }
 
     // 사진 다듬기
     async PictureCreate({ arr, boardIdx }) {
@@ -293,11 +263,11 @@ class BoardService {
     }
 
     // 리스트 검색 알고리즘
-    async ListValue({search, mainCd}){
+    async ListValue({ search, mainCd }) {
         try {
             const mainCdValue = this.mainChange[mainCd]
-            const result = await this.boardRepository.listValue({search, mainCdValue})
-            const {subjectResponse,adminResponse} = result
+            const result = await this.boardRepository.listValue({ search, mainCdValue })
+            const { subjectResponse, adminResponse } = result
             const subjectlength = subjectResponse.length
             const userlength = adminResponse.length
             result.subjectlength = subjectlength
@@ -319,20 +289,20 @@ class BoardService {
     }
 
     // 댓글 수정하기
-    async UpdateComment({ boardIdx, cmdContent, userId, cmdIdx}){
+    async UpdateComment({ boardIdx, cmdContent, userId, cmdIdx }) {
         try {
-            const result = await this.boardRepository.updateComment({boardIdx, cmdContent, userId,cmdIdx})
+            const result = await this.boardRepository.updateComment({ boardIdx, cmdContent, userId, cmdIdx })
             return result
         } catch (e) {
             throw new Error(e)
         }
     }
-    
+
     // 댓글 삭제하기
-    async DropComment({cmdIdx}){
+    async DropComment({ cmdIdx }) {
         try {
-            const result = await this.boardRepository.dropComment({cmdIdx})
-            return result 
+            const result = await this.boardRepository.dropComment({ cmdIdx })
+            return result
         } catch (e) {
             throw new Error(e)
         }

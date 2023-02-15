@@ -19,6 +19,7 @@ const contentValue = hidden.value
 content.innerHTML = `${contentValue}`
 let img = document.querySelectorAll("#content img[src]")
 const boardIdx = BoardIdx.value
+const userId = loginUser.value
 
 const modifyBtnHandler = async (e) => {
     if (e.target.className.indexOf("modify") >= 0) {
@@ -30,9 +31,12 @@ const modifyBtnHandler = async (e) => {
         location.href = `/board/${mainCd.value}?page=1`
     }
 }
-const likedHandler = (e) => {
+const likedHandler = async (e) => {
     console.dir(liked.children[0])
+    const result = await request.post(`/board/${mainCd.value}/view/${boardIdx}/like`, { userId: `${userId}` })
+    liked.children[1].innerHTML = `추천수 : ${result.data.length}`
     liked.children[0].classList.toggle("likedImgClick")
+    //
 }
 const commentFrmHandler = async (e) => {
     e.preventDefault()
@@ -41,7 +45,6 @@ const commentFrmHandler = async (e) => {
     const inputValue = commentFrm.children[0].value
     if (inputValue) {
         if (e.target.localName === "button") {
-            const userId = loginUser.value
             const result = await request.post(`/board/comment/${boardIdx}`, { cmdContent: inputValue, userId })
             const { response, count } = result.data
             const commentItem = document.createElement("div")
@@ -58,12 +61,11 @@ const commentFrmHandler = async (e) => {
                         </div>
                     </div>
                     <div class="comment">${response.cmdContent}</div>`
-        //result 를 innerHTML / template로 작성
-        commentCount.innerHTML = ` ${count}개`
-        
-        commentFrm.focus()
-        commentFrm.reset()
+            //result 를 innerHTML / template로 작성
+            commentCount.innerHTML = ` ${count}개`
 
+            commentFrm.focus()
+            commentFrm.reset()
         }
     }
 }
