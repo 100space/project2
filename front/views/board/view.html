@@ -27,7 +27,6 @@
                 <span id="updatedTime">{{newBoard.updatedAt}}</span>
             </span>
         </div>
-        
     </div>
 
     <div id="content">{{newBoard.content}}</div>
@@ -36,6 +35,10 @@
         <li id="tags">#{{tags.tag}}</li>
         {% endfor %}
     </ul>
+    <div id="liked" class="flex-center">
+        <div id="likedImg" class="userPicSize"></div>
+        <div id="likedCount">추천수 : {{newBoard.liked}}</div>
+    </div>
     <div id="comment_wrap">
         <div>
             <div id="commentHeader">

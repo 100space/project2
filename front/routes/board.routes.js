@@ -36,7 +36,7 @@ router.get("/:mainCd", async (req, res, next) => {
     const result = await request.get(`/board/${mainCd}/${page}`)
 
     const { listValue, cateLength, subVal } = result.data
-    // console.log(subVal)
+    console.log(result.data)
     res.render("board/subList.html", { mainCd, listValue, cateLength, subVal })
 })
 ///:mainCd/:subCd 라우터와 안 겹치려면 위로
@@ -97,7 +97,7 @@ router.get("/:mainCd/:subCd", async (req, res, next) => {
     const pagequery = req.query
     const result = await request.get(`/board/${mainCd}/${subCd}/${pagequery.page}`)
     const { listValue } = result.data
-    // console.log(listValue, 123456)
+    console.log(result, 123456)
     res.render("board/subList.html", { mainCd, listValue })
 })
 /////////////
