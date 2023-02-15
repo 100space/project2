@@ -8,7 +8,7 @@ class UserRepository {
 
     async hotValue() {
         try {
-            const userHot = await this.User.findAll({ order: this.sequelize.literal('userPoint DESC'), limit: 3, raw: true })
+            const userHot = await this.User.findAll({ order: this.sequelize.literal("userPoint DESC"), limit: 3, raw: true })
             return userHot
         } catch (e) {
             throw new Error(e)
@@ -98,13 +98,15 @@ class UserRepository {
             const Op = this.Sequelize.Op
             const response = await this.User.findAll({
                 where: {
-                    userId: { [Op.like]: `%${search}%` }
-                }, raw: true
+                    userId: { [Op.like]: `%${search}%` },
+                },
+                raw: true,
             })
             const userCount = await this.User.count({
                 where: {
-                    userId: { [Op.like]: `%${search}%` }
-                }, raw: true
+                    userId: { [Op.like]: `%${search}%` },
+                },
+                raw: true,
             })
             return { response, userCount }
         } catch (e) {
@@ -118,8 +120,9 @@ class UserRepository {
             const indexValue = page * 5 - 4 === 1 ? 0 : page * 5 - 4
             const response = await this.Board.findAll({
                 where: {
-                    userId
-                }, raw: true
+                    userId,
+                },
+                raw: true,
             })
             const findMain = await this.Board.findAll({
                 limit: 5,
@@ -129,13 +132,11 @@ class UserRepository {
                 },
                 raw: true,
             })
-            return {response, findMain}
+            return { response, findMain }
         } catch (e) {
             throw new Error(`Error while find writing Value: ${e.message}`)
         }
     }
-
-    async
 }
 
 module.exports = UserRepository

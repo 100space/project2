@@ -15,12 +15,6 @@ router.use((req, res, next) => {
     next()
 })
 
-router.get("/login", (req, res, next) => {
-    const { boardHot } = req
-    const { userHot } = req
-    res.render("user/login.html", { boardHot, userHot })
-})
-
 router.post("/login", async (req, res, next) => {
     const response = await request.post("/user/login", {
         ...req.body,
@@ -48,7 +42,6 @@ router.get("/myview", async (req, res, next) => {
     } = response
     console.log(myLength, findMain, writeCdarray)
     res.render("user/mywrite.html", { myLength, listValue: findMain, subVal: writeCdarray })
-
 })
 
 router.get("/myview/:mainCd")

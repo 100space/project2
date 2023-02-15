@@ -1,13 +1,13 @@
 {% extends 'layout/layout.html'%} {% block css %}<link rel="stylesheet" href="/css/welcome.css" type="text/css" />{% endblock %}{% block content %}
 
 <div id="welcomeWrap" class="init">
-    <form id="welcomeFrm" class="flexColumn" method="post" action="/profile/modify/{{userId}}">
+    <form id="welcomeFrm" class="flexColumn" method="post" action="/profile/{{userId}}">
         <div id="userPic" class="userPicSize" style="background-image: url('/image/{{userPic}}');"></div>
         <div id="textfrm">
-            <input type="file" placeholder="upload" style="font-size: 1.4rem;" name="userPic" multiple hidden/>
+            <input type="file" placeholder="upload" style="font-size: 1.4rem" name="userPic" multiple hidden />
             <div id="userId" class="callifont flex">
                 <div>아이디 :</div>
-                <input type="text" value="{{userId}}" class="userId" name="userId" readonly/>
+                <input type="text" value="{{userId}}" class="userId" name="userId" readonly />
             </div>
             <div id="userName" class="callifont flex">
                 <div>이름 :</div>

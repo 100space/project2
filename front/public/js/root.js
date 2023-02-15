@@ -11,11 +11,26 @@ const chatWindow = document.querySelector("#chatWindow")
 const closeBtn = document.querySelector("#closeBtn")
 const chat = document.querySelector("#chat")
 const frm = document.querySelector("#frm")
+const card = document.querySelectorAll(".flexCard > div")
+console.log(card)
 const socket = io.connect("http://127.0.0.1:3000", {
     path: "/socket.io",
     transports: ["websocket"],
 })
-
+const cardHandler = (e) => {
+    setTimeout(function () {
+        for (let i = 0; i < card.length; i++) {
+            console.log(card[`${i}`].style)
+            card[`${i}`].style.transform = "rotate(0deg)"
+            card[`${i}`].style.transition = "all 2s"
+            card[2].style.bottom = "0"
+            card[5].style.right = "0"
+            card[5].style.bottom = "0"
+            card[3].style.bottom = "0"
+            card[3].style.right = "0"
+        }
+    }, 1500)
+}
 const navfunction = (e) => {
     gnb.classList.toggle("off")
     arrow.classList.toggle("deg")
@@ -85,6 +100,7 @@ socket.on("reply", (data1) => {
 
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)
+window.addEventListener("load", cardHandler)
 userInfo.addEventListener("click", userInfoClick)
 searchBtn.addEventListener("click", searchFunction)
 // search.addEventListener("keypress", searchEvent)

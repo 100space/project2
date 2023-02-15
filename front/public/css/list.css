@@ -1,11 +1,12 @@
 body {
-    background-image: url(/img/background4.jpg);
+    background-image: url(/img/listBackground.jpg);
     background-repeat: no-repeat;
 }
 #viewWrap {
     width: 120rem;
     height: 82vh;
     margin: 0 auto;
+    background-color: rgba(238, 231, 222, 0.5);
 }
 
 #boardHeader > a:nth-child(1) {
@@ -82,7 +83,7 @@ body {
 #boardNav {
     width: 90%;
     height: 5rem;
-    margin: 8rem auto 0;
+    margin: 6rem auto 0;
     font-size: 2rem;
 }
 

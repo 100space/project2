@@ -29,8 +29,9 @@ class BoardController {
     // 게시판 글 수정하기
     async changeBoard(req, res, next) {
         try {
-            const { boardIdx, mainCd } = req.params
-            const { data:{subject, content, userId, hash, subCd} } = req.body
+            const { boardIdx } = req.params
+            const { subject, content, userId, mainCd, subCd, hash } = req.body
+            console.log(req.body)
             const result = await this.boardService.ChangeView({ boardIdx, subject, content, userId, mainCd, subCd, hash })
             res.status(201).json(result)
         } catch (e) {
@@ -139,9 +140,7 @@ class BoardController {
     async postComment(req, res, next) {
         try {
             const { boardIdx } = req.params
-            console.log(boardIdx)
             const { cmdContent, userId } = req.body
-            console.log(cmdContent,userId,"+==============")
             const result = await this.boardService.PostComment({ boardIdx, cmdContent, userId })
             res.status(201).json(result)
         } catch (e) {

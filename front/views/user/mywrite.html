@@ -7,8 +7,8 @@
             <a href="/user/myview?page=1"></a>
         </div>
         <div id="subCategory" class="flex-justi-center">
-            {% for item in subVal %}
-            <li class="flex-center"><a href="/user/myview/{{item}}?page=1">{{item}}</a></li>
+            {% for list in subVal %}
+            <li class="flex-center"><a href="/user/myview/{{list}}?page=1">{{list}}</a></li>
             {% endfor %}
         </div>
 
@@ -20,7 +20,7 @@
                 </div>
                 <div id="contentSub">
                     <ul id="subject">
-                        <a href="/board/{{mainCd}}/view/{{item.boardIdx}}">제목 : {{item.subject}}</a>
+                        <a href="/board/{{item.mainCd}}/view/{{item.boardIdx}}"> 제목 : {{item.subject}} </a>
                     </ul>
                     <ul id="subjectBtm">
                         <li id="writer">작성자 : {{item.userId}}</li>
@@ -46,7 +46,7 @@
                     <li id="prev">◀️</li>
                     <li id="pageNum"></li>
                     <li id="next">▶️</li>
-                    <input type="hidden" id="hidden" value="{{boardCount}}" />
+                    <input type="hidden" id="hidden" value="{{myLength}}" />
                     <input type="hidden" id="pagePath" value="/board/{{mainCd}}/{{subCd}}" />
                 </ul>
             </div>

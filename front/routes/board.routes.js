@@ -61,12 +61,11 @@ router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
 router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     let data = {
-        subCd: req.body.categorySub,
-        userId: req.body.writer,
         subject: req.body.subject,
         content: req.body.content,
         hash: req.body["tags-outside"],
     }
+    console.log(data)
     const result = await request.put(`/board/${mainCd}/${boardIdx}`, { data })
     const { updatedBoard } = result.data
     res.redirect(`/board/${mainCd}/view/${boardIdx}`)
@@ -76,10 +75,10 @@ router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
     const {
-        data: { response, hashResponse, commentResponse },
+        data: { response, hashResponse, commentResponse, commentLength },
     } = result
     console.log(result.data)
-    res.render("board/view.html", { newBoard: response, newHashTagVal: hashResponse, commentResponse })
+    res.render("board/view.html", { newBoard: response, newHashTagVal: hashResponse, commentResponse, commentLength })
 })
 // 게시물 작성 후 확인하기
 router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {

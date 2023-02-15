@@ -24,7 +24,7 @@
     height: 120rem;
     margin: 0 auto;
     display: grid;
-    background-color: #f8f8f800;
+    /* background-color: #000000c7; */
     gap: 1rem;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(6, 1fr);
@@ -37,45 +37,63 @@
         "c c c . . d d";
 }
 #a {
-    background-color: var(--white);
+    background-color: #fff;
     grid-area: a;
+    transform: rotate(30deg);
 }
 
 #b {
-    background-color: var(--white);
+    background-color: #fff;
     grid-area: b;
+    transform: rotate(-30deg);
 }
 #c {
-    background-color: var(--white);
+    background-color: #fff;
     grid-area: c;
+    transform: rotate(-20deg);
+    position: relative;
+    bottom: 10rem;
 }
 #d {
-    background-color: var(--white);
+    background-color: #fff;
     grid-area: d;
+    transform: rotate(60deg);
+    position: relative;
+    right: 7rem;
+    bottom: 20rem;
 }
 #e {
-    background-color: var(--white);
+    background-color: #fff;
     grid-area: e;
+    transform: rotate(-160deg);
+    position: relative;
+    right: 20rem;
+    bottom: -5rem;
 }
 #f {
-    background-color: var(--white);
+    background-color: #fff;
     grid-area: f;
+    transform: rotate(45deg);
 }
 #g {
-    background-color: var(--white);
+    background-color: #fff;
     grid-area: g;
+    transform: rotate(65deg);
 }
 #h {
-    background-color: var(--white);
+    background-color: #fff;
     grid-area: h;
+    transform: rotate(57deg);
 }
 #i {
-    background-color: var(--white);
+    background-color: #fff;
     grid-area: i;
+    transform: rotate(85deg);
 }
 #j {
-    background-color: var(--white);
+    background-color: #fff;
     grid-area: j;
+    transform: rotate(23deg);
 }
 #c > .content_box > .cardHeader > .userid {
     margin-right: 23rem;
@@ -94,7 +112,8 @@
     background-color: antiquewhite;
 }
 .contentCard:hover {
-    background-color: antiquewhite !important;
+    background-color: rgb(249, 229, 202) !important;
+    z-index: 20;
 }
 
 .content_box {

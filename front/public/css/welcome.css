@@ -25,13 +25,13 @@ body {
 }
 #textfrm > div {
     margin-bottom: 2rem;
-    width: 55%;
+    width: 75%;
 }
 #userPic {
     align-items: center;
     box-shadow: inset 0 0 9px 4px white;
-    width: 15rem;
-    height: 15rem;
+    width: 12rem;
+    height: 12rem;
     margin-bottom: 3rem;
 }
 .callifont {
@@ -48,7 +48,7 @@ body {
 .textbox {
     display: flex;
     flex-direction: column;
-    height: 13rem;
+    height: 10rem;
     width: 100%;
 }
 .textbox > div:nth-child(1) {
