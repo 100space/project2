@@ -175,6 +175,9 @@ class BoardRepository {
                 },
                 raw: true,
             })
+            // console.log()
+            // const mainLength = allMainCd.length
+            // console.log(mainLength)
             const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM BOARD WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
             return { findMain, allMainCd, findSub }
         } catch (e) {
@@ -183,10 +186,17 @@ class BoardRepository {
     }
 
     // subcategory 정렬
-    async categoryValue({ findValue, pageNumber }) {
+    async categoryValue({ findValue, pageNumber,mainCdValue }) {
         const Op = this.Sequelize.Op
         try {
             const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
+            const subcateLength = await this.Board.count({
+                where:{
+                    cateCd:{
+                        [Op.like]: `%${findValue}%`
+                    }
+                }
+            })
             const correctValue = await this.Board.findAll({
                 limit: 5,
                 offset: indexValue,
@@ -197,7 +207,8 @@ class BoardRepository {
                 },
                 raw: true,
             })
-            return correctValue
+            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM BOARD WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
+            return { correctValue, subcateLength,findSub}
         } catch (e) {
             throw new Error(`Error while find category: ${e.message}`)
         }
@@ -380,11 +391,12 @@ class BoardRepository {
         try {
             const response = await this.comment.destroy({
                 where:{
-                    boardIdx
+                    cmdIdx
                 }
             })
+            console.log(response)
         } catch (e) {
-            
+            throw new Error(`Error while delete Comment status: ${e.message}`)
         }
     }
 }

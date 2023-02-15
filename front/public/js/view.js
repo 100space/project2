@@ -31,13 +31,11 @@ const modifyBtnHandler = async (e) => {
 
 const commentFrmHandler = async (e) => {
     e.preventDefault()
-    console.log(e)
     if (e.target.localName === "button") {
         const inputValue = commentFrm.children[0].value
         const userId = loginUser.value
         const result = await request.post(`/board/comment/${boardIdx}`, { cmdContent: inputValue, userId })
         const { response, count } = result.data
-        console.log(count, 123123123)
         const commentItem = document.createElement("div")
         commentItem.classList.add("commentItem")
         commentList.prepend(commentItem)
@@ -48,12 +46,13 @@ const commentFrmHandler = async (e) => {
                         </div>
                         <div class="comment_controll">
                             <span class="comment_modify item_Header_date">수정</span>
-                            <span class="comment_delete item_Header_date">삭제</span>
+                            <span class="comment_delete item_Header_date"><a href=/board/${mainCd.value}/comment/${response.cmdIdx}>삭제</a></span>
                         </div>
                     </div>
                     <div class="comment">${response.cmdContent}</div>`
         //result 를 innerHTML / template로 작성
         commentCount.innerHTML = ` ${count}개`
+        
         commentFrm.focus()
         commentFrm.reset()
     }
