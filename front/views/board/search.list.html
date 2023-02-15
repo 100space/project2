@@ -20,7 +20,7 @@
                 <ul class="tableContent flex">
                     <li>{{loop.index}}</li>
                     <li>{{item.userId}}</li>
-                    <li>{{item.subject}}</li>
+                    <li><a href="http://127.0.0.1:3005/board/{{ item.mainCd }}/view/{{ item.boardIdx }}">{{ item.subject }}</a></li>
                     <li>{{item.liked}}</li>
                     <li>{{item.createdAt}}</li>
                 </ul>
@@ -42,7 +42,7 @@
                 {% for item in adminResponse %}
                 <ul class="tableContent flex">
                     <li>{{loop.index}}</li>
-                    <li>{{item.subject}}</li>
+                    <li><a href="http://127.0.0.1:3005/board/{{ item.mainCd }}/view/{{ item.boardIdx }}">{{ item.subject }}</a></li>
                     <li>{{item.userId}}</li>
                     <li>{{item.createdAt}}</li>
                     <li>{{item.liked}}</li>
