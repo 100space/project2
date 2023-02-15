@@ -23,6 +23,7 @@ router.use("/", async (req, res, next) => {
             const userResponse = await request.get("/user/hot")
             const userHot = userResponse.data
             req.userHot = userHot
+            res.cookie("token","guest")
         } else {
             const [header, payload, signature] = token.split(".")
             const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
@@ -97,7 +98,6 @@ router.get("/", async (req, res, next) => {
     const { userHot } = req
     const response = await request.get("/board/random")
     const { listValue, randomUser, randomHash } = response.data
-    console.log(response.data, 123123123123)
     res.render("index.html", { ...userInfo, boardHot, userHot, boardRandom: listValue, randomUser, randomHash })
 })
 

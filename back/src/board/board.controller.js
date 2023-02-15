@@ -137,11 +137,34 @@ class BoardController {
         }
     }
 
+    // 댓글 작성하기
     async postComment(req, res, next) {
         try {
             const { boardIdx } = req.params
             const { cmdContent, userId } = req.body
             const result = await this.boardService.PostComment({ boardIdx, cmdContent, userId })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    // 댓글 수정하기
+    async putComment(req,res,next) {
+        try {
+            const {boardIdx} = req.params
+            const {cmdContent, userId, cmdIdx} = req.body
+            const result = await this.boardService.UpdateComment({boardIdx, cmdContent, userId, cmdIdx})
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+    // 댓글 삭제하기
+    async deleteComment(req,res,next){
+        try {
+            const {cmdIdx} = req.params
+            const result = await this.boardService.DropComment({cmdIdx})
             res.status(201).json(result)
         } catch (e) {
             next(e)

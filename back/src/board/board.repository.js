@@ -362,6 +362,31 @@ class BoardRepository {
             throw new Error(`Error while create Comment Value: ${e.message}`)
         }
     }
+
+    // 댓글 수정하기
+    async updateComment({boardIdx, cmdContent, userId, cmdIdx}){
+        try{
+            const response = await this.comment.update(
+                {cmdContent}, 
+                {where:{cmdIdx}}
+            )
+        } catch(e) {
+            throw new Error(`Error while update Comment Value: ${e.message}`)
+        }
+    }
+
+    // 댓글 삭제하기
+    async dropComment({cmdIdx}){
+        try {
+            const response = await this.comment.destroy({
+                where:{
+                    boardIdx
+                }
+            })
+        } catch (e) {
+            
+        }
+    }
 }
 
 module.exports = BoardRepository

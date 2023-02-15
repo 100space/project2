@@ -244,11 +244,31 @@ class BoardService {
         }
     }
 
-    // 댓글
+    // 댓글 작성하기
     async PostComment({ boardIdx, cmdContent, userId }) {
         try {
             const result = await this.boardRepository.postComment({ boardIdx, cmdContent, userId })
             return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    // 댓글 수정하기
+    async UpdateComment({ boardIdx, cmdContent, userId, cmdIdx}){
+        try {
+            const result = await this.boardRepository.updateComment({boardIdx, cmdContent, userId,cmdIdx})
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+    
+    // 댓글 삭제하기
+    async DropComment({cmdIdx}){
+        try {
+            const result = await this.boardRepository.dropComment({cmdIdx})
+            return result 
         } catch (e) {
             throw new Error(e)
         }
