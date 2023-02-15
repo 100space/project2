@@ -34,13 +34,13 @@ class BoardRepository {
     async createBoard(payload) {
         try {
             const { subject, content, mainCdValue, subCdValue, hashArray, userId } = payload
-            console.log(payload)
+            // console.log(payload)
             const newBoard = (await this.Board.create({ subject, content, userId, cateCd: `${mainCdValue}${subCdValue}` })).get({ plain: true })
             const newHashTagVal = []
             const userInfo = await this.User.findAll({ where: { userId }, raw: true })
             const userPic = userInfo[0].userPic
-            const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-            const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
+            // const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
+            // const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
 
             if (!hashArray) return { newBoard, newHashTagVal }
             const { boardIdx } = newBoard
@@ -49,7 +49,8 @@ class BoardRepository {
                 type: this.queryTypes.SELECT,
             })
             newBoard.userPic = userPic
-            return { newBoard, hashValue }
+            const addUserPoint = await this.User.increment({userPoint: 10}, {where : {userId}})
+            return { newBoard, hashValue, addUserPoint }
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)
         }
@@ -127,6 +128,7 @@ class BoardRepository {
     // 게시글 지우기
     async deleteValue(payload) {
         try {
+            console.log(payload)
             const { boardIdx } = payload
             const boardResponse = await this.Board.destroy({ where: { boardIdx }, raw: true })
             return boardResponse
@@ -374,7 +376,8 @@ class BoardRepository {
         try {
             const response = (await this.comment.create({ boardIdx, cmdContent, userId })).get({ plain: true })
             const count = await this.comment.count()
-            const result = { response, count }
+            const addUserPoint = await this.User.increment({userPoint: 5}, {where : {userId}})
+            const result = { response, count, addUserPoint }
             return result
         } catch (e) {
             throw new Error(`Error while create Comment Value: ${e.message}`)
@@ -382,10 +385,16 @@ class BoardRepository {
     }
 
     // 댓글 수정하기
-    async updateComment({ boardIdx, cmdContent, userId, cmdIdx }) {
-        try {
-            const response = await this.comment.update({ cmdContent }, { where: { cmdIdx } })
-        } catch (e) {
+
+    async updateComment({ cmdContent, cmdIdx}){
+        try{
+            
+            const response = await this.comment.update(
+                {cmdContent}, 
+                {where:{cmdIdx}}
+            )
+            return response
+        } catch(e) {
             throw new Error(`Error while update Comment Value: ${e.message}`)
         }
     }
@@ -399,6 +408,8 @@ class BoardRepository {
                 },
             })
             console.log(response)
+            const deleteUserPoint = await this.User.decrement({userPoint: 10}, {where : {userId}})
+            return {response, deleteUserPoint}
         } catch (e) {
             throw new Error(`Error while delete Comment status: ${e.message}`)
         }

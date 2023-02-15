@@ -44,13 +44,16 @@ router.get("/myview", async (req, res, next) => {
     res.render("user/mywrite.html", { myLength, listValue: findMain, subVal: writeCdarray })
 })
 
+// 내가 좋아요 누른 글, 내가 쓴 글 
+router.get("/myview/reaction", async(req,res,next)=>{
+    const {userId} = req.user
+    const { boardHot } = req
+    const { userHot } = req
+    const response = await request.post("/user/myview/reaction", {page, userId})
+    res.send("1")
+})
 router.get("/myview/:mainCd")
 
-router.get("/myview/reaction", async(req,res,next)=>{
-    const {page} = req.query
-    
-    
-})
 
 
 module.exports = router

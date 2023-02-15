@@ -203,7 +203,7 @@ class BoardService {
     }
 
     // 좋아요 추가하기
-    async likeBoard(payload) {
+    async InsertLike({ userId, boardIdx, categoryMain }) {
         try {
             // payload 에 담고
             const { userId, boardIdx } = payload
@@ -212,7 +212,7 @@ class BoardService {
             const result = liked.map((x) => x.userId)
             return result
         } catch (e) {
-            throw new Error(`Error while processing like board: ${e.message}`)
+            throw new Error(e)
         }
     }
 
@@ -289,9 +289,9 @@ class BoardService {
     }
 
     // 댓글 수정하기
-    async UpdateComment({ boardIdx, cmdContent, userId, cmdIdx }) {
+    async UpdateComment({ cmdIdx, cmdContent}){
         try {
-            const result = await this.boardRepository.updateComment({ boardIdx, cmdContent, userId, cmdIdx })
+            const result = await this.boardRepository.updateComment({ cmdContent,cmdIdx})
             return result
         } catch (e) {
             throw new Error(e)

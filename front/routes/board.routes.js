@@ -16,16 +16,17 @@ router.use((req, res, next) => {
 router.post("/:mainCd/search", async (req, res, next) => {
     const { mainCd } = req.params
     const { search } = req.body
-    const result = await request.post("/board/list/search", { mainCd, search })
+    const { boardHot } = req
+    console.log('test', boardHot)
+    const result = await request.post("/board/list/search", { mainCd, search})
     const {
-        data: { subjectResponse, adminResponse, subjectlength, userlength },
+        data: { subjectResponse, adminResponse, subjectlength, userlength, boardIdx },
     } = result
-    res.render("board/search.list.html", { subjectlength, userlength, subjectResponse, adminResponse, search })
+    res.render("board/search.list.html", { subjectlength, userlength, subjectResponse, adminResponse, search, boardIdx })
 })
 
 router.get("/search", async (req, res, next) => {
     const { search } = req.query
-    console.log(search)
     const result = await request.post(`/board/search`, { search })
     const { response, boardCount } = result.data
     res.render("board/subList.html", { listValue: response, boardCount })
@@ -90,6 +91,14 @@ router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {
 router.get("/:mainCd/comment/:cmdIdx", async (req, res, next) => {
     const { mainCd, cmdIdx } = req.params
     const result = await request.delete(`/board/comment/${cmdIdx}`)
+    res.redirect(`/board/${mainCd}/view/1`)
+})
+
+// 댓글 수정하기
+router.post("/:mainCd/comment/:cmdIdx", async(req,res,next)=>{
+    const {cmdContent} = req.body
+    const  {mainCd,cmdIdx}= req.params
+    const result = await request.put(`/board/comment/${cmdIdx}`, {cmdContent})
     res.redirect(`/board/${mainCd}/view/1`)
 })
 

@@ -80,14 +80,24 @@ class UserController {
     }
 
     // 내가 쓴글
-    async MyWriting(req, res, next) {
+    async myWriting(req, res, next) {
         try {
-            console.log(req)
             const { userId, page } = req.body
             const result = await this.userService.FindWriting({ userId, page })
             res.status(201).json(result)
         } catch (e) {
             next(e)
+        }
+    }
+
+    async myReaction(req,res,next){
+        try {
+            const {userId} = req.body
+            console.log(userId)
+            const response = await this.userService.FindReaction({userId})
+            res.status(201).json(result)
+        } catch (e) {
+            
         }
     }
 
