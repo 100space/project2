@@ -185,3 +185,22 @@ ul > #tags {
     border: none;
     background-color: var(--white);
 }
+
+#commentUpdateFrm {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#commentUpdateFrm > input {
+    width: 75%;
+    height:6rem;
+    margin-top: 0.5rem;
+    padding:0.8rem;
+    font-size:1.8rem;
+    border: solid 1px var(--background-color)
+}
+
+#commentUpdateFrm > button{
+    width: 10%;
+    height: 7rem;
+}

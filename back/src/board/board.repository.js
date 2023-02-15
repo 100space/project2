@@ -369,12 +369,14 @@ class BoardRepository {
     }
 
     // 댓글 수정하기
-    async updateComment({boardIdx, cmdContent, userId, cmdIdx}){
+    async updateComment({ cmdContent, cmdIdx}){
         try{
+            
             const response = await this.comment.update(
                 {cmdContent}, 
                 {where:{cmdIdx}}
             )
+            return response
         } catch(e) {
             throw new Error(`Error while update Comment Value: ${e.message}`)
         }

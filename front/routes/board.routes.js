@@ -93,6 +93,14 @@ router.get("/:mainCd/comment/:cmdIdx", async (req,res,next)=>{
     res.redirect(`/board/${mainCd}/view/1`)
 })
 
+// 댓글 수정하기
+router.post("/:mainCd/comment/:cmdIdx", async(req,res,next)=>{
+    const {cmdContent} = req.body
+    const  {mainCd,cmdIdx}= req.params
+    const result = await request.put(`/board/comment/${cmdIdx}`, {cmdContent})
+    res.redirect(`/board/${mainCd}/view/1`)
+})
+
 //제일 밑으로 내려가자
 router.get("/:mainCd/:subCd", async (req, res, next) => {
     const { mainCd, subCd } = req.params
