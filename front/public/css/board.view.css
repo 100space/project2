@@ -1,6 +1,6 @@
 #container {
     width: 120rem;
-    height: 80rem;
+    min-height: 50rem;
     margin: 5rem auto 3rem;
     padding: 2rem;
     background-color: rgb(248, 221, 182);
@@ -201,14 +201,14 @@ ul > #tags {
 
 #commentUpdateFrm > input {
     width: 75%;
-    height:6rem;
+    height: 6rem;
     margin-top: 0.5rem;
-    padding:0.8rem;
-    font-size:1.8rem;
-    border: solid 1px var(--background-color)
+    padding: 0.8rem;
+    font-size: 1.8rem;
+    border: solid 1px var(--background-color);
 }
 
-#commentUpdateFrm > button{
+#commentUpdateFrm > button {
     width: 10%;
     height: 7rem;
 }

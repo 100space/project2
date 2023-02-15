@@ -5,7 +5,8 @@
     <div id="search_result" class="flex">' {{search}} '에 대한 검색 결과</div>
     <div id="resultBody">
         <div class="searchBox">
-            <span id="userSearch" class="searchHeader flex">유저 정보
+            <span id="userSearch" class="searchHeader flex"
+                >유저 정보
                 <span> 총 {{userCount}} 개의 검색 결과가 있습니다.</span>
             </span>
             <div class="table">
@@ -28,7 +29,8 @@
             </div>
         </div>
         <div class="searchBox">
-            <span id="boardSearch" class="searchHeader flex">게시판 정보
+            <span id="boardSearch" class="searchHeader flex"
+                >게시판 정보
                 <span> 총 {{boardCount}} 개의 검색 결과가 있습니다.</span>
             </span>
             <div class="table">
@@ -42,7 +44,7 @@
                 {% for item in data1 %}
                 <ul class="tableContent flex">
                     <li>{{loop.index}}</li>
-                    <li><a href="http://127.0.0.1:3005/board/{{ item.mainCd }}/view/{{ item.boardIdx }}">{{ item.subject }}</ㅁ></li>
+                    <li><a href="http://127.0.0.1:3005/board/{{ item.mainCd }}/view/{{ item.boardIdx }}">{{ item.subject }}</a></li>
                     <li>{{item.userId}}</li>
                     <li>{{item.createdAt}}</li>
                     <li>{{item.liked}}</li>

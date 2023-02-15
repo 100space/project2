@@ -204,7 +204,7 @@ li {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 67%;
+    width: 55%;
     border-bottom: 0.1rem var(--white2) solid;
 }
 .hotUser-subject > div > span,
