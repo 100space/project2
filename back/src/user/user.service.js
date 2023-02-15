@@ -86,41 +86,59 @@ class UserService {
     async FindWriting({ userId, page }) {
         try {
             const result = await this.userRepository.findWriting({ userId, page })
-            const {response, findMain} = result
-            const myLength = response.length     
+            const { response, findMain } = result
+            const myLength = response.length
+
             const writeCd = []
-            const myWriteMainCd = response.map(x=>{
-                const myCdValue = x.cateCd.slice(0,4)
+            const myWriteMainCd = response.map((x) => {
+                const myCdValue = x.cateCd.slice(0, 4)
                 writeCd.push(myCdValue)
-                let writeCdresult = writeCd.filter((value,index) => {
-                    return writeCd.indexOf(value) ===index
+
+                let writeCdresult = writeCd.filter((value, index) => {
+                    return writeCd.indexOf(value) === index
                 })
                 return writeCdresult
             })
+            const mainCdValue = findMain.map((x) => {
+                const myCdValue = x.cateCd.slice(0, 4)
+                switch (myCdValue) {
+                    case "0001":
+                        x.mainCd = "notice"
+                        break
+                    case "0002":
+                        x.mainCd = "community"
+                        break
+                    case "0003":
+                        x.mainCd = "qna"
+                        break
+                }
+                return x
+            })
+
             const writeCdarray = myWriteMainCd.pop()
-            writeCdarray.forEach((x,i,arr)=>{
-                switch(x){
-                    case '0001':
-                        arr[i]="notice"
+            writeCdarray.forEach((x, i, arr) => {
+                switch (x) {
+                    case "0001":
+                        arr[i] = "notice"
                         break
-                    case '0002':
-                        arr[i]="community"
+                    case "0002":
+                        arr[i] = "community"
                         break
-                    case '0003':
-                        arr[i]="qna"
+                    case "0003":
+                        arr[i] = "qna"
                         break
                 }
             })
-            return {myLength, findMain, writeCdarray}
+            return { myLength, findMain: mainCdValue, writeCdarray }
         } catch (e) {
             throw new Error(e)
         }
     }
 
     // 내가 쓴 글 분류
-    async myMainCd({userId}){
+    async myMainCd({ userId }) {
         try {
-            const {mainCd} = req.params
+            const { mainCd } = req.params
             // const result
         } catch (e) {
             throw new Error(e)

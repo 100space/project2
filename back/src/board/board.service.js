@@ -55,11 +55,11 @@ class BoardService {
     // 게시물 수정하기
     async ChangeView(payload) {
         try {
-            const {boardIdx, subject, content, userId, mainCd, subCd, hash} = payload
-            const hashValue = JSON.parse(hash)
-            const hashArray = hashValue.map(x=>x.value)
-            const mainCdValue = this.mainChange[mainCd]
-            const subCdValue = this.subChange[subCd]
+            const { subject, content, userId, mainCd, subCd, hash, boardIdx } = payload
+            const hashValue = hash.replace("[", "").replace("]", "")
+            const hashArray = hashValue.split(",")
+            const mainCdValue = mainCd === "notice" ? this.mainChange.notice : mainCd === "community" ? this.mainChange.community : this.mainChange.qna
+            const subCdValue = subCd === "sub1" ? this.subChange.sub1 : subCd === "sub2" ? this.subChange.sub2 : this.subChange.sub3
             const result = await this.boardRepository.changeView({ subject, content, mainCdValue, subCdValue, hashArray, userId, boardIdx })
         } catch (e) {
             throw new Error(e)

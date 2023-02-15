@@ -52,7 +52,6 @@ router.get("/login", (req, res, next) => {
     const { userHot } = req
     res.render("user/login.html", { boardHot, userHot })
 })
-
 router.use("/user", user)
 router.use("/profile", profile)
 router.use("/board", board)

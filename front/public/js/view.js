@@ -12,6 +12,7 @@ const viewModify = document.querySelector("#view_modify")
 const commentFrm = document.querySelector("#comment-form")
 const commentList = document.querySelector("#commentList")
 const commentModify = document.querySelector(".comment_modify")
+const commentCount = document.querySelector("#commentHeader > span:nth-child(2)")
 const contentValue = hidden.value
 content.innerHTML = `${contentValue}`
 let img = document.querySelectorAll("#content img[src]")
@@ -35,23 +36,24 @@ const commentFrmHandler = async (e) => {
         const inputValue = commentFrm.children[0].value
         const userId = loginUser.value
         const result = await request.post(`/board/comment/${boardIdx}`, { cmdContent: inputValue, userId })
-        const comment = result.data
+        const { response, count } = result.data
+        console.log(count, 123123123)
         const commentItem = document.createElement("div")
         commentItem.classList.add("commentItem")
         commentList.prepend(commentItem)
         commentItem.innerHTML = `<div class="item_Header flex">
                         <div>
-                            <span class="item_Header_writer">${comment.userId}</span>
-                            <span class="item_Header_date">${comment.createdAt}</span>
+                            <span class="item_Header_writer">${response.userId}</span>
+                            <span class="item_Header_date">${response.createdAt}</span>
                         </div>
                         <div class="comment_controll">
                             <span class="comment_modify item_Header_date">수정</span>
                             <span class="comment_delete item_Header_date">삭제</span>
                         </div>
                     </div>
-                    <div class="comment">${comment.cmdContent}</div>`
+                    <div class="comment">${response.cmdContent}</div>`
         //result 를 innerHTML / template로 작성
-        console.log(commentFrm.children[0])
+        commentCount.innerHTML = ` ${count}개`
         commentFrm.focus()
         commentFrm.reset()
     }

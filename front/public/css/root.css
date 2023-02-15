@@ -50,7 +50,7 @@ li {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 10rem;
+    height: 12rem;
     z-index: 10;
     /* background-color: var(--white2); */
 }
@@ -361,7 +361,7 @@ li {
     transition: all 1.5s;
 }
 #chatWindow {
-    z-index: 20;
+    z-index: 40;
 }
 #chatHeader {
     display: flex;

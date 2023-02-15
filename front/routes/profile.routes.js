@@ -30,7 +30,6 @@ router.get("/modify/:userId", async (req, res, next) => {
     const response = await request.post("/user/check", {
         userId,
     })
-    console.log("ttttt")
     const { data } = response
     res.render("user/mypage.modify.html", {
         ...data,
@@ -48,6 +47,9 @@ router.post("/modify/:id", upload.single("userPic"), async (req, res, next) => {
         data.userPic = req.file.filename
     }
     const response = await request.put(`/profile/${id}`, data)
+    console.log(response.data, "here")
+    console.log(boardHot, "test3")
+    console.log(userHot, "test2")
     res.render("user/mypage.html", { ...response.data, boardHot, userHot })
 })
 

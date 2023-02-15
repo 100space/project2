@@ -42,7 +42,6 @@ router.get("/myview", async (req, res, next) => {
     } = response
     console.log(myLength, findMain, writeCdarray)
     res.render("user/mywrite.html", { myLength, listValue: findMain, subVal: writeCdarray })
-
 })
 
 router.get("/myview/:mainCd")
