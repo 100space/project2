@@ -78,6 +78,7 @@
                         </div>
                         {% if userId === comment.userId %}
                         <div class="comment_controll">
+                            <input type="hidden" id="cmdIdx" value="{{comment.cmdIdx}}" />
                             <span class="comment_modify item_Header_date">수정</span>
                             <span class="comment_delete item_Header_date">삭제</span>
                         </div>

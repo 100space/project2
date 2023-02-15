@@ -102,7 +102,7 @@ class BoardRepository {
             return newHashTag
         } catch (e) {
             throw new Error(`Error while change status: ${e.message}`)
-        } 
+        }
     }
 
     // 게시글 지우기
@@ -148,7 +148,7 @@ class BoardRepository {
         try {
             const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 5
             // console.log(pageNumber);
-            console.log(indexValue);
+            console.log(indexValue)
             const allMainCd = await this.Board.count({
                 where: {
                     cateCd: {

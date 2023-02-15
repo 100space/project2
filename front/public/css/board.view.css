@@ -230,7 +230,10 @@ ul > #tags {
 }
 .commentContent {
     border: none;
-    background-color: var(--white);
+    background-color: #e4ddd86b;
+    border-bottom: var(--sdf);
+    font-size: 2rem;
+    padding: 5px 10px;
 }
 
 #commentUpdateFrm {
