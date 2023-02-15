@@ -49,7 +49,7 @@ class BoardRepository {
                 type: this.queryTypes.SELECT,
             })
             newBoard.userPic = userPic
-            const addUserPoint = await this.User.increment({userPoint: 10}, {where : {userId}})
+            const addUserPoint = await this.User.increment({ userPoint: 10 }, { where: { userId } })
             return { newBoard, hashValue, addUserPoint }
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)
@@ -376,7 +376,7 @@ class BoardRepository {
         try {
             const response = (await this.comment.create({ boardIdx, cmdContent, userId })).get({ plain: true })
             const count = await this.comment.count()
-            const addUserPoint = await this.User.increment({userPoint: 5}, {where : {userId}})
+            const addUserPoint = await this.User.increment({ userPoint: 5 }, { where: { userId } })
             const result = { response, count, addUserPoint }
             return result
         } catch (e) {
@@ -386,15 +386,11 @@ class BoardRepository {
 
     // 댓글 수정하기
 
-    async updateComment({ cmdContent, cmdIdx}){
-        try{
-            
-            const response = await this.comment.update(
-                {cmdContent}, 
-                {where:{cmdIdx}}
-            )
+    async updateComment({ cmdContent, cmdIdx }) {
+        try {
+            const response = await this.comment.update({ cmdContent }, { where: { cmdIdx } })
             return response
-        } catch(e) {
+        } catch (e) {
             throw new Error(`Error while update Comment Value: ${e.message}`)
         }
     }
@@ -408,8 +404,7 @@ class BoardRepository {
                 },
             })
             console.log(response)
-            const deleteUserPoint = await this.User.decrement({userPoint: 10}, {where : {userId}})
-            return {response, deleteUserPoint}
+            return response
         } catch (e) {
             throw new Error(`Error while delete Comment status: ${e.message}`)
         }

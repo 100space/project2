@@ -55,11 +55,12 @@ class BoardService {
     // 게시물 수정하기
     async ChangeView(payload) {
         try {
-            const { subject, content, userId, mainCd, subCd, hash, boardIdx } = payload
-            const hashValue = hash.replace("[", "").replace("]", "")
-            const hashArray = hashValue.split(",")
-            const mainCdValue = mainCd === "notice" ? this.mainChange.notice : mainCd === "community" ? this.mainChange.community : this.mainChange.qna
-            const subCdValue = subCd === "sub1" ? this.subChange.sub1 : subCd === "sub2" ? this.subChange.sub2 : this.subChange.sub3
+            const { boardIdx, subject, content, userId, mainCd, subCd, hash } = payload
+            console.log(hash)
+            const hashValue = JSON.parse(hash)
+            const hashArray = hashValue.map((x) => x.value)
+            const mainCdValue = this.mainChange[mainCd]
+            const subCdValue = this.subChange[subCd]
             const result = await this.boardRepository.changeView({ subject, content, mainCdValue, subCdValue, hashArray, userId, boardIdx })
         } catch (e) {
             throw new Error(e)
@@ -203,7 +204,7 @@ class BoardService {
     }
 
     // 좋아요 추가하기
-    async InsertLike({ userId, boardIdx, categoryMain }) {
+    async likeBoard(payload) {
         try {
             // payload 에 담고
             const { userId, boardIdx } = payload
@@ -212,7 +213,7 @@ class BoardService {
             const result = liked.map((x) => x.userId)
             return result
         } catch (e) {
-            throw new Error(e)
+            throw new Error(`Error while processing like board: ${e.message}`)
         }
     }
 
@@ -289,9 +290,9 @@ class BoardService {
     }
 
     // 댓글 수정하기
-    async UpdateComment({ cmdIdx, cmdContent}){
+    async UpdateComment({ boardIdx, cmdContent, userId, cmdIdx }) {
         try {
-            const result = await this.boardRepository.updateComment({ cmdContent,cmdIdx})
+            const result = await this.boardRepository.updateComment({ boardIdx, cmdContent, userId, cmdIdx })
             return result
         } catch (e) {
             throw new Error(e)

@@ -17,8 +17,8 @@ router.post("/:mainCd/search", async (req, res, next) => {
     const { mainCd } = req.params
     const { search } = req.body
     const { boardHot } = req
-    console.log('test', boardHot)
-    const result = await request.post("/board/list/search", { mainCd, search})
+    console.log("test", boardHot)
+    const result = await request.post("/board/list/search", { mainCd, search })
     const {
         data: { subjectResponse, adminResponse, subjectlength, userlength, boardIdx },
     } = result
@@ -60,6 +60,8 @@ router.get("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
 router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     let data = {
+        subCd: req.body.categorySub,
+        userId: req.body.writer,
         subject: req.body.subject,
         content: req.body.content,
         hash: req.body["tags-outside"],
@@ -95,10 +97,10 @@ router.get("/:mainCd/comment/:cmdIdx", async (req, res, next) => {
 })
 
 // 댓글 수정하기
-router.post("/:mainCd/comment/:cmdIdx", async(req,res,next)=>{
-    const {cmdContent} = req.body
-    const  {mainCd,cmdIdx}= req.params
-    const result = await request.put(`/board/comment/${cmdIdx}`, {cmdContent})
+router.post("/:mainCd/comment/:cmdIdx", async (req, res, next) => {
+    const { cmdContent } = req.body
+    const { mainCd, cmdIdx } = req.params
+    const result = await request.put(`/board/comment/${cmdIdx}`, { cmdContent })
     res.redirect(`/board/${mainCd}/view/1`)
 })
 
