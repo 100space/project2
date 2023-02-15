@@ -60,7 +60,7 @@ const commentFrmHandler = async (e) => {
                             <span class="item_Header_date">${response.createdAt}</span>
                         </div>
                         <div class="comment_controll">
-                            <span class="comment_modify item_Header_date" id="comment_update" style="color:#444444">수정</span>
+                            <span class="comment_modify item_Header_date" id="comment_update" style="color:#808080">수정</span>
                             <span class="comment_delete item_Header_date"><a href=/board/${mainCd.value}/comment/${response.cmdIdx}>삭제</a></span>
                         </div>
                     </div>

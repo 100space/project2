@@ -37,7 +37,7 @@
     </ul>
     <div id="centerBtn" class="flex">
         <div class="centerBtn">
-            <div class="backBtn">뒤로가기</div>
+            <div class="backBtn flex-center">뒤로가기</div>
         </div>
         <div id="liked" class="flex-center">
             {% if likedUser.indexOf(userId) >= 0 %}
@@ -48,8 +48,12 @@
             <div id="likedCount">추천수 : {{newBoard.liked}}</div>
         </div>
         <div class="centerBtn viewNav">
-            <div class="prevBtn">이전글</div>
-            <div class="nextBtn">다음글</div>
+            <div class="viewBtn">
+                <div class="prevBtn flex-center">
+                    <a href="/board/{{newBoard.mainCd}}/view/{{newBoard.boardIdx - 1}}"> 이전글 </a>
+                </div>
+                <div class="nextBtn flex-center"><a href="/board/{{newBoard.mainCd}}/view/{{newBoard.boardIdx + 1}}"> 다음글 </a></div>
+            </div>
         </div>
     </div>
     <div id="comment_wrap">
