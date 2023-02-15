@@ -16,6 +16,7 @@ Preview Menu
 -   [기본사항](https://github.com/100space/project2/wiki/%5B%EA%B8%B0%EB%B3%B8%EC%82%AC%ED%95%AD%5D)
 -   [이슈&해결](https://github.com/100space/project2/wiki/%5B%EC%9D%B4%EC%8A%88&%ED%95%B4%EA%B2%B0%5D)
 -   [페이지 디자인](https://github.com/100space/project2/wiki/%5B%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%94%94%EC%9E%90%EC%9D%B8%5D)
+-   [작업 진행률](https://github.com/100space/project2/wiki/%EC%9E%91%EC%97%85%EC%A7%84%ED%96%89%EB%A5%A0-(Last-Updated-2023.02.15))
 
 ### Daily Log
 
@@ -32,6 +33,22 @@ Preview Menu
 
 
 # Project
+
+## 2023.02.15 작업 진행률
+
+### Total Progress
+60.7% 
+### User ( 90.0% )
+Progress : 90% 9 completed of total 10 item.
+
+### Board ( 66.7% )
+Progress : 66.7% Completed 8 of total 12 item
+
+
+### Admin ( 0.0% )
+Progress : 0%  No Completed of total 6 Item
+
+
 
 # Daily Log
 
