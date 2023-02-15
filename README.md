@@ -62,11 +62,6 @@ Progress : 0%  No Completed of total 6 Item
 4) Index Page Desion
 5) Login/Join Page Design
 
-Day 2 Will be update
-1) HTML Page 1차 작성 완료
-2) Backend Defaults Setting / FrontEnd 영역 분배
-3) Backend & Frontend Initial 예정
-
 ## Day2 Completed
 
 1) HTML Page 1차 작성완료
@@ -74,13 +69,6 @@ Day 2 Will be update
 3) FrontEnd user Basic Feature (Join, Login) 구현
 4) Front/Backend 연결 완료
 
-Day 3 Will be update
-1) Front-end Area
-- Axios Feature 기능 구현
-- HTML Render 구현
-2) Backend Area
-- DB Table Model 수정 및 구현
-- Backend board area 기초기능 구현 
 
 ## Day3 Completed
 
@@ -91,60 +79,37 @@ Day 3 Will be update
 5) User router 완료
 6) user 기능 및 오류 수정완료
 
-Day 4 Will be update
-1) Front-end Area
-- 회원가입 API 기본 작업
-- HTML layout 작업
-- Front server route / 기능 작업
-
-2) Backend Area
-- Will be update
 
 ## Day4 Completed
-1) Front 
-- 회원가입시 KAKAO지도 API 사용 연동
-- DB 회원가입 검증
-- Main / User Interface & UI 작업완료
-- User Axios / Backend 연결 작업완료
-
-2)BackEnd
-- DB 더미데이터 생성
-- 통신 작업완료
-
-Day 5 Will be update
-Board 기초작업
+1) 회원가입시 KAKAO지도 API 사용 연동
+2) DB 회원가입 검증
+3) Main / User Interface & UI 작업완료
+4) User Axios / Backend 연결 작업완료
+5) DB 더미데이터 생성
+6) 통신 작업완료
 
 ## Day5 Completed
-1)Front
-- Board list/View/Write 작업완료
-- Board 기본 기능 작업
+1) Board list/View/Write 작업완료
+2) Board 기본 기능 작업
 
-2) Backend
-- Will be update
-
-
-Day 6 Will be update
-Board 작업예정 
 
 ## Day 6 Completed
 1) MyPage 작업완료
 2) 회원가입 이용약관 iFrame 적용완료
 3) Board CRUD 기초 설계 진행
 
-Day 7 Will be update
-User 기능 마무리 및 Board 작업
 
 ## Day 7 Completed
 1) MyPage 작업완료
 2) Board View 페이지 구현완료
 3) Like 기능 구현 완료 
 
-Day 8 Will be update
-Board 기능 구현
 
 ## Day 8 Completed
 1)Front Router작업
+
 2)Notification 기능 구현
+
 3)Board CRUD 작업 진행
 
 ## Day 8 Completed
