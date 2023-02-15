@@ -4,6 +4,7 @@ const request = axios.create({
 })
 const modifyBtn = document.querySelector("#modifyBtn")
 const submitBtn = document.querySelector("#submitBtn")
+const backBtn = document.getElementById("backBtn")
 const userId = document.querySelector(".userId").innerHTML
 const input = document.querySelectorAll("input")
 
@@ -12,12 +13,17 @@ const modifyHandler = async (e) => {
     console.log(response.data)
 }
 
+const backBtnHandler = () => {
+    location.href = `http://127.0.0.1:3005/`
+}
+
 // console.log(input)
 // const submitHandler = async (e) => {
 //     e.perventDefault()
 //     console.log(e.target)
 // }
 modifyBtn.addEventListener("click", modifyHandler)
+backBtn.addEventListener("click", backBtnHandler);
 // submitBtn.addEventListener("submit", submitHandler)
 
 

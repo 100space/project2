@@ -231,48 +231,42 @@ class BoardRepository {
         return userInfo
     }
 
-    // 좋아요 추가
+    // 좋아요 추가&삭제 
     async insertLike(payload) {
         try {
-            const { userId, boardIdx, categoryMain } = payload
-            const likeResult = await this.liked.findOrCreate({
-                where: { userId, boardIdx },
-                defaults: {
-                    userId,
-                    boardIdx,
-                },
+        // userId, boarIdx, mainCD payload 담기
+        const { userId, boardIdx, mainCd } = payload
+        console.log('11 repository', payload)
+        // user, boardIdx 일치하는 게시물의 좋아요 확인
+        const liked = await this.liked.findOne({
+            where: { userId, boardIdx },
+          })
+          console.log('22 repository', liked)
+          // 좋아요가 이미 있으면 좋아요 제거 
+          if (liked) {
+            await liked.destroy()
+          } // 좋아요가 없으면 좋아요 추가  
+          else {
+            await this.liked.create({
+              userId,
+              boardIdx,
             })
-            const likeresult = likeResult[0].dataValues
-            if (likeResult[1]) {
-                const likeCount = await this.liked.findAll({
-                    where: {
-                        boardIdx,
-                    },
-                    raw: true,
-                })
-                const likeValue = likeCount.length
-                const boardLike = await this.Board.update({ liked: likeValue }, { where: { boardIdx } })
-                return boardLike
-            } else {
-                const likeDelete = await this.liked.destroy({
-                    where: {
-                        userId,
-                    },
-                })
-                const likeCount = await this.liked.findAll({
-                    where: {
-                        boardIdx,
-                    },
-                    raw: true,
-                })
-                const likeValue = likeCount.length
-                const boardLike = await this.Board.update({ liked: likeValue }, { where: { boardIdx } })
-                return boardLike
-            }
+          }
+          // boardIdx 매칭되는 게시물 좋아요 개수 카운트
+          const likeCount = await this.liked.count({
+            where: {
+              boardIdx,
+            },
+          })
+          console.log('33 repository', likeCount)
+          // 게시물 좋아요 수 업데이트
+          const response = await this.Board.update({ liked: likeCount }, { where: { boardIdx } })
+          console.log('44 repository', response)
+          return response
         } catch (e) {
-            throw new Error(`Error while insert status: ${e.message}`)
+          throw new Error(`Error while inserting like: ${e.message}`)
         }
-    }
+      }
 
     // 사진 값 정렬
     async pictureCreate(payload) {

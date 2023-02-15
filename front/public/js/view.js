@@ -10,9 +10,11 @@ const loginUser = document.querySelector("#userId")
 const writeCheckBtn = document.querySelector("#writeCheckBtn")
 const viewModify = document.querySelector("#view_modify")
 const commentFrm = document.querySelector("#comment-form")
+const commentContent = document.querySelectorAll(".comment")
 const commentList = document.querySelector("#commentList")
-const commentModify = document.querySelector(".comment_modify")
+const commentModify = document.querySelectorAll(".comment_modify")
 const commentCount = document.querySelector("#commentHeader > span:nth-child(2)")
+const liked = document.querySelector("#liked")
 const contentValue = hidden.value
 content.innerHTML = `${contentValue}`
 let img = document.querySelectorAll("#content img[src]")
@@ -28,18 +30,24 @@ const modifyBtnHandler = async (e) => {
         location.href = `/board/${mainCd.value}?page=1`
     }
 }
-
+const likedHandler = (e) => {
+    console.dir(liked.children[0])
+    liked.children[0].classList.toggle("likedImgClick")
+}
 const commentFrmHandler = async (e) => {
     e.preventDefault()
-    if (e.target.localName === "button") {
-        const inputValue = commentFrm.children[0].value
-        const userId = loginUser.value
-        const result = await request.post(`/board/comment/${boardIdx}`, { cmdContent: inputValue, userId })
-        const { response, count } = result.data
-        const commentItem = document.createElement("div")
-        commentItem.classList.add("commentItem")
-        commentList.prepend(commentItem)
-        commentItem.innerHTML = `<div class="item_Header flex">
+
+    console.log(e)
+    const inputValue = commentFrm.children[0].value
+    if (inputValue) {
+        if (e.target.localName === "button") {
+            const userId = loginUser.value
+            const result = await request.post(`/board/comment/${boardIdx}`, { cmdContent: inputValue, userId })
+            const { response, count } = result.data
+            const commentItem = document.createElement("div")
+            commentItem.classList.add("commentItem")
+            commentList.prepend(commentItem)
+            commentItem.innerHTML = `<div class="item_Header flex">
                         <div>
                             <span class="item_Header_writer">${response.userId}</span>
                             <span class="item_Header_date">${response.createdAt}</span>
@@ -55,10 +63,15 @@ const commentFrmHandler = async (e) => {
         
         commentFrm.focus()
         commentFrm.reset()
+
+        }
     }
 }
 const commentModifyHandler = (e) => {
-    content.log(e.target)
+    console.log(e.target)
+    for (let i = 0; i < commentContent.length; i++) {
+        commentContent[i].innerHTML = `<input type="text" class="commentContent" value="${commentContent[i].innerHTML}">`
+    }
 }
 const arr = []
 for (let i = 0; i < img.length; i++) {
@@ -68,7 +81,10 @@ for (let i = 0; i < img.length; i++) {
     const response = await request.post("/board/picture", { arr, boardIdx })
     // console.log(response)
 })()
-
+liked.addEventListener("click", likedHandler)
 commentFrm.addEventListener("click", commentFrmHandler)
-commentModify.addEventListener("click", commentModifyHandler)
+console.log(commentModify.length)
+for (let i = 0; i < commentModify.length; i++) {
+    commentModify[i].addEventListener("click", commentModifyHandler, { once: true })
+}
 viewModify.addEventListener("click", modifyBtnHandler)

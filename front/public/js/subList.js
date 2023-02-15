@@ -7,7 +7,7 @@ const hidden = document.querySelector("#hidden")
 const prev = document.querySelector("#prev")
 const next = document.querySelector("#next")
 const pageNum = document.querySelector("#pageNum")
-const pagePath = boardHeaderA.attributes.href.nodeValue
+const pagePath = boardHeaderA.pathname
 let pathname2 = pagePath.replace("/board", "")
 let pathname3 = pathname2 === "/notice?page=1" ? "공지사항" : pathname2 === "/community?page=1" ? "커뮤니티" : "질문과 답변"
 

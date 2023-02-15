@@ -91,16 +91,30 @@ class BoardController {
     }
 
     // 좋아요 값 추가
-    async infoLike(req, res, next) {
+    async likeBoard(req, res, next) {
         try {
-            const { categoryMain, boardIdx, userInfo } = req.body
-            console.log(categoryMain, userInfo.userId, boardIdx)
-            const result = await this.boardService.InsertLike({ userId: userInfo.userId, boardIdx, categoryMain })
-            res.status(201).json(result)
-        } catch (e) {
-            next(e)
+            // boardIdx, userId 구조분해할당 후 담기 
+            const { boardIdx } = req.params
+            const { userId } = req.body.userInfo
+            console.log('11 Con',req.body)
+            console.log('22 Con',req.params)
+            // service likeBoard method 호출 및 값 담기
+            const response = await this.boardService.likeBoard({ boardIdx, userId })
+            res.status(201).json(response)
+            } catch (e) {
+                next(e)
+            }
         }
-    }
+    // async infoLike(req, res, next) {
+    //     try {
+    //         const { categoryMain, boardIdx, userInfo } = req.body
+    //         console.log(categoryMain, userInfo.userId, boardIdx)
+    //         const result = await this.boardService.InsertLike({ userId: userInfo.userId, boardIdx, categoryMain })
+    //         res.status(201).json(result)
+    //     } catch (e) {
+    //         next(e)
+    //     }
+    // }
 
     // 사진 저장하기
     async pictureInsert(req, res, next) {

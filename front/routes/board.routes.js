@@ -100,6 +100,7 @@ router.get("/:mainCd/:subCd", async (req, res, next) => {
     const result = await request.get(`/board/${mainCd}/${subCd}/${pagequery.page}`)
     const {data:{correctValue, cateLength, subVal}}= result
     res.render("board/subList.html", { mainCd, listValue:correctValue, cateLength, subVal })
+
 })
 
 /////////////

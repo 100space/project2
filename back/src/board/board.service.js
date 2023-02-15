@@ -203,14 +203,48 @@ class BoardService {
     }
 
     // 좋아요 추가하기
-    async InsertLike({ userId, boardIdx, categoryMain }) {
+    async likeBoard(payload) {
         try {
-            const result = await this.boardRepository.insertLike({ userId, boardIdx, categoryMain })
-            return result
-        } catch (e) {
-            throw new Error(e)
+        // payload 에 담고
+        const { userId, boardIdx, mainCd } = payload
+        // 좋아요 여부 체크
+        const liked = await this.liked.findOne({
+            where: { userId, boardIdx },
+            })
+            console.log('11service',payload)
+            console.log('22service',liked)
+        // 이미 눌럿다면 좋아요 삭제
+        if (liked) {
+            await liked.destroy()
+            }
+        // 안눌럿으면 추가
+        else {
+            await this.liked.create({
+            userId,
+            boardIdx,
+            })
         }
-    }
+        // 좋아요 카운트 구하기 
+        const likeCount = await this.liked.count({
+            where: { boardIdx },
+            })
+            console.log('33service',likeCount)
+        // 게시물 업데이트
+        const response = await this.Board.update({ liked: likeCount }, { where: { boardIdx } })
+        console.log('44service',response)
+        return response
+        } catch (e) {
+            throw new Error(`Error while processing like board: ${e.message}`)
+        }
+    }        
+    // async InsertLike({ userId, boardIdx, categoryMain }) {
+    //     try {
+    //         const result = await this.boardRepository.insertLike({ userId, boardIdx, categoryMain })
+    //         return result
+    //     } catch (e) {
+    //         throw new Error(e)
+    //     }
+    // }
 
     // 사진 다듬기
     async PictureCreate({ arr, boardIdx }) {
