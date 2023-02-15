@@ -165,9 +165,9 @@ class BoardController {
     // 댓글 수정하기
     async putComment(req,res,next) {
         try {
-            const {boardIdx} = req.params
-            const {cmdContent, userId, cmdIdx} = req.body
-            const result = await this.boardService.UpdateComment({boardIdx, cmdContent, userId, cmdIdx})
+            const {cmdIdx} = req.params
+            const {cmdContent} = req.body
+            const result = await this.boardService.UpdateComment({cmdContent, cmdIdx})
             res.status(201).json(result)
         } catch (e) {
             next(e)

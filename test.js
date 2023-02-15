@@ -24,3 +24,7 @@
 ```sql
 SELECT A.tag FROM Hashtag A JOIN Hash B ON A.hashTagIdx = B.hashTagIdx WHERE B.boardIdx =136
 ```
+
+```sql
+SELECT A.boardIdx From Liked A JOIN User B ON A.userId = B.userId WHERE B.userId = 1;
+```

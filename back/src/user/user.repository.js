@@ -2,6 +2,7 @@ class UserRepository {
     constructor({ User, sequelize, Sequelize }) {
         this.User = User
         this.Board = sequelize.models.Board
+        this.Comment = sequelize.models.Comment
         this.sequelize = sequelize
         this.Sequelize = Sequelize
     }
@@ -135,6 +136,20 @@ class UserRepository {
             return { response, findMain }
         } catch (e) {
             throw new Error(`Error while find writing Value: ${e.message}`)
+        }
+    }
+
+    async findReaction({userId}){
+        try {
+            const myBoardResponse = await this.Comment.findAll({
+                where:{
+                    userId
+                },
+                raw:true    
+            })
+            console.log(myBoardResponse)
+        } catch (e) {
+            
         }
     }
 }
