@@ -18,7 +18,17 @@ class BoardService {
             sub8: "0008",
             sub9: "0009",
         }
-        this.moment = moment
+        this.dateVal = (dayobj)=>{
+            let value =JSON.stringify(dayobj).slice(1,11)
+            return value
+        }
+        this.objDate = (obj)=>{
+            obj = obj.map(x=>{
+                x.createdAt = this.dateVal(x.createdAt)
+                return x
+            })
+            return obj
+        }
     }
     // 글쓰기
     async MakeWrite(payload) {
@@ -37,8 +47,9 @@ class BoardService {
     // 게시물 리스트 view 보기
     async FindValue({ boardIdx }) {
         try {
-            const result = await this.boardRepository.findValue({ boardIdx })
-            const { cateCd } = result.response
+            let result = await this.boardRepository.findValue({ boardIdx })
+            result.response.createdAt = this.dateVal(result.response.createdAt)
+            let { cateCd } = result.response
             const mainValue = cateCd.slice(0, 4)
             const subValue = cateCd.slice(4, 8)
             const keySub = Object.keys(this.subChange)
@@ -56,7 +67,6 @@ class BoardService {
     async ChangeView(payload) {
         try {
             const { boardIdx, subject, content, userId, mainCd, subCd, hash } = payload
-            console.log(hash)
             const hashValue = JSON.parse(hash)
             const hashArray = hashValue.map((x) => x.value)
             const mainCdValue = this.mainChange[mainCd]
@@ -105,6 +115,7 @@ class BoardService {
                 const subValue = x.cateCd.slice(4, 8)
                 const sendMain = mainValue === this.mainChange.notice ? "notice" : mainValue === this.mainChange.community ? "community" : "qna"
                 const sendSub = subValue === this.subChange.sub1 ? "sub1" : subValue === this.subChange.sub2 ? "sub2" : "sub3"
+                x.createdAt =this.dateVal(x.createdAt)
                 x.mainCd = sendMain
                 x.subCd = sendSub
                 return x
@@ -112,7 +123,6 @@ class BoardService {
             const cateLength = {
                 length: `${result.allMainCd}`,
             }
-            console.log(cateLength)
             const findSub = result.findSub.map((x) => {
                 const array = x.cateCd.slice(4, 8)
                 return array
@@ -140,7 +150,12 @@ class BoardService {
             const subCdValue = this.subChange[subCd]
             const findValue = `${mainCdValue}${subCdValue}`
             const result = await this.boardRepository.categoryValue({ findValue, pageNumber, mainCdValue })
-            const { correctValue, subcateLength, findSub } = result
+            console.log(result)
+            let { correctValue, subcateLength, findSub } = result
+            correctValue = correctValue.map(x=>{
+                x.createdAt = this.dateVal(x.createdAt)
+                return x
+            })
             const subArray = findSub.map((x) => x.cateCd.slice(4, 8))
             const subValue = subArray.map((x, i) => {
                 switch (x) {

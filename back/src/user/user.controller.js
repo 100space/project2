@@ -104,12 +104,7 @@ class UserController {
         }
     }
 
-    // 내가 쓴 글 메인 카테고리로 분류하기
-    async myMainCd(req, res, next) {
-        try {
-            const { mainCd } = req.params
-        } catch (e) {}
-    }
+    // 내가 쓴 글 메인 카테고
 }
 
 module.exports = UserController

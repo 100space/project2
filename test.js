@@ -28,3 +28,7 @@ SELECT A.tag FROM Hashtag A JOIN Hash B ON A.hashTagIdx = B.hashTagIdx WHERE B.b
 ```sql
 SELECT A.* FROM Board A JOIN (SELECT A.boardIdx From Liked A JOIN User B ON A.userId = B.userId WHERE A.userId = "admin1") B ON A.boardIdx = B.boardIdx;
 ```
+
+```sql
+SELECT A.* From Board A JOIN Comment B ON A.boardIdx = B.boardIdx Where B.userId = "admin1"
+```

@@ -54,7 +54,6 @@ router.get("/myview/reaction", async(req,res,next)=>{
     const {data : {myBoardResponse, myLikeResponse}} = response
     const myBoardResponseCount = myBoardResponse.length
     const myLikeReseponseCount = myLikeResponse.length
-    
     res.render("user/reaction.html", {commentCount : myBoardResponseCount, commentValue:myBoardResponse, likeCount: myLikeReseponseCount, likeValue:myLikeResponse })
 })
 
@@ -87,7 +86,6 @@ router.get("/myview/:mainCd", async(req,res,next) => {
         }
     return mainCd
     })
-    console.log("test13",findMainCd)
     const { data : {myLength, findMain, writeCdarray},} = response
     const filteredFindMain = findMain.filter((item) => item.mainCd === mainCd)
     const totalPage = Math.ceil(filteredFindMain.length / 5)
@@ -101,7 +99,6 @@ router.get("/myview/:mainCd", async(req,res,next) => {
     const pagedFindMain = filteredFindMain.slice(startIdx, endIdx)
     res.render("user/mywrite.html", {myLength, listValue : pagedFindMain, subVal : writeCdarray, mainCd, currentPage : page, totalPage})
 })
-
 
 
 module.exports = router

@@ -4,7 +4,7 @@
 <div id="viewWrap">
     <div>
         <div id="boardHeader" class="flex-center">
-            <a href="/user/myview?page=1"></a>
+            <a href="/user/myview?page=1">내가 쓴 글</a>
         </div>
         <div id="subCategory" class="flex-justi-center">
             {% for item in subVal %}
@@ -52,8 +52,8 @@
                 </ul>
             </div>
             <div id="writeBtn" class="boardBtn">
-                <div class="flex-center">
-                    <a href="/board/{{mainCd}}/write"> 글쓰기 </a>
+                <div class="flex-center" style="display: none;">
+                    
                 </div>
             </div>
         </div>
