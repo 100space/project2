@@ -95,9 +95,9 @@ class UserController {
             const {userId} = req.body
             console.log(userId)
             const response = await this.userService.FindReaction({userId})
-            res.status(201).json(result)
+            res.status(201).json(response)
         } catch (e) {
-            
+             next(e)
         }
     }
 
