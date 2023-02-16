@@ -41,6 +41,8 @@ router.get("/myview", async (req, res, next) => {
     const {
         data: { myLength, findMain, writeCdarray },
     } = response
+    console.log('123',response)
+    console.log('444',findMain)
     res.render("user/mywrite.html", { myLength, listValue: findMain, subVal: writeCdarray })
 })
 
@@ -56,7 +58,21 @@ router.get("/myview/reaction", async(req,res,next)=>{
     
     res.render("user/reaction.html", {commentCount : myBoardResponseCount, commentValue:myBoardResponse, likeCount: myLikeReseponseCount, likeValue:myLikeResponse })
 })
-router.get("/myview/:mainCd")
+router.get("/myview/:mainCd", async(req,res,next) => {
+    const { userId } = req.user
+    const { boardHot } = req
+    const { userHot } = req
+    const { page } = req.query
+    const { mainCd } = req.params
+    const response = await request.post("/profile/myview/mywrite", {userId, page})
+    console.log("category",response.data)
+    
+    const { data : {myLength, findMain, writeCdarray},} = response
+    const filteredFindMain = findMain.filter((item) => item.mainCd === mainCd)
+    // console.log(filteredFindMain)
+    // console.log('test',findMain)
+    res.render("user/mywrite.html", {myLength, listValue : filteredFindMain, subVal : writeCdarray, mainCd})
+})
 
 
 
