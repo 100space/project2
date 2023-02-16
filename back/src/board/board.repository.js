@@ -79,8 +79,13 @@ class BoardRepository {
                 raw: true,
             })
             const likedUser = likedTable.map((x) => x.userId)
-            console.log(response)
-            return { response, hashResponse, commentResponse, commentLength, likedUser }
+            const recmd = await this.sequelize.query(
+                `SELECT A.cmdIdx, A.recmdContent, A.createdAt , A.userId FROM Recomment A JOIN (SELECT A.cmdIdx FROM Comment A JOIN Board B ON A.boardIdx = B.boardIdx WHERE A.boardIdx = ${boardIdx}) B ON A.cmdIdx = B.cmdIdx ORDER BY A.createdAt DESC `,
+                {
+                    type: this.queryTypes.SELECT,
+                }
+            )
+            return { response, hashResponse, commentResponse, commentLength, likedUser, recmd }
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
         }
@@ -392,15 +397,18 @@ class BoardRepository {
     }
 
     // 대댓글 달기
-    async creReComment({cmdIdx, recmdContent, userId}){
+    async creReComment({ cmdIdx, recmdContent, userId }) {
         try {
-            const response = (await this.recomment.create({cmdIdx, recmdContent, userId})).get({plain:true})
-            return response
+            console.log(cmdIdx)
+            const response = (await this.recomment.create({ cmdIdx, recmdContent, userId })).get({ plain: true })
+
+            const result = await this.recomment.findAll({ where: { cmdIdx }, raw: true })
+            console.log(result, "$%$%$%$%")
+            return result
         } catch (e) {
             throw new Error(`Error while create ReComment status: ${e.message}`)
         }
     }
-    
 }
 
 module.exports = BoardRepository

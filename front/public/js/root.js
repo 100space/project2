@@ -23,11 +23,20 @@ const cardHandler = (e) => {
             console.log(card[`${i}`].style)
             card[`${i}`].style.transform = "rotate(0deg)"
             card[`${i}`].style.transition = "all 2s"
-            card[2].style.bottom = "0"
-            card[5].style.right = "0"
-            card[5].style.bottom = "0"
-            card[3].style.bottom = "0"
-            card[3].style.right = "0"
+            setTimeout(() => (card[2].style.bottom = "0"), 200)
+            setTimeout(() => {
+                card[5].style.right = "0"
+                card[5].style.bottom = "0"
+            }, 700)
+            setTimeout(() => {
+                card[3].style.bottom = "0"
+                card[3].style.right = "0"
+            }, 300)
+            setTimeout(() => {
+                card[1].style.bottom = "0"
+                card[1].style.right = "0"
+                card[1].style.transition = "all 1s"
+            }, 500)
         }
     }, 1500)
 }

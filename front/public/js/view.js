@@ -86,6 +86,7 @@ const commentFrmHandler = async (e) => {
 
                 let button = document.createElement("button")
                 button.type = "submit"
+                button.classList = "submitBtn"
                 button.innerHTML = "수정 완료"
 
                 form.appendChild(input)
@@ -127,6 +128,7 @@ for (let i = 0; i < commentControll.length; i++) {
             })
         }
         if (e.target.classList[0] === "comment_delete") {
+            confirm("삭제하시겠습니까?")
             location.href = `/board/${mainCd.value}/comment/${cmdIdxz[i].value}`
         }
     })
@@ -135,23 +137,24 @@ for (let i = 0; i < commentItems.length; i++) {
     reply[i].addEventListener(
         "click",
         async (e) => {
+            console.log(cmdIdxz)
             //<div class="commentReply"><input type="text" name="commentReply" id="commentReplyInput" /></div>
             const input = document.createElement("form")
             input.setAttribute("class", "commentReply")
-            input.innerHTML = `<input type="text" id="commentReplyInput" />`
+            input.setAttribute("method", "post")
+            input.setAttribute("action", `/board/reply/${cmdIdxz[i].value}?userId=${userId}`)
+            input.innerHTML = `<input type="text" id="commentReplyInput" name="recmdContent"/>`
             commentItems[i].after(input)
-            console.log(input.value)
-            if (input.value) {
-                const result = await request.post(`/board/reply/${cmdIdxz[i].value}`, { recmdContent: input.value, userId })
-                const { response, count } = result.data
-            }
         },
         { once: true }
     )
 }
 for (let i = 0; i < viewReply.length; i++) {
-    viewReply[i].addEventListener("click", () => {
-        replyCommentItem[i].classList.toggle("none")
+    viewReply[i].addEventListener("click", (e) => {
+        const item = e.target.parentNode.querySelectorAll(".replyCommentItem")
+        for (const comment of item) {
+            comment.classList.toggle("none")
+        }
     })
 }
 commentFrm.addEventListener("click", commentFrmHandler)

@@ -137,9 +137,10 @@ ul > #tags {
     font-size: 1.8rem;
     border: solid 1px var(--background-color);
 }
-#commentBody > form > button {
+#commentBody > form > button,
+.submitBtn {
     width: 10%;
-    height: 6rem;
+    height: 6rem !important;
     font-size: 1.6rem;
     font-weight: 700;
     border: none;
@@ -155,17 +156,20 @@ ul > #tags {
     padding: 1rem;
     margin: 0 auto;
     border-bottom: 1px dashed var(--background-color);
+    margin-bottom: 1rem;
+}
+.commentItem > div:last-child {
+    margin-bottom: 1rem;
 }
 .replyCommentItem {
     width: 90%;
     height: fit-content;
     /* margin: 0 auto; */
     float: right;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: 1rem 0 1rem 1rem;
+    margin-top: 1rem;
     border-bottom: 1px dashed var(--background-color);
 }
-
 .item_Header_writer {
     font-size: 1.8rem;
 }
@@ -264,7 +268,12 @@ ul > #tags {
     width: 10%;
     height: 7rem;
 }
-.commentReply {
+#commentReplyInput {
+    width: 75%;
+    height: 6rem;
+    padding: 0.8rem;
+    font-size: 1.8rem;
+    border: solid 1px var(--background-color);
 }
 .viewReply {
     margin-top: 1rem;

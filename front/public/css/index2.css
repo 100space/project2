@@ -46,6 +46,9 @@
     background-color: #fff;
     grid-area: b;
     transform: rotate(-30deg);
+    position: relative;
+    right: 15rem;
+    bottom: -10rem;
 }
 #c {
     background-color: #fff;

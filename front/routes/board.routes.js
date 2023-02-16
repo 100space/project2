@@ -23,7 +23,16 @@ router.post("/:mainCd/search", async (req, res, next) => {
     } = result
     res.render("board/search.list.html", { subjectlength, userlength, subjectResponse, adminResponse, search, boardIdx, mainCd })
 })
+router.post("/reply/:cmdIdx", async (req, res, next) => {
+    const { cmdIdx } = req.params
+    console.log(cmdIdx)
+    const { userId } = req.query
+    const url = req.header("referer").slice(21)
+    const { recmdContent } = req.body
+    const result = await request.post(`/board/reply/${cmdIdx}`, { recmdContent, userId })
 
+    res.redirect(url)
+})
 router.get("/search", async (req, res, next) => {
     const { search } = req.query
     const result = await request.post(`/board/search`, { search })
@@ -73,10 +82,12 @@ router.post("/:mainCd/view/:boardIdx/modify", async (req, res, next) => {
 router.get("/:mainCd/view/:boardIdx", async (req, res, next) => {
     const { mainCd, boardIdx } = req.params
     const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
+    // const replyresult = await request.post(`/board/reply/${cmdIdxz[i].value}`, { recmdContent: input.value, userId })
+    // console.log(replyresult)
     const {
-        data: { response, hashResponse, commentResponse, commentLength, likedUser },
+        data: { response, hashResponse, commentResponse, commentLength, likedUser, recmd },
     } = result
-    res.render("board/view.html", { newBoard: response, newHashTagVal: hashResponse, commentResponse, commentLength, likedUser })
+    res.render("board/view.html", { newBoard: response, newHashTagVal: hashResponse, commentResponse, commentLength, likedUser, recmd })
 })
 // 게시물 작성 후 확인하기
 router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {
@@ -100,7 +111,7 @@ router.post("/:mainCd/comment/:cmdIdx", async (req, res, next) => {
     const { cmdContent } = req.body
     const { mainCd, cmdIdx } = req.params
     const result = await request.put(`/board/comment/${cmdIdx}`, { cmdContent })
-    res.redirect(`/board/${mainCd}/view/1`)
+    res.redirect(`/board/${mainCd}/view/12`)
 })
 
 //제일 밑으로 내려가자
@@ -108,9 +119,11 @@ router.get("/:mainCd/:subCd", async (req, res, next) => {
     const { mainCd, subCd } = req.params
     const { page } = req.query
     const result = await request.get(`/board/${mainCd}/${subCd}/${page}`)
-    const { data: { correctValue, subVal }} = result
+    const {
+        data: { correctValue, subVal },
+    } = result
     const cateArray = result.data.cateLength
-    const cateLength = Array.from({ length : cateArray}, (_, i) => i + 1)
+    const cateLength = Array.from({ length: cateArray }, (_, i) => i + 1)
     res.render("board/subList.html", { mainCd, listValue: correctValue, cateLength, subVal })
 })
 
