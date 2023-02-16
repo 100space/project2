@@ -325,9 +325,10 @@ class BoardService {
     }
 
     // 대댓글 달기
-    async CreReComment({cmdIdx, recmdContent, userId}){
+    async CreReComment({ cmdIdx, recmdContent, userId }) {
+        console.log(cmdIdx, recmdContent, userId)
         try {
-            const result = await this.boardRepository.creReComment({cmdIdx, recmdContent, userId})
+            const result = await this.boardRepository.creReComment({ cmdIdx, recmdContent, userId })
             return result
         } catch (e) {
             throw new Error(e)

@@ -87,22 +87,24 @@
                     </div>
                     <div class="comment">{{comment.cmdContent}}</div>
                     <div class="viewReply">↓ 답글 보기 ↓</div>
-                </div>
-                <div class="replyCommentItem none">
-                    <div class="item_Header flex">
-                        <div>
-                            <span class="item_Header_writer">{{comment.userId}}</span>
-                            <span class="item_Header_date">{{comment.createdAt}}</span>
+                    {% for recomment in recmd %} {% if comment.cmdIdx === recomment.cmdIdx %}
+                    <div class="replyCommentItem none">
+                        <div class="item_Header flex">
+                            <div>
+                                <span class="item_Header_writer">{{recomment.userId}}</span>
+                                <span class="item_Header_date">{{recomment.createdAt}}</span>
+                            </div>
+                            {% if userId === recomment.userId %}
+                            <div class="comment_controll">
+                                <input type="hidden" id="cmdIdx" value="{{comment.cmdIdx}}" />
+                                <span class="comment_modify item_Header_date">수정</span>
+                                <span class="comment_delete item_Header_date">삭제</span>
+                            </div>
+                            {% endif %}
                         </div>
-                        {% if userId === comment.userId %}
-                        <div class="comment_controll">
-                            <input type="hidden" id="cmdIdx" value="{{comment.cmdIdx}}" />
-                            <span class="comment_modify item_Header_date">수정</span>
-                            <span class="comment_delete item_Header_date">삭제</span>
-                        </div>
-                        {% endif %}
+                        <div class="comment">{{recomment.recmdContent}}</div>
                     </div>
-                    <div class="comment">{{comment.cmdContent}}</div>
+                    {% endif%} {% endfor %}
                 </div>
                 {% endfor %}
             </div>

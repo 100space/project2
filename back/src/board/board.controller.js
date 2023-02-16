@@ -122,7 +122,6 @@ class BoardController {
     async pictureInsert(req, res, next) {
         try {
             const { arr, boardIdx } = req.body
-            console.log(arr, boardIdx, "+++++++++++++++++++++++++")
             const result = await this.boardService.PictureCreate({ arr, boardIdx })
             res.status(201).json(result)
         } catch (e) {
@@ -187,12 +186,12 @@ class BoardController {
     }
 
     // 대댓글 만들기
-    async createReComment(req,res,next){
+    async createReComment(req, res, next) {
         try {
-            let {cmdIdx}= req.params
+            let { cmdIdx } = req.params
             cmdIdx = Number(cmdIdx)
-            const {recmdContent, userId}=  req.body
-            const result = await this.boardService.CreReComment({cmdIdx, recmdContent, userId})
+            const { recmdContent, userId } = req.body
+            const result = await this.boardService.CreReComment({ cmdIdx, recmdContent, userId })
             res.status(201).json(result)
         } catch (e) {
             next(e)

@@ -67,18 +67,20 @@ body {
 #subject {
     font-size: 2.6rem;
 }
-#liked {
+#liked,
+#views {
     display: flex;
     justify-content: center;
     /* flex-direction: column; */
     align-items: center;
-    width: 14rem;
+    width: 10rem;
     height: 5rem;
-    font-size: 1.4rem;
+    font-size: 1.8rem;
 }
-#liked > img {
-    width: 3rem;
-    height: 3rem;
+#liked > img,
+#views > img {
+    width: 4rem;
+    height: 4rem;
 }
 #boardNav {
     width: 90%;

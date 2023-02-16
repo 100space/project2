@@ -10,15 +10,14 @@
             {% for item in subVal %}
             <li class="flex-center">
                 <a href="/board/{{mainCd}}/{{item.categorySub}}?page=1" id="subCdLink">{{item.categorySub}}</a>
-            {% endfor %}
+                {% endfor %}
+            </li>
         </div>
 
         <div class="flex-justi-center flex-column">
             {% for item in listValue %}
             <div id="contentBox">
-                <div id="conImage" class="flex-center">
-                    <div id="contentImg">img</div>
-                </div>
+                <div id="conImage" class="flex-center"></div>
                 <div id="contentSub">
                     <ul id="subject">
                         <a href="/board/{{mainCd}}/view/{{item.boardIdx}}">제목 : {{item.subject}}</a>
@@ -31,6 +30,10 @@
                 <div id="liked">
                     <img src="/img/liked.png" alt="" />
                     <div id="contentLiked">{{item.liked}}</div>
+                </div>
+                <div id="views">
+                    <img src="/img/viewIcon.png" alt="" />
+                    <div id="contentLiked">{{item.viewCount}}</div>
                 </div>
             </div>
             {% endfor %}
