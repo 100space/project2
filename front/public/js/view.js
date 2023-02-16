@@ -19,6 +19,8 @@ const liked = document.querySelector("#liked")
 const backBtn = document.querySelector(".backBtn")
 const commentItems = document.querySelectorAll(".commentItem")
 const reply = document.querySelectorAll("#reply")
+const replyCommentItem = document.querySelectorAll(".replyCommentItem")
+const viewReply = document.querySelectorAll(".viewReply")
 const contentValue = hidden.value
 content.innerHTML = `${contentValue}`
 let img = document.querySelectorAll("#content img[src]")
@@ -43,7 +45,7 @@ const likedHandler = async (e) => {
     //
 }
 const backBtnHandler = () => {
-    location.href = document.referrer
+    location.href = `/board/${mainCd.value}?page=1`
 }
 const commentFrmHandler = async (e) => {
     e.preventDefault()
@@ -124,6 +126,9 @@ for (let i = 0; i < commentControll.length; i++) {
                 }
             })
         }
+        if (e.target.classList[0] === "comment_delete") {
+            location.href = `/board/${mainCd.value}/comment/${cmdIdxz[i].value}`
+        }
     })
 }
 for (let i = 0; i < commentItems.length; i++) {
@@ -137,12 +142,17 @@ for (let i = 0; i < commentItems.length; i++) {
             commentItems[i].after(input)
             console.log(input.value)
             if (input.value) {
-                const result = await request.post(`/board/reply/${cmdIdxz[i].value}`, { cmdContent: input.value, userId })
+                const result = await request.post(`/board/reply/${cmdIdxz[i].value}`, { recmdContent: input.value, userId })
                 const { response, count } = result.data
             }
         },
         { once: true }
     )
+}
+for (let i = 0; i < viewReply.length; i++) {
+    viewReply[i].addEventListener("click", () => {
+        replyCommentItem[i].classList.toggle("none")
+    })
 }
 commentFrm.addEventListener("click", commentFrmHandler)
 viewModify.addEventListener("click", modifyBtnHandler)

@@ -162,6 +162,7 @@ ul > #tags {
     /* margin: 0 auto; */
     float: right;
     padding: 1rem;
+    margin-bottom: 1rem;
     border-bottom: 1px dashed var(--background-color);
 }
 

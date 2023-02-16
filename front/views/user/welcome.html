@@ -1,6 +1,6 @@
 {% extends 'layout/layout.html'%} {% block css %}<link rel="stylesheet" href="/css/welcome.css" type="text/css" />{% endblock %}{% block content %}
 
-<div id="welcomeWrap" class="">
+<div id="welcomeWrap" class="flexColumn">
     <div id="welcomeFrm" class="flexColumn">
         <div id="userPic" class="userPicSize" style="background-image: url('/image/{{userPic}}');"></div>
         <div id="textfrm">
@@ -36,6 +36,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="flex-center">
+        <a href="/">메인페이지로 이동하기</a>
     </div>
 </div>
 

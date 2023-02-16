@@ -158,6 +158,9 @@ li {
     transition: all 0.5s;
     opacity: 0;
 }
+.none {
+    display: none;
+}
 #search {
     position: absolute;
     right: 20rem;
