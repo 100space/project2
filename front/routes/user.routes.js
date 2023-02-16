@@ -65,7 +65,6 @@ router.get("/myview/:mainCd", async(req,res,next) => {
     let { page } = req.query
     const { mainCd } = req.params
     const response = await request.post("/profile/myview/mywrite", {userId, page})
-    console.log('1234', response.data.boardData)
     const { data: { boardData } } = response;
     const findMainCd = boardData.map(item => {
         const cateCd = item.cateCd.substring(0, 4)

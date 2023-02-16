@@ -96,6 +96,7 @@ router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {
     const {
         data: { response, hashResponse },
     } = result
+    console.log(result)
 
     res.render("board/view.check.html", { mainCd, newBoard: response, newHashTagVal: hashResponse })
 })

@@ -19,6 +19,11 @@ class BoardRepository {
         this.Sequelize = Sequelize
         this.recomment = Recomment
         this.hashMake = async (boardIdx, hashArray) => {
+            const destroyHashtag = await await this.hash.destroy({
+                where: {
+                    boardIdx
+                }
+            })
             const hashContent = []
             for (let i = 0; i < hashArray.length; i++) {
                 const result = hashArray[i]
@@ -35,16 +40,16 @@ class BoardRepository {
     async createBoard(payload) {
         try {
             const { subject, content, mainCdValue, subCdValue, hashArray, userId } = payload
-            // console.log(payload)
             const newBoard = (await this.Board.create({ subject, content, userId, cateCd: `${mainCdValue}${subCdValue}` })).get({ plain: true })
             const newHashTagVal = []
             const userInfo = await this.User.findAll({ where: { userId }, raw: true })
             const userPic = userInfo[0].userPic
-            // const newUser = await this.sequelize.query(`UPDATE USER SET userBoard=userBoard+1 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-            // const userPoint = await this.sequelize.query(`UPDATE USER SET userPoint=userPoint+10 WHERE userId='${userId}'`, { type: this.queryTypes.UPDATE })
-
-            if (!hashArray) return { newBoard, newHashTagVal }
+            if (hashArray[0] === ''){ 
+                let hashValue = null
+                return {newBoard, hashValue}
+            } else {
             const { boardIdx } = newBoard
+            console.log(boardIdx, "========================")
             const newHashTag = await this.hashMake(boardIdx, hashArray)
             const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
                 type: this.queryTypes.SELECT,
@@ -52,6 +57,7 @@ class BoardRepository {
             newBoard.userPic = userPic
             const addUserPoint = await this.User.increment({ userPoint: 10 }, { where: { userId } })
             return { newBoard, hashValue, addUserPoint }
+        }
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)
         }
@@ -62,9 +68,11 @@ class BoardRepository {
         try {
             const { boardIdx } = payload
             const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
+            let viewCount = response.viewCount
             const hashResponse = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
                 type: this.queryTypes.SELECT,
             })
+            const updateViewCount = await this.Board.update({viewCount:viewCount+1},{where:{boardIdx}})
             const commentResponse = await this.sequelize.query(
                 `SELECT B.cmdIdx, B.cmdContent, B.boardIdx, B.userId, B.createdAt from Board A JOIN Comment B On (A.boardIdx = B.boardIdx) where A.boardIdx =${boardIdx} order by B.cmdIdx DESC`,
                 {
@@ -104,9 +112,17 @@ class BoardRepository {
                     },
                 }
             )
-            if (!hashArray) return { newBoard, newHashTagVal }
-            const newHashTag = await this.hashMake(boardIdx, hashArray)
-            return newHashTag
+            
+            if (!hashArray){
+                const hashDelete = await this.hash.destroy({
+                    where: {
+                        boardIdx
+                    }
+                })
+            } else{
+                const newHashTag = await this.hashMake(boardIdx, hashArray)
+                return newHashTag
+            }
         } catch (e) {
             throw new Error(`Error while change status: ${e.message}`)
         }
@@ -154,8 +170,6 @@ class BoardRepository {
         const Op = this.Sequelize.Op
         try {
             const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 5
-            // console.log(pageNumber);
-            console.log(indexValue)
             const allMainCd = await this.Board.count({
                 where: {
                     cateCd: {
@@ -187,7 +201,7 @@ class BoardRepository {
     async categoryValue({ findValue, pageNumber, mainCdValue }) {
         const Op = this.Sequelize.Op
         try {
-            const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
+            const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 5
             const subcateLength = await this.Board.count({
                 where: {
                     cateCd: {
