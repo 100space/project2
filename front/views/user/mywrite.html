@@ -8,7 +8,7 @@
         </div>
         <div id="subCategory" class="flex-justi-center">
             {% for list in subVal %}
-            <li class="flex-center"><a href="/user/myview/{{list}}?page=1">{{list}}</a></li>
+            <li class="flex-center"><a href="/user/myview/{{list}}?page=1&mainCd={{mainCd}}">{{list}}</a></li>
             {% endfor %}
         </div>
 
