@@ -86,7 +86,6 @@ class BoardRepository {
                 }
             )
             return { response, hashResponse, commentResponse, commentLength, likedUser, recmd }
-
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
         }
@@ -187,7 +186,7 @@ class BoardRepository {
     async categoryValue({ findValue, pageNumber, mainCdValue }) {
         const Op = this.Sequelize.Op
         try {
-            const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 4
+            const indexValue = pageNumber * 5 - 4 === 1 ? 0 : pageNumber * 5 - 5
             const subcateLength = await this.Board.count({
                 where: {
                     cateCd: {

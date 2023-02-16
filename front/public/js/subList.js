@@ -9,7 +9,8 @@ const next = document.querySelector("#next")
 const pageNum = document.querySelector("#pageNum")
 const pagePath = boardHeaderA.pathname
 let pathname2 = pagePath.replace("/board", "")
-let pathname3 = pathname2 === "/notice?page=1" ? "공지사항" : pathname2 === "/community?page=1" ? "커뮤니티" : "질문과 답변"
+let pathname3 = pathname2 === "/notice" ? "공지사항" : pathname2 === "/community" ? "커뮤니티" : "질문과 답변"
+console.log(pathname2)
 
 console.log(location)
 
@@ -33,8 +34,8 @@ for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
     }
 }
 prev.addEventListener("click", () => {
-    if (pageBlock > 1) { 
-        pageBlock--; 
+    if (pageBlock > 1) {
+        pageBlock--
         pageNum.innerHTML = ""
         for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
             if (i <= page) {
@@ -53,7 +54,7 @@ next.addEventListener("click", () => {
         pageNum.innerHTML = ""
         for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
             if (i <= page) {
-                const tag = document.createElement("a");
+                const tag = document.createElement("a")
                 tag.innerHTML = `${i}`
                 tag.setAttribute("href", `${pagePath}?page=${i}`)
                 pageNum.append(tag)

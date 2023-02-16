@@ -137,16 +137,26 @@ for (let i = 0; i < commentItems.length; i++) {
     reply[i].addEventListener(
         "click",
         async (e) => {
-            console.log(cmdIdxz)
-            //<div class="commentReply"><input type="text" name="commentReply" id="commentReplyInput" /></div>
-            const input = document.createElement("form")
-            input.setAttribute("class", "commentReply")
-            input.setAttribute("method", "post")
-            input.setAttribute("action", `/board/reply/${cmdIdxz[i].value}?userId=${userId}`)
-            input.innerHTML = `<input type="text" id="commentReplyInput" name="recmdContent"/>`
-            commentItems[i].after(input)
-        },
-        { once: true }
+            // console.log(commentItems[i].lastChild.localName !== "form")
+            if (commentItems[i].lastChild.localName !== "form") {
+                //<div class="commentReply"><input type="text" name="commentReply" id="commentReplyInput" /></div>
+                const input = document.createElement("form")
+                input.setAttribute("class", "commentReply")
+                input.setAttribute("method", "post")
+                input.setAttribute("action", `/board/reply/${cmdIdxz[i].value}?userId=${userId}`)
+                input.innerHTML = `<input type="text" id="commentReplyInput" name="recmdContent"/>`
+                commentItems[i].appendChild(input)
+                // input.focus()
+            } else {
+                commentItems[i].lastChild.remove()
+            }
+        }
+        // if (e.target.parentElement.parentElement.parentElement.nextElementSibling.localName === "form") {
+        // }
+        // }
+        // console.dir(e.target.parentElement.parentElement.parentElement.nextElementSibling.localName === "form")
+
+        // { once: true }
     )
 }
 for (let i = 0; i < viewReply.length; i++) {

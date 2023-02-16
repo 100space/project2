@@ -52,6 +52,9 @@ router.get("/login", (req, res, next) => {
     const { userHot } = req
     res.render("user/login.html", { boardHot, userHot })
 })
+router.get("/error", (req, res, next) => {
+    res.render("error.html")
+})
 router.use("/user", user)
 router.use("/profile", profile)
 router.use("/board", board)
@@ -82,11 +85,11 @@ router.get("/search", async (req, res, next) => {
     const boardResponse = await request.post("/board/search", { search })
     const { boardCount } = boardResponse.data
     const boardValue = boardResponse.data.response
-    const categoryMap = {'0001' : 'notice', '0002' : 'community', '0003' : 'qna'}
+    const categoryMap = { "0001": "notice", "0002": "community", "0003": "qna" }
     const data1 = boardValue.map((x) => {
         x.createdAt = x.createdAt.substring(0, 10)
-        x.cateCd = x.cateCd.substring(0,4)
-        x.mainCd = categoryMap[x.cateCd] || ''
+        x.cateCd = x.cateCd.substring(0, 4)
+        x.mainCd = categoryMap[x.cateCd] || ""
         return x
     })
     const userResponse = await request.post("/user/search", { search })

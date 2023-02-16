@@ -7,6 +7,7 @@ const request = axios.create({
 })
 //
 router.use((req, res, next) => {
+    if (!req.userInfo) return next()
     const { userPic, userId, userPw, userName, nickName, provider } = req.userInfo
     const { boardHot, userHot } = req
     res.locals = { boardHot, userHot }
@@ -109,7 +110,7 @@ router.get("/:mainCd/comment/:cmdIdx", async (req, res, next) => {
 // 댓글 수정하기
 router.post("/:mainCd/comment/:cmdIdx", async (req, res, next) => {
     const { cmdContent } = req.body
-    const {boardIdx} = req.query
+    const { boardIdx } = req.query
     const { mainCd, cmdIdx } = req.params
     const result = await request.put(`/board/comment/${cmdIdx}`, { cmdContent })
     res.redirect(`/board/${mainCd}/view/${boardIdx}`)
