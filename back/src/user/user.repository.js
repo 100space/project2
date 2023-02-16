@@ -119,41 +119,75 @@ class UserRepository {
     async findWriting({ userId, page }) {
         const Op = this.Sequelize.Op
         try {
-            const indexValue = page * 5 - 4 === 1 ? 0 : page * 5 - 4
+            const indexValue = page * 5 - 4 === 1 ? 0 : page * 5 - 5
             const response = await this.Board.findAll({
                 where: {
                     userId,
                 },
                 raw: true,
             })
-            const findMain = await this.Board.findAll({
-                limit: 5,
+            const findMain = (await this.Board.findAndCountAll({
+                limit : 5,
                 offset: indexValue,
                 where: {
                     userId,
                 },
                 raw: true,
-            })
+            })).rows
             return { response, findMain }
         } catch (e) {
             throw new Error(`Error while find writing Value: ${e.message}`)
         }
     }
 
+    // async findWriting({ userId, mainCd, page }) {
+    //     const Op = this.Sequelize.Op
+    //     try {
+    //         const offset = (page - 1) * 5
+    //         const where = {userId}
+    //     if (mainCd) {where.mainCd = mainCd}
+    //     const findMain = await this.Board.findAndCountAll({
+    //         limit: 5,
+    //         offset,
+    //         where,
+    //         raw: true
+    //         })
+    //         return findMain
+    //     } catch (e) {
+    //         throw new Error(`Error while find writing Value: ${e.message}`)
+    //     }
+    // }
+
+    
+
     async findReaction({userId}){
         try {
-            const myBoardResponse = await this.Comment.findAll({
-                where:{
-                    userId
-                },
-                raw:true    
-            })
+            const myBoardResponse = await this.sequelize.query(`SELECT A.* From Board A JOIN Comment B ON A.boardIdx = B.boardIdx Where B.userId = "${userId}"`,{type: this.queryTypes.SELECT,})
             const myLikeResponse = await this.sequelize.query(`SELECT A.* FROM Board A JOIN (SELECT A.boardIdx From Liked A JOIN User B ON A.userId = B.userId WHERE A.userId = "${userId}") B ON A.boardIdx = B.boardIdx;`,{type: this.queryTypes.SELECT,})
             return {myBoardResponse, myLikeResponse}
         } catch (e) {
             throw new Error(`Error while find Reaction: ${e.message}`)
         }
     }
+
+    // async mywriteMainCd({userId, mainCdValue,page}){
+    //     try {
+    //         const Op = this.Sequelize.Op
+    //         const indexValue = page * 5 - 4 === 1 ? 0 : page * 5 - 5
+    //         console.log(main)
+    //         const myWriteMainCd = await this.Board.findAll({
+    //             limit:5,
+    //             offset:indexValue,
+    //             where:{
+    //                cateCd: {[Op.like]: `${mainCdValue}%`},
+    //                userId
+    //             },
+    //             raw:true
+    //         })
+    //     } catch (e) {
+            
+    //     }
+    // }
 }
 
 module.exports = UserRepository

@@ -4,14 +4,15 @@
 <div id="viewWrap">
     <div>
         <div id="boardHeader" class="flex-center">
-            <a href="/user/myview?page=1"></a>
+            <a href="/user/myview?page=1">내가 쓴 글</a>
         </div>
         <div id="subCategory" class="flex-justi-center">
-            {% for list in subVal %}
-            <li class="flex-center"><a href="/user/myview/{{list}}?page=1&mainCd={{mainCd}}">{{list}}</a></li>
+            {% for item in subVal %}
+                <li class="flex-center">
+                    <a href="/user/myview/{{item}}?page=1{% if mainCd %}&mainCd={{mainCd}}{% endif %}">{{item}}</a>
+                </li>
             {% endfor %}
         </div>
-
         <div class="flex-justi-center flex-column">
             {% for item in listValue %}
             <div id="contentBox">
@@ -51,8 +52,8 @@
                 </ul>
             </div>
             <div id="writeBtn" class="boardBtn">
-                <div class="flex-center">
-                    <a href="/board/{{mainCd}}/write"> 글쓰기 </a>
+                <div class="flex-center" style="display: none;">
+                    
                 </div>
             </div>
         </div>

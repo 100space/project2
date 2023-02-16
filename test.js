@@ -28,3 +28,10 @@ SELECT A.* FROM Board A JOIN (SELECT A.boardIdx From Liked A JOIN User B ON A.us
     SELECT A.cmdIdx, A.recmdContent, A.userId FROM Recomment A JOIN (SELECT A.cmdIdx FROM Comment A JOIN Board B ON A.boardIdx = B.boardIdx WHERE A.boardIdx = 1) B ON A.cmdIdx = B.cmdIdx ORDER BY DESC
 
 ```
+
+```
+
+```sql
+SELECT A.* From Board A JOIN Comment B ON A.boardIdx = B.boardIdx Where B.userId = "admin1"
+```
+

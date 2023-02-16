@@ -11,7 +11,19 @@ class UserService {
             community: "0002",
             qna: "0003",
         }
+        this.dateVal = (dayobj)=>{
+            let value =JSON.stringify(dayobj).slice(1,11)
+            return value
+        }
+        this.objDate = (obj)=>{
+            obj = obj.map(x=>{
+                x.createdAt = this.dateVal(x.createdAt)
+                return x
+            })
+            return obj
+        }
     }
+
 
     async HotValue() {
         try {
@@ -86,14 +98,15 @@ class UserService {
     async FindWriting({ userId, page }) {
         try {
             const result = await this.userRepository.findWriting({ userId, page })
-            const { response, findMain } = result
+            let { response, findMain } = result
             const myLength = response.length
+            findMain =this.objDate(findMain)
 
             const writeCd = []
             const myWriteMainCd = response.map((x) => {
                 const myCdValue = x.cateCd.slice(0, 4)
                 writeCd.push(myCdValue)
-
+    
                 let writeCdresult = writeCd.filter((value, index) => {
                     return writeCd.indexOf(value) === index
                 })
@@ -114,7 +127,7 @@ class UserService {
                 }
                 return x
             })
-
+    
             const writeCdarray = myWriteMainCd.pop()
             writeCdarray.forEach((x, i, arr) => {
                 switch (x) {
@@ -129,16 +142,48 @@ class UserService {
                         break
                 }
             })
-            return { myLength, findMain: mainCdValue, writeCdarray }
+            return { myLength, findMain: mainCdValue, writeCdarray, boardData: response }
         } catch (e) {
             throw new Error(e)
         }
     }
 
+    // async FindWriting({ userId, page, mainCd }) {
+    //     try {
+    //         const response = await this.userRepository.findWriting({ userId, page })
+    //         const myLength = response.count
+    //         const findMain = response.rows
+    //         const writeCdarray = ["notice", "community", "qna"]
+    
+    //         const filteredFindMain = mainCd ? findMain.filter(item => item.mainCd === mainCd) : findMain
+    //         const mainCdValue = filteredFindMain.map(item => {
+    //             switch (item.cateCd.slice(0, 4)) {
+    //                 case "0001":
+    //                     item.mainCd = "notice"
+    //                     break
+    //                 case "0002":
+    //                     item.mainCd = "community"
+    //                     break
+    //                 case "0003":
+    //                     item.mainCd = "qna"
+    //                     break
+    //             }
+    //             return item
+    //         })
+    //         return { myLength, findMain: mainCdValue, writeCdarray }
+    //     } catch (e) {
+    //         throw new Error(`Error while finding writing: ${e.message}`)
+    //     }
+    // }
+
+    
+
     // 내가 좋아요 한 글, 댓글 단 글 
     async FindReaction({userId}){
         try{
             const result = await this.userRepository.findReaction({userId})
+            result.myBoardResponse = this.objDate(result.myBoardResponse)
+            result.myLikeResponse = this.objDate(result.myLikeResponse)
             return result 
         } catch(e) {
             throw new Error(e)
@@ -147,14 +192,7 @@ class UserService {
 
 
     // 내가 쓴 글 분류
-    async myMainCd({ userId }) {
-        try {
-            const { mainCd } = req.params
-            // const result
-        } catch (e) {
-            throw new Error(e)
-        }
-    }
+    
 }
 
 module.exports = UserService

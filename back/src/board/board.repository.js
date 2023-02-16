@@ -86,6 +86,7 @@ class BoardRepository {
                 }
             )
             return { response, hashResponse, commentResponse, commentLength, likedUser, recmd }
+
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
         }
