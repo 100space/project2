@@ -8,7 +8,8 @@ const request = axios.create({
 })
 
 router.use("/",(req, res, next) => {
-        const { userPic, userId, userPw, userName, nickName, provider } = req.userInfo
+    if(!req.userInfo) return next()
+    const { userPic, userId, userPw, userName, nickName, provider } = req.userInfo
     const { boardHot, userHot } = req
     res.locals = { boardHot, userHot }
     res.locals = { ...res.locals, userPic, userId, userPw, userName, nickName, provider }
@@ -40,7 +41,6 @@ router.get("/myview", async (req, res, next) => {
     const {
         data: { myLength, findMain, writeCdarray },
     } = response
-    console.log(myLength, findMain, writeCdarray)
     res.render("user/mywrite.html", { myLength, listValue: findMain, subVal: writeCdarray })
 })
 
@@ -51,7 +51,10 @@ router.get("/myview/reaction", async(req,res,next)=>{
     const { userHot } = req
     const response = await request.post("/user/myview/reaction", { userId})
     const {data : {myBoardResponse, myLikeResponse}} = response
-    res.render("")
+    const myBoardResponseCount = myBoardResponse.length
+    const myLikeReseponseCount = myLikeResponse.length
+    
+    res.render("user/reaction.html", {commentCount : myBoardResponseCount, commentValue:myBoardResponse, likeCount: myLikeReseponseCount, likeValue:myLikeResponse })
 })
 router.get("/myview/:mainCd")
 
