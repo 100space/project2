@@ -308,6 +308,16 @@ class BoardService {
             throw new Error(e)
         }
     }
+
+    // 대댓글 달기
+    async CreReComment({cmdIdx, recmdContent, userId}){
+        try {
+            const result = await this.boardRepository.creReComment({cmdIdx, recmdContent, userId})
+            return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
 }
 
 module.exports = BoardService

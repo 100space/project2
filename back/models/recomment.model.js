@@ -11,9 +11,13 @@ module.exports = (sequelize, Sequelize) => {
                     primaryKey: true,
                     autoIncrement: true,
                 },
-                cmdContent: {
+                recmdContent: {
                     type: Sequelize.TEXT,
                     allowNull: false
+                },
+                userId:{
+                    type: Sequelize.STRING(255),
+                    allowNull:false
                 }
             },
                 {
@@ -24,6 +28,9 @@ module.exports = (sequelize, Sequelize) => {
         static associate(models) {
             this.belongsTo(models.Comment, {
                 foreignKey: "cmdIdx"
+            })
+            this.belongsTo(models.User,{
+                foreignKey: "userId"
             })
             
         }

@@ -88,6 +88,9 @@ module.exports = (sequelize, Sequelize) => {
                 through: "Liked",
                 foreignKey: "userId",
             })
+            this.hasMany(models.Recomment,{
+                foreignKey: "userId"
+            })
         }
     }
     User.initialize()
