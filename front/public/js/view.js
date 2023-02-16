@@ -51,11 +51,11 @@ const commentFrmHandler = async (e) => {
     e.preventDefault()
 
     const inputValue = commentFrm.children[0].value
-    console.log(inputValue, "=====================")
     if (inputValue) {
         if (e.target.localName === "button") {
             const result = await request.post(`/board/comment/${boardIdx}`, { cmdContent: inputValue, userId })
             const { response, count } = result.data
+            console.log(response)
             const commentItem = document.createElement("div")
             commentItem.classList.add("commentItem")
             commentList.prepend(commentItem)
@@ -77,7 +77,7 @@ const commentFrmHandler = async (e) => {
                 let form = document.createElement("form")
                 form.setAttribute("charset", "UTF-8")
                 form.setAttribute("method", "post")
-                form.setAttribute("action", `/board/${mainCd.value}/comment/${response.cmdIdx}`)
+                form.setAttribute("action", `/board/${mainCd.value}/comment/${response.cmdIdx}?boardIdx=${response.boardIdx}`)
                 form.id = "commentUpdateFrm"
 
                 let input = document.createElement("input")

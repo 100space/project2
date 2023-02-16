@@ -79,7 +79,6 @@ class BoardRepository {
                 raw: true,
             })
             const likedUser = likedTable.map((x) => x.userId)
-            console.log(response)
             return { response, hashResponse, commentResponse, commentLength, likedUser }
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)

@@ -55,16 +55,31 @@ router.get("/myview/reaction", async(req,res,next)=>{
     const {data : {myBoardResponse, myLikeResponse}} = response
     const myBoardResponseCount = myBoardResponse.length
     const myLikeReseponseCount = myLikeResponse.length
-    
     res.render("user/reaction.html", {commentCount : myBoardResponseCount, commentValue:myBoardResponse, likeCount: myLikeReseponseCount, likeValue:myLikeResponse })
 })
+// router.get("/myview/:mainCd", async(req,res,next) => {
+//     const { userId } = req.user
+//     const { boardHot } = req
+//     const { userHot } = req
+//     const { page } = req.query
+//     const { mainCd } = req.params
+//     const response = await request.post("/profile/myview/mywrite", {userId, page})
+//     console.log("category",response.data)
+    
+//     const { data : {myLength, findMain, writeCdarray},} = response
+//     const filteredFindMain = findMain.filter((item) => item.mainCd === mainCd)
+//     // console.log(filteredFindMain)
+//     // console.log('test',findMain)
+//     res.render("user/mywrite.html", {myLength, listValue : filteredFindMain, subVal : writeCdarray, mainCd})
+// })
 router.get("/myview/:mainCd", async(req,res,next) => {
     const { userId } = req.user
     const { boardHot } = req
     const { userHot } = req
     const { page } = req.query
     const { mainCd } = req.params
-    const response = await request.post("/profile/myview/mywrite", {userId, page})
+    const response = await request.post(`/profile/myview/${mainCd}`, {userId, page})
+    res.send("1")
     console.log("category",response.data)
     
     const { data : {myLength, findMain, writeCdarray},} = response
@@ -73,7 +88,6 @@ router.get("/myview/:mainCd", async(req,res,next) => {
     // console.log('test',findMain)
     res.render("user/mywrite.html", {myLength, listValue : filteredFindMain, subVal : writeCdarray, mainCd})
 })
-
 
 
 module.exports = router
