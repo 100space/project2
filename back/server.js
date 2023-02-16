@@ -19,8 +19,6 @@ const hash = jwt.crypto.createHmac("sha256", SALT).update(userPw).digest("hex")
 const {
     models: { User, Board, Comment, Hashtag, Point, Liked, Hash, Counterimg, Category, Recomment },
 } = sequelize
-const moment = require("moment")
-
 
 app.use(router)
 
@@ -114,15 +112,60 @@ const http = app.listen(port, async () => {
             userPoint: "0",
         })
         await Hashtag.create({ hashTagIdx: `${i}`, tag: `${i}` })
-        await Board.create({ subject: `test1`, content: "test", userId: `admin${i}`, cateCd: "00010001" })
-        await Board.create({ subject: `test2`, content: "test", userId: `admin${i}`, cateCd: "00010002" })
-        await Board.create({ subject: `test3`, content: "test", userId: `admin${i}`, cateCd: "00010003" })
-        await Board.create({ subject: `test4`, content: "test", userId: `admin${i}`, cateCd: "00020004" })
-        await Board.create({ subject: `test5`, content: "test", userId: `admin${i}`, cateCd: "00020005" })
-        await Board.create({ subject: `test6`, content: "test", userId: `admin${i}`, cateCd: "00020006" })
-        await Board.create({ subject: `test7`, content: "test", userId: `admin${i}`, cateCd: "00030007" })
-        await Board.create({ subject: `test8`, content: "test", userId: `admin${i}`, cateCd: "00030008" })
-        await Board.create({ subject: `test9`, content: "test", userId: `admin${i}`, cateCd: "00030009" })
+        await Board.create({
+            subject: `test1`,
+            content: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+            userId: `admin${i}`,
+            cateCd: "00010001",
+        })
+        await Board.create({
+            subject: `test2`,
+            content: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+            userId: `admin${i}`,
+            cateCd: "00010002",
+        })
+        await Board.create({
+            subject: `test4`,
+            content: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+            userId: `admin${i}`,
+            cateCd: "00020004",
+        })
+        await Board.create({
+            subject: `test3`,
+            content: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+            userId: `admin${i}`,
+            cateCd: "00010003",
+        })
+        await Board.create({
+            subject: `test5`,
+            content: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+            userId: `admin${i}`,
+            cateCd: "00020005",
+        })
+        await Board.create({
+            subject: `test6`,
+            content: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+            userId: `admin${i}`,
+            cateCd: "00020006",
+        })
+        await Board.create({
+            subject: `test7`,
+            content: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+            userId: `admin${i}`,
+            cateCd: "00030007",
+        })
+        await Board.create({
+            subject: `test8`,
+            content: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+            userId: `admin${i}`,
+            cateCd: "00030008",
+        })
+        await Board.create({
+            subject: `test9`,
+            content: "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+            userId: `admin${i}`,
+            cateCd: "00030009",
+        })
         await Hash.create({ boardIdx: `${i}`, hashTagIdx: `${i}` })
     }
 

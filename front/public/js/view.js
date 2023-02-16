@@ -12,10 +12,13 @@ const viewModify = document.querySelector("#view_modify")
 const commentFrm = document.querySelector("#comment-form")
 const commentContent = document.querySelectorAll(".comment")
 const commentList = document.querySelector("#commentList")
-const commentModify = document.querySelectorAll(".comment_modify")
+const commentControll = document.querySelectorAll(".comment_controll")
 const commentCount = document.querySelector("#commentHeader > span:nth-child(2)")
+const cmdIdxz = document.querySelectorAll("#cmdIdx")
 const liked = document.querySelector("#liked")
 const backBtn = document.querySelector(".backBtn")
+const commentItems = document.querySelectorAll(".commentItem")
+const reply = document.querySelectorAll("#reply")
 const contentValue = hidden.value
 content.innerHTML = `${contentValue}`
 let img = document.querySelectorAll("#content img[src]")
@@ -60,7 +63,7 @@ const commentFrmHandler = async (e) => {
                             <span class="item_Header_date">${response.createdAt}</span>
                         </div>
                         <div class="comment_controll">
-                            <span class="comment_modify item_Header_date" id="comment_update" style="color:#444444">수정</span>
+                            <span class="comment_modify item_Header_date" id="comment_update" style="color:#808080">수정</span>
                             <span class="comment_delete item_Header_date"><a href=/board/${mainCd.value}/comment/${response.cmdIdx}>삭제</a></span>
                         </div>
                     </div>
@@ -96,12 +99,6 @@ const commentFrmHandler = async (e) => {
         }
     }
 }
-const commentModifyHandler = (e) => {
-    console.log(e.target)
-    for (let i = 0; i < commentContent.length; i++) {
-        commentContent[i].innerHTML = `<input type="text" class="commentContent" value="${commentContent[i].innerHTML}">`
-    }
-}
 const arr = []
 for (let i = 0; i < img.length; i++) {
     arr.push(img[i].currentSrc)
@@ -110,11 +107,42 @@ for (let i = 0; i < img.length; i++) {
     const response = await request.post("/board/picture", { arr, boardIdx })
     // console.log(response)
 })()
+
 liked.addEventListener("click", likedHandler)
 backBtn.addEventListener("click", backBtnHandler)
-commentFrm.addEventListener("click", commentFrmHandler)
-console.log(commentModify.length)
-for (let i = 0; i < commentModify.length; i++) {
-    commentModify[i].addEventListener("click", commentModifyHandler, { once: true })
+for (let i = 0; i < commentControll.length; i++) {
+    commentControll[i].addEventListener("click", (e) => {
+        if (e.target.classList[0] === "comment_modify" && commentContent[i].innerHTML.indexOf("input") < 0) {
+            commentContent[i].innerHTML = `<input type="text" class="commentContent" value="${commentContent[i].innerHTML}">`
+            const modifyContent = document.querySelector(".commentContent")
+            console.log(mainCd.value)
+            modifyContent.addEventListener("keyup", async (e) => {
+                if (e.keyCode === 13) {
+                    const cmdContent = modifyContent.value
+                    const modifyValue = await request.put(`/board/comment/${cmdIdxz[i].value}`, { cmdContent: `${cmdContent}` })
+                    commentContent[i].innerHTML = `${cmdContent}`
+                }
+            })
+        }
+    })
 }
+for (let i = 0; i < commentItems.length; i++) {
+    reply[i].addEventListener(
+        "click",
+        async (e) => {
+            //<div class="commentReply"><input type="text" name="commentReply" id="commentReplyInput" /></div>
+            const input = document.createElement("form")
+            input.setAttribute("class", "commentReply")
+            input.innerHTML = `<input type="text" id="commentReplyInput" />`
+            commentItems[i].after(input)
+            console.log(input.value)
+            if (input.value) {
+                const result = await request.post(`/board/reply/${cmdIdxz[i].value}`, { cmdContent: input.value, userId })
+                const { response, count } = result.data
+            }
+        },
+        { once: true }
+    )
+}
+commentFrm.addEventListener("click", commentFrmHandler)
 viewModify.addEventListener("click", modifyBtnHandler)
