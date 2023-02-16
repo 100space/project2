@@ -51,7 +51,7 @@ const userInfoClick = (e) => {
 }
 const logoutFunction = (e) => {
     e.preventDefault()
-    document.cookie = "token=; expires=Thum 01 Jan 1970 00:00:01 GMT"
+    document.cookie = "token=; path=/; expires=Thum 01 Jan 1970 00:00:01 GMT"
     location.href = "/"
 }
 const searchFunction = (e) => {

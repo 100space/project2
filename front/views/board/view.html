@@ -88,12 +88,11 @@
                     <div class="comment">{{comment.cmdContent}}</div>
                     <div class="viewReply">↓ 답글 보기 ↓</div>
                 </div>
-                <div class="replyCommentItem">
+                <div class="replyCommentItem none">
                     <div class="item_Header flex">
                         <div>
                             <span class="item_Header_writer">{{comment.userId}}</span>
                             <span class="item_Header_date">{{comment.createdAt}}</span>
-                            <span id="reply" class="item_Header_date"> 답글 달기 </span>
                         </div>
                         {% if userId === comment.userId %}
                         <div class="comment_controll">
