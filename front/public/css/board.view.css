@@ -108,6 +108,7 @@ ul > #tags {
     margin-bottom: 2rem;
 }
 #comment_wrap {
+    overflow-y: scroll;
     width: 100%;
     padding: 2rem;
     margin-top: 3rem;
@@ -121,7 +122,8 @@ ul > #tags {
     font-size: 2rem;
 }
 #commentBody {
-    margin-top: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--background-color);
 }
 #commentBody > form {
     width: 80%;
@@ -144,15 +146,22 @@ ul > #tags {
     background-color: var(--btnColor);
 }
 #commentList {
-    width: 90%;
+    width: 80%;
     margin: 2rem auto 0;
-    border-top: 1px solid var(--background-color);
 }
 .commentItem {
-    width: 80%;
+    width: 100%;
     height: fit-content;
-    padding: 2rem;
+    padding: 1rem;
     margin: 0 auto;
+    border-bottom: 1px dashed var(--background-color);
+}
+.replyCommentItem {
+    width: 90%;
+    height: fit-content;
+    /* margin: 0 auto; */
+    float: right;
+    padding: 1rem;
     border-bottom: 1px dashed var(--background-color);
 }
 
@@ -171,7 +180,7 @@ ul > #tags {
     margin-left: 0 !important;
 }
 .comment {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     font-size: 2rem;
 }
 
@@ -253,4 +262,11 @@ ul > #tags {
 #commentUpdateFrm > button {
     width: 10%;
     height: 7rem;
+}
+.commentReply {
+}
+.viewReply {
+    margin-top: 1rem;
+    color: gray;
+    font-size: 1.4rem;
 }

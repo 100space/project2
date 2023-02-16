@@ -19,7 +19,6 @@ const hash = jwt.crypto.createHmac("sha256", SALT).update(userPw).digest("hex")
 const {
     models: { User, Board, Comment, Hashtag, Point, Liked, Hash, Counterimg, Category, Recomment },
 } = sequelize
-const moment = require("moment")
 
 app.use(router)
 
