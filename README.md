@@ -145,3 +145,15 @@ Progress : 0%  No Completed of total 6 Item
 5) Comment 기능 재추가
 6) 나의 글 기능 추가
 7) Board Router/Backend 처리
+
+## Day 13 Completed 
+
+1) Paging 기능 재구현
+2) SubCategory 검색시 Paging 기능
+3) Search 결과에서 게시물 이동 
+4) Liked 기능 구현
+5) Comment 수정 
+6) Comment 삭제
+7) Front Router 오류수정
+8) Myreaction 기능 backend 생성
+9) Backend Router 오류수정
