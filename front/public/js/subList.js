@@ -10,9 +10,8 @@ const pageNum = document.querySelector("#pageNum")
 const pagePath = boardHeaderA.pathname
 let pathname2 = pagePath.replace("/board", "")
 let pathname3 = pathname2 === "/notice?page=1" ? "공지사항" : pathname2 === "/community?page=1" ? "커뮤니티" : "질문과 답변"
-const subCategory = document.querySelector("#subCategory")
-const flexCenterListItems = document.querySelectorAll('.flex-center li');
 
+console.log(location)
 
 boardHeaderA.innerHTML = `${pathname3}`
 // <div>${pathname.slice(1).replace(/^[a-z]/, (char) => char.toUpperCase())}</div>`
@@ -24,11 +23,12 @@ const checkNum = 5 * nowPage - 4
 let pageBlock = Math.ceil(nowPage / 5)
 const page = Math.ceil(boardCount / 5)
 const maxPageBlock = Math.ceil(page / 5)
+
 for (let i = 5 * pageBlock - 4; i <= 5 * pageBlock; i++) {
     if (i <= page) {
         const tag = document.createElement("a")
         tag.innerHTML = `${i}`
-        tag.setAttribute("href", `${pagePath}?page=${i}`)
+        tag.setAttribute("href", `${pathname}?page=${i}`)
         pageNum.append(tag)
     }
 }

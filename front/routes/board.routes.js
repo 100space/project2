@@ -17,12 +17,11 @@ router.post("/:mainCd/search", async (req, res, next) => {
     const { mainCd } = req.params
     const { search } = req.body
     const { boardHot } = req
-    console.log("test", boardHot)
     const result = await request.post("/board/list/search", { mainCd, search })
     const {
         data: { subjectResponse, adminResponse, subjectlength, userlength, boardIdx },
     } = result
-    res.render("board/search.list.html", { subjectlength, userlength, subjectResponse, adminResponse, search, boardIdx })
+    res.render("board/search.list.html", { subjectlength, userlength, subjectResponse, adminResponse, search, boardIdx, mainCd })
 })
 
 router.get("/search", async (req, res, next) => {
@@ -36,7 +35,6 @@ router.get("/:mainCd", async (req, res, next) => {
     const { page } = req.query
     const result = await request.get(`/board/${mainCd}/${page}`)
     const { listValue, cateLength, subVal } = result.data
-    console.log(result.data)
     res.render("board/subList.html", { mainCd, listValue, cateLength, subVal })
 })
 ///:mainCd/:subCd 라우터와 안 겹치려면 위로
@@ -108,12 +106,11 @@ router.post("/:mainCd/comment/:cmdIdx", async (req, res, next) => {
 //제일 밑으로 내려가자
 router.get("/:mainCd/:subCd", async (req, res, next) => {
     const { mainCd, subCd } = req.params
-    console.log(req.params,'123123')
-    const pagequery = req.query
-    const result = await request.get(`/board/${mainCd}/${subCd}/${pagequery.page}`)
-    const {
-        data: { correctValue, cateLength, subVal },
-    } = result
+    const { page } = req.query
+    const result = await request.get(`/board/${mainCd}/${subCd}/${page}`)
+    const { data: { correctValue, subVal }} = result
+    const cateArray = result.data.cateLength
+    const cateLength = Array.from({ length : cateArray}, (_, i) => i + 1)
     res.render("board/subList.html", { mainCd, listValue: correctValue, cateLength, subVal })
 })
 

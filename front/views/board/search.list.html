@@ -1,6 +1,7 @@
 {% extends 'layout/layout.html'%} {% block css %}
 <link rel="stylesheet" href="/css/search.css" />
-{% endblock %} {% block content %}
+{% endblock %} 
+{% block content %}
 <div id="search_Wrap">
     <div id="search_result" class="flex">' {{search}} '에 대한 검색 결과</div>
     <div id="resultBody">
@@ -18,10 +19,11 @@
                     <li>작성일</li>
                 </ul>
                 {% for item in subjectResponse %}
+                    {% set boardPath = '/board/' + mainCd + '/view/' + item.boardIdx %}
                 <ul class="tableContent flex">
                     <li>{{loop.index}}</li>
                     <li>{{item.userId}}</li>
-                    <li>{{item.subject}}</li>
+                    <li><a href="{{ boardPath }}">{{item.subject}}</a></li>
                     <li>{{item.liked}}</li>
                     <li>{{item.createdAt}}</li>
                 </ul>
@@ -42,9 +44,10 @@
                     <li>추천수</li>
                 </ul>
                 {% for item in adminResponse %}
+                {% set boardPath = '/board/' + mainCd + '/view/' + item.boardIdx %}
                 <ul class="tableContent flex">
                     <li>{{loop.index}}</li>
-                    <li>{{item.subject}}</li>
+                    <li><a href="{{ boardPath }}">{{item.subject}}</a></li>
                     <li>{{item.userId}}</li>
                     <li>{{item.createdAt}}</li>
                     <li>{{item.liked}}</li>
