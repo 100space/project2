@@ -137,7 +137,7 @@ for (let i = 0; i < commentItems.length; i++) {
             commentItems[i].after(input)
             console.log(input.value)
             if (input.value) {
-                const result = await request.post(`/board/reply/${cmdIdxz[i].value}`, { cmdContent: input.value, userId })
+                const result = await request.post(`/board/reply/${cmdIdxz[i].value}`, { recmdContent: input.value, userId })
                 const { response, count } = result.data
             }
         },

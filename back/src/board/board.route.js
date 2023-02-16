@@ -14,8 +14,8 @@ router.post("/comment/:boardIdx", (req, res, next) => controller.postComment(req
 router.put("/comment/:cmdIdx", (req, res, next) => controller.putComment(req, res, next))
 router.delete("/comment/:cmdIdx", (req, res, next) => controller.deleteComment(req, res, next))
 
-// 리팩토링할 코드
-// 리팩토링 코드 끝
+// reply comment
+router.post("/reply/:cmdIdx", (req,res,next)=> controller.createReComment(req,res,next))
 
 // 기본 CRUD
 router.post("/:mainCd/write", (req, res, next) => controller.postWrite(req, res, next))

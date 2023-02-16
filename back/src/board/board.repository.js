@@ -1,7 +1,7 @@
 class BoardRepository {
     constructor({
         sequelize: {
-            models: { User, Board, Comment, Liked, Hash, Hashtag, Picture, Category },
+            models: { User, Board, Comment, Liked, Hash, Hashtag, Picture, Category, Recomment },
         },
         Sequelize,
         sequelize,
@@ -17,6 +17,7 @@ class BoardRepository {
         this.queryTypes = Sequelize.QueryTypes
         this.sequelize = sequelize
         this.Sequelize = Sequelize
+        this.recomment = Recomment
         this.hashMake = async (boardIdx, hashArray) => {
             const hashContent = []
             for (let i = 0; i < hashArray.length; i++) {
@@ -389,6 +390,17 @@ class BoardRepository {
             throw new Error(`Error while delete Comment status: ${e.message}`)
         }
     }
+
+    // 대댓글 달기
+    async creReComment({cmdIdx, recmdContent, userId}){
+        try {
+            const response = (await this.recomment.create({cmdIdx, recmdContent, userId})).get({plain:true})
+            return response
+        } catch (e) {
+            throw new Error(`Error while create ReComment status: ${e.message}`)
+        }
+    }
+    
 }
 
 module.exports = BoardRepository
