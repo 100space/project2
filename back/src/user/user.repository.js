@@ -4,6 +4,7 @@ class UserRepository {
         this.Board = sequelize.models.Board
         this.Comment = sequelize.models.Comment
         this.sequelize = sequelize
+        this.queryTypes = Sequelize.QueryTypes
         this.Sequelize = Sequelize
     }
 
@@ -147,9 +148,10 @@ class UserRepository {
                 },
                 raw:true    
             })
-            console.log(myBoardResponse)
+            const myLikeResponse = await this.sequelize.query(`SELECT A.* FROM Board A JOIN (SELECT A.boardIdx From Liked A JOIN User B ON A.userId = B.userId WHERE A.userId = "${userId}") B ON A.boardIdx = B.boardIdx;`,{type: this.queryTypes.SELECT,})
+            return {myBoardResponse, myLikeResponse}
         } catch (e) {
-            
+            throw new Error(`Error while find Reaction: ${e.message}`)
         }
     }
 }

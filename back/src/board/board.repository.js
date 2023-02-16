@@ -249,10 +249,8 @@ class BoardRepository {
                     boardIdx,
                 },
             })
-            console.log("33 repository", likeCount)
             // 게시물 좋아요 수 업데이트
             const response = await this.Board.update({ liked: likeCount }, { where: { boardIdx } })
-            console.log("44 repository", response)
             const likedTable = await this.liked.findAll({
                 where: {
                     boardIdx,

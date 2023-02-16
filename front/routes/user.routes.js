@@ -49,8 +49,9 @@ router.get("/myview/reaction", async(req,res,next)=>{
     const {userId} = req.user
     const { boardHot } = req
     const { userHot } = req
-    const response = await request.post("/user/myview/reaction", {page, userId})
-    res.send("1")
+    const response = await request.post("/user/myview/reaction", { userId})
+    const {data : {myBoardResponse, myLikeResponse}} = response
+    res.render("")
 })
 router.get("/myview/:mainCd")
 

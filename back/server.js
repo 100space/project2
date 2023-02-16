@@ -85,6 +85,7 @@ app.get("/oauth/kakao", async (req, res, next) => {
 const http = app.listen(port, async () => {
     console.log("connecting to backend and Database...")
     await sequelize.sync({ force: true })
+    
     await Category.create({
         mainCd: "0001",
         subCd: "0000",
@@ -97,7 +98,7 @@ const http = app.listen(port, async () => {
         name: "sub1",
         type: "board",
     })
-    for (i = 1; i <= 15; i++) {
+    for (i = 1; i <= 7; i++) {
         await User.create({
             userId: `admin${i}`,
             userPw: hash,
