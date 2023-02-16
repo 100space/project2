@@ -81,15 +81,17 @@ class UserController {
 
     // 내가 쓴글
     async myWriting(req, res, next) {
+        let boardData
         try {
             const { userId, page } = req.body
             const result = await this.userService.FindWriting({ userId, page })
-            console.log(result)
+            boardData = result
             res.status(201).json(result)
         } catch (e) {
             next(e)
         }
     }
+ 
 
     async myReaction(req,res,next){
         try {

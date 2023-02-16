@@ -39,12 +39,11 @@ router.get("/myview", async (req, res, next) => {
     const { page } = req.query
     const response = await request.post("/profile/myview/mywrite", { userId, page })
     const {
-        data: { myLength, findMain, writeCdarray },
+        data: { myLength, findMain, writeCdarray, boardData },
     } = response
-    console.log('123',response)
-    console.log('444',findMain)
-    res.render("user/mywrite.html", { myLength, listValue: findMain, subVal: writeCdarray })
+    res.render("user/mywrite.html", { myLength, listValue: findMain, subVal: writeCdarray, currentPage : page })
 })
+
 
 // 내가 좋아요 누른 글, 내가 쓴 글 
 router.get("/myview/reaction", async(req,res,next)=>{
@@ -57,36 +56,48 @@ router.get("/myview/reaction", async(req,res,next)=>{
     const myLikeReseponseCount = myLikeResponse.length
     res.render("user/reaction.html", {commentCount : myBoardResponseCount, commentValue:myBoardResponse, likeCount: myLikeReseponseCount, likeValue:myLikeResponse })
 })
-// router.get("/myview/:mainCd", async(req,res,next) => {
-//     const { userId } = req.user
-//     const { boardHot } = req
-//     const { userHot } = req
-//     const { page } = req.query
-//     const { mainCd } = req.params
-//     const response = await request.post("/profile/myview/mywrite", {userId, page})
-//     console.log("category",response.data)
-    
-//     const { data : {myLength, findMain, writeCdarray},} = response
-//     const filteredFindMain = findMain.filter((item) => item.mainCd === mainCd)
-//     // console.log(filteredFindMain)
-//     // console.log('test',findMain)
-//     res.render("user/mywrite.html", {myLength, listValue : filteredFindMain, subVal : writeCdarray, mainCd})
-// })
+
+// 나의 글 내의 Category 선택
 router.get("/myview/:mainCd", async(req,res,next) => {
     const { userId } = req.user
     const { boardHot } = req
     const { userHot } = req
-    const { page } = req.query
+    let { page } = req.query
     const { mainCd } = req.params
-    const response = await request.post(`/profile/myview/${mainCd}`, {userId, page})
-    res.send("1")
-    console.log("category",response.data)
-    
+    const response = await request.post("/profile/myview/mywrite", {userId, page})
+    console.log('1234', response.data.boardData)
+    const { data: { boardData } } = response;
+    const findMainCd = boardData.map(item => {
+        const cateCd = item.cateCd.substring(0, 4)
+        let mainCd
+        switch (cateCd) {
+            case "0001":
+            mainCd = "notice"
+            break
+            case "0002":
+            mainCd = "community"
+            break;
+            case "0003":
+            mainCd = "qna"
+            break
+            default:
+            mainCd = ""
+            break
+        }
+    return mainCd
+    })
     const { data : {myLength, findMain, writeCdarray},} = response
     const filteredFindMain = findMain.filter((item) => item.mainCd === mainCd)
-    // console.log(filteredFindMain)
-    // console.log('test',findMain)
-    res.render("user/mywrite.html", {myLength, listValue : filteredFindMain, subVal : writeCdarray, mainCd})
+    const totalPage = Math.ceil(filteredFindMain.length / 5)
+    if (!page) {
+        page = 1 
+    } else if (page > totalPage) {
+        page = totalPage
+    }
+    const startIdx = (page - 1) * 5
+    const endIdx = startIdx + 5
+    const pagedFindMain = filteredFindMain.slice(startIdx, endIdx)
+    res.render("user/mywrite.html", {myLength, listValue : pagedFindMain, subVal : writeCdarray, mainCd, currentPage : page, totalPage})
 })
 
 
