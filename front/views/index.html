@@ -1,4 +1,6 @@
-{% extends 'layout/layout.html'%} {% block css %} <link rel="stylesheet" href="/css/index2.css" /> {% endblock %} {% block content %}
+{% extends 'layout/layout.html'%} {% block css %} 
+<link rel="stylesheet" href="/css/index2.css" />
+{% endblock %} {% block content %}
 <div id="communityList">
     <!-- <div id="cate_header">
         <span> 자유게시판 </span>
@@ -30,8 +32,9 @@
                         </div>
                     </div>
                     <div class="textareas">
+                        <input type="hidden" name="hidden" id="hidden1" value="{{boardRandom[0].content}}">
                         <h1 class="textSub">{{boardRandom[0].subject}}</h1>
-                        <span class="textCon">{{boardRandom[0].content}}</span>
+                        <div class="textCon1">{{boardRandom[0].content}}</div>
                         {% for Hash in randomHash[0] %}
                         <ul id="hashtag">
                             <li class="textHash">{{Hash.tag}}</li>
@@ -63,8 +66,9 @@
                         </div>
                     </div>
                     <div class="textareas">
+                        <input type="hidden" name="hidden" id="hidden2" value="{{boardRandom[1].content}}">
                         <h1 class="textSub">{{boardRandom[1].subject}}</h1>
-                        <span class="textCon">{{boardRandom[1].content}}</span>
+                        <div class="textCon2">{{boardRandom[1].content}}</div>
                         {% for Hash in randomHash[1] %}
                         <ul id="hashtag">
                             <li class="textHash">{{Hash.tag}}</li>
@@ -96,8 +100,9 @@
                         </div>
                     </div>
                     <div class="textareas">
+                        <input type="hidden" name="hidden" id="hidden3" value="{{boardRandom[2].content}}">
                         <h1 class="textSub">{{boardRandom[2].subject}}</h1>
-                        <span class="textCon">{{boardRandom[2].content}}</span>
+                        <div class="textCon3">{{boardRandom[2].content}}</div>
                         {% for Hash in randomHash[2] %}
                         <ul id="hashtag">
                             <li class="textHash">{{Hash.tag}}</li>
@@ -129,8 +134,9 @@
                         </div>
                     </div>
                     <div class="textareas">
+                        <input type="hidden" name="hidden" id="hidden4" value="{{boardRandom[3].content}}">
                         <h1 class="textSub">{{boardRandom[3].subject}}</h1>
-                        <span class="textCon">{{boardRandom[3].content}}</span>
+                        <div class="textCon4">{{boardRandom[3].content}}</div>
                         {% for Hash in randomHash[3] %}
                         <ul id="hashtag">
                             <li class="textHash">{{Hash.tag}}</li>
@@ -163,8 +169,9 @@
                         </div>
                     </div>
                     <div class="textareas">
+                        <input type="hidden" name="hidden" id="hidden5" value="{{boardRandom[4].content}}">
                         <h1 class="textSub">{{boardRandom[4].subject}}</h1>
-                        <span class="textCon">{{boardRandom[4].content}}</span>
+                        <div class="textCon5">{{boardRandom[4].content}}</div>
                         {% for Hash in randomHash[4] %}
                         <ul id="hashtag">
                             <li class="textHash">{{Hash.tag}}</li>
@@ -195,9 +202,10 @@
                             <span>{{boardRandom[5].viewCount}}</span>
                         </div>
                     </div>
-                    <div class="textareas">
+                    <div class="textareas" id="textValue">
+                        <input type="hidden" name="hidden" id="hidden6" value="{{boardRandom[5].content}}">
                         <h1 class="textSub">{{boardRandom[5].subject}}</h1>
-                        <span class="textCon">{{boardRandom[5].content}}</span>
+                        <div class="textCon6" id="text">{{boardRandom[5].content}}</div>
                         {% for Hash in randomHash[5] %}
                         <ul id="hashtag">
                             <li class="textHash">{{Hash.tag}}</li>
@@ -229,8 +237,9 @@
                         </div>
                     </div>
                     <div class="textareas">
+                        <input type="hidden" name="hidden" id="hidden" value="{{boardRandom[6].content}}">
                         <h1 class="textSub">{{boardRandom[6].subject}}</h1>
-                        <span class="textCon">{{boardRandom[6].content}}</span>
+                        <div class="textCon">{{boardRandom[6].content}}</div>
                         {% for Hash in randomHash[6] %}
                         <ul id="hashtag">
                             <li class="textHash">{{Hash.tag}}</li>
