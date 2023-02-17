@@ -11,24 +11,12 @@ class UserService {
             community: "0002",
             qna: "0003",
         }
-        // this.dateVal = (dayobj)=>{
-        //     let value =JSON.stringify(dayobj).slice(1,11)
-        //     return value
-        // }
-        // this.objDate = (obj)=>{
-        //     obj = obj.map(x=>{
-        //         x.createdAt = this.dateVal(x.createdAt)
-        //         return x
-        //     })
-        //     return obj
-        // }
-        this.dateTimeVal = (dayobj)=>{
-            let value =JSON.stringify(dayobj).slice(1,20)
+        this.dateTimeVal = (dayobj) => {
+            let value = JSON.stringify(dayobj).slice(1, 20)
             return { date: value.slice(0, 10), time: value.slice(11, 19) }
         }
-        
-        this.objDateTime = (obj)=>{
-            obj = obj.map(x=>{
+        this.objDateTime = (obj) => {
+            obj = obj.map((x) => {
                 const { date, time } = this.dateTimeVal(x.createdAt)
                 x.createdAt = date
                 x.createdTime = time
@@ -37,7 +25,6 @@ class UserService {
             return obj
         }
     }
-
 
     async HotValue() {
         try {
@@ -79,9 +66,13 @@ class UserService {
 
     async SignIn(token) {
         try {
-            const { userId } = this.jwt.verify(token, SALT)
-            const user = await this.userRepository.getInfo(userId)
-            return user
+            if (token === guest || "") {
+                return
+            } else {
+                const { userId } = this.jwt.verify(token, SALT)
+                const user = await this.userRepository.getInfo(userId)
+                return user
+            }
         } catch (e) {
             throw new Error(e)
         }
@@ -113,13 +104,13 @@ class UserService {
             const result = await this.userRepository.findWriting({ userId, page })
             let { response, findMain } = result
             const myLength = response.length
-            findMain =this.objDateTime(findMain)
+            findMain = this.objDateTime(findMain)
 
             const writeCd = []
             const myWriteMainCd = response.map((x) => {
                 const myCdValue = x.cateCd.slice(0, 4)
                 writeCd.push(myCdValue)
-    
+
                 let writeCdresult = writeCd.filter((value, index) => {
                     return writeCd.indexOf(value) === index
                 })
@@ -140,7 +131,7 @@ class UserService {
                 }
                 return x
             })
-    
+
             const writeCdarray = myWriteMainCd.pop()
             writeCdarray.forEach((x, i, arr) => {
                 switch (x) {
@@ -161,22 +152,20 @@ class UserService {
         }
     }
 
-    // 내가 좋아요 한 글, 댓글 단 글 
-    async FindReaction({userId}){
-        try{
-            const result = await this.userRepository.findReaction({userId})
+    // 내가 좋아요 한 글, 댓글 단 글
+    async FindReaction({ userId }) {
+        try {
+            const result = await this.userRepository.findReaction({ userId })
             result.myBoardResponse = this.objDateTime(result.myBoardResponse)
             result.myLikeResponse = this.objDateTime(result.myLikeResponse)
             result.myCommentResponse = this.objDateTime(result.myCommentResponse)
-            return result 
-        } catch(e) {
+            return result
+        } catch (e) {
             throw new Error(e)
         }
     }
 
-
     // 내가 쓴 글 분류
-    
 }
 
 module.exports = UserService

@@ -6,10 +6,12 @@ const cookieParser = require("cookie-parser")
 const cors = require("cors")
 const router = require("./routes")
 
-app.use(cors({
-  origin: true,
-  credentials: true,
-}))
+app.use(
+    cors({
+        origin: true,
+        credentials: true,
+    })
+)
 
 app.set("view engine", "html")
 nunjucks.configure("views", { express: app })
@@ -22,19 +24,18 @@ app.use("/image", express.static("./uploads"))
 app.use(router)
 
 app.use((req, res, next) => {
-  const error = new Error(`Cannot ${req.method} ${req.url}`)
-  error.statusCode = 404
-  next(error)
+    const error = new Error(`Cannot ${req.method} ${req.url}`)
+    error.statusCode = 404
+    next(error)
 })
 
 app.use((error, req, res, next) => {
-  const statusCode = error.statusCode || 500
-  const message = error.message || "Something went wrong!"
-  if (statusCode >= 400) {
-    return res.status(statusCode).render("index.html", { message })
-  }
-  res.status(statusCode).send(message)
+    const statusCode = error.statusCode || 500
+    const message = error.message || "Something went wrong!"
+    if (statusCode >= 400) {
+        return res.status(statusCode).render("error.html", { message })
+    }
+    res.status(statusCode).render("error.html", { message })
 })
-
 
 module.exports = app
