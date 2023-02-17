@@ -122,7 +122,7 @@ router.get("/:mainCd/viewcheck/:boardIdx", async (req, res, next) => {
     try{
         const { mainCd, boardIdx } = req.params
         const result = await request.get(`/board/${mainCd}/view/${boardIdx}`)
-        const {data: { response, hashResponse },} = result
+        const {data: { response, hashResponse }} = result
         res.render("board/view.check.html", { mainCd, newBoard: response, newHashTagVal: hashResponse })
     }catch(e){
         next(e)
