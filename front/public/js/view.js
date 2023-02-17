@@ -2,7 +2,6 @@ const request = axios.create({
     baseURL: "http://127.0.0.1:3000",
     withCredentials: true,
 })
-import { a } from "./root.js"
 const hidden = document.querySelector("#hidden")
 const BoardIdx = document.querySelector("#boardIdx")
 const mainCd = document.querySelector("#mainCd")
@@ -165,8 +164,6 @@ for (let i = 0; i < viewReply.length; i++) {
         }
     })
 }
-a(1, 3)
-// console.log(a, "123123123123123aaaaaaaa")
 //알림
 const notifyHandler = async ({ boardWriter, boardIdx, writer, cmdContent, mainCd }) => {
     const response = await request.post("/board/notify", { boardWriter, boardIdx, writer, cmdContent, mainCd })
