@@ -59,7 +59,6 @@ const commentFrmHandler = async (e) => {
         if (e.target.localName === "button") {
             const result = await request.post(`/board/comment/${boardIdx}`, { cmdContent: inputValue, userId })
             const { response, count } = result.data
-            console.log(response)
             const commentItem = document.createElement("div")
             commentItem.classList.add("commentItem")
             commentList.prepend(commentItem)

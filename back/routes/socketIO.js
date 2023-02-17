@@ -25,16 +25,19 @@ module.exports = async (server, app) => {
         })
     })
     noti.on("connection", (socket) => {
-        // const token = socket.handshake.headers.cookie.slice(6)
-        // const { userId } = jwt.verify(token, SALT)
         socket.on(`notify`, ({ userId, data }) => {
+            socket.join(userId)
+            // const token = socket.handshake.headers.cookie.slice(6)
+            // const { userId } = jwt.verify(token, SALT)
             const json = {
                 userId,
                 data,
             }
-            socket.emit("notify", JSON.stringify(json))
-            socket.join(userId)
-            // socket.to(userId).emit("notify", JSON.stringify(json))
+            console.log(JSON.stringify(json), 1249867124978)
+
+            // noti.emit("notify", JSON.stringify(json))
+            socket.to(userId).emit("notify", JSON.stringify(json))
         })
+        // console.log(userId)
     })
 }

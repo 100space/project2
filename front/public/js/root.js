@@ -114,13 +114,13 @@ socket.on("reply", (data1) => {
     chat.scrollTop = chat.scrollHeight
 })
 
-notify.on("notify", (dataz) => {
-    const json = JSON.parse(dataz)
-    console.log(dataz)
-    socket.join()
-    console.log(json)
+notify.on("connect", () => {
+    const userIdz = userId
+    socket.emit("joinRoom", userIdz)
 
-    socket.emit(dataz)
+    socket.on("notify", (dataz) => {
+        console.log(dataz)
+    })
 })
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)

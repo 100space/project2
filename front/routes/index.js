@@ -38,7 +38,7 @@ router.use("/", async (req, res, next) => {
             const userResponse = await request.get("/user/hot")
             const userHot = userResponse.data
             req.userHot = userHot
-            console.log('1115', boardHot)
+            console.log("1115", boardHot)
         }
     } catch (error) {
     } finally {
@@ -88,8 +88,9 @@ router.get("/oauth/kakao", (req, res, next) => {
 })
 
 router.get("/manage", (req, res, next) => {
-    try{res.render("user/management.html")
-    }catch(e){
+    try {
+        res.render("user/management.html")
+    } catch (e) {
         next(e)
     }
 })
@@ -103,14 +104,14 @@ router.get("/search", async (req, res, next) => {
         const boardResponse = await request.post("/board/search", { search })
         const { boardCount } = boardResponse.data
         const boardValue = boardResponse.data.response
-        const categoryMap = { '0001': 'notice', '0002': 'community', '0003': 'qna' }
-        const data1 = [];
+        const categoryMap = { "0001": "notice", "0002": "community", "0003": "qna" }
+        const data1 = []
         boardValue.forEach((x) => {
-            const { createdAt, ...rest } = x;
+            const { createdAt, ...rest } = x
             const date = createdAt.substring(0, 10)
             const time = createdAt.substring(11, 19)
             rest.cateCd = rest.cateCd.substring(0, 4)
-            rest.mainCd = categoryMap[rest.cateCd] || ''
+            rest.mainCd = categoryMap[rest.cateCd] || ""
             data1.push({ ...rest, createdAt: date, createdTime: time })
         })
 
@@ -120,14 +121,12 @@ router.get("/search", async (req, res, next) => {
         const countB = userResponse.data.userCount
         userValue.forEach((user) => {
             user.userBoard = countB
-        });
+        })
         res.render("board/search.html", { ...userInfo, boardHot, userHot, search, boardCount, data1, userCount, userValue })
     } catch (e) {
         next(e)
     }
 })
-
-
 
 router.get("/", async (req, res, next) => {
     try {
