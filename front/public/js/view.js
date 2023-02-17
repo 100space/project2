@@ -165,9 +165,9 @@ for (let i = 0; i < viewReply.length; i++) {
 //알림
 const notifyHandler = async ({ boardWriter, boardIdx, writer, cmdContent, mainCd }) => {
     const response = await request.post("/board/notify", { boardWriter, boardIdx, writer, cmdContent, mainCd })
-    console.log(response.data, "view.js/169")
     const data = response.data
     notify.emit("notify", { userId, data })
+    console.log(response.data, "view.js/169")
 }
 
 commentFrm.addEventListener("click", commentFrmHandler)
