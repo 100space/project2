@@ -33,9 +33,7 @@ class UserController {
     }
     async checkNick(req, res, next) {
         try {
-            // console.log(req.body)
             const { nickName } = req.body
-            // console.log(nickName)
             const user = await this.userService.CheckNick({ nickName })
             res.status(201).json(user)
         } catch (e) {
@@ -59,7 +57,6 @@ class UserController {
         try {
             const { userId } = req.params
             const data = req.body
-            // console.log(data, 1231251234)
             const updateUser = await this.userService.SignUpdate(data)
             res.status(200).json(updateUser)
         } catch (e) {
@@ -92,9 +89,10 @@ class UserController {
 
     async myReaction(req, res, next) {
         try {
-            const { userId } = req.body
-            console.log(userId)
-            const response = await this.userService.FindReaction({ userId })
+            const {userId} = req.body
+            const response = await this.userService.FindReaction({userId})
+            console.log(response)
+
             res.status(201).json(response)
         } catch (e) {
             next(e)

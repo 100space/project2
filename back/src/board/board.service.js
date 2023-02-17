@@ -35,9 +35,14 @@ class BoardService {
         try {
             const { subject, content, mainCd, subCd, userId, hash } = payload
             const hashArray = hash.split(",")
+            if(!hashArray){
+                const result = await this.boardRepository.createBoard({ subject, content, mainCdValue, subCdValue, userId })
+                return result
+            }
             const mainCdValue = this.mainChange[mainCd]
             const subCdValue = this.subChange[subCd]
-            const result = await this.boardRepository.createBoard({ subject, content, mainCdValue, subCdValue, hashArray, userId })
+            let result = await this.boardRepository.createBoard({ subject, content, mainCdValue, subCdValue, hashArray, userId })
+            result.newBoard.createdAt = this.dateVal(result.newBoard.createdAt)
             return result
         } catch (e) {
             throw new Error(e)
@@ -48,7 +53,11 @@ class BoardService {
     async FindValue({ boardIdx }) {
         try {
             let result = await this.boardRepository.findValue({ boardIdx })
+            console.log(result)
             result.response.createdAt = this.dateVal(result.response.createdAt)
+            result.commentResponse = this.objDate(result.commentResponse)
+            result.recmd = this.objDate(result.recmd)
+            console.log(result)
             let { cateCd } = result.response
             const mainValue = cateCd.slice(0, 4)
             const subValue = cateCd.slice(4, 8)
@@ -67,11 +76,16 @@ class BoardService {
     async ChangeView(payload) {
         try {
             const { boardIdx, subject, content, userId, mainCd, subCd, hash } = payload
-            const hashValue = JSON.parse(hash)
-            const hashArray = hashValue.map((x) => x.value)
             const mainCdValue = this.mainChange[mainCd]
             const subCdValue = this.subChange[subCd]
+            if(hash){
+            const hashValue = JSON.parse(hash)
+            const hashArray = hashValue.map((x) => x.value)
             const result = await this.boardRepository.changeView({ subject, content, mainCdValue, subCdValue, hashArray, userId, boardIdx })
+            }
+            else{
+                const result = await this.boardRepository.changeView({subject, content, mainCdValue, subCdValue, userId, boardIdx}) 
+            }
         } catch (e) {
             throw new Error(e)
         }
@@ -120,6 +134,7 @@ class BoardService {
                 x.subCd = sendSub
                 return x
             })
+            
             const cateLength = {
                 length: `${result.allMainCd}`,
             }

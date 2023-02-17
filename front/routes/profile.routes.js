@@ -8,51 +8,43 @@ const request = axios.create({
 })
 
 router.get("/:userId", async (req, res, next) => {
-    const { userId } = req.params
-    const { boardHot } = req
-    const { userHot } = req
-    const response = await request.post("/user/check", {
-        userId,
-    })
-    const { data } = response
-    res.render("user/mypage.html", {
-        ...data,
-        boardHot,
-        userHot,
-    })
+    try{
+        const { userId } = req.params
+        const { boardHot } = req
+        const { userHot } = req
+        const response = await request.post("/user/check", {userId})
+        const { data } = response
+        res.render("user/mypage.html", {...data,boardHot,userHot,})
+    }catch(e){
+        next(e)
+    }
 })
 
 router.get("/modify/:userId", async (req, res, next) => {
-    const { userId } = req.params
-    const { boardHot } = req
-    const { userHot } = req
-    const response = await request.post("/user/check", {
-        userId,
-    })
-    const { data } = response
-    res.render("user/mypage.modify.html", {
-        ...data,
-        boardHot,
-        userHot,
-    })
+    try{
+        const { userId } = req.params
+        const { boardHot } = req
+        const { userHot } = req
+        const response = await request.post("/user/check", {userId})
+        const { data } = response
+        res.render("user/mypage.modify.html", {...data,boardHot,userHot,})
+    }catch(e){
+        next(e)
+    }
 })
 
 router.post("/modify/:id", upload.single("userPic"), async (req, res, next) => {
-    const { id } = req.params
-    const { boardHot } = req
-    const { userHot } = req
-    const data = { ...req.body }
-    if (req.file) {
-        data.userPic = req.file.filename
+    try{
+        const { id } = req.params
+        const { boardHot } = req
+        const { userHot } = req
+        const data = { ...req.body }
+        if (req.file) {data.userPic = req.file.filename}
+        const response = await request.put(`/profile/${id}`, data)
+        res.render("user/mypage.html", { ...response.data, boardHot, userHot })
+    }catch(e){
+        next(e)
     }
-    const response = await request.put(`/profile/${id}`, data)
-    console.log(response.data, "here")
-    console.log(boardHot, "test3")
-    console.log(userHot, "test2")
-    res.render("user/mypage.html", { ...response.data, boardHot, userHot })
 })
-
-
-
 
 module.exports = router
