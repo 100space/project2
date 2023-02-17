@@ -48,7 +48,9 @@ router.post("/reply/:cmdIdx", async (req, res, next) => {
 router.get("/search", async (req, res, next) => {
     try{
         const { search } = req.query
+        console.log('123ff', response)
         const result = await request.post(`/board/search`, { search })
+        console.log('ff123',result)
         const { response, boardCount } = result.data
         res.render("board/subList.html", { listValue: response, boardCount })
     }catch(e){

@@ -54,9 +54,7 @@ router.get("/login", (req, res, next) => {
         next(e)
     }
 })
-router.get("/error", (req, res, next) => {
-    res.render("error.html")
-})
+
 router.use("/user", user)
 router.use("/profile", profile)
 router.use("/board", board)
@@ -88,8 +86,7 @@ router.get("/oauth/kakao", (req, res, next) => {
 })
 
 router.get("/manage", (req, res, next) => {
-    try{
-        res.render("user/management.html")
+    try{res.render("user/management.html")
     }catch(e){
         next(e)
     }
@@ -97,29 +94,30 @@ router.get("/manage", (req, res, next) => {
 
 router.get("/search", async (req, res, next) => {
     try{
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const { search } = req.query
-    const boardResponse = await request.post("/board/search", { search })
-    const { boardCount } = boardResponse.data
-    const boardValue = boardResponse.data.response
-    const categoryMap = {'0001' : 'notice', '0002' : 'community', '0003' : 'qna'}
-    const data1 = [];
+        const userInfo = req.userInfo
+        const { boardHot } = req
+        const { userHot } = req
+        const { search } = req.query
+        const boardResponse = await request.post("/board/search", { search })
+        const { boardCount } = boardResponse.data
+        const boardValue = boardResponse.data.response
+        const categoryMap = {'0001' : 'notice', '0002' : 'community', '0003' : 'qna'}
+        const data1 = [];
+        boardValue.forEach((x) => {
+            const { createdAt, ...rest } = x;
+            const date = createdAt.substring(0, 10)
+            const time = createdAt.substring(11, 19)
+            rest.cateCd = rest.cateCd.substring(0, 4)
+            rest.mainCd = categoryMap[rest.cateCd] || ''
+            data1.push({ ...rest, createdAt: date ,createdTime : time})
+        })
 
-    boardValue.forEach((x) => {
-        const { createdAt, ...rest } = x;
-        const date = createdAt.substring(0, 10)
-        const time = createdAt.substring(11, 19)
-        rest.cateCd = rest.cateCd.substring(0, 4)
-        rest.mainCd = categoryMap[rest.cateCd] || ''
-        data1.push({ ...rest, createdAt: date ,createdTime : time})
-    })
-
-    const userResponse = await request.post("/user/search", { search })
-    const { userCount } = userResponse.data
-    const userValue = userResponse.data.response
-    res.render("board/search.html", { ...userInfo, boardHot, userHot, search, boardCount, data1, userCount, userValue })
+        const userResponse = await request.post("/user/search", { search })
+        const { userCount } = userResponse.data
+        const userValue = userResponse.data.response
+        console.log("보드측", boardValue)
+        console.log("유저측", userValue)
+        res.render("board/search.html", { ...userInfo, boardHot, userHot, search, boardCount, data1, userCount, userValue })
     }catch(e){
         next(e)
     }

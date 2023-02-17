@@ -105,11 +105,13 @@ class UserRepository {
                 },
                 raw: true,
             })
-            return { response, userCount }
+    
+            return { response, userCount}
         } catch (e) {
             throw new Error(`Error while find search Value: ${e.message}`)
         }
     }
+    
 
     async findWriting({ userId, page }) {
         const Op = this.Sequelize.Op
