@@ -19,6 +19,8 @@ const agreeBtn = document.getElementById("agreeBtn")
 const cancelBtn = document.getElementById("cancelBtn")
 const agreeText = document.getElementById("agreetext")
 const kakao = document.querySelector("#kakao")
+const checkId = document.getElementById("checkId")
+const checkNick = document.getElementById("checkNick")
 
 joinFrm.addEventListener("input", async (e) => {
     const valueFocus = e.target
@@ -38,15 +40,9 @@ joinFrm.addEventListener("input", async (e) => {
         )
         const { data } = response
         if (data) {
-            let pmakeForm = valueFocus.parentNode
-            let p = document.createElement("p")
-            p.innerHTML = "중복된 아이디가 존재합니다."
-            p.style.display = "block"
-            pmakeForm.appendChild(p)
+            checkId.style.display = "block"
         } else {
-            let pmakeForm = valueFocus.parentNode
-            let [p] = pmakeForm.getElementsByTagName("p")
-            pmakeForm.removeChild(p)
+            checkId.style.display = "none"
         }
     } else if (check === "nickName") {
         const response = await request.post(
@@ -63,15 +59,9 @@ joinFrm.addEventListener("input", async (e) => {
         const { data } = response
 
         if (data) {
-            let pmakeForm = valueFocus.parentNode
-            let p = document.createElement("p")
-            p.innerHTML = "중복된 닉네임이 존재합니다."
-            p.style.display = "block"
-            pmakeForm.appendChild(p)
+            checkNick.style.display = 'block'
         } else {
-            let pmakeForm = valueFocus.parentNode
-            let [p] = pmakeForm.getElementsByTagName("p")
-            pmakeForm.removeChild(p)
+            checkNick.style.display = 'none'
         }
     }
 })

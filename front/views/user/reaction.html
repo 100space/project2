@@ -12,18 +12,18 @@
             <div class="table">
                 <ul class="tableHeader flex">
                     <li>번호</li>
-                    <li>제목</li>
+                    <li>작성게시물</li>
                     <li>작성자</li>
                     <li>작성일</li>
-                    <li>좋아요</li>
+                    <li>작성시간</li>
                 </ul>
                 {% for item in commentValue %}
                 <ul class="tableContent flex">
                     <li>{{loop.index}}</li>
-                    <li>{{item.subject}}</li>
+                    <li><a href="http://127.0.0.1:3005/board/{{ item.mainCd }}/view/{{ item.boardIdx }}">{{ item.subject }}</a></li>
                     <li>{{item.userId}}</li>
                     <li>{{item.createdAt}}</li>
-                    <li>{{item.liked}}</li>
+                    <li>{{item.createdTime}}</li>
                 </ul>
                 {% endfor %}
             </div>
@@ -37,16 +37,16 @@
                 <ul class="tableHeader flex">
                     <li>게시글 번호</li>
                     <li>게시글 제목</li>
-                    <li>작성자</li>
-                    <li>작성일</li>
-                    <li>좋아요</li>
+                    <li>누른 날짜</li>
+                    <li>누른 시간</li>
+                    <li>총 좋아요</li>
                 </ul>
                 {% for item in likeValue %}
                 <ul class="tableContent flex">
                     <li>{{loop.index}}</li>
                     <li><a href="http://127.0.0.1:3005/board/{{ item.mainCd }}/view/{{ item.boardIdx }}">{{ item.subject }}</a></li>
-                    <li>{{item.userId}}</li>
                     <li>{{item.createdAt}}</li>
+                    <li>{{item.createdTime}}</li>
                     <li>{{item.liked}}</li>
                 </ul>
                 {% endfor %}
