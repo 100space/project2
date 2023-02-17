@@ -186,12 +186,38 @@
     margin-top: 2rem;
     font-size: 3rem;
 }
-.textCon {
+.textareas > div  {
     display: block;
     margin-top: 2rem;
     font-size: 1.8rem;
     word-break: break-all;
+    
 }
+
+.textCon1 > .image > img {
+    max-width: 100%;
+}
+
+.textCon2 > .image > img {
+    max-width: 100%;
+}
+
+.textCon3 > .image > img {
+    max-width: 100%;
+}
+
+.textCon4 > .image > img {
+    max-width: 100%;
+}
+
+.textCon5 > .image > img {
+    max-width: 100%;
+}
+
+.textCon6 > .image > img {
+    max-width: 100%;
+}
+
 #hashtag {
     margin-top: 4rem;
     display: flex;

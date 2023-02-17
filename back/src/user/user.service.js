@@ -132,7 +132,8 @@ class UserService {
                 return x
             })
 
-            const writeCdarray = myWriteMainCd.pop()
+            const writeCdarray = myWriteMainCd.length ? myWriteMainCd.pop() : []
+            if (writeCdarray.length) {
             writeCdarray.forEach((x, i, arr) => {
                 switch (x) {
                     case "0001":
@@ -144,9 +145,10 @@ class UserService {
                     case "0003":
                         arr[i] = "qna"
                         break
-                }
-            })
-            return { myLength, findMain: mainCdValue, writeCdarray, boardData: response }
+                    }
+                })
+            }return { myLength, findMain: mainCdValue, writeCdarray, boardData: response }
+
         } catch (e) {
             throw new Error(e)
         }
