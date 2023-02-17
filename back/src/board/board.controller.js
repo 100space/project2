@@ -76,6 +76,7 @@ class BoardController {
     async getRandom(req, res, next) {
         try {
             const response = await this.boardService.RandomValue()
+            console.log(response)
             res.status(201).json(response)
         } catch (e) {
             next(e)

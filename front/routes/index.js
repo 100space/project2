@@ -38,7 +38,6 @@ router.use("/", async (req, res, next) => {
             const userResponse = await request.get("/user/hot")
             const userHot = userResponse.data
             req.userHot = userHot
-            console.log('1115', boardHot)
         }
     } catch (error) {
     } finally {
@@ -136,7 +135,6 @@ router.get("/", async (req, res, next) => {
         const { userHot } = req
         const response = await request.get("/board/random")
         const { listValue, randomUser, randomHash } = response.data
-        console.log(listValue)
         res.render("index.html", { ...userInfo, boardHot, userHot, boardRandom: listValue, randomUser, randomHash })
     } catch (e) {
         next(e)
