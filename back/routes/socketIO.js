@@ -25,7 +25,7 @@ module.exports = async (server, app) => {
         })
     })
     noti.on("connection", (socket) => {
-        const token = socket.handshake.headers.cookie.slice(6)
+        // const token = socket.handshake.headers.cookie.slice(6)
         // const { userId } = jwt.verify(token, SALT)
         socket.on(`notify`, ({ boardWriter, data }) => {
             socket.join(boardWriter)

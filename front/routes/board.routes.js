@@ -137,7 +137,8 @@ router.get("/:mainCd/comment/:cmdIdx", async (req, res, next) => {
     try{
         const { mainCd, cmdIdx } = req.params
         const result = await request.delete(`/board/comment/${cmdIdx}`)
-        res.redirect(`/board/${mainCd}/view/1`)
+        const {data:{boardIdx}} = result
+        res.redirect(`/board/${mainCd}/view/${boardIdx}`)
     }catch(e){
         next(e)
     }

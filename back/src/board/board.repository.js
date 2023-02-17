@@ -399,13 +399,13 @@ class BoardRepository {
     // 댓글 삭제하기
     async dropComment({ cmdIdx }) {
         try {
+            const deleteBoardIdx = await this.comment.findOne({where:{ cmdIdx}, raw:true})
             const response = await this.comment.destroy({
                 where: {
                     cmdIdx,
                 },
             })
-            console.log(response)
-            return response
+            return deleteBoardIdx
         } catch (e) {
             throw new Error(`Error while delete Comment status: ${e.message}`)
         }
@@ -414,11 +414,8 @@ class BoardRepository {
     // 대댓글 달기
     async creReComment({ cmdIdx, recmdContent, userId }) {
         try {
-            console.log(cmdIdx)
             const response = (await this.recomment.create({ cmdIdx, recmdContent, userId })).get({ plain: true })
-
             const result = await this.recomment.findAll({ where: { cmdIdx }, raw: true })
-            console.log(result, "$%$%$%$%")
             return result
         } catch (e) {
             throw new Error(`Error while create ReComment status: ${e.message}`)
@@ -429,7 +426,6 @@ class BoardRepository {
         try {
             const response = (await this.notify.create({ boardWriter, boardIdx, cmdWriter: writer, cmdContent, mainCd })).get({ plain: true })
             const result = await this.notify.findAll({ where: { boardWriter }, raw: true })
-            console.log(result, "reposi noti")
             return result
         } catch (e) {
             throw new Error(`Error while create createNofify status: ${e.message}`)
