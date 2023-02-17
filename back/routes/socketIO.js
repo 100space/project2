@@ -37,4 +37,5 @@ module.exports = async (server, app) => {
             socket.broadcast.emit("notify", JSON.stringify(json))
         })
     })
+
 }
