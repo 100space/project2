@@ -24,7 +24,7 @@ app.use("/image", express.static("./uploads"))
 app.use(router)
 
 app.use((req, res, next) => {
-    const error = new Error(`Cannot ${req.method} ${req.url}`)
+    const error = new Error(`요청한 페이지를 찾을 수 없습니다`)
     error.statusCode = 404
     next(error)
 })
