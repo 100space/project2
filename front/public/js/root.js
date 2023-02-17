@@ -116,8 +116,9 @@ socket.on("reply", (data1) => {
 
 notify.on("notify", (dataz) => {
     const json = JSON.parse(dataz)
-    console.log(json)
+    console.log(dataz)
     socket.join()
+    console.log(json)
 
     socket.emit(dataz)
 })

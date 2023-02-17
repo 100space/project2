@@ -29,7 +29,7 @@ router.use("/", async (req, res, next) => {
             const pl = JSON.parse(Buffer.from(payload, "base64url").toString("utf-8"))
             req.user = pl
             const { userId } = req.user
-            const response = await request.post("/user/check", {userId})
+            const response = await request.post("/user/check", { userId })
             const { data } = response
             req.userInfo = data
             const boardResponse = await request.get("/board/hot")
@@ -47,11 +47,11 @@ router.use("/", async (req, res, next) => {
 })
 
 router.get("/login", (req, res, next) => {
-    try{
-    const { boardHot } = req
-    const { userHot } = req
-    res.render("user/login.html", { boardHot, userHot })
-    } catch(e){
+    try {
+        const { boardHot } = req
+        const { userHot } = req
+        res.render("user/login.html", { boardHot, userHot })
+    } catch (e) {
         next(e)
     }
 })
@@ -62,26 +62,27 @@ router.use("/board", board)
 router.use("/admin,", admin)
 
 router.get("/io", (req, res, next) => {
-    try{
-    res.render("/layout/layout.html")
-    }catch(e){
+    try {
+        res.render("/layout/layout.html")
+    } catch (e) {
         next(e)
     }
 })
 router.get("/token/:token", async (req, res, next) => {
-    try{const { token } = req.params
-    res.cookie("token", token)
-    res.redirect("/")
-    }catch(e){
+    try {
+        const { token } = req.params
+        res.cookie("token", token)
+        res.redirect("/")
+    } catch (e) {
         next(e)
     }
 })
 
 router.get("/oauth/kakao", (req, res, next) => {
-    try{
-    const redirectURL = `${config.kakaoHOST}/oauth/authorize?client_id=${config.kakaoREST_API_KEY}&redirect_uri=${config.kakaoREDIRECT_URI}&response_type=code`
-    res.redirect(redirectURL)
-    }catch(e){
+    try {
+        const redirectURL = `${config.kakaoHOST}/oauth/authorize?client_id=${config.kakaoREST_API_KEY}&redirect_uri=${config.kakaoREDIRECT_URI}&response_type=code`
+        res.redirect(redirectURL)
+    } catch (e) {
         next(e)
     }
 })
@@ -129,14 +130,15 @@ router.get("/search", async (req, res, next) => {
 
 
 router.get("/", async (req, res, next) => {
-    try{
-    const userInfo = req.userInfo
-    const { boardHot } = req
-    const { userHot } = req
-    const response = await request.get("/board/random")
-    const { listValue, randomUser, randomHash } = response.data
-    res.render("index.html", { ...userInfo, boardHot, userHot, boardRandom: listValue, randomUser, randomHash })
-    }catch(e){
+    try {
+        const userInfo = req.userInfo
+        const { boardHot } = req
+        const { userHot } = req
+        const response = await request.get("/board/random")
+        const { listValue, randomUser, randomHash } = response.data
+        console.log(listValue)
+        res.render("index.html", { ...userInfo, boardHot, userHot, boardRandom: listValue, randomUser, randomHash })
+    } catch (e) {
         next(e)
     }
 })
