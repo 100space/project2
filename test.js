@@ -8,6 +8,8 @@
 //     }]
 // }
 
+const { randomBytes } = require('crypto')
+
 // const array = Object.values(files).map((v) => v[0].files)
 
 // console.log(array)
@@ -28,10 +30,22 @@ SELECT A.* FROM Board A JOIN (SELECT A.boardIdx From Liked A JOIN User B ON A.us
     SELECT A.cmdIdx, A.recmdContent, A.userId FROM Recomment A JOIN (SELECT A.cmdIdx FROM Comment A JOIN Board B ON A.boardIdx = B.boardIdx WHERE A.boardIdx = 1) B ON A.cmdIdx = B.cmdIdx ORDER BY DESC
 
 ```
+```
+SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd, MIN(B.picture) AS picture
+FROM (
+  SELECT userId, subject, viewCount, liked, content, boardIdx, cateCd 
+  FROM Board 
+  ORDER BY RAND() LIMIT 7
+) A 
+JOIN Picture B ON A.boardIdx = B.boardIdx 
+GROUP BY A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd; 
+
 
 ```
 
+
 ```sql
-SELECT A.* From Board A JOIN Comment B ON A.boardIdx = B.boardIdx Where B.userId = "admin1"
+SELECT  A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd, B.picture FROM (SELECT userId, subject, viewCount, liked, content, boardIdx, cateCd From Board ORDER BY RAND() LIMIT 7) A JOIN Picture B ON A.boardIdx = B.boardIdx GROUP BY A.boardIdx
+(SELECT userId, subject, viewCount, liked, content, boardIdx, cateCd From Board ORDER BY RAND() LIMIT 7)
 ```
 

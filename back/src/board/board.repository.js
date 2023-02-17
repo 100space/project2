@@ -143,7 +143,14 @@ class BoardRepository {
     async randomValue() {
         try {
             const boardRandom = await this.sequelize.query(
-                "SELECT A.userId, A.subject, A.viewCount, A.liked, A.content ,A.boardIdx, A.cateCd , B.picture From Board A LEFT JOIN Picture B ON A.boardIdx = B.boardIdx where A.boardIdx = B.boardIdx order by rand() Limit 7",
+                `SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd, MIN(B.picture) AS picture
+                FROM (
+                  SELECT userId, subject, viewCount, liked, content, boardIdx, cateCd 
+                  FROM Board 
+                  ORDER BY RAND() LIMIT 7
+                ) A 
+                JOIN Picture B ON A.boardIdx = B.boardIdx 
+                GROUP BY A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd`,
                 { type: this.queryTypes.SELECT }
             )
             console.log(boardRandom)
