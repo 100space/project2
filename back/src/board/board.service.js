@@ -18,12 +18,12 @@ class BoardService {
             sub8: "0008",
             sub9: "0009",
         }
-        this.dateVal = (dayobj)=>{
-            let value =JSON.stringify(dayobj).slice(1,11)
+        this.dateVal = (dayobj) => {
+            let value = JSON.stringify(dayobj).slice(1, 11)
             return value
         }
-        this.objDate = (obj)=>{
-            obj = obj.map(x=>{
+        this.objDate = (obj) => {
+            obj = obj.map((x) => {
                 x.createdAt = this.dateVal(x.createdAt)
                 return x
             })
@@ -115,7 +115,7 @@ class BoardService {
                 const subValue = x.cateCd.slice(4, 8)
                 const sendMain = mainValue === this.mainChange.notice ? "notice" : mainValue === this.mainChange.community ? "community" : "qna"
                 const sendSub = subValue === this.subChange.sub1 ? "sub1" : subValue === this.subChange.sub2 ? "sub2" : "sub3"
-                x.createdAt =this.dateVal(x.createdAt)
+                x.createdAt = this.dateVal(x.createdAt)
                 x.mainCd = sendMain
                 x.subCd = sendSub
                 return x
@@ -152,7 +152,7 @@ class BoardService {
             const result = await this.boardRepository.categoryValue({ findValue, pageNumber, mainCdValue })
             console.log(result)
             let { correctValue, subcateLength, findSub } = result
-            correctValue = correctValue.map(x=>{
+            correctValue = correctValue.map((x) => {
                 x.createdAt = this.dateVal(x.createdAt)
                 return x
             })
@@ -330,6 +330,14 @@ class BoardService {
         try {
             const result = await this.boardRepository.creReComment({ cmdIdx, recmdContent, userId })
             return result
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+    async CreateNotify({ boardWriter, boardIdx, writer, cmdContent, mainCd }) {
+        try {
+            const response = await this.boardRepository.createNotify({ boardWriter, boardIdx, writer, cmdContent, mainCd })
+            return response
         } catch (e) {
             throw new Error(e)
         }

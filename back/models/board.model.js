@@ -41,6 +41,9 @@ module.exports = (sequelize, Sequelize) => {
             this.hasMany(models.Comment, {
                 foreignKey: "boardIdx",
             })
+            this.hasMany(models.Notify, {
+                foreignKey: "boardIdx",
+            })
             this.hasMany(models.ContentImg, {
                 foreignKey: "boardIdx",
             })

@@ -197,6 +197,16 @@ class BoardController {
             next(e)
         }
     }
+
+    async createNotify(req, res, next) {
+        try {
+            const { boardWriter, boardIdx, writer, cmdContent, mainCd } = req.body
+            const result = await this.boardService.CreateNotify({ boardWriter, boardIdx, writer, cmdContent, mainCd })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = BoardController

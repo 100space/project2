@@ -2,11 +2,13 @@ const request = axios.create({
     baseURL: "http://127.0.0.1:3000",
     withCredentials: true,
 })
+import { a } from "./root.js"
 const hidden = document.querySelector("#hidden")
 const BoardIdx = document.querySelector("#boardIdx")
 const mainCd = document.querySelector("#mainCd")
 const content = document.querySelector("#content")
 const loginUser = document.querySelector("#userId")
+const boardWriter = document.querySelector("#boardWriter")
 const writeCheckBtn = document.querySelector("#writeCheckBtn")
 const viewModify = document.querySelector("#view_modify")
 const commentFrm = document.querySelector("#comment-form")
@@ -26,7 +28,10 @@ content.innerHTML = `${contentValue}`
 let img = document.querySelectorAll("#content img[src]")
 const boardIdx = BoardIdx.value
 const userId = loginUser.value
-
+const notify = io.connect(`http://127.0.0.1:3000/notify`, {
+    path: "/socket.io",
+    transports: ["websocket"],
+})
 const modifyBtnHandler = async (e) => {
     if (e.target.className.indexOf("modify") >= 0) {
         location.href = `/board/${mainCd.value}/view/${boardIdx}/modify`
@@ -70,6 +75,8 @@ const commentFrmHandler = async (e) => {
                         </div>
                     </div>
                     <div class="comment">${response.cmdContent}</div>`
+            console.log({ boardWriter: `${boardWriter.value}`, writer: userId, boardIdx, cmdContent: inputValue, mainCd: `${mainCd.value}` }, 12312312312312)
+            notifyHandler({ boardWriter: `${boardWriter.value}`, writer: userId, boardIdx, cmdContent: inputValue, mainCd: `${mainCd.value}` })
             //result 를 innerHTML / template로 작성
             const commentUpdate = document.querySelector("#comment_update")
             commentUpdate.addEventListener("click", async (e) => {
@@ -134,30 +141,21 @@ for (let i = 0; i < commentControll.length; i++) {
     })
 }
 for (let i = 0; i < commentItems.length; i++) {
-    reply[i].addEventListener(
-        "click",
-        async (e) => {
-            // console.log(commentItems[i].lastChild.localName !== "form")
-            if (commentItems[i].lastChild.localName !== "form") {
-                //<div class="commentReply"><input type="text" name="commentReply" id="commentReplyInput" /></div>
-                const input = document.createElement("form")
-                input.setAttribute("class", "commentReply")
-                input.setAttribute("method", "post")
-                input.setAttribute("action", `/board/reply/${cmdIdxz[i].value}?userId=${userId}`)
-                input.innerHTML = `<input type="text" id="commentReplyInput" name="recmdContent"/>`
-                commentItems[i].appendChild(input)
-                // input.focus()
-            } else {
-                commentItems[i].lastChild.remove()
-            }
+    reply[i].addEventListener("click", async (e) => {
+        // console.log(commentItems[i].lastChild.localName !== "form")
+        if (commentItems[i].lastChild.localName !== "form") {
+            //<div class="commentReply"><input type="text" name="commentReply" id="commentReplyInput" /></div>
+            const input = document.createElement("form")
+            input.setAttribute("class", "commentReply")
+            input.setAttribute("method", "post")
+            input.setAttribute("action", `/board/reply/${cmdIdxz[i].value}?userId=${userId}`)
+            input.innerHTML = `<input type="text" id="commentReplyInput" name="recmdContent"/>`
+            commentItems[i].appendChild(input)
+            // input.focus()
+        } else {
+            commentItems[i].lastChild.remove()
         }
-        // if (e.target.parentElement.parentElement.parentElement.nextElementSibling.localName === "form") {
-        // }
-        // }
-        // console.dir(e.target.parentElement.parentElement.parentElement.nextElementSibling.localName === "form")
-
-        // { once: true }
-    )
+    })
 }
 for (let i = 0; i < viewReply.length; i++) {
     viewReply[i].addEventListener("click", (e) => {
@@ -167,5 +165,15 @@ for (let i = 0; i < viewReply.length; i++) {
         }
     })
 }
+a(1, 3)
+// console.log(a, "123123123123123aaaaaaaa")
+//알림
+const notifyHandler = async ({ boardWriter, boardIdx, writer, cmdContent, mainCd }) => {
+    const response = await request.post("/board/notify", { boardWriter, boardIdx, writer, cmdContent, mainCd })
+    console.log(response.data, "view.js/169")
+    const data = response.data
+    notify.emit("notify", { boardWriter, data })
+}
+
 commentFrm.addEventListener("click", commentFrmHandler)
 viewModify.addEventListener("click", modifyBtnHandler)

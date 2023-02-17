@@ -2,6 +2,9 @@ const express = require("express")
 const router = express.Router()
 const { boardController: controller } = require("./board.module")
 
+//알림
+router.post("/notify", (req, res, next) => controller.createNotify(req, res, next))
+
 router.post("/picture", (req, res, next) => controller.pictureInsert(req, res, next))
 router.get("/random", (req, res, next) => controller.getRandom(req, res, next))
 router.get("/hot", (req, res, next) => controller.getHot(req, res, next))
@@ -15,7 +18,7 @@ router.put("/comment/:cmdIdx", (req, res, next) => controller.putComment(req, re
 router.delete("/comment/:cmdIdx", (req, res, next) => controller.deleteComment(req, res, next))
 
 // reply comment
-router.post("/reply/:cmdIdx", (req,res,next)=> controller.createReComment(req,res,next))
+router.post("/reply/:cmdIdx", (req, res, next) => controller.createReComment(req, res, next))
 
 // 기본 CRUD
 router.post("/:mainCd/write", (req, res, next) => controller.postWrite(req, res, next))
