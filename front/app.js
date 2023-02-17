@@ -23,19 +23,19 @@ app.use(cookieParser())
 app.use("/image", express.static("./uploads"))
 app.use(router)
 
-app.use((req, res, next) => {
-    const error = new Error(`요청한 페이지를 찾을 수 없습니다`)
-    error.statusCode = 404
-    next(error)
-})
+// app.use((req, res, next) => {
+//     const error = new Error(`요청한 페이지를 찾을 수 없습니다`)
+//     error.statusCode = 404
+//     next(error)
+// })
 
-app.use((error, req, res, next) => {
-    const statusCode = error.statusCode || 500
-    const message = error.message || "Something went wrong!"
-    if (statusCode >= 400) {
-        return res.status(statusCode).render("error.html", { message })
-    }
-    res.status(statusCode).render("error.html", { message })
-})
+// app.use((error, req, res, next) => {
+//     const statusCode = error.statusCode || 500
+//     const message = error.message || "Something went wrong!"
+//     if (statusCode >= 400) {
+//         return res.status(statusCode).render("error.html", { message })
+//     }
+//     res.status(statusCode).render("error.html", { message })
+// })
 
 module.exports = app

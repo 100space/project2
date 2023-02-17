@@ -52,6 +52,10 @@ router.get("/myview", async (req, res, next) => {
         const {
             data: { myLength, findMain, writeCdarray },
         } = response
+        if (findMain.length === 0) {
+            res.render("user/mywrite.html")
+            return
+        }
         const filteredFindMain = mainCd ? findMain.filter((item) => item.mainCd === mainCd) : findMain
         const totalPage = Math.ceil(filteredFindMain.length / 5)
         if (page > totalPage) {
@@ -65,6 +69,7 @@ router.get("/myview", async (req, res, next) => {
         next(e)
     }
 })
+
 
 // 내가 좋아요 누른 글, 내가 쓴 글
 router.get("/myview/reaction", async (req, res, next) => {
