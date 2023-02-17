@@ -16,7 +16,7 @@ const socket = io.connect("http://127.0.0.1:3000", {
     path: "/socket.io",
     transports: ["websocket"],
 })
-const notify = io.connect(`http://127.0.0.1:3000/notify`, {
+const notify2 = io.connect(`http://127.0.0.1:3000/notify`, {
     path: "/socket.io",
     transports: ["websocket"],
 })
@@ -113,6 +113,19 @@ socket.on("reply", (data1) => {
     chat.append(li)
     chat.scrollTop = chat.scrollHeight
 })
+
+
+// notify2.on("connect", () => {
+notify2.on("notify", (dataz) => {
+    // notify2.emit("joinRoom", "123")
+    console.log(dataz)
+    const json = JSON.parse(dataz)
+    console.log(json)
+    // const userIdz = json.userId
+    console.log(1)
+    // console.log(userId, data)
+})
+// })
 
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)
