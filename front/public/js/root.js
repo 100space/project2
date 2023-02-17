@@ -12,11 +12,11 @@ const closeBtn = document.querySelector("#closeBtn")
 const chat = document.querySelector("#chat")
 const frm = document.querySelector("#frm")
 const card = document.querySelectorAll(".flexCard > div")
-const socket = io.connect("http://127.0.0.1:3000", {
+const socket = io.connect("http://13.209.76.244:3000", {
     path: "/socket.io",
     transports: ["websocket"],
 })
-const notify = io.connect(`http://127.0.0.1:3000/notify`, {
+const notify = io.connect(`http://13.209.76.244:3000/notify`, {
     path: "/socket.io",
     transports: ["websocket"],
 })
@@ -55,7 +55,7 @@ const gnbfunction = async (e) => {
     arrow.classList.toggle("deg")
     arrow.classList.toggle("deg2")
     const response = await request.get(e.target.pathname)
-    location.href = `http://127.0.0.1:3005${e.target.pathname}`
+    location.href = `http://13.209.76.244:3005${e.target.pathname}`
     console.log(response)
 }
 const userInfoClick = (e) => {
