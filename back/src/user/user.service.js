@@ -11,13 +11,27 @@ class UserService {
             community: "0002",
             qna: "0003",
         }
-        this.dateVal = (dayobj)=>{
-            let value =JSON.stringify(dayobj).slice(1,11)
-            return value
+        // this.dateVal = (dayobj)=>{
+        //     let value =JSON.stringify(dayobj).slice(1,11)
+        //     return value
+        // }
+        // this.objDate = (obj)=>{
+        //     obj = obj.map(x=>{
+        //         x.createdAt = this.dateVal(x.createdAt)
+        //         return x
+        //     })
+        //     return obj
+        // }
+        this.dateTimeVal = (dayobj)=>{
+            let value =JSON.stringify(dayobj).slice(1,20)
+            return { date: value.slice(0, 10), time: value.slice(11, 19) }
         }
-        this.objDate = (obj)=>{
+        
+        this.objDateTime = (obj)=>{
             obj = obj.map(x=>{
-                x.createdAt = this.dateVal(x.createdAt)
+                const { date, time } = this.dateTimeVal(x.createdAt)
+                x.createdAt = date
+                x.createdTime = time
                 return x
             })
             return obj
@@ -76,7 +90,6 @@ class UserService {
     async SignUpdate(payload) {
         const address = payload.address1 + " " + payload.address2
         payload.address = address
-        // console.log(payload, 123123)
         try {
             const updateUser = await this.userRepository.updateInfo(payload)
             return updateUser
@@ -100,7 +113,7 @@ class UserService {
             const result = await this.userRepository.findWriting({ userId, page })
             let { response, findMain } = result
             const myLength = response.length
-            findMain =this.objDate(findMain)
+            findMain =this.objDateTime(findMain)
 
             const writeCd = []
             const myWriteMainCd = response.map((x) => {
@@ -148,42 +161,13 @@ class UserService {
         }
     }
 
-    // async FindWriting({ userId, page, mainCd }) {
-    //     try {
-    //         const response = await this.userRepository.findWriting({ userId, page })
-    //         const myLength = response.count
-    //         const findMain = response.rows
-    //         const writeCdarray = ["notice", "community", "qna"]
-    
-    //         const filteredFindMain = mainCd ? findMain.filter(item => item.mainCd === mainCd) : findMain
-    //         const mainCdValue = filteredFindMain.map(item => {
-    //             switch (item.cateCd.slice(0, 4)) {
-    //                 case "0001":
-    //                     item.mainCd = "notice"
-    //                     break
-    //                 case "0002":
-    //                     item.mainCd = "community"
-    //                     break
-    //                 case "0003":
-    //                     item.mainCd = "qna"
-    //                     break
-    //             }
-    //             return item
-    //         })
-    //         return { myLength, findMain: mainCdValue, writeCdarray }
-    //     } catch (e) {
-    //         throw new Error(`Error while finding writing: ${e.message}`)
-    //     }
-    // }
-
-    
-
     // 내가 좋아요 한 글, 댓글 단 글 
     async FindReaction({userId}){
         try{
             const result = await this.userRepository.findReaction({userId})
-            result.myBoardResponse = this.objDate(result.myBoardResponse)
-            result.myLikeResponse = this.objDate(result.myLikeResponse)
+            result.myBoardResponse = this.objDateTime(result.myBoardResponse)
+            result.myLikeResponse = this.objDateTime(result.myLikeResponse)
+            result.myCommentResponse = this.objDateTime(result.myCommentResponse)
             return result 
         } catch(e) {
             throw new Error(e)
