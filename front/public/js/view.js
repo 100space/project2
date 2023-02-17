@@ -74,7 +74,6 @@ const commentFrmHandler = async (e) => {
                         </div>
                     </div>
                     <div class="comment">${response.cmdContent}</div>`
-            console.log({ boardWriter: `${boardWriter.value}`, writer: userId, boardIdx, cmdContent: inputValue, mainCd: `${mainCd.value}` }, 12312312312312)
             notifyHandler({ boardWriter: `${boardWriter.value}`, writer: userId, boardIdx, cmdContent: inputValue, mainCd: `${mainCd.value}` })
             //result 를 innerHTML / template로 작성
             const commentUpdate = document.querySelector("#comment_update")
