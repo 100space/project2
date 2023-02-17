@@ -12,11 +12,15 @@ const closeBtn = document.querySelector("#closeBtn")
 const chat = document.querySelector("#chat")
 const frm = document.querySelector("#frm")
 const card = document.querySelectorAll(".flexCard > div")
-console.log(card)
 const socket = io.connect("http://127.0.0.1:3000", {
     path: "/socket.io",
     transports: ["websocket"],
 })
+const notify = io.connect(`http://127.0.0.1:3000/notify`, {
+    path: "/socket.io",
+    transports: ["websocket"],
+})
+
 const cardHandler = (e) => {
     setTimeout(function () {
         for (let i = 0; i < card.length; i++) {
@@ -77,6 +81,9 @@ const chatCHandler = (e) => {
     chatWindow.classList.toggle("close")
     chat.scrollTop = chat.scrollHeight
 }
+export function a(a, b) {
+    return a + b
+}
 const chatSubmitHandler = (e) => {
     e.preventDefault()
     const { message, nickName } = e.target
@@ -107,12 +114,18 @@ socket.on("reply", (data1) => {
     chat.scrollTop = chat.scrollHeight
 })
 
+notify.on("notify", (dataz) => {
+    const json = JSON.parse(dataz)
+    console.log(json)
+    socket.join()
+
+    socket.emit(dataz)
+})
 nav.addEventListener("click", navfunction)
 gnb.addEventListener("click", gnbfunction)
 window.addEventListener("load", cardHandler)
 userInfo.addEventListener("click", userInfoClick)
 searchBtn.addEventListener("click", searchFunction)
-// search.addEventListener("keypress", searchEvent)
 chatIcon.addEventListener("click", chatHandler)
 closeBtn.addEventListener("click", chatCHandler)
 frm.addEventListener("submit", chatSubmitHandler)

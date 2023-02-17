@@ -7,7 +7,9 @@ const request = axios.create({
 })
 //
 router.use((req, res, next) => {
+
     try{
+        if (!req.userInfo) return next()
         const { userPic, userId, userPw, userName, nickName, provider } = req.userInfo
         const { boardHot, userHot } = req
         res.locals = { boardHot, userHot }

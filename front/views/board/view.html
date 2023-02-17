@@ -5,6 +5,7 @@
 
 <input type="hidden" name="hidden" id="hidden" value="{{newBoard.content}}" />
 <input type="hidden" name="boardIdx" id="boardIdx" value="{{newBoard.boardIdx}}" />
+<input type="hidden" name="boardWriter" id="boardWriter" value="{{newBoard.userId}}" />
 <input type="hidden" name="boardIdx" id="mainCd" value="{{newBoard.mainCd}}" />
 <input type="hidden" name="boardIdx" id="userId" value="{{userId}}" />
 <div id="container">
@@ -111,5 +112,7 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 <script src="/js/view.js" type="text/javascript"></script>
+
 {% endblock %}

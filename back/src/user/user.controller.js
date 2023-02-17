@@ -1,5 +1,3 @@
-const { userController } = require("./user.module")
-
 class UserController {
     constructor({ userService }) {
         this.userService = userService
@@ -88,16 +86,16 @@ class UserController {
             next(e)
         }
     }
- 
 
-    async myReaction(req,res,next){
+    async myReaction(req, res, next) {
         try {
             const {userId} = req.body
             const response = await this.userService.FindReaction({userId})
             console.log(response)
+
             res.status(201).json(response)
         } catch (e) {
-             next(e)
+            next(e)
         }
     }
 

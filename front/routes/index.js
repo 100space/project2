@@ -54,6 +54,9 @@ router.get("/login", (req, res, next) => {
         next(e)
     }
 })
+router.get("/error", (req, res, next) => {
+    res.render("error.html")
+})
 router.use("/user", user)
 router.use("/profile", profile)
 router.use("/board", board)

@@ -1,7 +1,7 @@
 class BoardRepository {
     constructor({
         sequelize: {
-            models: { User, Board, Comment, Liked, Hash, Hashtag, Picture, Category, Recomment },
+            models: { User, Board, Comment, Liked, Hash, Hashtag, Picture, Category, Recomment, Notify },
         },
         Sequelize,
         sequelize,
@@ -14,6 +14,7 @@ class BoardRepository {
         this.hashtag = Hashtag
         this.picture = Picture
         this.category = Category
+        this.notify = Notify
         this.queryTypes = Sequelize.QueryTypes
         this.sequelize = sequelize
         this.Sequelize = Sequelize
@@ -94,7 +95,6 @@ class BoardRepository {
                 }
             )
             return { response, hashResponse, commentResponse, commentLength, likedUser, recmd }
-
         } catch (e) {
             throw new Error(`Error while find status: ${e.message}`)
         }
@@ -422,6 +422,17 @@ class BoardRepository {
             return result
         } catch (e) {
             throw new Error(`Error while create ReComment status: ${e.message}`)
+        }
+    }
+    //알림
+    async createNotify({ boardWriter, boardIdx, writer, cmdContent, mainCd }) {
+        try {
+            const response = (await this.notify.create({ boardWriter, boardIdx, cmdWriter: writer, cmdContent, mainCd })).get({ plain: true })
+            const result = await this.notify.findAll({ where: { boardWriter }, raw: true })
+            console.log(result, "reposi noti")
+            return result
+        } catch (e) {
+            throw new Error(`Error while create createNofify status: ${e.message}`)
         }
     }
 }
