@@ -105,8 +105,13 @@ class UserRepository {
                 },
                 raw: true,
             })
-    
-            return { response, userCount}
+            const boardCount = await this.Board.findAll({
+                where: {
+                    userId: { [Op.like]: `%${search}%` },
+                },
+                raw: true,
+            })
+            return { response, userCount, boardCount }
         } catch (e) {
             throw new Error(`Error while find search Value: ${e.message}`)
         }

@@ -161,26 +161,6 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
                 alert("모든 입력 항목은 필수입니다.")
                 return
             }
-            // const userId = writer.value;
-            // const mainCd = mainValue.value
-
-            // const subCd = categoryMain.value;
-            // const content = editor.getData();
-            // const hash = tagify.value.map((tag) => tag.value).join(",");
-            // const data = { subject: subject.value, content, userId, mainCd, subCd, hash };
-
-            // request
-            //     // .post(`/board/${mainCd}/view/`, { data })
-            //     .then((response) => {
-            //         const { hashValue, newBoard } = response.data;
-            //         const {boardIdx} = newBoard
-            //         alert("글이 성공적으로 작성되었습니다.");
-            //         location.href = `/board/${mainCd}/viewcheck/${boardIdx}`;
-            //     })
-            //     .catch((error) => {
-            //         alert("글 작성에 실패했습니다.");
-            //         console.error(error);
-            //     });
         })
 
         var editor = CKEDITOR.instances.editor1
@@ -188,5 +168,4 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
         editor.setData(data)
     })
     .catch((error) => {
-        // console.error(error)
     })
