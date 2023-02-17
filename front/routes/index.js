@@ -8,7 +8,7 @@ const upload = require("../midlewares/upload")
 const config = require("../config")
 const admin = require("./admin.routes")
 const request = axios.create({
-    baseURL: "http://13.209.76.244:3000",
+    baseURL: "http://127.0.0.1:3000",
     withCredentials: true,
 })
 
