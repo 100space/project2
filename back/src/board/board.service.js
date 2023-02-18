@@ -360,8 +360,12 @@ class BoardService {
     
     async getAllBoard(){
         try{
-            const allBoard = await this.boardRepository.getAllBoard()
-            console.log(allBoard)
+            let allBoard = await this.boardRepository.getAllBoard()
+            // allBoard = this.objDate(allBoard)
+            // let allBoardDate = {}
+            // allBoard.map((x,i)=>{
+
+            // })
             return allBoard
         }catch(e){
             throw new Error(e)

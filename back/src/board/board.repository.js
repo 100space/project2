@@ -144,7 +144,7 @@ class BoardRepository {
     async randomValue() {
         try {
             const boardRandom = await this.sequelize.query(
-                `SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd, MIN(B.picture) AS picture
+                `SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd ,MIN(B.picture) AS picture
                 FROM (
                   SELECT userId, subject, viewCount, liked, content, boardIdx, cateCd 
                   FROM Board 
@@ -154,7 +154,6 @@ class BoardRepository {
                 GROUP BY A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd`,
                 { type: this.queryTypes.SELECT }
             )
-            console.log(boardRandom)
             const randomUser = []
             const randomHash = []
             for (let i = 0; i < boardRandom.length; i++) {
@@ -443,8 +442,8 @@ class BoardRepository {
     //전체 게시물 조회 (Admin 전용)
     async getAllBoard(){
         try {
-            const allBoard = await this.Board.findAll()
-            return allBoard
+            const dateBoard = await this.Board.findAll()
+            return dateBoard
         }catch(e){
             throw new Error(e)
         }

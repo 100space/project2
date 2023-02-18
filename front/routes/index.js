@@ -92,6 +92,8 @@ router.get("/manage", async (req, res, next) => {
         const counts = {}
         const likes = {}
 
+        // console.log(boards)
+        // console.log(counts)
         for (const board of boards) {
             const createdAt = new Date(board.createdAt)
             const date = createdAt.toISOString().slice(0, 10)
@@ -103,11 +105,9 @@ router.get("/manage", async (req, res, next) => {
             likes[date] += board.liked
         }
 
-        console.log('11',counts)
-        console.log('33',likes)
-
+        
         const hours = {}
-
+        
         for (const board of boards) {
             const createdAt = new Date(board.createdAt)
             const hour = createdAt.toISOString().slice(11, 13)
@@ -116,11 +116,12 @@ router.get("/manage", async (req, res, next) => {
             }
             hours[hour]++
         }
-
-        console.log('114',hours)
-        res.render("user/management.html", {count : counts, like : likes, hour : hours})
+        
+        let countArray =Object.entries(counts)
+        let likesArray = Object.entries(likes)
+        let hoursArray =Object.entries(hours)
+        res.render("user/management.html", {count : countArray, like : likesArray, hour : hoursArray})
     } catch (e) {
-        console.log(e)
         next(e)
     }
 })
@@ -165,9 +166,7 @@ router.get("/", async (req, res, next) => {
         const { boardHot } = req
         const { userHot } = req
         const response = await request.get("/board/random")
-        console.log(response)
         const { listValue, randomUser, randomHash } = response.data
-        console.log(listValue)
         res.render("index.html", { ...userInfo, boardHot, userHot, boardRandom: listValue, randomUser, randomHash })
     } catch (e) {
         next(e)
