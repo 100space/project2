@@ -58,7 +58,6 @@ router.get("/login", (req, res, next) => {
 router.use("/user", user)
 router.use("/profile", profile)
 router.use("/board", board)
-router.use("/admin,", admin)
 
 // router.get("/io", (req, res, next) => {
 //     try {
@@ -86,13 +85,46 @@ router.get("/oauth/kakao", (req, res, next) => {
     }
 })
 
-router.get("/manage", (req, res, next) => {
+router.get("/manage", async (req, res, next) => {
     try {
-        res.render("user/management.html")
+        const response = await request.get("/board/manage")
+        const boards = response.data
+        const counts = {}
+        const likes = {}
+
+        for (const board of boards) {
+            const createdAt = new Date(board.createdAt)
+            const date = createdAt.toISOString().slice(0, 10)
+            if (!counts[date]) {
+                counts[date] = 0
+                likes[date] = 0
+            }
+            counts[date]++
+            likes[date] += board.liked
+        }
+
+        console.log('11',counts)
+        console.log('33',likes)
+
+        const hours = {}
+
+        for (const board of boards) {
+            const createdAt = new Date(board.createdAt)
+            const hour = createdAt.toISOString().slice(11, 13)
+            if (!hours[hour]) {
+                hours[hour] = 0
+            }
+            hours[hour]++
+        }
+
+        console.log('114',hours)
+        res.render("user/management.html", {count : counts, like : likes, hour : hours})
     } catch (e) {
+        console.log(e)
         next(e)
     }
 })
+
 
 router.get("/search", async (req, res, next) => {
     try {

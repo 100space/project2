@@ -440,6 +440,15 @@ class BoardRepository {
             throw new Error(`Error while create createNofify status: ${e.message}`)
         }
     }
+    //전체 게시물 조회 (Admin 전용)
+    async getAllBoard(){
+        try {
+            const allBoard = await this.Board.findAll()
+            return allBoard
+        }catch(e){
+            throw new Error(e)
+        }
+    }   
 }
 
 module.exports = BoardRepository

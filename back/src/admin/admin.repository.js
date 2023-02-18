@@ -33,6 +33,7 @@ class adminRepository {
     async getBoards() {
         try{
             const response = await this.Board.findAll()
+            console.log('reposit', response)
             return response
         }catch(e){
             throw new Error(e)

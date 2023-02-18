@@ -357,6 +357,16 @@ class BoardService {
             throw new Error(e)
         }
     }
+    
+    async getAllBoard(){
+        try{
+            const allBoard = await this.boardRepository.getAllBoard()
+            console.log(allBoard)
+            return allBoard
+        }catch(e){
+            throw new Error(e)
+        }
+    }
 }
 
 module.exports = BoardService

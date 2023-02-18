@@ -24,6 +24,7 @@ class AdminService {
   async getBoards() {
     try {
       const response = await this.adminRepository.getBoards()
+      console.log('service', response)
       return response
     } catch (e) {
       throw new Error(e)
