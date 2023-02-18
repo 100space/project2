@@ -133,7 +133,9 @@ router.get("/", async (req, res, next) => {
         const { boardHot } = req
         const { userHot } = req
         const response = await request.get("/board/random")
+        console.log(response)
         const { listValue, randomUser, randomHash } = response.data
+        console.log(listValue)
         res.render("index.html", { ...userInfo, boardHot, userHot, boardRandom: listValue, randomUser, randomHash })
     } catch (e) {
         next(e)
