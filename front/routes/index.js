@@ -60,13 +60,13 @@ router.use("/profile", profile)
 router.use("/board", board)
 router.use("/admin,", admin)
 
-router.get("/io", (req, res, next) => {
-    try {
-        res.render("/layout/layout.html")
-    } catch (e) {
-        next(e)
-    }
-})
+// router.get("/io", (req, res, next) => {
+//     try {
+//         res.render("/layout/layout.html")
+//     } catch (e) {
+//         next(e)
+//     }
+// })
 router.get("/token/:token", async (req, res, next) => {
     try {
         const { token } = req.params
