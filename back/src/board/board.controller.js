@@ -208,6 +208,14 @@ class BoardController {
             next(e)
         }
     }
+    async getAllBoard(req,res,next){
+        try{
+            const allBoard = await this.boardService.getAllBoard();
+            res.status(201).json(allBoard)
+        }catch(e){
+            next(e)
+        }
+    }
 }
 
 module.exports = BoardController

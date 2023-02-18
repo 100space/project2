@@ -1,6 +1,6 @@
 class AdminController {
-  constructor({AdminService}){
-    this.AdminService = AdminService
+  constructor({ adminService }){
+    this.adminService = adminService
   }
   async getUsers(req,res,next){
     try {
@@ -24,6 +24,7 @@ class AdminController {
   async getBoards(req,res,next){
     try {
       const boards = await adminService.getBoards()
+      console.log(111245231,boards)
       res.status(201).json(boards)
     } catch (e) {
       next(e)

@@ -5,78 +5,6 @@
     <div id="search_result" class="flex">사이트 관리페이지 입니다.</div>
     <div id="resultBody">
         <div class="searchBox">
-            <span id="userSearch" class="searchHeader flex">유저 정보
-                <span> 총 {{userCount}} 의 유저가 존재합니다.</span>
-            </span>
-            <div class="table">
-                <ul class="tableHeader flex">
-                    <li>번호</li>
-                    <li>아이디</li>
-                    <li>닉네임</li>
-                    <li>게시글</li>
-                    <li>포인트</li>
-                </ul>
-                {% for item in userValue %}
-                <ul class="tableContent flex">
-                    <li>{{loop.index}}</li>
-                    <li><a href="#">{{item.userId}}</a></li>
-                    <li>{{item.nickName}}</li>
-                    <li>{{item.userBoard}}</li>
-                    <li>{{item.userPoint}}</li>
-                </ul>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="searchBox">
-            <span id="boardSearch" class="searchHeader flex">게시판 관리
-                <span> 총 {{boardCount}} 개의 게시물이 표시됩니다.</span>
-            </span>
-            <div class="table">
-                <ul class="tableHeader flex">
-                    <li>번호</li>
-                    <li>게시글 제목</li>
-                    <li>작성자</li>
-                    <li>작성일</li>
-                    <li>추천수</li>
-                    <li>글내리기</li>
-                </ul>
-                {% for item in data1 %}
-                <ul class="tableContent flex">
-                    <li>{{loop.index}}</li>
-                    <li><a href="#">{{item.subject}}</a></li>
-                    <li>{{item.userId}}</li>
-                    <li>{{item.createdAt}}</li>
-                    <li>{{item.liked}}</li>
-                    <li><a href="#">글내리기</a></li>
-                </ul>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="searchBox">
-            <span id="boardSearch" class="searchHeader flex">카테고리 정보
-                <span> 총 {{categoryCount}} 개의 카테고리가 존재합니다. </span>
-            </span>
-            <div class="table">
-                <ul class="tableHeader flex">
-                    <li>유형</li>
-                    <li>카테고리 번호</li>
-                    <li>카테고리 명</li>
-                    <li>카테고리 생성</li>
-                    <li>카테고리 삭제</li>
-                </ul>
-                {% for item in data1 %}
-                <ul class="tableContent flex">
-                    <li>{{loop.index}}</li>
-                    <li><a href="#">{{item.mainCd}}</a></li>
-                    <li>{{item.subCd}}</li>
-                    <li>{{item.name}}</li>
-                    <li><a href="#">카테고리 생성</a></li>
-                    <li><a href="#">카테고리 삭제</a></li>
-                </ul>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="searchBox">
             <span id="boardSearch" class="searchHeader flex">통계
                 <span> 홈페이지 통계 정보</span>
             </span>
@@ -85,47 +13,46 @@
                     <li id="dailyGraph">일자별 통계</li>
                     <li id="TimeGraph">시간대 통계</li>
                     <li id="likedGraph">좋아요 통계</li>
-                    <li id="hashtagGraph">해시태그 통계</li>
                 </ul>
                 
                 <div class="graph" id="chart">
-                    <input type="hidden" class="hideenBar1" value="111">
-                    <input type="hidden" class="hideenBar2" value="111">
-                    <input type="hidden" class="hideenBar3" value="111">
-                    <input type="hidden" class="hideenBar4" value="111">
-                    <input type="hidden" class="hideenBar5" value="111">
-                    <input type="hidden" class="hideenBar6" value="111">
-
-                    <div class="bar" style="height: 120px; left: 0px;">
-                        <div class="dateName">2023-01-01
-                            <div class="valueName">23</div>
+                    <input type="hidden" class="hideenBar1" value="1">
+                    <input type="hidden" class="hideenBar2" value="2">
+                    <input type="hidden" class="hideenBar3" value="3">
+                    <input type="hidden" class="hideenBar4" value="4">
+                    <input type="hidden" class="hideenBar5" value="5">
+                    <input type="hidden" class="hideenBar6" value="6">
+                    <div class="bar" style="height: 10px; left: 80px;">
+                        <div class="dateName">{{count.value}}
+                            <div class="valueName">{{count}}</div>
                         </div>
                     </div>
-                    <div class="bar" style="height: 80px; left: 80px;">
-                        <div class="dateName">2023-01-02
-                            <div class="valueName">23</div>
+                    <div class="bar" style="height: 10px; left: 200px;">
+                        <div class="dateName">{{date}}
+                            <div class="valueName">{{count}}</div>
                         </div>
                     </div>
-                    <div class="bar" style="height: 160px; left: 160px;">
-                        <div class="dateName">2023-01-03
-                            <div class="valueName">23</div>
+                    <div class="bar" style="height: 10px; left: 320px;">
+                        <div class="dateName">{{date}}
+                            <div class="valueName">{{count}}</div>
                         </div>
                     </div>
-                    <div class="bar" style="height: 40px; left: 240px;">
-                        <div class="dateName">2023-01-04
-                            <div class="valueName">23</div>
+                    <div class="bar" style="height: 10px; left: 440px;">
+                        <div class="dateName">{{date}}
+                            <div class="valueName">{{count}}</div>
                         </div>
                     </div>
-                    <div class="bar" style="height: 100px; left: 320px;">
+                    <div class="bar" style="height: 10px; left: 560px;">
                         <div class="dateName">2023-01-05
                             <div class="valueName">23</div>
                         </div>
                     </div>
-                    <div class="bar" style="height: 100px; left: 400px;">
+                    <div class="bar" style="height: 10px; left: 680px;">
                         <div class="dateName">2023-01-06
                             <div class="valueName">23</div>
                         </div>
                     </div>
+            
 		            <div class="x-axis">
                         <div class="x-label"></div>
                         <div class="x-label"></div>
