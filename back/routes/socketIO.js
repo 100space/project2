@@ -1,9 +1,5 @@
 const SocketIO = require("socket.io")
 const axios = require("axios")
-const crypto = require("crypto")
-const JWT = require("../lib/jwt")
-const SALT = process.env.SALT || "test"
-const jwt = new JWT({ crypto })
 
 module.exports = async (server, app) => {
     const io = SocketIO(server, { path: "/socket.io" })
@@ -37,5 +33,4 @@ module.exports = async (server, app) => {
             socket.broadcast.emit("notify", JSON.stringify(json))
         })
     })
-
 }
