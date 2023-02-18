@@ -23,25 +23,26 @@
                     <input type="hidden" class="hideenBar5" value="5">
                     <input type="hidden" class="hideenBar6" value="6">
                     {% for item in count %}
-                    <div class="bar" style="height: 10px; left: 80px;">
+                    <div class="bar" style="height: 120px; left: 80px; display: none;" id="dateCount">
                         <div class="dateName">{{item[0]}}
-                            <div class="valueName">{{item[1]}}</div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% for item in hour %}
-                    <div class="bar2" style="height: 10px; left: 80px;">
-                        <div class="hourName">{{item[0]}}
-                            <div class="hourName">{{item[1]}}</div>
+                            <div class="valueName" id="dateValue">{{item[1]}}</div>
                         </div>
                     </div>
                     {% endfor %}
                     {% for item in like %}
-                    <div class="bar3">
-                        <div class="likeName">{{item[0]}}
-                            <div class="likeName" ></div>
+                    <div class="bar" style="height: 120px; left: 80px; display: none;" id="likeCount">
+                        <div class="dateName">{{item[0]}}
+                            <div class="valueName" id="likeValue">{{item[1]}}</div>
                         </div>
                     </div>
+                    {% endfor %}
+                    {% for item in hour %}
+                    <div class="bar" style="height: 120px; left: 80px; display: none;" id="hourCount">
+                        <div class="dateName">{{item[0]}}
+                            <div class="valueName" id="hourValue">{{item[1]}}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
                     
             
 		            <div class="x-axis">

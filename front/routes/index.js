@@ -120,6 +120,9 @@ router.get("/manage", async (req, res, next) => {
         let countArray =Object.entries(counts)
         let likesArray = Object.entries(likes)
         let hoursArray =Object.entries(hours)
+        console.log(countArray)
+        console.log(likesArray)
+        console.log(hoursArray)
         res.render("user/management.html", {count : countArray, like : likesArray, hour : hoursArray})
     } catch (e) {
         next(e)

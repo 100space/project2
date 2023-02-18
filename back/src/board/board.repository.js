@@ -53,7 +53,7 @@ class BoardRepository {
             const { boardIdx } = newBoard
             console.log(boardIdx, "========================")
             const newHashTag = await this.hashMake(boardIdx, hashArray)
-            const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
+            const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN Hashtag B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
                 type: this.queryTypes.SELECT,
             })
             newBoard.userPic = userPic
@@ -71,7 +71,7 @@ class BoardRepository {
             const { boardIdx } = payload
             const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
             let viewCount = response.viewCount
-            const hashResponse = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
+            const hashResponse = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN Hashtag B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
                 type: this.queryTypes.SELECT,
             })
             const updateViewCount = await this.Board.update({viewCount:viewCount+1},{where:{boardIdx}})
@@ -198,7 +198,7 @@ class BoardRepository {
             // console.log()
             // const mainLength = allMainCd.length
             // console.log(mainLength)
-            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM BOARD WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
+            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM Board WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
             return { findMain, allMainCd, findSub }
         } catch (e) {
             throw new Error(`Error while find pagingValue: ${e.message}`)
@@ -227,7 +227,7 @@ class BoardRepository {
                 },
                 raw: true,
             })
-            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM BOARD WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
+            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM Board WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
             return { correctValue, subcateLength, findSub }
         } catch (e) {
             throw new Error(`Error while find category: ${e.message}`)
