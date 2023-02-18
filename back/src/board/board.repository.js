@@ -45,6 +45,7 @@ class BoardRepository {
             const newHashTagVal = []
             const userInfo = await this.User.findAll({ where: { userId }, raw: true })
             const userPic = userInfo[0].userPic
+            console.log(userPic)
             if (hashArray[0] === ''){ 
                 let hashValue = null
                 return {newBoard, hashValue}
