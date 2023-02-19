@@ -22,8 +22,8 @@ class BoardRepository {
         this.hashMake = async (boardIdx, hashArray) => {
             const destroyHashtag = await await this.hash.destroy({
                 where: {
-                    boardIdx
-                }
+                    boardIdx,
+                },
             })
             const hashContent = []
             for (let i = 0; i < hashArray.length; i++) {
@@ -45,21 +45,19 @@ class BoardRepository {
             const newHashTagVal = []
             const userInfo = await this.User.findAll({ where: { userId }, raw: true })
             const userPic = userInfo[0].userPic
-            console.log(userPic)
-            if (hashArray[0] === ''){ 
+            if (hashArray[0] === "") {
                 let hashValue = null
-                return {newBoard, hashValue}
+                return { newBoard, hashValue }
             } else {
-            const { boardIdx } = newBoard
-            console.log(boardIdx, "========================")
-            const newHashTag = await this.hashMake(boardIdx, hashArray)
-            const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
-                type: this.queryTypes.SELECT,
-            })
-            newBoard.userPic = userPic
-            const addUserPoint = await this.User.increment({ userPoint: 10 }, { where: { userId } })
-            return { newBoard, hashValue, addUserPoint }
-        }
+                const { boardIdx } = newBoard
+                const newHashTag = await this.hashMake(boardIdx, hashArray)
+                const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
+                    type: this.queryTypes.SELECT,
+                })
+                newBoard.userPic = userPic
+                const addUserPoint = await this.User.increment({ userPoint: 10 }, { where: { userId } })
+                return { newBoard, hashValue, addUserPoint }
+            }
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)
         }
@@ -74,7 +72,7 @@ class BoardRepository {
             const hashResponse = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
                 type: this.queryTypes.SELECT,
             })
-            const updateViewCount = await this.Board.update({viewCount:viewCount+1},{where:{boardIdx}})
+            const updateViewCount = await this.Board.update({ viewCount: viewCount + 1 }, { where: { boardIdx } })
             const commentResponse = await this.sequelize.query(
                 `SELECT B.cmdIdx, B.cmdContent, B.boardIdx, B.userId, B.createdAt from Board A JOIN Comment B On (A.boardIdx = B.boardIdx) where A.boardIdx =${boardIdx} order by B.cmdIdx DESC`,
                 {
@@ -113,14 +111,14 @@ class BoardRepository {
                     },
                 }
             )
-            
-            if (!hashArray){
+
+            if (!hashArray) {
                 const hashDelete = await this.hash.destroy({
                     where: {
-                        boardIdx
-                    }
+                        boardIdx,
+                    },
                 })
-            } else{
+            } else {
                 const newHashTag = await this.hashMake(boardIdx, hashArray)
                 return newHashTag
             }
@@ -132,7 +130,6 @@ class BoardRepository {
     // 게시글 지우기
     async deleteValue(payload) {
         try {
-            console.log(payload)
             const { boardIdx } = payload
             const boardResponse = await this.Board.destroy({ where: { boardIdx }, raw: true })
             return boardResponse
@@ -154,7 +151,6 @@ class BoardRepository {
                 GROUP BY A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd`,
                 { type: this.queryTypes.SELECT }
             )
-            console.log(boardRandom)
             const randomUser = []
             const randomHash = []
             for (let i = 0; i < boardRandom.length; i++) {
@@ -196,9 +192,6 @@ class BoardRepository {
                 },
                 raw: true,
             })
-            // console.log()
-            // const mainLength = allMainCd.length
-            // console.log(mainLength)
             const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM BOARD WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
             return { findMain, allMainCd, findSub }
         } catch (e) {
@@ -257,12 +250,10 @@ class BoardRepository {
         try {
             // userId, boarIdx, mainCD payload 담기
             const { userId, boardIdx, mainCd } = payload
-            console.log("11 repository", payload)
             // user, boardIdx 일치하는 게시물의 좋아요 확인
             const liked = await this.liked.findOne({
                 where: { userId, boardIdx },
             })
-            console.log("22 repository", liked)
             // 좋아요가 이미 있으면 좋아요 제거
             if (liked) {
                 await liked.destroy()
@@ -385,7 +376,7 @@ class BoardRepository {
     async postComment({ boardIdx, cmdContent, userId }) {
         try {
             const response = (await this.comment.create({ boardIdx, cmdContent, userId })).get({ plain: true })
-            const count = await this.comment.count()
+            const count = await this.comment.count({ where: { boardIdx } })
             const addUserPoint = await this.User.increment({ userPoint: 5 }, { where: { userId } })
             const result = { response, count, addUserPoint }
             return result
@@ -408,7 +399,7 @@ class BoardRepository {
     // 댓글 삭제하기
     async dropComment({ cmdIdx }) {
         try {
-            const deleteBoardIdx = await this.comment.findOne({where:{ cmdIdx}, raw:true})
+            const deleteBoardIdx = await this.comment.findOne({ where: { cmdIdx }, raw: true })
             const response = await this.comment.destroy({
                 where: {
                     cmdIdx,
@@ -431,6 +422,14 @@ class BoardRepository {
         }
     }
     //알림
+    async findNoti() {
+        try {
+            const result = await this.notify.findAll({ raw: true })
+            return result
+        } catch (e) {
+            throw new Error(`Error while findNoti status: ${e.message}`)
+        }
+    }
     async createNotify({ boardWriter, boardIdx, writer, cmdContent, mainCd }) {
         try {
             const response = (await this.notify.create({ boardWriter, boardIdx, cmdWriter: writer, cmdContent, mainCd })).get({ plain: true })
@@ -440,15 +439,24 @@ class BoardRepository {
             throw new Error(`Error while create createNofify status: ${e.message}`)
         }
     }
+    async modifyNotify({ notiId, boardWriter }) {
+        try {
+            const response = await this.notify.update({ readCheck: 0 }, { where: { id: notiId } })
+            const result = await this.notify.findAll({ where: { boardWriter }, raw: true })
+            return result
+        } catch (e) {
+            throw new Error(`Error while modify modifyNotify status: ${e.message}`)
+        }
+    }
     //전체 게시물 조회 (Admin 전용)
-    async getAllBoard(){
+    async getAllBoard() {
         try {
             const allBoard = await this.Board.findAll()
             return allBoard
-        }catch(e){
+        } catch (e) {
             throw new Error(e)
         }
-    }   
+    }
 }
 
 module.exports = BoardRepository

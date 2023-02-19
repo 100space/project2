@@ -59,13 +59,6 @@ router.use("/user", user)
 router.use("/profile", profile)
 router.use("/board", board)
 
-// router.get("/io", (req, res, next) => {
-//     try {
-//         res.render("/layout/layout.html")
-//     } catch (e) {
-//         next(e)
-//     }
-// })
 router.get("/token/:token", async (req, res, next) => {
     try {
         const { token } = req.params
@@ -103,8 +96,8 @@ router.get("/manage", async (req, res, next) => {
             likes[date] += board.liked
         }
 
-        console.log('11',counts)
-        console.log('33',likes)
+        console.log("11", counts)
+        console.log("33", likes)
 
         const hours = {}
 
@@ -117,14 +110,13 @@ router.get("/manage", async (req, res, next) => {
             hours[hour]++
         }
 
-        console.log('114',hours)
-        res.render("user/management.html", {count : counts, like : likes, hour : hours})
+        console.log("114", hours)
+        res.render("user/management.html", { count: counts, like: likes, hour: hours })
     } catch (e) {
         console.log(e)
         next(e)
     }
 })
-
 
 router.get("/search", async (req, res, next) => {
     try {
@@ -165,9 +157,7 @@ router.get("/", async (req, res, next) => {
         const { boardHot } = req
         const { userHot } = req
         const response = await request.get("/board/random")
-        console.log(response)
         const { listValue, randomUser, randomHash } = response.data
-        console.log(listValue)
         res.render("index.html", { ...userInfo, boardHot, userHot, boardRandom: listValue, randomUser, randomHash })
     } catch (e) {
         next(e)
