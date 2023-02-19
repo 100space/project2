@@ -198,7 +198,16 @@ class BoardController {
             next(e)
         }
     }
-
+    //알림 조회
+    async findNoti(req, res, next) {
+        try {
+            const result = await this.boardService.FindNoti()
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+    //알림 생성
     async createNotify(req, res, next) {
         try {
             const { boardWriter, boardIdx, writer, cmdContent, mainCd } = req.body
@@ -208,11 +217,22 @@ class BoardController {
             next(e)
         }
     }
-    async getAllBoard(req,res,next){
-        try{
-            const allBoard = await this.boardService.getAllBoard();
+    //알림 수정
+    async modifyNotify(req, res, next) {
+        try {
+            const { notiId, boardWriter } = req.body
+            console.log(boardWriter, "chekcmodify")
+            const result = await this.boardService.ModifyNotify({ notiId, boardWriter })
+            res.status(201).json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+    async getAllBoard(req, res, next) {
+        try {
+            const allBoard = await this.boardService.getAllBoard()
             res.status(201).json(allBoard)
-        }catch(e){
+        } catch (e) {
             next(e)
         }
     }

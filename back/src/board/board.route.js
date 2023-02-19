@@ -3,11 +3,12 @@ const router = express.Router()
 const { boardController: controller } = require("./board.module")
 
 //알림
+router.get("/notify", (req, res, next) => controller.findNoti(req, res, next))
 router.post("/notify", (req, res, next) => controller.createNotify(req, res, next))
+router.put("/notify", (req, res, next) => controller.modifyNotify(req, res, next))
 
 //admin 통계용
 router.get("/manage", (req,res,next) => controller.getAllBoard(req,res,next))
-// admin 용 끝 
 
 router.post("/picture", (req, res, next) => controller.pictureInsert(req, res, next))
 router.get("/random", (req, res, next) => controller.getRandom(req, res, next))
@@ -41,6 +42,5 @@ router.get("/:mainCd/:subCd/:pageNumber", (req, res, next) => controller.findCat
 
 // 댓글 게시물 삭제
 // router.get("/:categoryMain", (req, res, next) => controller.findCategory(req, res, next))
-
 
 module.exports = router

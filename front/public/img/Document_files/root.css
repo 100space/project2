@@ -252,8 +252,8 @@ li {
 }
 .cmdContent {
     max-width: 10rem;
-    overflow: hidden;
     text-overflow: ellipsis !important;
+    background-color: black;
 }
 .notilist > li {
     display: inline-block;

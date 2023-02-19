@@ -1,6 +1,7 @@
 body {
     background-image: url(/img/listBackground.jpg);
     background-repeat: no-repeat;
+    background-size: 100%;
 }
 #viewWrap {
     width: 120rem;

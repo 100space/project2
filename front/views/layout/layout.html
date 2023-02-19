@@ -22,6 +22,7 @@
                         <img src="/img/logo.png" />
                     </a>
                 </div>
+
                 <div id="logBtn">
                     <form id="searchWrap" action="/search" method="get">
                         <input type="text" name="search" id="search" class="off3" />
@@ -29,6 +30,12 @@
                     <div id="searchBtn" class="circle9">
                         <a href="#"></a>
                     </div>
+                    <div id="notifyIcon" class="circle9">
+                        <div id="notifybadge" class="none">
+                            <span></span>
+                        </div>
+                    </div>
+                    <input type="hidden" name="userId" value="{{userId}}" />
                     {% if userId and userId !== "guest" and provider === "local" %}
                     <div id="userInfo" class="circle9 userPicSize" style="background-image: url('/image/{{userPic}}');">
                         <a href="#"></a>
@@ -45,6 +52,7 @@
                     {% endif %}
                 </div>
             </div>
+
             <ul id="gnb" class="off gnb_flex">
                 <div id="hotBoard" class="gnb-h2">
                     <div class="hotPost">
@@ -116,6 +124,11 @@
                 </div>
                 <div id="imgs">
                     <span id="sh" class="userPicSize"></span>
+                </div>
+            </div>
+            <div id="notification" class="none">
+                <div id="innerNotification">
+                    <ul class="notilist check"></ul>
                 </div>
             </div>
             <div id="chatWindow" class="close">

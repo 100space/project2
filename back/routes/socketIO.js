@@ -14,23 +14,15 @@ module.exports = async (server, app) => {
             console.log(JSON.stringify(json))
             socket.broadcast.emit("reply", JSON.stringify(json))
         })
-
-        //hello 이벤트 발생시
-        socket.on("hello", (data) => {
-            console.log(data)
-        })
     })
     noti.on("connection", (socket) => {
         socket.on(`notify`, ({ userId, data }) => {
-            // socket.join("123") //
-            // socket.join(userId)
             const json = {
                 userId,
                 data,
             }
-            console.log(JSON.stringify(json), 1249867124978)
-            // socket.broadcast.emit("notify", JSON.stringify(json))
-            socket.broadcast.emit("notify", JSON.stringify(json))
+            console.log(json, 1249867124978)
+            socket.broadcast.emit("noti", JSON.stringify(json))
         })
     })
 }

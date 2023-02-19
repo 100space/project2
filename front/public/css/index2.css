@@ -186,12 +186,11 @@
     margin-top: 2rem;
     font-size: 3rem;
 }
-.textareas > div  {
+.textareas > div {
     display: block;
     margin-top: 2rem;
     font-size: 1.8rem;
     word-break: break-all;
-    
 }
 
 .textCon1 > .image > img {

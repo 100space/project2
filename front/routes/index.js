@@ -59,13 +59,6 @@ router.use("/user", user)
 router.use("/profile", profile)
 router.use("/board", board)
 
-// router.get("/io", (req, res, next) => {
-//     try {
-//         res.render("/layout/layout.html")
-//     } catch (e) {
-//         next(e)
-//     }
-// })
 router.get("/token/:token", async (req, res, next) => {
     try {
         const { token } = req.params
@@ -105,7 +98,6 @@ router.get("/manage", async (req, res, next) => {
             likes[date] += board.liked
         }
 
-        
         const hours = {}
         
         for (const board of boards) {
@@ -115,8 +107,7 @@ router.get("/manage", async (req, res, next) => {
                 hours[hour] = 0
             }
             hours[hour]++
-        }
-        
+        }        
         let countArray =Object.entries(counts)
         let likesArray = Object.entries(likes)
         let hoursArray =Object.entries(hours)
@@ -128,7 +119,6 @@ router.get("/manage", async (req, res, next) => {
         next(e)
     }
 })
-
 
 router.get("/search", async (req, res, next) => {
     try {
