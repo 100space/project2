@@ -8,7 +8,7 @@ router.post("/notify", (req, res, next) => controller.createNotify(req, res, nex
 router.put("/notify", (req, res, next) => controller.modifyNotify(req, res, next))
 
 //admin 통계용
-router.get("/manage", (req, res, next) => controller.getAllBoard(req, res, next))
+router.get("/manage", (req,res,next) => controller.getAllBoard(req,res,next))
 
 router.post("/picture", (req, res, next) => controller.pictureInsert(req, res, next))
 router.get("/random", (req, res, next) => controller.getRandom(req, res, next))

@@ -49,15 +49,15 @@ class BoardRepository {
                 let hashValue = null
                 return { newBoard, hashValue }
             } else {
-                const { boardIdx } = newBoard
-                const newHashTag = await this.hashMake(boardIdx, hashArray)
-                const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
-                    type: this.queryTypes.SELECT,
-                })
-                newBoard.userPic = userPic
-                const addUserPoint = await this.User.increment({ userPoint: 10 }, { where: { userId } })
-                return { newBoard, hashValue, addUserPoint }
-            }
+            const { boardIdx } = newBoard
+            const newHashTag = await this.hashMake(boardIdx, hashArray)
+            const hashValue = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN Hashtag B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
+                type: this.queryTypes.SELECT,
+            })
+            newBoard.userPic = userPic
+            const addUserPoint = await this.User.increment({ userPoint: 10 }, { where: { userId } })
+            return { newBoard, hashValue, addUserPoint }
+        }
         } catch (error) {
             throw new Error(`Error while creating board: ${error.message}`)
         }
@@ -69,7 +69,7 @@ class BoardRepository {
             const { boardIdx } = payload
             const response = await this.Board.findOne({ where: { boardIdx }, raw: true })
             let viewCount = response.viewCount
-            const hashResponse = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN HASHTAG B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
+            const hashResponse = await this.sequelize.query(`SELECT A.boardIdx, B.tag FROM Hash A JOIN Hashtag B On (A.hashTagIdx = B.hashTagIdx) where A.boardIdx = ${boardIdx}`, {
                 type: this.queryTypes.SELECT,
             })
             const updateViewCount = await this.Board.update({ viewCount: viewCount + 1 }, { where: { boardIdx } })
@@ -141,7 +141,7 @@ class BoardRepository {
     async randomValue() {
         try {
             const boardRandom = await this.sequelize.query(
-                `SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd, MIN(B.picture) AS picture
+                `SELECT A.userId, A.subject, A.viewCount, A.liked, A.boardIdx, A.cateCd ,MIN(B.picture) AS picture
                 FROM (
                   SELECT userId, subject, viewCount, liked, content, boardIdx, cateCd 
                   FROM Board 
@@ -192,7 +192,7 @@ class BoardRepository {
                 },
                 raw: true,
             })
-            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM BOARD WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
+            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM Board WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
             return { findMain, allMainCd, findSub }
         } catch (e) {
             throw new Error(`Error while find pagingValue: ${e.message}`)
@@ -221,7 +221,7 @@ class BoardRepository {
                 },
                 raw: true,
             })
-            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM BOARD WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
+            const findSub = await this.sequelize.query(`SELECT DISTINCT cateCd FROM Board WHERE cateCd LIKE '${mainCdValue}%'`, { type: this.queryTypes.SELECT })
             return { correctValue, subcateLength, findSub }
         } catch (e) {
             throw new Error(`Error while find category: ${e.message}`)
@@ -451,9 +451,9 @@ class BoardRepository {
     //전체 게시물 조회 (Admin 전용)
     async getAllBoard() {
         try {
-            const allBoard = await this.Board.findAll()
-            return allBoard
-        } catch (e) {
+            const dateBoard = await this.Board.findAll()
+            return dateBoard
+        }catch(e){
             throw new Error(e)
         }
     }
