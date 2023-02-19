@@ -254,7 +254,7 @@ class BoardService {
                 this.fs.writeFile(`../front/uploads/${boardIdx}_${i}.png`, x, "base64", function (e) {})
             })
             const file = await this.fs.readdir("../front/uploads")
-            const boardFile = file.filter((x) => x.indexOf(`${boardIdx}`) >= 0)
+            const boardFile = file.filter((x) => x.startsWith(`${boardIdx}`))
             const response = await this.boardRepository.pictureCreate({ boardFile, boardIdx })
             return response
         } catch (e) {
