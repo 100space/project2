@@ -288,9 +288,11 @@ class BoardRepository {
     async pictureCreate(payload) {
         try {
             const { boardIdx, boardFile } = payload
+            console.log(payload, "&&&&&&&&&&&&&&&&&&&&&&&&&&")
             for (let i = 0; i < boardFile.length; i++) {
                 const response = await this.picture.findOrCreate({ where: { boardIdx, picture: boardFile[i] } })
             }
+
         } catch (e) {
             throw new Error(`Error while delete status: ${e.message}`)
         }
