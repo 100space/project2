@@ -157,3 +157,18 @@ Progress : 0%  No Completed of total 6 Item
 7) Front Router 오류수정
 8) Myreaction 기능 backend 생성
 9) Backend Router 오류수정
+
+## Day 14 Completed 
+1) 구현기능 오류 및 버그사항 수정
+2) 대댓글 기능 작업완료
+3) 좋아요 및 랭킹 처리작업
+4) Front 시간 출력필요부분만 나오도록 가공
+5) SubCategory 가공
+6) 나의 반응 작업
+
+## Day 15 Completed 
+1) Front/Backend Error 처리 및 에러페이지 구현
+2) 인기게시물 및 홈 화면 게시물 Viewer 랜더링 처리
+3) 게시물 수정시 HashTag 예외처리 수정
+4) 일부 기능 로직 수정 및 Admin 기초기능 구현(통계)
+5) 배포 진행
